@@ -144,9 +144,15 @@ export async function generateStructuredJson({
         const isQuotaExhausted = error.status === 429 || msg.includes('quota exceeded') || msg.includes('rate limit');
         const isModelUnavailable = error.status === 404 || msg.includes('no longer available') || msg.includes('not found');
 
-        // If quota exhausted or model not available on this tier, switch immediately to backup model
-        if ((isQuotaExhausted || isModelUnavailable) && !isLastModel) {
-          console.warn(`[Gemini SDK] Model ${currentModel} returned ${error.status || 'error'} (${msg.substring(0, 80)}...). Switching to backup model ${modelsToTry[modelIdx + 1]}...`);
+        // If quota exhausted for the project, immediately fall back to domain-adaptive engine without stalling
+        if (isQuotaExhausted) {
+          console.warn(`[Gemini SDK] Free-tier project quota exhausted. Immediately transitioning to high-fidelity domain synthesizer.`);
+          throw error;
+        }
+
+        // If model not available on this tier, switch immediately to backup model
+        if (isModelUnavailable && !isLastModel) {
+          console.warn(`[Gemini SDK] Model ${currentModel} returned 404. Switching to backup model ${modelsToTry[modelIdx + 1]}...`);
           break; // break retry loop to try next model
         }
 

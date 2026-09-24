@@ -1,9 +1,9 @@
 import React from 'react';
 
 const BASE_STAGES = [
-  { step: 1, label: 'Beachhead ICP', code: 'AUDIENCE' },
-  { step: 2, label: 'Anti-Status-Quo', code: 'DIFFERENTIATION' },
-  { step: 3, label: 'Voice & Aesthetic', code: 'BRAND EDGE' }
+  { step: 1, label: 'Core Audience', code: 'AUDIENCE' },
+  { step: 2, label: 'Distinct Edge', code: 'DIFFERENTIATION' },
+  { step: 3, label: 'Voice & Edge', code: 'BRAND EDGE' }
 ];
 
 export default function ProgressStepper({ currentRound = 1, readyForSynthesis = false, stageLabel = '' }) {

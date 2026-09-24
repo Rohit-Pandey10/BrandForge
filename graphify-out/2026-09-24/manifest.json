@@ -12,15 +12,15 @@
     "semantic_hash": ""
   },
   "client/src/App.jsx": {
-    "mtime": 1790257707.0937846,
-    "seen": 1790258100.705135,
-    "ast_hash": "0d9d6ad2d99fab80b2cf85332480372c",
+    "mtime": 1790260010.3521712,
+    "seen": 1790260681.256404,
+    "ast_hash": "2121da264916d03b081b88893dfb42f5",
     "semantic_hash": ""
   },
   "client/src/components/BrandKitDashboard.jsx": {
-    "mtime": 1790256636.962813,
-    "seen": 1790257120.7185001,
-    "ast_hash": "c8230d2cc8fcdb55b6620188ffec79d6",
+    "mtime": 1790261818.3815494,
+    "seen": 1790262164.133215,
+    "ast_hash": "279a910a45e9d58437b2ff09e86c9513",
     "semantic_hash": ""
   },
   "client/src/components/Header.jsx": {
@@ -30,27 +30,27 @@
     "semantic_hash": ""
   },
   "client/src/components/IntakeView.jsx": {
-    "mtime": 1790255551.6342673,
-    "seen": 1790257120.718501,
-    "ast_hash": "a704205f67fb5322752b9fddc7c62ef4",
+    "mtime": 1790261852.119074,
+    "seen": 1790262164.133216,
+    "ast_hash": "7c37904bce5bb06c38fcccd4ec0afd01",
     "semantic_hash": ""
   },
   "client/src/components/InterviewChat.jsx": {
-    "mtime": 1790257680.4318526,
-    "seen": 1790258100.705137,
-    "ast_hash": "b8ef7e7aae22a5ac53e4a9d1aac53fe8",
+    "mtime": 1790261842.1260622,
+    "seen": 1790262164.133217,
+    "ast_hash": "96deb8d1a28dc152a9220b0f4c240451",
     "semantic_hash": ""
   },
   "client/src/components/ProgressStepper.jsx": {
-    "mtime": 1790257660.980076,
-    "seen": 1790258100.705138,
-    "ast_hash": "c1e6896483bbee802a9ab7de0b0b8aa1",
+    "mtime": 1790261829.7519937,
+    "seen": 1790262164.133217,
+    "ast_hash": "7e72765f4aad4f220a9d7c2914c261f2",
     "semantic_hash": ""
   },
   "client/src/data/mockBrandData.js": {
-    "mtime": 1790249183.6817625,
-    "seen": 1790257120.7185018,
-    "ast_hash": "c3083014e0b4a6add73adae1671f0db6",
+    "mtime": 1790261774.4411604,
+    "seen": 1790262164.133218,
+    "ast_hash": "cf1ec6389656ba243c24bdbd294cc758",
     "semantic_hash": ""
   },
   "client/src/main.jsx": {
@@ -96,9 +96,9 @@
     "semantic_hash": ""
   },
   "server/controllers/interviewerController.js": {
-    "mtime": 1790257628.8276951,
-    "seen": 1790258100.705142,
-    "ast_hash": "3d40583abaecec6793cc1b5f1a9de34b",
+    "mtime": 1790261729.9326143,
+    "seen": 1790262164.1332228,
+    "ast_hash": "c7b7e12912e39fbe11729f2e95e302df",
     "semantic_hash": ""
   },
   "server/package.json": {
@@ -120,9 +120,9 @@
     "semantic_hash": ""
   },
   "server/utils/geminiClient.js": {
-    "mtime": 1790258342.6854103,
-    "seen": 1790258409.210551,
-    "ast_hash": "fbace1acc6aca7ef696ddc7d798ff914",
+    "mtime": 1790259537.1786647,
+    "seen": 1790260681.256413,
+    "ast_hash": "a6a28466c620bd2a0b397d1eb844555b",
     "semantic_hash": ""
   },
   "DESIGN.md": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "DEVSTATE.md": {
-    "mtime": 1790258364.4368742,
-    "seen": 1790258409.210552,
-    "ast_hash": "6d5d57a1d7a68585d6da4abe1f4ecfe1",
+    "mtime": 1790260712.8191845,
+    "seen": 1790262164.133226,
+    "ast_hash": "01d4e1dbde002af0dd626e6c2f587338",
     "semantic_hash": ""
   },
   "README.md": {
@@ -153,6 +153,12 @@
     "mtime": 1790250502.828808,
     "seen": 1790257120.718507,
     "ast_hash": "7c6b2bb84927cf68baf5b0b84b758a98",
+    "semantic_hash": ""
+  },
+  "scripts/test-restaurant-flow.js": {
+    "mtime": 1790262093.705791,
+    "seen": 1790262164.1332219,
+    "ast_hash": "b653463575a55c1d6b6f9e58cf09817c",
     "semantic_hash": ""
   }
 }

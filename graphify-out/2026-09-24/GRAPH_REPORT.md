@@ -1,17 +1,17 @@
 # Graph Report - brand-builder  (2026-09-24)
 
 ## Corpus Check
-- 25 files · ~13,789 words
+- 26 files · ~16,738 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 4 file(s) not represented in the graph (top: .example 2, (none) 1, .css 1)
 
 ## Summary
-- 166 nodes · 206 edges · 13 communities (11 shown, 2 thin omitted)
-- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.92)
+- 175 nodes · 226 edges · 14 communities (11 shown, 3 thin omitted)
+- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 11 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c2389223`
+- Built from commit: `e5f1fdbd`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -32,15 +32,17 @@
 1. `react` - 8 edges
 2. `generateStructuredJson()` - 8 edges
 3. `scripts` - 7 edges
-4. `getGeminiClient()` - 6 edges
-5. `Brand Builder ⚡` - 6 edges
-6. `lucide-react` - 5 edges
-7. `handleNextQuestion()` - 5 edges
-8. `handleCompileBrandKit()` - 5 edges
-9. `DESIGN.md — Handhold Editorial Design System` - 5 edges
-10. `DEVSTATE.md — AI Agent Runtime & Architecture State` - 5 edges
+4. `handleNextQuestion()` - 7 edges
+5. `handleCompileBrandKit()` - 7 edges
+6. `extractDomain()` - 6 edges
+7. `getGeminiClient()` - 6 edges
+8. `Brand Builder ⚡` - 6 edges
+9. `lucide-react` - 5 edges
+10. `DESIGN.md — Handhold Editorial Design System` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `1. Project Overview & Sprint Status` --references--> `extractDomain()`  [INFERRED]
+  DEVSTATE.md → server/controllers/interviewerController.js
 - `Frontend Developer Agent:` --references--> `BrandKitDashboard()`  [INFERRED]
   DEVSTATE.md → client/src/components/BrandKitDashboard.jsx
 - `Frontend Developer Agent:` --references--> `IntakeView()`  [INFERRED]
@@ -49,21 +51,19 @@
   DEVSTATE.md → client/src/components/InterviewChat.jsx
 - `Frontend Developer Agent:` --references--> `ProgressStepper()`  [INFERRED]
   DEVSTATE.md → client/src/components/ProgressStepper.jsx
-- `2. Active Pipeline State Machine` --references--> `BrandKit`  [INFERRED]
-  DEVSTATE.md → client/src/types/brand.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (13 total, 2 thin omitted)
+## Communities (14 total, 3 thin omitted)
 
 ### Community 0 - "App.jsx"
-Cohesion: 0.18
-Nodes (14): App(), BrandKitDashboard(), Header(), IntakeView(), InterviewChat(), BASE_STAGES, ProgressStepper(), mockBrandKit (+6 more)
+Cohesion: 0.14
+Nodes (20): App(), BrandKitDashboard(), Header(), IntakeView(), InterviewChat(), BASE_STAGES, ProgressStepper(), careerBrandKit (+12 more)
 
 ### Community 1 - "interviewerController.js"
-Cohesion: 0.17
-Nodes (18): cors, express, brandKitSchema, extractDomain(), getMockBrandKit(), getMockQuestion(), handleCompileBrandKit(), handleNextQuestion() (+10 more)
+Cohesion: 0.18
+Nodes (19): cors, express, brandKitSchema, extractDomain(), getDomainGuidance(), getMockBrandKit(), getMockQuestion(), handleCompileBrandKit() (+11 more)
 
 ### Community 2 - "client/package.json"
 Cohesion: 0.10
@@ -102,24 +102,24 @@ Cohesion: 0.25
 Nodes (8): devDependencies, autoprefixer, postcss, tailwindcss, @types/react, @types/react-dom, vite, @vitejs/plugin-react
 
 ## Knowledge Gaps
-- **87 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+82 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 99 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **89 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+84 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 103 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `4. Known Blockers & Next Actions for AI Agents` connect `DEVSTATE.md — AI Agent Runtime & Architecture State` to `App.jsx`?**
-  _High betweenness centrality (0.106) - this node is a cross-community bridge._
-- **Why does `Frontend Developer Agent:` connect `App.jsx` to `DEVSTATE.md — AI Agent Runtime & Architecture State`?**
-  _High betweenness centrality (0.104) - this node is a cross-community bridge._
 - **Why does `DEVSTATE.md — AI Agent Runtime & Architecture State` connect `DEVSTATE.md — AI Agent Runtime & Architecture State` to `brand.ts`?**
-  _High betweenness centrality (0.103) - this node is a cross-community bridge._
+  _High betweenness centrality (0.334) - this node is a cross-community bridge._
+- **Why does `4. Known Blockers & Next Actions for AI Agents` connect `DEVSTATE.md — AI Agent Runtime & Architecture State` to `App.jsx`?**
+  _High betweenness centrality (0.270) - this node is a cross-community bridge._
+- **Why does `Frontend Developer Agent:` connect `App.jsx` to `DEVSTATE.md — AI Agent Runtime & Architecture State`?**
+  _High betweenness centrality (0.261) - this node is a cross-community bridge._
 - **What connects `name`, `private`, `version` to the rest of the system?**
-  _87 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _89 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `App.jsx` be split into smaller, more focused modules?**
+  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
 - **Should `client/package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
 - **Should `brand.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
-- **Should `server/package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._

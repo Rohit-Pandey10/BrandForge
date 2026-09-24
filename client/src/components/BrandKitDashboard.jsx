@@ -13,8 +13,21 @@ import {
   Target,
   Mic,
   Sliders,
-  FileText
+  FileText,
+  Utensils,
+  Calendar,
+  MapPin,
+  Clock,
+  Terminal,
+  ShieldCheck,
+  Heart
 } from 'lucide-react';
+import { extractClientDomain } from '../data/mockBrandData';
+
+const cleanXml = (unsafe = '') => 
+  String(unsafe).replace(/[<>&'"]/g, (c) => ({
+    '<': '&lt;', '>': '&gt;', '&': '&amp;', '\'': '&apos;', '"': '&quot;'
+  }[c]));
 
 export default function BrandKitDashboard({ brandKit, onStartNew }) {
   const [activeTab, setActiveTab] = useState('preview'); // 'preview' | 'strategy' | 'voice' | 'tokens' | 'manifesto'
@@ -106,18 +119,20 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
       const y = 110;
       return `
         <g transform="translate(${x}, ${y})">
-          <rect width="${swatchWidth}" height="${swatchHeight}" rx="20" fill="${c.hex}" stroke="#dbd7cd" stroke-width="1" />
-          <text x="${swatchWidth / 2}" y="${swatchHeight + 28}" fill="#737373" font-size="11" font-weight="400" text-anchor="middle" font-family="'Inter', sans-serif" letter-spacing="1">${(c.role || '').toUpperCase()}</text>
-          <text x="${swatchWidth / 2}" y="${swatchHeight + 48}" fill="#000000" font-size="13" font-weight="500" text-anchor="middle" font-family="'Inter', sans-serif">${c.name || 'Color'}</text>
-          <text x="${swatchWidth / 2}" y="${swatchHeight + 68}" fill="#000000" font-size="12" font-weight="400" text-anchor="middle" font-family="monospace">${c.hex}</text>
+          <rect width="${swatchWidth}" height="${swatchHeight}" rx="20" fill="${cleanXml(c.hex)}" stroke="#dbd7cd" stroke-width="1" />
+          <text x="${swatchWidth / 2}" y="${swatchHeight + 28}" fill="#737373" font-size="11" font-weight="400" text-anchor="middle" font-family="'Inter', sans-serif" letter-spacing="1">${cleanXml((c.role || '').toUpperCase())}</text>
+          <text x="${swatchWidth / 2}" y="${swatchHeight + 48}" fill="#000000" font-size="13" font-weight="500" text-anchor="middle" font-family="'Inter', sans-serif">${cleanXml(c.name || 'Color')}</text>
+          <text x="${swatchWidth / 2}" y="${swatchHeight + 68}" fill="#000000" font-size="12" font-weight="400" text-anchor="middle" font-family="monospace">${cleanXml(c.hex)}</text>
         </g>
       `;
     }).join('\n');
 
+    const brandTitle = cleanXml(brandName);
+
     const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
   <rect width="100%" height="100%" fill="#f2f1ed" />
-  <text x="${width / 2}" y="50" fill="#000000" font-size="28" font-weight="300" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif">${brandName} — Color System</text>
+  <text x="${width / 2}" y="50" fill="#000000" font-size="28" font-weight="300" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif">${brandTitle} — Color System</text>
   <text x="${width / 2}" y="76" fill="#737373" font-size="12" font-weight="400" text-anchor="middle" font-family="'Inter', sans-serif">Synthesized Design Tokens</text>
   ${swatchesSvg}
 </svg>`;
@@ -144,6 +159,15 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
   const primaryColor = palette.find(c => c.role === 'primary')?.hex || '#000000';
   const surfaceColor = palette.find(c => c.role === 'surface')?.hex || '#ffffff';
   const accentColor = palette.find(c => c.role === 'accent')?.hex || '#000000';
+  const radiusCurvature = visualTokens.borderCurvature === 'rounded-none' 
+    ? '0px' 
+    : visualTokens.borderCurvature === 'rounded-full' 
+    ? '9999px' 
+    : visualTokens.borderCurvature === 'rounded-2xl' 
+    ? '24px' 
+    : visualTokens.borderCurvature === 'rounded-lg' 
+    ? '12px' 
+    : '16px';
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-4 sm:py-8 animate-fade-in pb-24 font-sans text-black">
@@ -225,120 +249,452 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
       </div>
 
       {/* TAB 1: LIVE BRAND PREVIEW */}
-      {activeTab === 'preview' && (
-        <div className="space-y-8 animate-fade-in">
-          {/* Simulated Browser Viewport Card */}
-          <div className="bg-white rounded-[28px] border border-[#dbd7cd] overflow-hidden shadow-sm">
-            {/* Browser Top Chrome */}
-            <div className="bg-[#faf9f6] border-b border-[#dbd7cd] px-5 py-3 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
-                <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
-                <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
-              </div>
-              <div className="px-6 py-1 rounded-full bg-white border border-[#dbd7cd] text-[11px] font-mono text-stone-500 max-w-xs truncate">
-                https://{cleanName}.com
-              </div>
-              <span className="text-[10px] uppercase font-mono text-stone-400">Preview</span>
-            </div>
+      {activeTab === 'preview' && (() => {
+        const combinedContext = [
+          brandStrategy.brandName,
+          brandStrategy.tagline,
+          brandStrategy.mission,
+          brandStrategy.targetAudience,
+          brandStrategy.differentiator,
+          launchContent.heroHeadline,
+          launchContent.heroSubheadline
+        ].join(' ');
+        const detectedDomain = extractClientDomain(combinedContext);
 
-            {/* Simulated Live Brand Landing Page Hero */}
-            <div className="p-8 sm:p-16 min-h-[480px] flex flex-col justify-between bg-white">
-              {/* Mock Nav */}
-              <div className="flex items-center justify-between pb-8 mb-8 border-b border-stone-200">
-                <span 
-                  className="font-serif text-2xl font-light tracking-tight text-black"
-                  style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
-                >
-                  {brandName}.
+        return (
+          <div className="space-y-8 animate-fade-in">
+            {/* Simulated Browser Viewport Card */}
+            <div 
+              className="bg-white border border-[#dbd7cd] overflow-hidden shadow-sm"
+              style={{
+                borderRadius: '28px',
+                '--color-primary': primaryColor,
+                '--radius-curvature': radiusCurvature,
+                '--font-display': typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit',
+                '--font-body': typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit'
+              }}
+            >
+              {/* Browser Top Chrome */}
+              <div className="bg-[#faf9f6] border-b border-[#dbd7cd] px-5 py-3 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
+                </div>
+                <div className="px-6 py-1 rounded-full bg-white border border-[#dbd7cd] text-[11px] font-mono text-stone-500 max-w-xs truncate">
+                  {detectedDomain === 'hospitality' ? `https://${cleanName}.restaurant` : detectedDomain === 'developer' ? `https://${cleanName}.dev` : `https://${cleanName}.com`}
+                </div>
+                <span className="text-[10px] uppercase font-mono text-stone-400">
+                  {detectedDomain.toUpperCase()} PREVIEW
                 </span>
-                <div className="flex items-center gap-4 text-xs text-stone-600 font-sans">
-                  <span>Product</span>
-                  <span>Manifesto</span>
-                  <button 
-                    className="px-4 py-1.5 rounded-full text-xs font-medium transition-all"
-                    style={{ backgroundColor: primaryColor, color: '#ffffff' }}
-                  >
-                    {launchContent.callToAction || "Get Started"}
-                  </button>
-                </div>
               </div>
 
-              {/* Hero Section Content */}
-              <div className="max-w-3xl my-auto py-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs mb-6 border border-stone-300 bg-stone-50 text-stone-700">
-                  <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primaryColor }} />
-                  <span>Category Definition: {voiceSystem.archetype || "Radical Pioneer"}</span>
-                </div>
+              {/* DYNAMIC ARCHETYPE 1: HOSPITALITY & FOOD */}
+              {detectedDomain === 'hospitality' ? (
+                <div className="p-6 sm:p-12 min-h-[520px] flex flex-col justify-between bg-[#fcfbf9]">
+                  {/* Restaurant Navigation Bar */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-[#dbd7cd] gap-4">
+                    <div className="flex items-center gap-3">
+                      <span 
+                        className="text-2xl sm:text-3xl font-light tracking-tight text-black"
+                        style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', Georgia, serif` : 'inherit' }}
+                      >
+                        {brandName}
+                      </span>
+                      <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-[#f2f1ed] text-stone-600 border border-[#dbd7cd]">
+                        {voiceSystem.archetype || "Hospitality"}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-5 text-xs text-stone-700 font-sans">
+                      <span className="hover:text-black cursor-pointer font-medium">Daily Menu</span>
+                      <span className="hover:text-black cursor-pointer hidden sm:inline">The Table</span>
+                      <span className="hover:text-black cursor-pointer hidden md:inline">Private Dining</span>
+                      <button 
+                        className="px-5 py-2 text-xs font-medium transition-all shadow-sm"
+                        style={{ backgroundColor: primaryColor, color: '#ffffff', borderRadius: radiusCurvature }}
+                      >
+                        {launchContent.callToAction || "Reserve a Table"}
+                      </button>
+                    </div>
+                  </div>
 
-                <h2 
-                  className="text-4xl sm:text-6xl font-light tracking-tight leading-[1.05] text-black mb-6"
-                  style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
-                >
-                  {launchContent.heroHeadline || "Category Leadership Without Apology."}
-                </h2>
+                  {/* Location & Hours Context Pill */}
+                  <div className="flex items-center gap-2 text-[11px] font-mono text-stone-500 mb-6 bg-white px-3.5 py-1.5 rounded-full border border-[#dbd7cd] w-fit">
+                    <MapPin className="w-3.5 h-3.5 text-stone-400" />
+                    <span>142 Bedford Ave &bull; Wed–Sun 4pm–10pm &bull; Walk-ins & Family Tables Welcome</span>
+                  </div>
 
-                <p 
-                  className="text-base sm:text-lg text-stone-600 max-w-2xl leading-relaxed mb-8"
-                  style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
-                >
-                  {launchContent.heroSubheadline || brandStrategy.coreValueProposition}
-                </p>
-
-                <div className="flex flex-wrap items-center gap-3">
-                  <button 
-                    className="px-6 py-3 rounded-full text-xs font-medium tracking-wide transition-all shadow-sm"
-                    style={{ backgroundColor: primaryColor, color: '#ffffff' }}
+                  {/* Hero Photo / Atmospheric Hearth Showcase Placeholder Banner */}
+                  <div 
+                    className="relative w-full h-48 sm:h-64 overflow-hidden mb-8 border border-[#dbd7cd] flex items-end p-6"
+                    style={{ 
+                      borderRadius: radiusCurvature,
+                      background: `linear-gradient(135deg, #1f1815 0%, #2b201b 50%, #15110f 100%)`
+                    }}
                   >
-                    {launchContent.callToAction || "Explore Architecture"} &rarr;
-                  </button>
-                  <button 
-                    className="px-6 py-3 rounded-full text-xs text-stone-800 bg-white border border-[#dbd7cd] hover:border-black transition-all"
-                  >
-                    Read Manifesto
-                  </button>
-                </div>
-              </div>
+                    <div className="absolute inset-0 opacity-15 flex items-center justify-center pointer-events-none">
+                      <Utensils className="w-36 h-36 text-amber-100 stroke-[1]" />
+                    </div>
+                    <div className="relative z-10 flex flex-col sm:flex-row sm:items-end justify-between w-full gap-4 text-white">
+                      <div>
+                        <span className="text-[10px] uppercase font-mono tracking-widest text-amber-300 font-medium px-2 py-0.5 rounded bg-black/40 border border-white/10 inline-block mb-1.5">
+                          OPEN HEARTH &bull; 900° LIVE OAK
+                        </span>
+                        <h3 
+                          className="text-xl sm:text-2xl font-light text-white drop-shadow"
+                          style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', Georgia, serif` : 'inherit' }}
+                        >
+                          Naturally Fermented Sourdough &bull; Hand-Crafted Hospitality
+                        </h3>
+                      </div>
+                      <span className="text-xs font-mono px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white self-start sm:self-end">
+                        Walk-ins & Big Tables Welcome
+                      </span>
+                    </div>
+                  </div>
 
-              {/* Feature Highlights Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-10 border-t border-stone-200">
-                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
-                  <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">01 / Differentiator</span>
-                  <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.differentiator}</p>
+                  {/* Restaurant Hero Section */}
+                  <div className="max-w-3xl my-2">
+                    <h2 
+                      className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.08] text-black mb-4"
+                      style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', Georgia, serif` : 'inherit' }}
+                    >
+                      {launchContent.heroHeadline || "Big Tables. Honest Slices. Bring Everyone."}
+                    </h2>
+                    <p 
+                      className="text-base sm:text-lg text-stone-700 max-w-2xl leading-relaxed mb-6"
+                      style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', system-ui, sans-serif` : 'inherit' }}
+                    >
+                      {launchContent.heroSubheadline || brandStrategy.coreValueProposition}
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-3">
+                      <button 
+                        className="px-6 py-3 text-xs font-medium tracking-wide transition-all shadow-sm flex items-center gap-2"
+                        style={{ backgroundColor: primaryColor, color: '#ffffff', borderRadius: radiusCurvature }}
+                      >
+                        <Utensils className="w-3.5 h-3.5" />
+                        <span>{launchContent.callToAction || "Reserve a Table"}</span>
+                      </button>
+                      <button 
+                        className="px-6 py-3 text-xs font-medium text-stone-900 bg-white border border-[#dbd7cd] hover:border-black transition-all flex items-center gap-2"
+                        style={{ borderRadius: radiusCurvature }}
+                      >
+                        <Clock className="w-3.5 h-3.5 text-stone-500" />
+                        <span>Order Ahead</span>
+                      </button>
+                      <button 
+                        className="px-6 py-3 text-xs text-stone-700 hover:text-black transition-all flex items-center gap-2"
+                      >
+                        <Calendar className="w-3.5 h-3.5 text-stone-400" />
+                        <span>View Daily Menu</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Featured Menu & Table Spread Preview */}
+                  <div className="my-8 pt-8 border-t border-[#dbd7cd]">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500 font-medium">
+                        FROM THE KITCHEN & WOOD OVEN
+                      </span>
+                      <span className="text-xs text-stone-400 font-mono">Seasonal Daily Board</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div 
+                        className="p-5 bg-white border border-[#dbd7cd] flex flex-col justify-between shadow-xs"
+                        style={{ borderRadius: radiusCurvature }}
+                      >
+                        <div>
+                          <div className="flex items-center justify-between mb-1.5">
+                            <h4 
+                              className="text-base font-medium text-black"
+                              style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', Georgia, serif` : 'inherit' }}
+                            >
+                              Sourdough Margherita
+                            </h4>
+                            <span className="font-mono text-xs font-semibold text-stone-900">$18</span>
+                          </div>
+                          <p 
+                            className="text-xs text-stone-600 leading-relaxed"
+                            style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
+                          >
+                            72-hour naturally fermented crust, sweet San Marzano tomatoes, fresh fior di latte, cold-pressed olive oil.
+                          </p>
+                        </div>
+                        <span className="text-[10px] font-mono text-stone-400 mt-4 block">WOOD-FIRED &bull; 900° LIVE OAK</span>
+                      </div>
+
+                      <div 
+                        className="p-5 bg-white border border-[#dbd7cd] flex flex-col justify-between shadow-xs"
+                        style={{ borderRadius: radiusCurvature }}
+                      >
+                        <div>
+                          <div className="flex items-center justify-between mb-1.5">
+                            <h4 
+                              className="text-base font-medium text-black"
+                              style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', Georgia, serif` : 'inherit' }}
+                            >
+                              Crispy Fennel Sausage
+                            </h4>
+                            <span className="font-mono text-xs font-semibold text-stone-900">$22</span>
+                          </div>
+                          <p 
+                            className="text-xs text-stone-600 leading-relaxed"
+                            style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
+                          >
+                            Heritage pork sausage, roasted garlic cream, charred scallions, organic hot honey drizzle.
+                          </p>
+                        </div>
+                        <span className="text-[10px] font-mono text-stone-400 mt-4 block">NEIGHBORHOOD FAVORITE</span>
+                      </div>
+
+                      <div 
+                        className="p-5 bg-white border border-[#dbd7cd] flex flex-col justify-between shadow-xs"
+                        style={{ borderRadius: radiusCurvature }}
+                      >
+                        <div>
+                          <div className="flex items-center justify-between mb-1.5">
+                            <h4 
+                              className="text-base font-medium text-black"
+                              style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', Georgia, serif` : 'inherit' }}
+                            >
+                              Family Chopped Salad
+                            </h4>
+                            <span className="font-mono text-xs font-semibold text-stone-900">$14</span>
+                          </div>
+                          <p 
+                            className="text-xs text-stone-600 leading-relaxed"
+                            style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
+                          >
+                            Crisp seasonal greens, shaved radishes, pickled peppers, toasted chickpeas, wild oregano vinaigrette.
+                          </p>
+                        </div>
+                        <span className="text-[10px] font-mono text-stone-400 mt-4 block">SHARING PLATTER &bull; ALL-AGES</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Hospitality Highlights Footer Strip */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#dbd7cd]">
+                    <div 
+                      className="p-4 bg-white border border-[#dbd7cd]"
+                      style={{ borderRadius: radiusCurvature }}
+                    >
+                      <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">01 / The Distinct Edge</span>
+                      <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.differentiator}</p>
+                    </div>
+                    <div 
+                      className="p-4 bg-white border border-[#dbd7cd]"
+                      style={{ borderRadius: radiusCurvature }}
+                    >
+                      <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">02 / Core Guest Profile</span>
+                      <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.targetAudience}</p>
+                    </div>
+                    <div 
+                      className="p-4 bg-white border border-[#dbd7cd]"
+                      style={{ borderRadius: radiusCurvature }}
+                    >
+                      <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">03 / Standard We Break</span>
+                      <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.antiHero}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
-                  <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">02 / ICP Beachhead</span>
-                  <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.targetAudience}</p>
+              ) : detectedDomain === 'developer' ? (
+                /* DYNAMIC ARCHETYPE 2: DEVELOPER & SYSTEMS */
+                <div className="p-6 sm:p-14 min-h-[500px] flex flex-col justify-between bg-[#0e1015] text-white">
+                  <div className="flex items-center justify-between pb-6 mb-6 border-b border-stone-800">
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-xl font-bold tracking-tight text-white">{brandName}</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-stone-800 text-stone-400">v1.2.0</span>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40">Zero Config</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 text-xs text-stone-400 font-mono">
+                      <span>Docs</span>
+                      <span>Benchmarks</span>
+                      <span>GitHub ★ 2.4k</span>
+                      <button 
+                        className="px-4 py-1.5 text-xs font-mono font-medium transition-all"
+                        style={{ backgroundColor: primaryColor, color: '#ffffff', borderRadius: radiusCurvature }}
+                      >
+                        {launchContent.callToAction || "Install"}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="max-w-3xl my-6">
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-stone-800 text-stone-300">
+                        Rust-Engine
+                      </span>
+                      <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-stone-800 text-stone-300">
+                        Sub-1ms Latency
+                      </span>
+                      <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-stone-800 text-stone-300">
+                        Single Binary
+                      </span>
+                    </div>
+
+                    <h2 
+                      className="text-3xl sm:text-5xl font-mono font-bold tracking-tight leading-tight text-white mb-4"
+                      style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', monospace` : 'inherit' }}
+                    >
+                      {launchContent.heroHeadline}
+                    </h2>
+                    <p 
+                      className="text-sm sm:text-base text-stone-400 font-sans leading-relaxed mb-6"
+                      style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
+                    >
+                      {launchContent.heroSubheadline || brandStrategy.coreValueProposition}
+                    </p>
+
+                    {/* Terminal Install Snippet */}
+                    <div 
+                      className="p-4 bg-black border border-stone-800 font-mono text-xs text-emerald-400 space-y-1 mb-6 shadow-inner"
+                      style={{ borderRadius: radiusCurvature }}
+                    >
+                      <div className="text-stone-500 text-[10px]">// Install CLI & compile bare-metal engine</div>
+                      <div className="flex items-center justify-between">
+                        <code>$ curl -fsSL https://{cleanName}.dev/install.sh | sh</code>
+                        <span className="text-[10px] text-stone-500">copy</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-stone-800">
+                    <div 
+                      className="p-4 bg-stone-900/60 border border-stone-800"
+                      style={{ borderRadius: radiusCurvature }}
+                    >
+                      <span className="text-[10px] uppercase font-mono text-stone-500 block mb-1">01 / Engine Differentiator</span>
+                      <p className="text-xs text-stone-300 font-mono leading-snug">{brandStrategy.differentiator}</p>
+                    </div>
+                    <div 
+                      className="p-4 bg-stone-900/60 border border-stone-800"
+                      style={{ borderRadius: radiusCurvature }}
+                    >
+                      <span className="text-[10px] uppercase font-mono text-stone-500 block mb-1">02 / Target Systems User</span>
+                      <p className="text-xs text-stone-300 font-mono leading-snug">{brandStrategy.targetAudience}</p>
+                    </div>
+                    <div 
+                      className="p-4 bg-stone-900/60 border border-stone-800"
+                      style={{ borderRadius: radiusCurvature }}
+                    >
+                      <span className="text-[10px] uppercase font-mono text-stone-500 block mb-1">03 / Legacy Bloat Eliminated</span>
+                      <p className="text-xs text-stone-300 font-mono leading-snug">{brandStrategy.antiHero}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
-                  <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">03 / Villain</span>
-                  <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.antiHero}</p>
+              ) : (
+                /* DYNAMIC ARCHETYPE 3: EDITORIAL / CREATIVE / CAREER */
+                <div className="p-8 sm:p-16 min-h-[480px] flex flex-col justify-between bg-white">
+                  <div className="flex items-center justify-between pb-8 mb-8 border-b border-stone-200">
+                    <span 
+                      className="text-2xl font-light tracking-tight text-black"
+                      style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
+                    >
+                      {brandName}.
+                    </span>
+                    <div className="flex items-center gap-4 text-xs text-stone-600 font-sans">
+                      <span>Monograph</span>
+                      <span>Evidence</span>
+                      <button 
+                        className="px-4 py-1.5 text-xs font-medium transition-all"
+                        style={{ backgroundColor: primaryColor, color: '#ffffff', borderRadius: radiusCurvature }}
+                      >
+                        {launchContent.callToAction || "Get Started"}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="max-w-3xl my-auto py-6">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs mb-6 border border-stone-300 bg-stone-50 text-stone-700">
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primaryColor }} />
+                      <span>Archetype: {voiceSystem.archetype || "The Master Artisan"}</span>
+                    </div>
+
+                    <h2 
+                      className="text-4xl sm:text-6xl font-light tracking-tight leading-[1.05] text-black mb-6"
+                      style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
+                    >
+                      {launchContent.heroHeadline}
+                    </h2>
+
+                    <p 
+                      className="text-base sm:text-lg text-stone-600 max-w-2xl leading-relaxed mb-8"
+                      style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
+                    >
+                      {launchContent.heroSubheadline || brandStrategy.coreValueProposition}
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-3">
+                      <button 
+                        className="px-6 py-3 text-xs font-medium tracking-wide transition-all shadow-sm"
+                        style={{ backgroundColor: primaryColor, color: '#ffffff', borderRadius: radiusCurvature }}
+                      >
+                        {launchContent.callToAction || "Explore Archive"} &rarr;
+                      </button>
+                      <button 
+                        className="px-6 py-3 text-xs text-stone-800 bg-white border border-[#dbd7cd] hover:border-black transition-all"
+                        style={{ borderRadius: radiusCurvature }}
+                      >
+                        Read Manifesto
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-10 border-t border-stone-200">
+                    <div 
+                      className="p-4 bg-stone-50 border border-stone-200"
+                      style={{ borderRadius: radiusCurvature }}
+                    >
+                      <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">01 / The Distinct Edge</span>
+                      <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.differentiator}</p>
+                    </div>
+                    <div 
+                      className="p-4 bg-stone-50 border border-stone-200"
+                      style={{ borderRadius: radiusCurvature }}
+                    >
+                      <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">02 / Core Audience</span>
+                      <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.targetAudience}</p>
+                    </div>
+                    <div 
+                      className="p-4 bg-stone-50 border border-stone-200"
+                      style={{ borderRadius: radiusCurvature }}
+                    >
+                      <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">03 / Standard We Break</span>
+                      <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.antiHero}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* TAB 2: BRAND STRATEGY */}
       {activeTab === 'strategy' && (
         <div className="space-y-6 animate-fade-in">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Target Beachhead Card */}
+            {/* Target Audience / Guest Profile Card */}
             <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between">
               <div>
                 <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-2">
                   AUDIENCE FOUNDATION
                 </span>
                 <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-4">
-                  Beachhead ICP & Acute Pain
+                  Core Audience & Guest Profile
                 </h3>
                 <p className="text-sm text-stone-700 bg-[#fcfbf9] p-4 rounded-2xl border border-[#dbd7cd] leading-relaxed">
                   {brandStrategy.targetAudience}
                 </p>
               </div>
               <div className="mt-6 pt-4 border-t border-[#dbd7cd] text-xs text-stone-500">
-                Identifies the single most desperate segment that cannot tolerate status-quo solutions.
+                Identifies the distinct community and guests who actively seek out this experience.
               </div>
             </div>
 
@@ -356,43 +712,43 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
                 </p>
               </div>
               <div className="mt-6 pt-4 border-t border-[#dbd7cd] text-xs text-stone-500">
-                The primary transformational promise delivered directly to the beachhead user.
+                The primary transformational promise delivered directly to the core guest or buyer.
               </div>
             </div>
 
-            {/* The Anti-Hero / Villain */}
+            {/* The Industry Standard We Break */}
             <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between">
               <div>
                 <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-2">
                   IDEOLOGICAL OPPOSITION
                 </span>
                 <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-4">
-                  The Incumbent Villain (What We Kill)
+                  The Industry Standard We Break
                 </h3>
                 <p className="text-sm text-stone-700 bg-[#fcfbf9] p-4 rounded-2xl border border-[#dbd7cd] leading-relaxed">
                   {brandStrategy.antiHero}
                 </p>
               </div>
               <div className="mt-6 pt-4 border-t border-[#dbd7cd] text-xs text-stone-500">
-                Declares the broken incumbent practice that gives the brand moral authority to exist.
+                Declares the tired industry compromise that gives the brand its reason to exist.
               </div>
             </div>
 
-            {/* Unfair Differentiator */}
+            {/* The Distinct Edge */}
             <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between">
               <div>
                 <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-2">
-                  COMPETITIVE MOAT
+                  COMPETITIVE ADVANTAGE
                 </span>
                 <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-4">
-                  Unfair Differentiator
+                  The Distinct Edge
                 </h3>
                 <p className="text-sm text-stone-700 bg-[#fcfbf9] p-4 rounded-2xl border border-[#dbd7cd] leading-relaxed">
                   {brandStrategy.differentiator}
                 </p>
               </div>
               <div className="mt-6 pt-4 border-t border-[#dbd7cd] text-xs text-stone-500">
-                The structural mechanism that makes copycat competition ineffective.
+                The singular reason someone chooses this experience over any alternative.
               </div>
             </div>
           </div>
@@ -608,7 +964,7 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
                   className="text-sm text-stone-700 leading-relaxed mb-4"
                   style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
                 >
-                  Interface text, long-form editorial paragraphs, and system labels are rendered with balanced geometric neutral letterforms to preserve maximum legibility at high data density.
+                  {typography.rationale || "Balanced letterforms scaled for legible tactile menus, printed signage, and responsive mobile reservations."}
                 </p>
 
                 {/* Sample UI specimens */}
@@ -620,7 +976,7 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
               </div>
 
               <div className="pt-3 border-t border-[#dbd7cd] text-xs text-stone-500">
-                Weight: 400 Regular &bull; UI Hierarchy optimized for responsive viewports.
+                Weight: 400 Regular &bull; Scaled for legible tactile materials and responsive viewports.
               </div>
             </div>
           </section>

@@ -112,7 +112,7 @@ export default function IntakeView({ onStartInterview, onPreviewMock }) {
           <span className="text-[11px] uppercase tracking-[0.05em] text-[#999999] block mb-1">Step 01</span>
           <h4 className="font-serif text-lg text-black font-light leading-snug">Target User</h4>
           <p className="text-xs text-[#737373] mt-1 leading-relaxed">
-            Isolating the beachhead customer whose problem is urgent and acute.
+            Isolating the core audience and defining their primary expectation.
           </p>
         </div>
         <div>

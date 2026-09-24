@@ -4,69 +4,138 @@
  * a restaurant, hospitality space, fashion label, or consumer experience.
  */
 
-export const hospitalityBrandKit = {
+export const familyHospitalityBrandKit = {
   brandStrategy: {
-    brandName: "Atelier Umami",
-    tagline: "Unhurried Seasonal Hearth & Terroir-Driven Gastronomy",
-    mission: "To restore reverence for honest ingredients, wood-fired craft, and unhurried hospitality in an era of sterile, assembly-line dining.",
-    targetAudience: "Discerning culinary purists, neighborhood regulars, and food lovers who value provenance, craftsmanship, and memorable hospitality.",
-    coreValueProposition: "A micro-seasonal dining experience centered on an open wood hearth, where every plate celebrates local regenerative agriculture.",
-    antiHero: "Homogenized corporate restaurant groups serving microwaved distributor shortcuts under dim Edison bulbs.",
-    differentiator: "Zero frozen ingredients, 100% direct micro-farm relationships, and an open hearth kitchen where every dish has an uncompromised lineage."
+    brandName: "Campiña Family Table",
+    tagline: "Wood-Fired Pizza & Big Sharing Tables",
+    mission: "To bring families and neighborhoods together around honest wood-fired pizzas, hearty pasta platters, and joyful, welcoming tables.",
+    targetAudience: "Neighborhood families, parents with hungry kids, multi-generational gatherings, and local regulars looking for wholesome food and warm hospitality.",
+    coreValueProposition: "Naturally fermented crispy sourdough pizzas, kid-approved handmade crusts, and family-style platters served in a warm, mess-friendly dining room.",
+    antiHero: "Pretentious, quiet dining rooms with tiny portions, side-eye glances at energetic toddlers, and sixty-dollar tasting plates.",
+    differentiator: "Giant wooden sharing tables, open dough-stretching counter where kids can watch, and speedy, warm weeknight hospitality."
   },
   voiceSystem: {
-    archetype: "The Master Artisan",
+    archetype: "The Welcoming Host",
     tone: [
-      "Unhurried",
-      "Reverent",
-      "Sensory",
-      "Warmly Discerning"
+      "Warm",
+      "Generous",
+      "Down-to-Earth",
+      "Joyful"
     ],
     dos: [
-      "Speak passionately about ingredient origin and seasonal harvest.",
-      "Describe culinary rituals and hearth techniques with sensory clarity.",
-      "Welcome guests as collaborators in an unhurried communal experience."
+      "Celebrate hearty crusts, bubbly cheese, and shared family laughter.",
+      "Welcome strollers, big groups, and kids with open arms.",
+      "Focus on fresh simple ingredients and generous portions."
     ],
     donts: [
-      "Never use tech buzzwords, corporate jargon, or sterile hospitality clichés.",
-      "Do not brag about vanity awards or celebrity patrons.",
-      "Never compromise on culinary integrity to cater to rushed diners."
+      "Never mention wine pairings, date-night intimacy, or cocktail bars.",
+      "No stiff quiet rules or formal dining etiquette.",
+      "Never talk down to casual family diners."
     ],
     vocabularyWords: [
-      "Terroir",
       "Hearth",
-      "Provenance",
-      "Unhurried",
-      "Savor",
-      "Embers"
+      "Gather",
+      "Share",
+      "Warmth",
+      "Crisp",
+      "Generous"
     ]
   },
   visualTokens: {
     palette: [
-      { name: "Smoked Charcoal", hex: "#1C1A17", role: "surface" },
-      { name: "Warm Terracotta", hex: "#C25E3E", role: "primary" },
-      { name: "Sage Olive", hex: "#5B6B4D", role: "secondary" },
-      { name: "Raw Ochre", hex: "#D49B42", role: "accent" },
-      { name: "Warm Linen", hex: "#F7F5F0", role: "text" }
+      { name: "Warm Terracotta", hex: "#C85A32", role: "primary" },
+      { name: "Golden Wheat", hex: "#D99E32", role: "secondary" },
+      { name: "Forest Olive", hex: "#4A6044", role: "accent" },
+      { name: "Soft Buttermilk", hex: "#FAF7F0", role: "surface" },
+      { name: "Deep Espresso", hex: "#261E1A", role: "text" }
     ],
     typography: {
       headingFont: "Fraunces",
       bodyFont: "Inter",
-      googleFontsUrl: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=Inter:wght@400;500&display=swap"
+      googleFontsUrl: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=Inter:wght@400;500&display=swap",
+      rationale: "A warm, approachable heritage serif for friendly menus and storefront signage, paired with a clean, highly legible sans-serif for family online ordering."
     },
-    stylePhilosophy: "Warm organic brutalism with open-flame terracotta tones, unbleached linen textures, and expressive artisanal typography.",
+    stylePhilosophy: "Warm, sunlit family hospitality design with golden wheat tones, terracotta accents, soft buttermilk surfaces, and welcoming rounded geometry.",
     borderCurvature: "rounded-2xl"
   },
   launchContent: {
-    heroHeadline: "Food Reclaimed From The Industrial Conveyor Belt.",
-    heroSubheadline: "A neighborhood hearth dedicated to regenerative micro-farms, wild fermentations, and unhurried conversation around open embers.",
-    callToAction: "Reserve a Table",
-    manifesto: "The modern dining landscape has been hijacked by private equity and ghost kitchens. Every concept looks like the same faux-industrial tavern serving the same sysco shortcuts. We believe true hospitality is sacred. We cook with wood, time, and ruthless respect for the land. When you sit at our table, you taste where food actually comes from.",
-    elevatorPitch: "Atelier Umami is an intimate wood-fired dining room that pairs micro-seasonal harvests from local regenerative farms with natural wines and unhurried communal hospitality.",
+    heroHeadline: "Big Tables. Honest Slices. Bring Everyone.",
+    heroSubheadline: "Hand-stretched wood-fired sourdough pizzas, fresh pasta platters, and generous family dining where kids and grandparents feel right at home.",
+    callToAction: "Reserve a Family Table",
+    manifesto: "Family dinner shouldn't be stressful or stuffy. We got tired of restaurants where strollers are treated like hazards and kids are given frozen nuggets while parents whisper. We built a room with big oak tables, high heat, and fresh dough stretched right before your eyes. Bring the team after the game, bring the grandparents on Sunday, or pull up a chair on a busy Tuesday. There is always a seat at our table.",
+    elevatorPitch: "Campiña Family Table is a welcoming neighborhood pizzeria offering handcrafted wood-fired pizzas, sharing platters, and vibrant family-friendly hospitality.",
     socialHooks: [
-      "Sysco didn't make this sauce. Our morning delivery from three local farms did.",
-      "If a restaurant can serve 40 entrees in 8 minutes, you aren't eating food—you're eating logistics.",
-      "We built our kitchen around an open hearth because real flavor demands patience."
+      "Messy hands, full bellies, big smiles. Pass the pizza.",
+      "Built for family weeknights and Sunday teams. Big tables always open.",
+      "Real wood-fired dough. Honest ingredients. Every generation welcome."
+    ]
+  }
+};
+
+export const hospitalityBrandKit = {
+  brandStrategy: {
+    brandName: "Campiña Hearth & Table",
+    tagline: "Wood-Fired Dining & Neighborhood Hospitality",
+    mission: "To make neighborhood dining unpretentious, delicious, and centered around an open fire table.",
+    targetAudience: "Neighborhood regulars, hungry friends, and lively tables who want blistering sourdough pizza, delicious hospitality, and zero stiff service.",
+    coreValueProposition: "72-hour naturally fermented dough fired at 900 degrees over seasoned oak, served at neighborhood prices in a warm, communal room.",
+    antiHero: "Stiff, overpriced dining rooms with whispering servers, tiny portions, and pretentious tasting lecture scripts.",
+    differentiator: "Blistering live-fire oven right in the center of a loud, energetic, communal dining room where you can always hear your friends."
+  },
+  voiceSystem: {
+    archetype: "The Warm Host",
+    tone: [
+      "Warm",
+      "Direct",
+      "Generous",
+      "Lively"
+    ],
+    dos: [
+      "Talk passionately about sizzling crusts, melted cheeses, and cold pours.",
+      "Keep the dining room casual, energetic, and welcoming to everyone.",
+      "Welcome guests warmly with zero pretension or stiff lectures."
+    ],
+    donts: [
+      "Never use pretentious buzzwords like terroir, provenance, or quiet luxury.",
+      "No stiff white tablecloth etiquette or whisper-only rules.",
+      "Never rush guests off their tables with artificial time limits."
+    ],
+    vocabularyWords: [
+      "Oak",
+      "Crust",
+      "Table",
+      "Sizzle",
+      "Hearth",
+      "Lively"
+    ]
+  },
+  visualTokens: {
+    palette: [
+      { name: "Cast Iron Charcoal", hex: "#1C1917", role: "surface" },
+      { name: "Deep Terracotta", hex: "#C25E3E", role: "primary" },
+      { name: "Toasted Fennel", hex: "#556B2F", role: "secondary" },
+      { name: "Aged Brass", hex: "#C49A45", role: "accent" },
+      { name: "Warm Cream", hex: "#FAF8F5", role: "text" }
+    ],
+    typography: {
+      headingFont: "Fraunces",
+      bodyFont: "Inter",
+      googleFontsUrl: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=Inter:wght@400;500&display=swap",
+      rationale: "A classic, high-contrast serif for printed daily menus and signage paired with a modern neutral sans-serif for responsive reservations and digital ordering."
+    },
+    stylePhilosophy: "Warm, tactile hospitality design with cast-iron contrast, deep terracotta accents, and unpretentious editorial typography.",
+    borderCurvature: "rounded-xl"
+  },
+  launchContent: {
+    heroHeadline: "Open Fire. Honest Slices. No Stiff Collars.",
+    heroSubheadline: "A lively neighborhood dining room with wood-fired sourdough pizzas and unpretentious neighborhood service.",
+    callToAction: "Grab a Table",
+    manifesto: "Dining out should be loud, joyful, and deeply satisfying. We are tired of stiff restaurants where you can't hear your friends and the bill feels like a down payment. We build around what matters: seasoned oak, blistering heat, fermented dough, and honest food served freely. Pull up a chair, order a pie, and stay as long as you want.",
+    elevatorPitch: "Campiña Hearth & Table is a vibrant wood-fired pizza and neighborhood dining room dedicated to sourdough craft, lively tables, and zero dining pretension.",
+    socialHooks: [
+      "Life is too short for stiff dining rooms and quiet whispers. Pass the pizza.",
+      "72-hour fermented dough. 900-degree oak fire. 0 pretension.",
+      "Great hospitality doesn't need a lecture. Just pull up a chair."
     ]
   }
 };
@@ -211,8 +280,12 @@ export const careerBrandKit = {
 export const mockBrandKit = hospitalityBrandKit;
 
 /**
- * Domain Classifier
+ * Domain Classifier & Family Intent Detector
  */
+export function isClientFamilyIntent(text = '') {
+  return /(family|kid|child|children|toddler|parent|all-ages|all ages|multi-generation|casual diner|sharing table|high chair|soccer team)/i.test(String(text));
+}
+
 export function extractClientDomain(text = '') {
   const lower = String(text).toLowerCase();
   if (/(restaurant|food|dining|cuisine|culinary|chef|bistro|cafe|bar|bakery|coffee|eatery|pizza|burger|pasta|taco|cocktail|hospitality|kitchen|table|wine|menu|dish)/i.test(lower)) {
@@ -232,7 +305,12 @@ export function extractClientDomain(text = '') {
  */
 export function getDomainMockBrandKit(contextText = '') {
   const domain = extractClientDomain(contextText);
-  if (domain === 'hospitality') return hospitalityBrandKit;
+  if (domain === 'hospitality') {
+    if (isClientFamilyIntent(contextText)) {
+      return familyHospitalityBrandKit;
+    }
+    return hospitalityBrandKit;
+  }
   if (domain === 'career') return careerBrandKit;
   if (domain === 'developer') return developerBrandKit;
   return hospitalityBrandKit;
@@ -243,60 +321,118 @@ export function getDomainMockBrandKit(contextText = '') {
  */
 export function getDomainMockQuestion(round = 1, contextText = '') {
   const domain = extractClientDomain(contextText);
+  const isFamily = isClientFamilyIntent(contextText);
 
   if (domain === 'hospitality') {
+    if (isFamily) {
+      if (round === 1) {
+        return {
+          currentRound: 1,
+          stageLabel: "Family Dining Flow",
+          question: "Family dinners have different rhythms. Are you focusing on fast weeknight school-night dinners or celebratory weekend feasts?",
+          suggestedAnswers: [
+            "Fast weeknight neighborhood dinners",
+            "Lively weekend family feasts",
+            "All-day pizza & gelato counter"
+          ],
+          reasoning: "Table turn speed and kid-friendly service style determine your dining room layout.",
+          readyForSynthesis: false
+        };
+      }
+      if (round === 2) {
+        return {
+          currentRound: 2,
+          stageLabel: "Kitchen Boundaries",
+          question: "Many family spots rely on frozen shortcuts or bland kid menus. What compromise do you refuse to make?",
+          suggestedAnswers: [
+            "No frozen or boxed kid food",
+            "No artificial dough improvers",
+            "No cramped tables or stroller bans"
+          ],
+          reasoning: "Real ingredient boundaries build lasting trust with health-conscious parents.",
+          readyForSynthesis: false
+        };
+      }
+      if (round === 3) {
+        return {
+          currentRound: 3,
+          stageLabel: "Family Ritual",
+          question: "What memorable dining ritual will kids and parents look forward to every visit?",
+          suggestedAnswers: [
+            "Watch dough tossed at counter",
+            "Family sharing platters sliced table-side",
+            "Soft-serve swirl station for kids"
+          ],
+          reasoning: "Tangible interactive rituals turn first-time families into weekly regulars.",
+          readyForSynthesis: true
+        };
+      }
+      return {
+        currentRound: round,
+        stageLabel: "Neighborhood Role",
+        question: "How will your dining room become an indispensable hub for local families?",
+        suggestedAnswers: [
+          "Host post-game youth sports tables",
+          "Host weeknight dough workshops",
+          "Dine-in and speedy family takeout"
+        ],
+        reasoning: "Community integration drives repeat visits throughout the entire school year.",
+        readyForSynthesis: true
+      };
+    }
+
     if (round === 1) {
       return {
         currentRound: 1,
-        stageLabel: "Target Diners",
-        question: "Broad dining concepts fail to build loyalty. Who feels an immediate emotional connection to your table?",
+        stageLabel: "Dinner Vibe",
+        question: "Are you aiming for an energetic neighborhood joint or an intimate dinner counter?",
         suggestedAnswers: [
-          "Discerning culinary purists seeking terroir.",
-          "Neighborhood regulars seeking unhurried dining.",
-          "Adventurous eaters seeking bold open fire."
+          "Casual neighborhood joint",
+          "Intimate dinner counter",
+          "Lively open-fire table"
         ],
-        reasoning: "Focusing on a specific dining beachhead creates a devoted neighborhood following.",
+        reasoning: "Your room vibe dictates table spacing, seating cadence, and music volume.",
         readyForSynthesis: false
       };
     }
     if (round === 2) {
       return {
         currentRound: 2,
-        stageLabel: "Culinary Ethos",
-        question: "Corporate restaurants compromise on ingredients to boost margins. What kitchen compromise will you never make?",
+        stageLabel: "Kitchen Conviction",
+        question: "Most restaurants cut corners on ingredients or overcomplicate the menu. What compromise will you refuse?",
         suggestedAnswers: [
-          "Zero frozen or distributor shortcuts.",
-          "100% direct regenerative farm sourcing.",
-          "Only wood-fired ancestral cooking."
+          "No freezer shortcuts or additives",
+          "No tiny pretentious tasting portions",
+          "No rushed ninety-minute table limits"
         ],
-        reasoning: "Clear culinary convictions guard against generic food concepts.",
+        reasoning: "Declaring kitchen boundaries shapes menu pricing and guest trust.",
         readyForSynthesis: false
       };
     }
     if (round === 3) {
       return {
         currentRound: 3,
-        stageLabel: "Atmosphere & Edge",
-        question: "Trend-chasing hospitality spaces feel sterile. What popular dining trend do you refuse to adopt?",
+        stageLabel: "Guest Fit",
+        question: "What kind of dining behavior or customer expectation are you completely comfortable turning away?",
         suggestedAnswers: [
-          "Rushed table turns and QR menus.",
-          "Dimly lit faux-industrial clichés.",
-          "Loud club music over honest dialogue."
+          "Guests expecting fast-food speed",
+          "Influencers seeking photo-only stunts",
+          "Formal diners wanting stiff quiet"
         ],
-        reasoning: "Atmospheric boundaries shape sensory identity and room cadence.",
+        reasoning: "Defining who you reject gives your service team clear identity.",
         readyForSynthesis: true
       };
     }
     return {
       currentRound: round,
-      stageLabel: "Hospitality Moat",
-      question: "Menus are easily imitated across town. What unforgettable dining ritual makes your space inimitable?",
+      stageLabel: "Signature Ritual",
+      question: "What memorable table ritual will guests tell their friends about tomorrow morning?",
       suggestedAnswers: [
-        "Unhurried communal hearth seatings.",
-        "Chef-curated micro-seasonal pairings.",
-        "Nightly bread and wild fermentation ritual."
+        "Sizzling skillet brought table-side",
+        "Generous carafes poured at table",
+        "Warm bread fresh from embers"
       ],
-      reasoning: "Ritual converts first-time diners into lifelong brand ambassadors.",
+      reasoning: "Signature rituals create word-of-mouth without paid marketing.",
       readyForSynthesis: true
     };
   }
@@ -377,7 +513,7 @@ export function getDomainMockQuestion(round = 1, contextText = '') {
  * Sample 1-sentence pitches spanning diverse business categories
  */
 export const samplePitches = [
-  "An intimate wood-fired hearth restaurant in Brooklyn serving micro-seasonal dishes from regenerative local farms.",
+  "A cozy family-friendly wood-fired pizza restaurant with long communal tables and honest ingredients.",
   "A minimalist resume builder tailored for the 6-second glance of engineering managers.",
   "An in-memory developer database compiling complex SQL into bare-metal Rust in under 1 millisecond."
 ];

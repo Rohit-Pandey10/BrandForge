@@ -219,6 +219,42 @@
       "source_location": "L9"
     },
     {
+      "id": "client_src_data_mockbranddata_extractclientdomain",
+      "label": "extractClientDomain()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "extractclientdomain()",
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L217"
+    },
+    {
+      "id": "client_src_data_mockbranddata_getdomainmockbrandkit",
+      "label": "getDomainMockBrandKit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "getdomainmockbrandkit()",
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L234"
+    },
+    {
+      "id": "client_src_data_mockbranddata_getdomainmockquestion",
+      "label": "getDomainMockQuestion()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "getdomainmockquestion()",
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L245"
+    },
+    {
       "id": "server_controllers_interviewercontroller_extractdomain",
       "label": "extractDomain()",
       "_callable": true,
@@ -228,7 +264,19 @@
       "file_type": "code",
       "norm_label": "extractdomain()",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L113"
+      "source_location": "L118"
+    },
+    {
+      "id": "server_controllers_interviewercontroller_getdomainguidance",
+      "label": "getDomainGuidance()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "interviewerController.js",
+      "file_type": "code",
+      "norm_label": "getdomainguidance()",
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L144"
     },
     {
       "id": "server_controllers_interviewercontroller_getmockbrandkit",
@@ -240,7 +288,7 @@
       "file_type": "code",
       "norm_label": "getmockbrandkit()",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L241"
+      "source_location": "L376"
     },
     {
       "id": "server_controllers_interviewercontroller_getmockquestion",
@@ -252,7 +300,7 @@
       "file_type": "code",
       "norm_label": "getmockquestion()",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L130"
+      "source_location": "L183"
     },
     {
       "id": "server_controllers_interviewercontroller_handlecompilebrandkit",
@@ -264,7 +312,7 @@
       "file_type": "code",
       "norm_label": "handlecompilebrandkit()",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L392"
+      "source_location": "L603"
     },
     {
       "id": "server_controllers_interviewercontroller_handlenextquestion",
@@ -276,7 +324,7 @@
       "file_type": "code",
       "norm_label": "handlenextquestion()",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L314"
+      "source_location": "L523"
     },
     {
       "id": "server_utils_geminiclient_cleanjsonstring",
@@ -300,7 +348,7 @@
       "file_type": "code",
       "norm_label": "generatestructuredjson()",
       "source_file": "server/utils/geminiClient.js",
-      "source_location": "L71"
+      "source_location": "L77"
     },
     {
       "id": "server_utils_geminiclient_getgeminiclient",
@@ -324,7 +372,7 @@
       "file_type": "code",
       "norm_label": "istransienterror()",
       "source_file": "server/utils/geminiClient.js",
-      "source_location": "L43"
+      "source_location": "L49"
     },
     {
       "id": "server_utils_geminiclient_sleep",
@@ -336,7 +384,19 @@
       "file_type": "code",
       "norm_label": "sleep()",
       "source_file": "server/utils/geminiClient.js",
-      "source_location": "L38"
+      "source_location": "L44"
+    },
+    {
+      "id": "scripts_test_restaurant_flow_runverification",
+      "label": "runVerification()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "test-restaurant-flow.js",
+      "file_type": "code",
+      "norm_label": "runverification()",
+      "source_file": "scripts/test-restaurant-flow.js",
+      "source_location": "L4"
     },
     {
       "id": "scripts_run_dev_cleanup",
@@ -439,6 +499,39 @@
       "source_location": "L1"
     },
     {
+      "id": "client_src_data_mockbranddata_careerbrandkit",
+      "label": "careerBrandKit",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "careerbrandkit",
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L142"
+    },
+    {
+      "id": "client_src_data_mockbranddata_developerbrandkit",
+      "label": "developerBrandKit",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "developerbrandkit",
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L75"
+    },
+    {
+      "id": "client_src_data_mockbranddata_hospitalitybrandkit",
+      "label": "hospitalityBrandKit",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "hospitalitybrandkit",
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L7"
+    },
+    {
       "id": "client_src_data_mockbranddata_mockbrandkit",
       "label": "mockBrandKit",
       "_origin": "ast",
@@ -447,7 +540,7 @@
       "file_type": "code",
       "norm_label": "mockbrandkit",
       "source_file": "client/src/data/mockBrandData.js",
-      "source_location": "L4"
+      "source_location": "L212"
     },
     {
       "id": "client_src_data_mockbranddata_samplepitches",
@@ -458,7 +551,7 @@
       "file_type": "code",
       "norm_label": "samplepitches",
       "source_file": "client/src/data/mockBrandData.js",
-      "source_location": "L74"
+      "source_location": "L380"
     },
     {
       "id": "client_src_main",
@@ -514,7 +607,7 @@
       "node_kind": "heading",
       "norm_label": "frontend developer agent:",
       "source_file": "DEVSTATE.md",
-      "source_location": "L160"
+      "source_location": "L162"
     },
     {
       "id": "server_controllers_interviewercontroller",
@@ -770,6 +863,17 @@
       "source_location": "L1"
     },
     {
+      "id": "scripts_test_restaurant_flow",
+      "label": "test-restaurant-flow.js",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "test-restaurant-flow.js",
+      "file_type": "code",
+      "norm_label": "test-restaurant-flow.js",
+      "source_file": "scripts/test-restaurant-flow.js",
+      "source_location": "L1"
+    },
+    {
       "id": "client_package",
       "label": "client/package.json",
       "_origin": "ast",
@@ -1021,7 +1125,7 @@
       "node_kind": "heading",
       "norm_label": "2. active pipeline state machine",
       "source_file": "DEVSTATE.md",
-      "source_location": "L22"
+      "source_location": "L24"
     },
     {
       "id": "graphify_architecture_graph",
@@ -1786,7 +1890,7 @@
       "node_kind": "heading",
       "norm_label": "3. implemented schemas & json contracts",
       "source_file": "DEVSTATE.md",
-      "source_location": "L38"
+      "source_location": "L40"
     },
     {
       "id": "devstate_4_known_blockers_next_actions_for_ai_agents",
@@ -1798,7 +1902,7 @@
       "node_kind": "heading",
       "norm_label": "4. known blockers & next actions for ai agents",
       "source_file": "DEVSTATE.md",
-      "source_location": "L150"
+      "source_location": "L152"
     },
     {
       "id": "devstate_a_question_schema_questionschema",
@@ -1810,7 +1914,7 @@
       "node_kind": "heading",
       "norm_label": "a. question schema (`questionschema`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L40"
+      "source_location": "L42"
     },
     {
       "id": "devstate_b_brand_kit_schema_brandkitschema",
@@ -1822,7 +1926,7 @@
       "node_kind": "heading",
       "norm_label": "b. brand kit schema (`brandkitschema`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L72"
+      "source_location": "L74"
     },
     {
       "id": "devstate_backend_developer_agent",
@@ -1834,7 +1938,7 @@
       "node_kind": "heading",
       "norm_label": "backend developer agent:",
       "source_file": "DEVSTATE.md",
-      "source_location": "L152"
+      "source_location": "L154"
     },
     {
       "id": "devstate_demo_presentation_agent",
@@ -1846,7 +1950,7 @@
       "node_kind": "heading",
       "norm_label": "demo & presentation agent:",
       "source_file": "DEVSTATE.md",
-      "source_location": "L169"
+      "source_location": "L171"
     },
     {
       "id": "devstate_devstate_md_ai_agent_runtime_architecture_state",
@@ -1911,6 +2015,66 @@
   ],
   "links": [
     {
+      "source": "client_src_app_app",
+      "target": "client_src_data_mockbranddata_getdomainmockbrandkit",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "client/src/App.jsx",
+      "source_location": "L181",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_app_app",
+      "target": "client_src_data_mockbranddata_getdomainmockquestion",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "client/src/App.jsx",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_data_mockbranddata_getdomainmockbrandkit",
+      "target": "client_src_data_mockbranddata_extractclientdomain",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L235",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_data_mockbranddata_getdomainmockquestion",
+      "target": "client_src_data_mockbranddata_extractclientdomain",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L246",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller_getmockbrandkit",
+      "target": "server_controllers_interviewercontroller_extractdomain",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L378",
+      "weight": 1.0
+    },
+    {
       "source": "server_controllers_interviewercontroller_getmockquestion",
       "target": "server_controllers_interviewercontroller_extractdomain",
       "relation": "calls",
@@ -1919,7 +2083,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L131",
+      "source_location": "L184",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller_handlecompilebrandkit",
+      "target": "server_controllers_interviewercontroller_extractdomain",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L611",
       "weight": 1.0
     },
     {
@@ -1931,7 +2107,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L397",
+      "source_location": "L613",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller_handlecompilebrandkit",
+      "target": "server_controllers_interviewercontroller_getdomainguidance",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L615",
       "weight": 1.0
     },
     {
@@ -1943,7 +2131,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L418",
+      "source_location": "L648",
       "weight": 1.0
     },
     {
@@ -1955,7 +2143,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L431",
+      "source_location": "L661",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller_handlenextquestion",
+      "target": "server_controllers_interviewercontroller_extractdomain",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L536",
       "weight": 1.0
     },
     {
@@ -1967,7 +2167,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L326",
+      "source_location": "L539",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller_handlenextquestion",
+      "target": "server_controllers_interviewercontroller_getdomainguidance",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L541",
       "weight": 1.0
     },
     {
@@ -1979,7 +2191,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L355",
+      "source_location": "L567",
       "weight": 1.0
     },
     {
@@ -1991,7 +2203,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L376",
+      "source_location": "L587",
       "weight": 1.0
     },
     {
@@ -2003,7 +2215,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/utils/geminiClient.js",
-      "source_location": "L134",
+      "source_location": "L140",
       "weight": 1.0
     },
     {
@@ -2015,7 +2227,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/utils/geminiClient.js",
-      "source_location": "L147",
+      "source_location": "L153",
       "weight": 1.0
     },
     {
@@ -2027,7 +2239,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/utils/geminiClient.js",
-      "source_location": "L154",
+      "source_location": "L160",
       "weight": 1.0
     },
     {
@@ -2039,7 +2251,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/utils/geminiClient.js",
-      "source_location": "L77",
+      "source_location": "L83",
       "weight": 1.0
     },
     {
@@ -2208,6 +2420,30 @@
       "context": "import",
       "source_file": "client/src/App.jsx",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_app",
+      "target": "client_src_data_mockbranddata_getdomainmockbrandkit",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "client/src/App.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_app",
+      "target": "client_src_data_mockbranddata_getdomainmockquestion",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "client/src/App.jsx",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -3097,13 +3333,57 @@
     },
     {
       "source": "client_src_data_mockbranddata",
+      "target": "client_src_data_mockbranddata_careerbrandkit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_data_mockbranddata",
       "target": "client_src_data_mockbranddata_mockbrandkit",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/src/data/mockBrandData.js",
-      "source_location": "L4",
+      "source_location": "L212",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_data_mockbranddata",
+      "target": "client_src_data_mockbranddata_extractclientdomain",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L217",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_data_mockbranddata",
+      "target": "client_src_data_mockbranddata_getdomainmockbrandkit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L234",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_data_mockbranddata",
+      "target": "client_src_data_mockbranddata_getdomainmockquestion",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L245",
       "weight": 1.0
     },
     {
@@ -3114,7 +3394,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/src/data/mockBrandData.js",
-      "source_location": "L74",
+      "source_location": "L380",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_data_mockbranddata",
+      "target": "client_src_data_mockbranddata_hospitalitybrandkit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_data_mockbranddata",
+      "target": "client_src_data_mockbranddata_developerbrandkit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -3345,7 +3647,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L40",
+      "source_location": "L42",
       "weight": 1.0
     },
     {
@@ -3356,7 +3658,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L72",
+      "source_location": "L74",
       "weight": 1.0
     },
     {
@@ -3367,7 +3669,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L152",
+      "source_location": "L154",
       "weight": 1.0
     },
     {
@@ -3378,7 +3680,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L160",
+      "source_location": "L162",
       "weight": 1.0
     },
     {
@@ -3389,7 +3691,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L169",
+      "source_location": "L171",
       "weight": 1.0
     },
     {
@@ -3400,7 +3702,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L150",
+      "source_location": "L152",
       "weight": 1.0
     },
     {
@@ -3411,7 +3713,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L22",
+      "source_location": "L24",
       "weight": 1.0
     },
     {
@@ -3422,7 +3724,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L38",
+      "source_location": "L40",
       "weight": 1.0
     },
     {
@@ -3789,6 +4091,17 @@
       "weight": 1.0
     },
     {
+      "source": "scripts_test_restaurant_flow",
+      "target": "scripts_test_restaurant_flow_runverification",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/test-restaurant-flow.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
       "source": "server_controllers_interviewercontroller",
       "target": "server_controllers_interviewercontroller_extractdomain",
       "relation": "contains",
@@ -3796,7 +4109,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L113",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller",
+      "target": "server_controllers_interviewercontroller_getdomainguidance",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L144",
       "weight": 1.0
     },
     {
@@ -3807,7 +4131,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L130",
+      "source_location": "L183",
       "weight": 1.0
     },
     {
@@ -3818,29 +4142,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L241",
-      "weight": 1.0
-    },
-    {
-      "source": "server_controllers_interviewercontroller",
-      "target": "server_controllers_interviewercontroller_handlenextquestion",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L314",
-      "weight": 1.0
-    },
-    {
-      "source": "server_controllers_interviewercontroller",
-      "target": "server_controllers_interviewercontroller_handlecompilebrandkit",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L392",
+      "source_location": "L376",
       "weight": 1.0
     },
     {
@@ -3856,6 +4158,17 @@
     },
     {
       "source": "server_controllers_interviewercontroller",
+      "target": "server_controllers_interviewercontroller_handlenextquestion",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L523",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller",
       "target": "server_controllers_interviewercontroller_questionschema",
       "relation": "contains",
       "_origin": "ast",
@@ -3863,6 +4176,17 @@
       "confidence_score": 1.0,
       "source_file": "server/controllers/interviewerController.js",
       "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller",
+      "target": "server_controllers_interviewercontroller_handlecompilebrandkit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L603",
       "weight": 1.0
     },
     {
@@ -4104,7 +4428,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/utils/geminiClient.js",
-      "source_location": "L38",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -4115,7 +4439,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/utils/geminiClient.js",
-      "source_location": "L43",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -4126,7 +4450,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/utils/geminiClient.js",
-      "source_location": "L71",
+      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -4183,7 +4507,7 @@
       "confidence_score": 0.95,
       "context": "BrandKit",
       "source_file": "DEVSTATE.md",
-      "source_location": "L34",
+      "source_location": "L36",
       "weight": 1.0
     },
     {
@@ -4207,7 +4531,7 @@
       "confidence_score": 0.95,
       "context": "BrandKitDashboard",
       "source_file": "DEVSTATE.md",
-      "source_location": "L164",
+      "source_location": "L166",
       "weight": 1.0
     },
     {
@@ -4219,7 +4543,7 @@
       "confidence_score": 0.95,
       "context": "IntakeView",
       "source_file": "DEVSTATE.md",
-      "source_location": "L161",
+      "source_location": "L163",
       "weight": 1.0
     },
     {
@@ -4231,7 +4555,7 @@
       "confidence_score": 0.95,
       "context": "InterviewChat",
       "source_file": "DEVSTATE.md",
-      "source_location": "L162",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -4243,7 +4567,7 @@
       "confidence_score": 0.95,
       "context": "ProgressStepper",
       "source_file": "DEVSTATE.md",
-      "source_location": "L163",
+      "source_location": "L165",
       "weight": 1.0
     },
     {
@@ -4257,8 +4581,20 @@
       "source_file": "graphify/architecture.graph.md",
       "source_location": "L70",
       "weight": 1.0
+    },
+    {
+      "source": "devstate_1_project_overview_sprint_status",
+      "target": "server_controllers_interviewercontroller_extractdomain",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "context": "extractDomain",
+      "source_file": "DEVSTATE.md",
+      "source_location": "L17",
+      "weight": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c238922398e7167ad6f6415be593fc0c1adb1ef8"
+  "built_at_commit": "e5f1fdbd5180ba682a2d21b067b3f9691139f066"
 }

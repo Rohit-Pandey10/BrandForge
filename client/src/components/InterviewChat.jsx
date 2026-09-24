@@ -17,8 +17,8 @@ export default function InterviewChat({
 
   const currentRound = currentQuestion?.currentRound || 1;
   const stageLabel = currentQuestion?.stageLabel || (
-    currentRound === 1 ? 'Target Beachhead' :
-    currentRound === 2 ? 'Incumbent Critique' :
+    currentRound === 1 ? 'Core Audience' :
+    currentRound === 2 ? 'The Distinct Edge' :
     currentRound === 3 ? 'Brand Edge' : 'Strategic Moat'
   );
   const readyForSynthesis = Boolean(currentQuestion?.readyForSynthesis || currentRound >= 3);

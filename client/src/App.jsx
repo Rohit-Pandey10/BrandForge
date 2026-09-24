@@ -253,6 +253,11 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
     downloadAnchor.remove();
   };
 
+  const cleanXml = (unsafe = '') => 
+    String(unsafe).replace(/[<>&'"]/g, (c) => ({
+      '<': '&lt;', '>': '&gt;', '&': '&amp;', '\'': '&apos;', '"': '&quot;'
+    }[c]));
+
   const handleExportSvg = () => {
     const palette = brandKit?.visualTokens?.palette || [];
     const width = 1000;
@@ -267,18 +272,20 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
       const y = 110;
       return `
         <g transform="translate(${x}, ${y})">
-          <rect width="${swatchWidth}" height="${swatchHeight}" rx="20" fill="${c.hex}" stroke="#dbd7cd" stroke-width="1" />
-          <text x="${swatchWidth / 2}" y="${swatchHeight + 28}" fill="#737373" font-size="11" font-weight="400" text-anchor="middle" font-family="'Inter', sans-serif" letter-spacing="1">${(c.role || '').toUpperCase()}</text>
-          <text x="${swatchWidth / 2}" y="${swatchHeight + 48}" fill="#000000" font-size="13" font-weight="500" text-anchor="middle" font-family="'Inter', sans-serif">${c.name || 'Color'}</text>
-          <text x="${swatchWidth / 2}" y="${swatchHeight + 68}" fill="#000000" font-size="12" font-weight="400" text-anchor="middle" font-family="monospace">${c.hex}</text>
+          <rect width="${swatchWidth}" height="${swatchHeight}" rx="20" fill="${cleanXml(c.hex)}" stroke="#dbd7cd" stroke-width="1" />
+          <text x="${swatchWidth / 2}" y="${swatchHeight + 28}" fill="#737373" font-size="11" font-weight="400" text-anchor="middle" font-family="'Inter', sans-serif" letter-spacing="1">${cleanXml((c.role || '').toUpperCase())}</text>
+          <text x="${swatchWidth / 2}" y="${swatchHeight + 48}" fill="#000000" font-size="13" font-weight="500" text-anchor="middle" font-family="'Inter', sans-serif">${cleanXml(c.name || 'Color')}</text>
+          <text x="${swatchWidth / 2}" y="${swatchHeight + 68}" fill="#000000" font-size="12" font-weight="400" text-anchor="middle" font-family="monospace">${cleanXml(c.hex)}</text>
         </g>
       `;
     }).join('\n');
 
+    const brandTitle = cleanXml(brandKit?.brandStrategy?.brandName || 'Brand');
+
     const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
   <rect width="100%" height="100%" fill="#f2f1ed" />
-  <text x="${width / 2}" y="50" fill="#000000" font-size="28" font-weight="300" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif">${brandKit?.brandStrategy?.brandName || 'Brand'} — Color System</text>
+  <text x="${width / 2}" y="50" fill="#000000" font-size="28" font-weight="300" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif">${brandTitle} — Color System</text>
   <text x="${width / 2}" y="76" fill="#737373" font-size="12" font-weight="400" text-anchor="middle" font-family="'Inter', sans-serif">Synthesized Design Tokens</text>
   ${swatchesSvg}
 </svg>`;
