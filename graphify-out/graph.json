@@ -336,7 +336,7 @@
       "file_type": "code",
       "norm_label": "handlecompilebrandkit()",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L63"
+      "source_location": "L83"
     },
     {
       "id": "server_controllers_interviewercontroller_handlenextquestion",
@@ -347,6 +347,18 @@
       "community_name": "mockEngine.js",
       "file_type": "code",
       "norm_label": "handlenextquestion()",
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L62"
+    },
+    {
+      "id": "server_controllers_interviewercontroller_handlestartinterview",
+      "label": "handleStartInterview()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "handlestartinterview()",
       "source_file": "server/controllers/interviewerController.js",
       "source_location": "L42"
     },
@@ -387,6 +399,18 @@
       "source_location": "L53"
     },
     {
+      "id": "server_prompts_brandprompts_buildbatchquestionsysteminstruction",
+      "label": "buildBatchQuestionSystemInstruction()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "buildbatchquestionsysteminstruction()",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L102"
+    },
+    {
       "id": "server_prompts_brandprompts_buildcompilesysteminstruction",
       "label": "buildCompileSystemInstruction()",
       "_callable": true,
@@ -396,7 +420,7 @@
       "file_type": "code",
       "norm_label": "buildcompilesysteminstruction()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L102"
+      "source_location": "L139"
     },
     {
       "id": "server_prompts_brandprompts_buildquestionsysteminstruction",
@@ -444,7 +468,19 @@
       "file_type": "code",
       "norm_label": "_defaultstagelabel()",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L87"
+      "source_location": "L149"
+    },
+    {
+      "id": "server_services_interviewservice_generateinterviewbatch",
+      "label": "generateInterviewBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "generateinterviewbatch()",
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L46"
     },
     {
       "id": "server_services_interviewservice_generatenextquestion",
@@ -456,7 +492,19 @@
       "file_type": "code",
       "norm_label": "generatenextquestion()",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L56"
+      "source_location": "L118"
+    },
+    {
+      "id": "server_services_mockengine_careerbatch",
+      "label": "_careerBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_careerbatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L207"
     },
     {
       "id": "server_services_mockengine_careerkit",
@@ -468,7 +516,7 @@
       "file_type": "code",
       "norm_label": "_careerkit()",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L279"
+      "source_location": "L565"
     },
     {
       "id": "server_services_mockengine_careerquestion",
@@ -480,7 +528,19 @@
       "file_type": "code",
       "norm_label": "_careerquestion()",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L95"
+      "source_location": "L381"
+    },
+    {
+      "id": "server_services_mockengine_developerbatch",
+      "label": "_developerBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_developerbatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L153"
     },
     {
       "id": "server_services_mockengine_developerkit",
@@ -492,7 +552,7 @@
       "file_type": "code",
       "norm_label": "_developerkit()",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L324"
+      "source_location": "L610"
     },
     {
       "id": "server_services_mockengine_developerquestion",
@@ -504,7 +564,19 @@
       "file_type": "code",
       "norm_label": "_developerquestion()",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L121"
+      "source_location": "L407"
+    },
+    {
+      "id": "server_services_mockengine_familybatch",
+      "label": "_familyBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_familybatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L45"
     },
     {
       "id": "server_services_mockengine_familyhospitalitykit",
@@ -516,7 +588,7 @@
       "file_type": "code",
       "norm_label": "_familyhospitalitykit()",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L187"
+      "source_location": "L473"
     },
     {
       "id": "server_services_mockengine_familyquestion",
@@ -528,7 +600,19 @@
       "file_type": "code",
       "norm_label": "_familyquestion()",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L29"
+      "source_location": "L315"
+    },
+    {
+      "id": "server_services_mockengine_generalbatch",
+      "label": "_generalBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_generalbatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L261"
     },
     {
       "id": "server_services_mockengine_generalquestion",
@@ -540,7 +624,19 @@
       "file_type": "code",
       "norm_label": "_generalquestion()",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L147"
+      "source_location": "L433"
+    },
+    {
+      "id": "server_services_mockengine_getmockbatch",
+      "label": "getMockBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "getmockbatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L33"
     },
     {
       "id": "server_services_mockengine_getmockbrandkit",
@@ -552,7 +648,7 @@
       "file_type": "code",
       "norm_label": "getmockbrandkit()",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L175"
+      "source_location": "L461"
     },
     {
       "id": "server_services_mockengine_getmockquestion",
@@ -567,6 +663,18 @@
       "source_location": "L16"
     },
     {
+      "id": "server_services_mockengine_hospitalitybatch",
+      "label": "_hospitalityBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_hospitalitybatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L99"
+    },
+    {
       "id": "server_services_mockengine_hospitalitykit",
       "label": "_hospitalityKit()",
       "_callable": true,
@@ -576,7 +684,7 @@
       "file_type": "code",
       "norm_label": "_hospitalitykit()",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L233"
+      "source_location": "L519"
     },
     {
       "id": "server_services_mockengine_hospitalityquestion",
@@ -588,7 +696,7 @@
       "file_type": "code",
       "norm_label": "_hospitalityquestion()",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L62"
+      "source_location": "L348"
     },
     {
       "id": "server_utils_llmclient_generatestructuredjson",
@@ -655,8 +763,8 @@
       "label": "cleanJsonString()",
       "_callable": true,
       "_origin": "ast",
-      "community": 14,
-      "community_name": "geminiClient.js",
+      "community": 4,
+      "community_name": "server/package.json",
       "file_type": "code",
       "norm_label": "cleanjsonstring()",
       "source_file": "server/utils/geminiClient.js",
@@ -667,8 +775,8 @@
       "label": "generateStructuredJson()",
       "_callable": true,
       "_origin": "ast",
-      "community": 14,
-      "community_name": "geminiClient.js",
+      "community": 4,
+      "community_name": "server/package.json",
       "file_type": "code",
       "norm_label": "generatestructuredjson()",
       "source_file": "server/utils/geminiClient.js",
@@ -679,8 +787,8 @@
       "label": "getGeminiClient()",
       "_callable": true,
       "_origin": "ast",
-      "community": 14,
-      "community_name": "geminiClient.js",
+      "community": 4,
+      "community_name": "server/package.json",
       "file_type": "code",
       "norm_label": "getgeminiclient()",
       "source_file": "server/utils/geminiClient.js",
@@ -691,8 +799,8 @@
       "label": "isTransientError()",
       "_callable": true,
       "_origin": "ast",
-      "community": 14,
-      "community_name": "geminiClient.js",
+      "community": 4,
+      "community_name": "server/package.json",
       "file_type": "code",
       "norm_label": "istransienterror()",
       "source_file": "server/utils/geminiClient.js",
@@ -703,8 +811,8 @@
       "label": "sleep()",
       "_callable": true,
       "_origin": "ast",
-      "community": 14,
-      "community_name": "geminiClient.js",
+      "community": 4,
+      "community_name": "server/package.json",
       "file_type": "code",
       "norm_label": "sleep()",
       "source_file": "server/utils/geminiClient.js",
@@ -828,7 +936,7 @@
       "file_type": "code",
       "norm_label": "progressstepper()",
       "source_file": "client/src/components/ProgressStepper.jsx",
-      "source_location": "L9"
+      "source_location": "L13"
     },
     {
       "id": "client_src_data_domainconfig_classifydomain",
@@ -853,6 +961,18 @@
       "norm_label": "isfamilyintent()",
       "source_file": "client/src/data/domainConfig.js",
       "source_location": "L52"
+    },
+    {
+      "id": "client_src_data_mockbranddata_getdomainmockbatch",
+      "label": "getDomainMockBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "getdomainmockbatch()",
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L498"
     },
     {
       "id": "client_src_data_mockbranddata_getdomainmockbrandkit",
@@ -1077,6 +1197,17 @@
       "source_location": "L1"
     },
     {
+      "id": "server_services_interviewservice_batchquestionschema",
+      "label": "batchQuestionSchema",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "batchquestionschema",
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L17"
+    },
+    {
       "id": "server_services_interviewservice_questionschema",
       "label": "questionSchema",
       "_origin": "ast",
@@ -1085,7 +1216,7 @@
       "file_type": "code",
       "norm_label": "questionschema",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L17"
+      "source_location": "L79"
     },
     {
       "id": "server_services_mockengine",
@@ -1185,28 +1316,6 @@
       "norm_label": "test-restaurant-flow.js",
       "source_file": "scripts/test-restaurant-flow.js",
       "source_location": "L1"
-    },
-    {
-      "id": "server_utils_geminiclient",
-      "label": "geminiClient.js",
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "geminiClient.js",
-      "file_type": "code",
-      "norm_label": "geminiclient.js",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_utils_geminiclient_candidate_models",
-      "label": "CANDIDATE_MODELS",
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "geminiClient.js",
-      "file_type": "code",
-      "norm_label": "candidate_models",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L36"
     },
     {
       "id": "client_package",
@@ -1948,7 +2057,7 @@
       "file_type": "code",
       "norm_label": "router",
       "source_file": "server/routes/brandRoutes.js",
-      "source_location": "L7"
+      "source_location": "L8"
     },
     {
       "id": "server_server",
@@ -1993,6 +2102,28 @@
       "norm_label": "corsoptions",
       "source_file": "server/server.js",
       "source_location": "L21"
+    },
+    {
+      "id": "server_utils_geminiclient",
+      "label": "geminiClient.js",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "server/package.json",
+      "file_type": "code",
+      "norm_label": "geminiclient.js",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_utils_geminiclient_candidate_models",
+      "label": "CANDIDATE_MODELS",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "server/package.json",
+      "file_type": "code",
+      "norm_label": "candidate_models",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L36"
     },
     {
       "id": "server_utils_llmclient",
@@ -2608,13 +2739,13 @@
       "source_location": "L1"
     },
     {
-      "id": "client_src_components_progressstepper_base_stages",
-      "label": "BASE_STAGES",
+      "id": "client_src_components_progressstepper_seven_stages",
+      "label": "SEVEN_STAGES",
       "_origin": "ast",
       "community": 9,
       "community_name": "mockBrandData.js",
       "file_type": "code",
-      "norm_label": "base_stages",
+      "norm_label": "seven_stages",
       "source_file": "client/src/components/ProgressStepper.jsx",
       "source_location": "L3"
     },
@@ -2737,7 +2868,7 @@
       "file_type": "code",
       "norm_label": "samplepitches",
       "source_file": "client/src/data/mockBrandData.js",
-      "source_location": "L498"
+      "source_location": "L551"
     },
     {
       "id": "client_src_main",
@@ -2860,6 +2991,18 @@
   "links": [
     {
       "source": "client_src_app_app",
+      "target": "client_src_data_mockbranddata_getdomainmockbatch",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "client/src/App.jsx",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_app_app",
       "target": "client_src_data_mockbranddata_getdomainmockbrandkit",
       "relation": "calls",
       "_origin": "ast",
@@ -2867,19 +3010,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/src/App.jsx",
-      "source_location": "L185",
-      "weight": 1.0
-    },
-    {
-      "source": "client_src_app_app",
-      "target": "client_src_data_mockbranddata_getdomainmockquestion",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "client/src/App.jsx",
-      "source_location": "L76",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -2964,6 +3095,30 @@
       "context": "call",
       "source_file": "client/src/components/dashboard/VisualTokensTab.jsx",
       "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_data_mockbranddata_getdomainmockbatch",
+      "target": "client_src_data_domainconfig_extractclientdomain",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L499",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_data_mockbranddata_getdomainmockbatch",
+      "target": "client_src_data_domainconfig_isclientfamilyintent",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L500",
       "weight": 1.0
     },
     {
@@ -3088,18 +3243,6 @@
     },
     {
       "source": "server_controllers_interviewercontroller_handlecompilebrandkit",
-      "target": "server_controllers_interviewercontroller_validatehistory",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L67",
-      "weight": 1.0
-    },
-    {
-      "source": "server_controllers_interviewercontroller_handlecompilebrandkit",
       "target": "server_services_compilerservice_compilebrandkit",
       "relation": "calls",
       "_origin": "ast",
@@ -3107,7 +3250,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L72",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -3119,7 +3262,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L46",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -3131,7 +3274,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L51",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller_handlestartinterview",
+      "target": "server_services_interviewservice_generateinterviewbatch",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "server_prompts_brandprompts_buildbatchquestionsysteminstruction",
+      "target": "server_prompts_brandprompts_getdomainguidance",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L103",
       "weight": 1.0
     },
     {
@@ -3143,7 +3310,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L103",
+      "source_location": "L140",
       "weight": 1.0
     },
     {
@@ -3167,7 +3334,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L100",
+      "source_location": "L136",
       "weight": 1.0
     },
     {
@@ -3179,7 +3346,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L101",
+      "source_location": "L137",
       "weight": 1.0
     },
     {
@@ -3191,7 +3358,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L103",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -3203,7 +3370,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L105",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -3215,7 +3382,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L108",
+      "source_location": "L144",
       "weight": 1.0
     },
     {
@@ -3227,7 +3394,79 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L115",
+      "source_location": "L151",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_interviewservice_generateinterviewbatch",
+      "target": "server_data_domainconfig_classifydomain",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_interviewservice_generateinterviewbatch",
+      "target": "server_data_domainconfig_isfamilyintent",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_interviewservice_generateinterviewbatch",
+      "target": "server_utils_llmclient_isllmconfigured",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_interviewservice_generateinterviewbatch",
+      "target": "server_prompts_brandprompts_buildbatchquestionsysteminstruction",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_interviewservice_generateinterviewbatch",
+      "target": "server_utils_llmclient_generatestructuredjson",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_interviewservice_generateinterviewbatch",
+      "target": "server_services_mockengine_getmockbatch",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -3239,7 +3478,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L62",
+      "source_location": "L124",
       "weight": 1.0
     },
     {
@@ -3251,7 +3490,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L63",
+      "source_location": "L125",
       "weight": 1.0
     },
     {
@@ -3263,7 +3502,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L65",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
@@ -3275,7 +3514,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L67",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -3287,7 +3526,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L70",
+      "source_location": "L132",
       "weight": 1.0
     },
     {
@@ -3299,7 +3538,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L76",
+      "source_location": "L138",
       "weight": 1.0
     },
     {
@@ -3311,7 +3550,91 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L84",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine_getmockbatch",
+      "target": "server_data_domainconfig_classifydomain",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine_getmockbatch",
+      "target": "server_data_domainconfig_isfamilyintent",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine_getmockbatch",
+      "target": "server_services_mockengine_familybatch",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine_getmockbatch",
+      "target": "server_services_mockengine_hospitalitybatch",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine_getmockbatch",
+      "target": "server_services_mockengine_careerbatch",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine_getmockbatch",
+      "target": "server_services_mockengine_developerbatch",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine_getmockbatch",
+      "target": "server_services_mockengine_generalbatch",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L42",
       "weight": 1.0
     },
     {
@@ -3323,7 +3646,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L177",
+      "source_location": "L463",
       "weight": 1.0
     },
     {
@@ -3335,7 +3658,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L178",
+      "source_location": "L464",
       "weight": 1.0
     },
     {
@@ -3347,7 +3670,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L181",
+      "source_location": "L467",
       "weight": 1.0
     },
     {
@@ -3359,7 +3682,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L181",
+      "source_location": "L467",
       "weight": 1.0
     },
     {
@@ -3371,7 +3694,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L183",
+      "source_location": "L469",
       "weight": 1.0
     },
     {
@@ -3383,7 +3706,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L184",
+      "source_location": "L470",
       "weight": 1.0
     },
     {
@@ -3736,6 +4059,18 @@
     },
     {
       "source": "client_src_app",
+      "target": "client_src_data_mockbranddata_getdomainmockbatch",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "client/src/App.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_app",
       "target": "client_src_data_mockbranddata_getdomainmockbrandkit",
       "relation": "imports",
       "_origin": "ast",
@@ -4036,6 +4371,18 @@
     },
     {
       "source": "server_controllers_interviewercontroller",
+      "target": "server_services_interviewservice_generateinterviewbatch",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller",
       "target": "server_services_interviewservice_generatenextquestion",
       "relation": "imports",
       "_origin": "ast",
@@ -4252,6 +4599,18 @@
     },
     {
       "source": "server_services_interviewservice",
+      "target": "server_prompts_brandprompts_buildbatchquestionsysteminstruction",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_interviewservice",
       "target": "server_prompts_brandprompts_buildquestionsysteminstruction",
       "relation": "imports",
       "_origin": "ast",
@@ -4260,6 +4619,18 @@
       "context": "import",
       "source_file": "server/services/interviewService.js",
       "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_interviewservice",
+      "target": "server_services_mockengine_getmockbatch",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -5104,6 +5475,18 @@
     },
     {
       "source": "server_controllers_interviewercontroller",
+      "target": "server_services_interviewservice_batchquestionschema",
+      "relation": "re_exports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "re-export",
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller",
       "target": "server_services_interviewservice_questionschema",
       "relation": "re_exports",
       "_origin": "ast",
@@ -5559,24 +5942,24 @@
     },
     {
       "source": "client_src_components_progressstepper",
-      "target": "client_src_components_progressstepper_base_stages",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "client/src/components/ProgressStepper.jsx",
-      "source_location": "L3",
-      "weight": 1.0
-    },
-    {
-      "source": "client_src_components_progressstepper",
       "target": "client_src_components_progressstepper_progressstepper",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/src/components/ProgressStepper.jsx",
-      "source_location": "L9",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_components_progressstepper",
+      "target": "client_src_components_progressstepper_seven_stages",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/src/components/ProgressStepper.jsx",
+      "source_location": "L3",
       "weight": 1.0
     },
     {
@@ -5691,13 +6074,24 @@
     },
     {
       "source": "client_src_data_mockbranddata",
-      "target": "client_src_data_mockbranddata_samplepitches",
+      "target": "client_src_data_mockbranddata_getdomainmockbatch",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/src/data/mockBrandData.js",
       "source_location": "L498",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_data_mockbranddata",
+      "target": "client_src_data_mockbranddata_samplepitches",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/src/data/mockBrandData.js",
+      "source_location": "L551",
       "weight": 1.0
     },
     {
@@ -6527,7 +6921,7 @@
     },
     {
       "source": "server_controllers_interviewercontroller",
-      "target": "server_controllers_interviewercontroller_handlenextquestion",
+      "target": "server_controllers_interviewercontroller_handlestartinterview",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6538,13 +6932,24 @@
     },
     {
       "source": "server_controllers_interviewercontroller",
+      "target": "server_controllers_interviewercontroller_handlenextquestion",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/controllers/interviewerController.js",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "server_controllers_interviewercontroller",
       "target": "server_controllers_interviewercontroller_handlecompilebrandkit",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/controllers/interviewerController.js",
-      "source_location": "L63",
+      "source_location": "L83",
       "weight": 1.0
     },
     {
@@ -6758,13 +7163,24 @@
     },
     {
       "source": "server_prompts_brandprompts",
-      "target": "server_prompts_brandprompts_buildcompilesysteminstruction",
+      "target": "server_prompts_brandprompts_buildbatchquestionsysteminstruction",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/prompts/brandPrompts.js",
       "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "server_prompts_brandprompts",
+      "target": "server_prompts_brandprompts_buildcompilesysteminstruction",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -6797,7 +7213,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/routes/brandRoutes.js",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -6857,24 +7273,13 @@
     },
     {
       "source": "server_services_interviewservice",
-      "target": "server_services_interviewservice_questionschema",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "server/services/interviewService.js",
-      "source_location": "L17",
-      "weight": 1.0
-    },
-    {
-      "source": "server_services_interviewservice",
       "target": "server_services_interviewservice_generatenextquestion",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/interviewService.js",
-      "source_location": "L56",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -6885,29 +7290,51 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/interviewService.js",
-      "source_location": "L87",
+      "source_location": "L149",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_interviewservice",
+      "target": "server_services_interviewservice_batchquestionschema",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_interviewservice",
+      "target": "server_services_interviewservice_generateinterviewbatch",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_interviewservice",
+      "target": "server_services_interviewservice_questionschema",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/interviewService.js",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
       "source": "server_services_mockengine",
-      "target": "server_services_mockengine_developerquestion",
+      "target": "server_services_mockengine_developerbatch",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L121",
-      "weight": 1.0
-    },
-    {
-      "source": "server_services_mockengine",
-      "target": "server_services_mockengine_generalquestion",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L147",
+      "source_location": "L153",
       "weight": 1.0
     },
     {
@@ -6923,46 +7350,24 @@
     },
     {
       "source": "server_services_mockengine",
-      "target": "server_services_mockengine_getmockbrandkit",
+      "target": "server_services_mockengine_careerbatch",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L175",
+      "source_location": "L207",
       "weight": 1.0
     },
     {
       "source": "server_services_mockengine",
-      "target": "server_services_mockengine_familyhospitalitykit",
+      "target": "server_services_mockengine_generalbatch",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L187",
-      "weight": 1.0
-    },
-    {
-      "source": "server_services_mockengine",
-      "target": "server_services_mockengine_hospitalitykit",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L233",
-      "weight": 1.0
-    },
-    {
-      "source": "server_services_mockengine",
-      "target": "server_services_mockengine_careerkit",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L279",
+      "source_location": "L261",
       "weight": 1.0
     },
     {
@@ -6973,18 +7378,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L29",
+      "source_location": "L315",
       "weight": 1.0
     },
     {
       "source": "server_services_mockengine",
-      "target": "server_services_mockengine_developerkit",
+      "target": "server_services_mockengine_getmockbatch",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L324",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -6995,7 +7400,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L62",
+      "source_location": "L348",
       "weight": 1.0
     },
     {
@@ -7006,7 +7411,106 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L95",
+      "source_location": "L381",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine",
+      "target": "server_services_mockengine_developerquestion",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L407",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine",
+      "target": "server_services_mockengine_generalquestion",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L433",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine",
+      "target": "server_services_mockengine_familybatch",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine",
+      "target": "server_services_mockengine_getmockbrandkit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L461",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine",
+      "target": "server_services_mockengine_familyhospitalitykit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L473",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine",
+      "target": "server_services_mockengine_hospitalitykit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L519",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine",
+      "target": "server_services_mockengine_careerkit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L565",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine",
+      "target": "server_services_mockengine_developerkit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L610",
+      "weight": 1.0
+    },
+    {
+      "source": "server_services_mockengine",
+      "target": "server_services_mockengine_hospitalitybatch",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -7175,6 +7679,18 @@
     },
     {
       "source": "server_routes_brandroutes",
+      "target": "server_controllers_interviewercontroller_handlestartinterview",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "argument",
+      "source_file": "server/routes/brandRoutes.js",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "server_routes_brandroutes",
       "target": "server_controllers_interviewercontroller_handlenextquestion",
       "relation": "indirect_call",
       "_origin": "ast",
@@ -7182,7 +7698,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "server/routes/brandRoutes.js",
-      "source_location": "L14",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -7194,7 +7710,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "server/routes/brandRoutes.js",
-      "source_location": "L21",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -7307,5 +7823,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "7ebc9d62cf8a06d07a0b5c3771d688a688fea701"
+  "built_at_commit": "98fca25c2ec307a6d3f19af115fdcd5f01ddde6d"
 }

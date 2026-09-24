@@ -3,12 +3,12 @@ import Header from './components/Header';
 import IntakeView from './components/IntakeView';
 import InterviewChat from './components/InterviewChat';
 import BrandKitDashboard from './components/BrandKitDashboard';
-import { mockBrandKit, getDomainMockBrandKit, getDomainMockQuestion } from './data/mockBrandData';
+import { mockBrandKit, getDomainMockBrandKit, getDomainMockBatch, getDomainMockQuestion } from './data/mockBrandData';
 
 export default function App() {
   const [stage, setStage] = useState('intake'); // 'intake' | 'interview' | 'dashboard'
-  const [messages, setMessages] = useState([]);
-  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [questions, setQuestions] = useState([]);
+  const [initialPitch, setInitialPitch] = useState('');
   const [brandKit, setBrandKit] = useState(mockBrandKit);
   const [isLoading, setIsLoading] = useState(false);
   const [isCompiling, setIsCompiling] = useState(false);
@@ -37,152 +37,46 @@ export default function App() {
   };
 
   /**
-   * Step 1: Start interview from IntakeView
+   * Step 1: Start interview from IntakeView (Batch Call 1: Upfront 7 Questions)
    */
   const handleStartInterview = async (pitch) => {
+    const cleanPitch = String(pitch || '').trim();
     setIsLoading(true);
-    setCurrentQuestion(null);
-
-    const initialHistory = [{ role: 'user', content: pitch }];
-    const initialMessages = [{
-      id: 'msg-0',
-      role: 'user',
-      content: pitch,
-      timestamp: Date.now()
-    }];
-
-    setMessages(initialMessages);
+    setInitialPitch(cleanPitch);
     setStage('interview');
 
-    // Call /api/interview/next
-    const data = await callApi('/api/interview/next', { history: initialHistory });
+    // Call 1: POST /api/interview/start generates all 7 questions upfront
+    const data = await callApi('/api/interview/start', { initialPitch: cleanPitch });
 
-    if (data) {
-      // API succeeded — commit only this single response, never inject a fallback on top
-      setCurrentQuestion(data);
-      setMessages(prev => [
-        ...prev,
-        {
-          id: `msg-ai-${Date.now()}`,
-          role: 'assistant',
-          content: data.question,
-          reasoning: data.reasoning,
-          suggestedAnswers: data.suggestedAnswers,
-          timestamp: Date.now()
-        }
-      ]);
+    if (data && Array.isArray(data.questions) && data.questions.length > 0) {
+      setQuestions(data.questions);
     } else {
-      // API unreachable — use domain-adaptive local fallback only in this branch
-      const fallbackQuestion = getDomainMockQuestion(1, pitch);
-      setCurrentQuestion(fallbackQuestion);
-      setMessages(prev => [
-        ...prev,
-        {
-          id: `msg-ai-${Date.now()}`,
-          role: 'assistant',
-          content: fallbackQuestion.question,
-          reasoning: fallbackQuestion.reasoning,
-          suggestedAnswers: fallbackQuestion.suggestedAnswers,
-          timestamp: Date.now()
-        }
-      ]);
+      // Local domain-adaptive fallback batch
+      setQuestions(getDomainMockBatch(cleanPitch));
     }
 
     setIsLoading(false);
   };
 
   /**
-   * Step 2: Answer question in InterviewChat (Continuous Discovery)
+   * Step 2: Final Synthesis (Batch Call 2: Single Compilation from 7 Answers)
    */
-  const handleSendMessage = async (text) => {
-    const updatedMessages = [
-      ...messages,
-      {
-        id: `msg-user-${Date.now()}`,
-        role: 'user',
-        content: text,
-        timestamp: Date.now()
-      }
-    ];
-
-    setMessages(updatedMessages);
-    setIsLoading(true);
-    setCurrentQuestion(null);
-
-    const historyForApi = updatedMessages.map(m => ({
-      role: m.role,
-      content: m.content
-    }));
-
-    const data = await callApi('/api/interview/next', { history: historyForApi });
-
-    if (data) {
-      setCurrentQuestion(data);
-      setMessages(prev => [
-        ...prev,
-        {
-          id: `msg-ai-${Date.now()}`,
-          role: 'assistant',
-          content: data.question,
-          reasoning: data.reasoning,
-          suggestedAnswers: data.suggestedAnswers,
-          timestamp: Date.now()
-        }
-      ]);
-    } else {
-      // Offline / network fallback progression (domain-adaptive)
-      const userTurnCount = updatedMessages.filter(m => m.role === 'user').length;
-      const fullContext = updatedMessages.map(m => m.content).join(' ');
-      const nextMock = getDomainMockQuestion(userTurnCount, fullContext);
-
-      setCurrentQuestion(nextMock);
-      setMessages(prev => [
-        ...prev,
-        {
-          id: `msg-ai-${Date.now()}`,
-          role: 'assistant',
-          content: nextMock.question,
-          reasoning: nextMock.reasoning,
-          suggestedAnswers: nextMock.suggestedAnswers,
-          timestamp: Date.now()
-        }
-      ]);
-    }
-
-    setIsLoading(false);
-  };
-
-  /**
-   * Step 3: Synthesize Brand Kit (Triggered on-demand at any time)
-   */
-  const handleCompileBrandKit = async (optionalFinalAnswer) => {
+  const handleCompileBrandKit = async (qaData = {}) => {
     setIsCompiling(true);
 
-    let msgs = [...messages];
-    if (optionalFinalAnswer && typeof optionalFinalAnswer === 'string' && optionalFinalAnswer.trim()) {
-      const finalMsg = {
-        id: `msg-user-final-${Date.now()}`,
-        role: 'user',
-        content: optionalFinalAnswer.trim(),
-        timestamp: Date.now()
-      };
-      msgs.push(finalMsg);
-      setMessages(msgs);
-    }
+    const payload = typeof qaData === 'object' ? qaData : {};
+    const pitch = payload.initialPitch || initialPitch;
 
-    const historyForApi = msgs.map(m => ({
-      role: m.role,
-      content: m.content
-    }));
-
-    const data = await callApi('/api/interview/compile', { history: historyForApi });
+    const data = await callApi('/api/interview/compile', {
+      initialPitch: pitch,
+      ...payload
+    });
 
     if (data && data.brandStrategy) {
       setBrandKit(data);
     } else {
       // Domain-adaptive fallback mock hydration
-      const fullContext = msgs.map(m => m.content).join(' ');
-      setBrandKit(getDomainMockBrandKit(fullContext));
+      setBrandKit(getDomainMockBrandKit(pitch));
     }
 
     setIsCompiling(false);
@@ -194,16 +88,15 @@ export default function App() {
    */
   const handleReset = () => {
     setStage('intake');
-    setMessages([]);
-    setCurrentQuestion(null);
+    setQuestions([]);
+    setInitialPitch('');
   };
 
   /**
    * Jump straight to dashboard with hydrated mock state
    */
   const handlePreviewMock = () => {
-    const fullContext = messages.map(m => m.content).join(' ');
-    setBrandKit(getDomainMockBrandKit(fullContext));
+    setBrandKit(getDomainMockBrandKit(initialPitch || ''));
     setStage('dashboard');
   };
 
@@ -211,7 +104,7 @@ export default function App() {
    * Fast-forward synthesis from Header
    */
   const handleSkipToSynthesis = () => {
-    if (messages.length > 0) {
+    if (questions.length > 0) {
       handleCompileBrandKit();
     } else {
       handlePreviewMock();
@@ -334,11 +227,10 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
 
         {stage === 'interview' && (
           <InterviewChat
-            messages={messages}
-            currentQuestion={currentQuestion}
+            questions={questions}
+            initialPitch={initialPitch}
             isLoading={isLoading}
             isCompiling={isCompiling}
-            onSendMessage={handleSendMessage}
             onCompileBrandKit={handleCompileBrandKit}
             onReset={handleReset}
           />

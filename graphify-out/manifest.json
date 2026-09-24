@@ -12,9 +12,9 @@
     "semantic_hash": ""
   },
   "client/src/App.jsx": {
-    "mtime": 1790271376.111936,
-    "seen": 1790271529.7339451,
-    "ast_hash": "eef48cf1e20affed94b767992e543fb8",
+    "mtime": 1790273838.9752724,
+    "seen": 1790274054.200523,
+    "ast_hash": "dc74daa78f66dd95a2a162b1603fff0b",
     "semantic_hash": ""
   },
   "client/src/components/BrandKitDashboard.jsx": {
@@ -36,21 +36,21 @@
     "semantic_hash": ""
   },
   "client/src/components/InterviewChat.jsx": {
-    "mtime": 1790261842.1260622,
-    "seen": 1790262164.133217,
-    "ast_hash": "96deb8d1a28dc152a9220b0f4c240451",
+    "mtime": 1790273766.0096815,
+    "seen": 1790274054.200526,
+    "ast_hash": "58b3c7738be07e33c8cc00069c4215b2",
     "semantic_hash": ""
   },
   "client/src/components/ProgressStepper.jsx": {
-    "mtime": 1790261829.7519937,
-    "seen": 1790262164.133217,
-    "ast_hash": "7e72765f4aad4f220a9d7c2914c261f2",
+    "mtime": 1790273736.5336564,
+    "seen": 1790274054.200526,
+    "ast_hash": "66aefb8b0e12a8bf67467f25dde51a84",
     "semantic_hash": ""
   },
   "client/src/data/mockBrandData.js": {
-    "mtime": 1790271343.4270864,
-    "seen": 1790271529.733951,
-    "ast_hash": "4ccebcded66ff7566eb00105d8f4795a",
+    "mtime": 1790273720.415061,
+    "seen": 1790274054.2005298,
+    "ast_hash": "0a40f6ee4cca4ca99a69f685757ebb70",
     "semantic_hash": ""
   },
   "client/src/main.jsx": {
@@ -96,9 +96,9 @@
     "semantic_hash": ""
   },
   "server/controllers/interviewerController.js": {
-    "mtime": 1790270516.6431642,
-    "seen": 1790271529.733956,
-    "ast_hash": "e9cdaf18e9e67b26c1465e766d805736",
+    "mtime": 1790273661.629711,
+    "seen": 1790274054.200535,
+    "ast_hash": "42ea5e3dd83dde515396bb0cc49b6743",
     "semantic_hash": ""
   },
   "server/package.json": {
@@ -108,9 +108,9 @@
     "semantic_hash": ""
   },
   "server/routes/brandRoutes.js": {
-    "mtime": 1790249079.9603221,
-    "seen": 1790257120.718505,
-    "ast_hash": "d30431ed28dc82557fe96e2c0fe7fc99",
+    "mtime": 1790273668.6802375,
+    "seen": 1790274054.2005372,
+    "ast_hash": "3345b3e6530ecc5bdb54d03c61656035",
     "semantic_hash": ""
   },
   "server/server.js": {
@@ -216,27 +216,27 @@
     "semantic_hash": ""
   },
   "server/prompts/brandPrompts.js": {
-    "mtime": 1790270319.255302,
-    "seen": 1790271529.733957,
-    "ast_hash": "7eb1a6d9256b1f61042fcf4b185ae346",
+    "mtime": 1790273603.6399522,
+    "seen": 1790274054.200536,
+    "ast_hash": "0eea8e2897dcc40e9a40695d223d31de",
     "semantic_hash": ""
   },
   "server/services/compilerService.js": {
-    "mtime": 1790273349.2853186,
-    "seen": 1790273549.8900712,
-    "ast_hash": "6a589a3180f1470ae072238ba16b54ac",
+    "mtime": 1790273681.8285196,
+    "seen": 1790274054.2005372,
+    "ast_hash": "973f9cce9af2fba1bd0115e66153b085",
     "semantic_hash": ""
   },
   "server/services/interviewService.js": {
-    "mtime": 1790273326.3864765,
-    "seen": 1790273549.8900712,
-    "ast_hash": "ce9c6befb56b063e5ab7f7f04f73b362",
+    "mtime": 1790273640.3914783,
+    "seen": 1790274054.2005382,
+    "ast_hash": "b71b102cbdbfb3902fb4012fb2e6b683",
     "semantic_hash": ""
   },
   "server/services/mockEngine.js": {
-    "mtime": 1790271367.4904032,
-    "seen": 1790271529.733959,
-    "ast_hash": "8fc49fe1126f2d3acee31d52c39d1134",
+    "mtime": 1790273632.046408,
+    "seen": 1790274054.2005382,
+    "ast_hash": "6139bfe268c7df2d9e3e31e56eab50e8",
     "semantic_hash": ""
   },
   "shared/domainConfig.js": {

@@ -493,6 +493,59 @@ export function getDomainMockQuestion(round = 1, contextText = '') {
 }
 
 /**
+ * Returns upfront 7-question batch discovery for client-side offline hydration
+ */
+export function getDomainMockBatch(contextText = '') {
+  const domain = extractClientDomain(contextText);
+  const isFamily = isClientFamilyIntent(contextText);
+
+  if (domain === 'hospitality') {
+    if (isFamily) {
+      return [
+        { id: 1, stageLabel: "Audience", question: "Who is the primary crowd filling your tables first?", suggestedAnswers: ["Parents with energetic young kids", "Multi-generation Sunday family gatherings", "Neighborhood sports teams after practice"], reasoning: "Identifies table sizes, seating flow, and high chair needs." },
+        { id: 2, stageLabel: "Experience", question: "What frustrating reality of dining out brings families to you?", suggestedAnswers: ["Tiny overpriced portions leaving kids hungry", "Stiff quiet rooms where kids get glared at", "Slow kitchen waits causing toddler meltdowns"], reasoning: "Focuses your kitchen pace and hospitality posture." },
+        { id: 3, stageLabel: "Villain", question: "What tired cliché or bad habit in family dining do you refuse to copy?", suggestedAnswers: ["Frozen processed chicken nuggets and fries", "Sticky laminated menus with cheap shortcuts", "Artificial dough additives and speed doughs"], reasoning: "Establishes real ingredient boundaries that earn parental trust." },
+        { id: 4, stageLabel: "Vibe", question: "What atmosphere and physical environment do families walk into?", suggestedAnswers: ["Sunlit open hearth with big wooden tables", "Bustling mess-friendly neighborhood pizzeria", "Warm wood and brass with lively acoustic hum"], reasoning: "Shapes acoustic treatment, lighting, and furniture durability." },
+        { id: 5, stageLabel: "Pricing", question: "What is your pricing and accessibility stance for busy families?", suggestedAnswers: ["Accessible everyday weeknight value", "Honest neighborhood craft without markup", "Special celebratory weekend feast packages"], reasoning: "Determines menu architecture, check average, and repeat frequency." },
+        { id: 6, stageLabel: "Tone", question: "What must the brand and service team NEVER sound or look like?", suggestedAnswers: ["Pretentious wine bar or quiet lounge", "Cold sterile corporate fast food chain", "Over-formal fine dining with stiff rules"], reasoning: "Prevents confusing brand signals and keeps staff aligned." },
+        { id: 7, stageLabel: "Edge", question: "What singular reason makes parents choose you over the spot down the street?", suggestedAnswers: ["72-hour naturally fermented sourdough crust", "Kids watch dough stretched at counter", "Giant wooden sharing tables fit everyone"], reasoning: "Creates word-of-mouth conviction that competitors cannot copy." }
+      ];
+    }
+    return [
+      { id: 1, stageLabel: "Audience", question: "Who is the first person walking through your doors on a Friday night?", suggestedAnswers: ["Neighborhood regulars seeking great craft", "Date nights wanting unpretentious warmth", "Lively groups sharing wine and pizzas"], reasoning: "Determines table turns, lighting, and hospitality pacing." },
+      { id: 2, stageLabel: "Experience", question: "What frustrating compromise in neighborhood dining brings guests to you?", suggestedAnswers: ["Overpriced tiny portions with stiff service", "Noisy generic chains with bland food", "Ninety-minute rush limits on tables"], reasoning: "Defines the core emotional relief your hospitality delivers." },
+      { id: 3, stageLabel: "Villain", question: "What conventional restaurant habit or cliché do you strictly refuse to adopt?", suggestedAnswers: ["Pretentious tasting menus and lectures", "Industrial freezer dough and canned sauces", "Whispering servers with stiff attitudes"], reasoning: "Declaring kitchen and service boundaries builds guest loyalty." },
+      { id: 4, stageLabel: "Vibe", question: "What environment and sensory mood greets someone walking in?", suggestedAnswers: ["Blistering wood hearth and cast-iron glow", "Energetic room with loud vinyl and laughter", "Intimate counter seating facing live fire"], reasoning: "Shapes tactile materials, room acoustics, and interior details." },
+      { id: 5, stageLabel: "Pricing", question: "What is your pricing philosophy and accessibility stance?", suggestedAnswers: ["Neighborhood everyday dining value", "Accessible craft pricing with zero pretension", "High-end artisanal weekend destination"], reasoning: "Positions the brand in the local dining hierarchy." },
+      { id: 6, stageLabel: "Tone", question: "What must your brand and voice NEVER sound like?", suggestedAnswers: ["Pretentious consultant food-critic speak", "Corporate sanitized casual chain script", "Aloof hipster dining club attitude"], reasoning: "Keeps copy, menus, and staff conversations grounded." },
+      { id: 7, stageLabel: "Edge", question: "What is the unfair differentiator that makes this impossible to replicate?", suggestedAnswers: ["Live-oak wood oven in center of room", "Naturally fermented 72-hour crispy dough", "Warm generous host who knows your name"], reasoning: "The enduring advantage that drives organic recommendations." }
+    ];
+  }
+
+  if (domain === 'developer') {
+    return [
+      { id: 1, stageLabel: "Audience", question: "Who is the technical user adopting your product on day one?", suggestedAnswers: ["Systems engineers fighting query latency", "DevOps leads tackling cloud cost overruns", "Staff engineers fed up with ORM bloat"], reasoning: "Narrow developer personas drive organic grassroots adoption." },
+      { id: 2, stageLabel: "Experience", question: "What developer friction or broken workflow are you eliminating entirely?", suggestedAnswers: ["Multi-second query compile latency", "Complex distributed cluster setup", "Opaque cloud vendor lock-in"], reasoning: "Focuses developer documentation and CLI developer experience." },
+      { id: 3, stageLabel: "Villain", question: "What enterprise software cliché or bloated practice do you eliminate?", suggestedAnswers: ["Mandatory sales calls before seeing pricing", "Heavy JVM/Python runtime overhead", "Over-abstracted YAML configuration sprawl"], reasoning: "Engineers trust tools with radical architectural transparency." },
+      { id: 4, stageLabel: "Vibe", question: "What is the technical environment and operational posture?", suggestedAnswers: ["Bare-metal single binary CLI tool", "Cloud-native distributed Kubernetes engine", "In-memory sub-millisecond local cache"], reasoning: "Sets the visual brutalism, documentation style, and benchmarks." },
+      { id: 5, stageLabel: "Pricing", question: "What is your commercialization and pricing stance?", suggestedAnswers: ["Open source core with enterprise support", "Predictable consumption billing with no seat tax", "Free local dev with paid cloud hosting"], reasoning: "Aligns developer trust with sustainable enterprise monetization." },
+      { id: 6, stageLabel: "Tone", question: "What must your brand and documentation NEVER sound like?", suggestedAnswers: ["Vague enterprise marketing hype", "Patronizing baby-talk onboarding guides", "Pastel corporate SaaS brochureware"], reasoning: "Preserves technical credibility among senior systems engineers." },
+      { id: 7, stageLabel: "Edge", question: "What contrarian architectural conviction makes your product uncopyable?", suggestedAnswers: ["Compiled Rust execution under 1ms", "Zero-dependency embedded architecture", "Deterministic memory safety without GC"], reasoning: "Forms a defensible technical moat that incumbents cannot easily patch." }
+    ];
+  }
+
+  return [
+    { id: 1, stageLabel: "Audience", question: "Who is the specific candidate you help win high-stakes interviews?", suggestedAnswers: ["Senior engineers with non-traditional backgrounds", "Design leaders showcasing deep case studies", "Founders transitioning into executive roles"], reasoning: "Focusing on a high-agency user prevents generic resume commoditization." },
+    { id: 2, stageLabel: "Experience", question: "What broken hiring reality are you rescuing candidates from?", suggestedAnswers: ["Black-hole automated ATS bot filters", "Messy 1-page summaries hiding architectural depth", "Keyword stuffing recommendations from recruiters"], reasoning: "Directly solves the 6-second glance frustration of hiring managers." },
+    { id: 3, stageLabel: "Villain", question: "What predatory industry habit or resume cliché do you refuse to adopt?", suggestedAnswers: ["Recurring monthly subscription paywalls", "Fluffy buzzword checklists without proof", "Cluttered multi-column infographic templates"], reasoning: "Positions the brand as an honest, high-signal editorial standard." },
+    { id: 4, stageLabel: "Vibe", question: "What aesthetic and reading impression should the dossier deliver?", suggestedAnswers: ["Restrained Swiss typographic monograph", "Executive technical dossier on warm paper", "Minimalist high-contrast portfolio site"], reasoning: "Typographic restraint signals seniority and disciplined craft." },
+    { id: 5, stageLabel: "Pricing", question: "What is your pricing and accessibility posture?", suggestedAnswers: ["Transparent one-time purchase forever", "Pay-once export with no subscription trap", "Premium bespoke review service"], reasoning: "Eliminates predatory consumer subscription fatigue." },
+    { id: 6, stageLabel: "Tone", question: "What must your brand and candidate copy NEVER sound like?", suggestedAnswers: ["Cheesy motivational LinkedIn influencer speak", "Stuffy corporate HR compliance jargon", "Apologetic hedging and passive voice"], reasoning: "Ensures the voice remains declarative, sharp, and authoritative." },
+    { id: 7, stageLabel: "Edge", question: "What is the unfair differentiator that wins candidate conviction?", suggestedAnswers: ["Verified impact proof-of-work layouts", "Executive typography tailored to hiring managers", "Instant conversion from raw messy notes"], reasoning: "The definitive reason a candidate pays instead of opening Google Docs." }
+  ];
+}
+
+/**
  * Sample 1-sentence pitches spanning diverse business categories
  */
 export const samplePitches = [

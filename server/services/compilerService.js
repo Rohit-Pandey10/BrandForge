@@ -94,11 +94,47 @@ export const brandKitSchema = {
  * @param {Array<{role: string, content: string}>} history
  * @returns {Promise<Object>} Brand Kit matching brandKitSchema
  */
-export async function compileBrandKit(history = []) {
+export async function compileBrandKit(payload = []) {
+  let history = [];
+  let firstPitch = '';
+
+  if (Array.isArray(payload)) {
+    history = payload;
+    firstPitch = history.find(m => m.role === 'user')?.content || '';
+  } else if (payload && typeof payload === 'object') {
+    if (Array.isArray(payload.history)) {
+      history = payload.history;
+      firstPitch = payload.initialPitch || history.find(m => m.role === 'user')?.content || '';
+    } else if (Array.isArray(payload.qaPairs)) {
+      firstPitch = payload.initialPitch || '';
+      if (firstPitch) {
+        history.push({ role: 'user', content: firstPitch });
+      }
+      for (const pair of payload.qaPairs) {
+        if (pair.question) history.push({ role: 'assistant', content: pair.question });
+        if (pair.answer) history.push({ role: 'user', content: pair.answer });
+      }
+    } else if (payload.answers && typeof payload.answers === 'object') {
+      firstPitch = payload.initialPitch || '';
+      if (firstPitch) {
+        history.push({ role: 'user', content: firstPitch });
+      }
+      for (const [q, a] of Object.entries(payload.answers)) {
+        history.push({ role: 'assistant', content: q });
+        history.push({ role: 'user', content: String(a) });
+      }
+    }
+  }
+
+  if (!firstPitch && history.length > 0) {
+    firstPitch = history.find(m => m.role === 'user')?.content || 'Hospitality dining experience';
+  } else if (!firstPitch) {
+    firstPitch = 'Hospitality dining experience';
+  }
+
   const transcriptText = history.map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n');
-  const firstPitch = history.find(m => m.role === 'user')?.content || 'Hospitality dining experience';
-  const domain = classifyDomain(transcriptText);
-  const isFamily = isFamilyIntent(transcriptText);
+  const domain = classifyDomain(transcriptText || firstPitch);
+  const isFamily = isFamilyIntent(transcriptText || firstPitch);
 
   if (isLlmConfigured()) {
     try {

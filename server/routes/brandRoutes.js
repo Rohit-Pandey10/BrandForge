@@ -1,10 +1,18 @@
 import express from 'express';
 import {
+  handleStartInterview,
   handleNextQuestion,
   handleCompileBrandKit
 } from '../controllers/interviewerController.js';
 
 const router = express.Router();
+
+/**
+ * @route   POST /api/interview/start
+ * @desc    Generates full 7-question discovery batch upfront in 1 call
+ * @access  Public
+ */
+router.post('/start', handleStartInterview);
 
 /**
  * @route   POST /api/interview/next

@@ -9,11 +9,11 @@
  *   compilerService   → Brand kit synthesis
  */
 
-import { generateNextQuestion } from '../services/interviewService.js';
+import { generateNextQuestion, generateInterviewBatch } from '../services/interviewService.js';
 import { compileBrandKit } from '../services/compilerService.js';
 
 // Re-export schemas for backwards compatibility with existing tests
-export { questionSchema } from '../services/interviewService.js';
+export { questionSchema, batchQuestionSchema } from '../services/interviewService.js';
 export { brandKitSchema } from '../services/compilerService.js';
 
 // Re-export domain helpers so existing imports from old controller still work
@@ -33,6 +33,26 @@ function validateHistory(history) {
     }
   }
   return null;
+}
+
+/**
+ * POST /api/interview/start
+ * Generates the full 7-question discovery batch upfront from initial pitch.
+ */
+export async function handleStartInterview(req, res) {
+  try {
+    const initialPitch = req.body.initialPitch || req.body.pitch || (Array.isArray(req.body.history) && req.body.history[0]?.content) || '';
+
+    if (!initialPitch || typeof initialPitch !== 'string' || !initialPitch.trim()) {
+      return res.status(400).json({ error: 'Invalid request', details: 'initialPitch must be a non-empty string' });
+    }
+
+    const questions = await generateInterviewBatch(initialPitch.trim());
+    return res.status(200).json({ questions });
+  } catch (error) {
+    console.error('[interviewerController] Error in handleStartInterview:', error);
+    return res.status(500).json({ error: 'Failed to generate interview batch', details: error.message });
+  }
 }
 
 /**
@@ -58,18 +78,14 @@ export async function handleNextQuestion(req, res) {
 
 /**
  * POST /api/interview/compile
- * Synthesizes the full conversation transcript into a structured Brand Kit.
+ * Synthesizes the full conversation transcript or 7 Q&A pairs into a structured Brand Kit.
  */
 export async function handleCompileBrandKit(req, res) {
   try {
-    const { history = [] } = req.body;
+    const payload = req.body;
 
-    const validationError = validateHistory(history);
-    if (validationError) {
-      return res.status(400).json({ error: 'Invalid request', details: validationError });
-    }
-
-    const result = await compileBrandKit(history);
+    // Support both new { qaPairs, initialPitch } / { answers } and legacy { history }
+    const result = await compileBrandKit(payload);
     return res.status(200).json(result);
   } catch (error) {
     console.error('[interviewerController] Error in handleCompileBrandKit:', error);

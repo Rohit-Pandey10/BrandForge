@@ -94,6 +94,43 @@ Currently evaluating Round ${currentRound}.`;
 }
 
 /**
+ * Builds the system instruction for the upfront 7-question batch discovery.
+ * @param {string} domain
+ * @param {boolean} isFamily
+ * @returns {string}
+ */
+export function buildBatchQuestionSystemInstruction(domain, isFamily) {
+  const domainGuidance = getDomainGuidance(domain, isFamily);
+  return `You are a seasoned brand advisor helping a founder turn their rough concept into a distinctive, commercially viable brand.
+
+${domainGuidance}
+
+MISSION:
+Generate exactly 7 sequential, structured discovery questions upfront that systematically interrogate the brand across these 7 dimensions:
+1. (id: 1, stageLabel: "Audience") Primary Target Crowd: Who is the first person walking through the door or buying immediately?
+2. (id: 2, stageLabel: "Experience") Unmet Need & Core Pain: What frustrating daily reality or unmet desire brings them here?
+3. (id: 3, stageLabel: "Villain") The Industry Anti-Hero: What tired conventional practice, bad habit, or industry cliché do you refuse to replicate?
+4. (id: 4, stageLabel: "Vibe") Setting & Atmosphere: What is the physical or digital environment and atmosphere?
+5. (id: 5, stageLabel: "Pricing") Pricing & Accessibility Posture: Is this everyday casual value, accessible craft, or rare special occasion?
+6. (id: 6, stageLabel: "Tone") Brand Tone Boundaries: What must the brand NEVER sound or look like?
+7. (id: 7, stageLabel: "Edge") The Unfair Differentiator: What is the singular reason someone chooses this over the established alternative?
+
+STRICT RULES:
+1. PLAIN CONVERSATIONAL ENGLISH (8th-grade reading level):
+   - Strictly ban pretentious consultant terms ("terroir", "beachhead", "dichotomy", "synergy", "provenance", "quiet luxury", "sanctuary", "elemental").
+   - Every question must be punchy and clear, STRICTLY UNDER 22 WORDS TOTAL.
+2. SUGGESTED ANSWERS:
+   - Provide exactly 3 suggested answers per question.
+   - Limit each suggested answer to UNDER 6 WORDS.
+   - The 3 options must represent distinct, concrete strategic directions.
+3. REASONING:
+   - Exactly 1 short sentence explaining why this trade-off matters for their brand.
+4. DEMOGRAPHIC CONSTRAINTS:
+   - If the founder specifies "family", "family dining", or "kids": STRICTLY FORBID alcohol, wine bar, or date-night tropes in all questions and options. Focus on family dining flow, kid-friendly seating, sharing platters, weeknight speed, or neighborhood trust.
+`;
+}
+
+/**
  * Builds the system instruction for the brand kit compilation endpoint.
  * @param {string} domain
  * @param {boolean} isFamily

@@ -8,8 +8,70 @@
 
 import { generateStructuredJson, isLlmConfigured } from '../utils/llmClient.js';
 import { classifyDomain, isFamilyIntent } from '../data/domainConfig.js';
-import { buildQuestionSystemInstruction } from '../prompts/brandPrompts.js';
-import { getMockQuestion } from './mockEngine.js';
+import { buildQuestionSystemInstruction, buildBatchQuestionSystemInstruction } from '../prompts/brandPrompts.js';
+import { getMockQuestion, getMockBatch } from './mockEngine.js';
+
+/**
+ * JSON schema for upfront 7-question batch discovery
+ */
+export const batchQuestionSchema = {
+  type: 'object',
+  properties: {
+    stageQuestions: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'integer' },
+          stageLabel: { type: 'string' },
+          question: { type: 'string' },
+          suggestedAnswers: {
+            type: 'array',
+            items: { type: 'string' }
+          },
+          reasoning: { type: 'string' }
+        },
+        required: ['id', 'stageLabel', 'question', 'suggestedAnswers', 'reasoning']
+      }
+    }
+  },
+  required: ['stageQuestions']
+};
+
+/**
+ * Generates all 7 discovery questions upfront in a single batch call.
+ * @param {string} initialPitch
+ * @returns {Promise<Array<Object>>} Array of exactly 7 questions
+ */
+export async function generateInterviewBatch(initialPitch = '') {
+  const pitchText = String(initialPitch || '').trim();
+  const domain = classifyDomain(pitchText);
+  const isFamily = isFamilyIntent(pitchText);
+
+  if (isLlmConfigured()) {
+    try {
+      const systemInstruction = buildBatchQuestionSystemInstruction(domain, isFamily);
+      const prompt = `Founder's Initial Concept Pitch:\n"${pitchText}"\n\nDetected Domain: ${domain.toUpperCase()}${isFamily ? ' (FAMILY DINING INTENT)' : ''}.\nGenerate the complete 7-question discovery batch now matching schema.`;
+
+      const result = await generateStructuredJson({
+        systemInstruction,
+        prompt,
+        schema: batchQuestionSchema
+      });
+
+      if (result && Array.isArray(result.stageQuestions) && result.stageQuestions.length >= 7) {
+        return result.stageQuestions.slice(0, 7);
+      }
+      if (result && Array.isArray(result.stageQuestions) && result.stageQuestions.length > 0) {
+        return result.stageQuestions;
+      }
+    } catch (llmError) {
+      console.warn('[interviewService] LLM Batch generation failed, using mock batch fallback:', llmError.message);
+    }
+  }
+
+  return getMockBatch(pitchText);
+}
 
 /**
  * Gemini JSON schema for the Socratic question response shape.

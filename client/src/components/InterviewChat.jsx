@@ -1,66 +1,137 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, ChevronDown, ChevronUp, Sparkles, RotateCcw, Settings, Layers } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronDown, ChevronUp, Sparkles, RotateCcw, Settings, FastForward } from 'lucide-react';
 import ProgressStepper from './ProgressStepper';
 
 export default function InterviewChat({
-  messages = [],
-  currentQuestion,
-  isLoading,
-  isCompiling,
-  onSendMessage,
+  questions = [],
+  initialPitch = '',
+  isLoading = false,
+  isCompiling = false,
   onCompileBrandKit,
   onReset
 }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState({});
   const [selectedOption, setSelectedOption] = useState(null);
   const [inputText, setInputText] = useState('');
   const [showRationale, setShowRationale] = useState(false);
 
-  const currentRound = currentQuestion?.currentRound || 1;
-  const stageLabel = currentQuestion?.stageLabel || (
-    currentRound === 1 ? 'Core Audience' :
-    currentRound === 2 ? 'The Distinct Edge' :
-    currentRound === 3 ? 'Brand Edge' : 'Strategic Moat'
-  );
-  const readyForSynthesis = Boolean(currentQuestion?.readyForSynthesis || currentRound >= 3);
-  const suggestedAnswers = currentQuestion?.suggestedAnswers || [];
-  const questionHeadline = currentQuestion?.question || '';
-  const reasoning = currentQuestion?.reasoning || '';
+  const totalQuestions = questions.length || 7;
+  const currentQ = questions[currentIndex] || {};
+  const currentRound = currentIndex + 1;
+  const stageLabel = currentQ.stageLabel || `Stage ${currentRound}`;
+  const suggestedAnswers = currentQ.suggestedAnswers || [];
+  const questionHeadline = currentQ.question || 'Formulating discovery question...';
+  const reasoning = currentQ.reasoning || '';
+  const isLastQuestion = currentIndex === totalQuestions - 1;
 
-  // Reset local state when a new question arrives
+  // Synchronize local input state whenever currentIndex or questions change
   useEffect(() => {
-    setSelectedOption(null);
-    setInputText('');
+    const existingAnswer = userAnswers[currentIndex] || '';
+    setInputText(existingAnswer);
+    const optionIndex = suggestedAnswers.findIndex(a => a === existingAnswer);
+    setSelectedOption(optionIndex !== -1 ? optionIndex : null);
     setShowRationale(false);
-  }, [currentRound, questionHeadline]);
+  }, [currentIndex, questions]);
 
   const handleSelectOption = (answer, index) => {
     setSelectedOption(index);
     setInputText(answer);
   };
 
-  const handleProceedNextRound = (e) => {
-    e?.preventDefault();
-    if (isLoading || isCompiling) return;
-    const answerToSend = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');
-    if (!answerToSend) return;
-    onSendMessage(answerToSend, false); // false = don't synthesize, continue discovery
+  /**
+   * Helper to format all recorded answers into structured Q&A pairs for synthesis
+   */
+  const buildQaPayload = (additionalCurrentAnswer) => {
+    const activeAnswer = additionalCurrentAnswer !== undefined
+      ? additionalCurrentAnswer
+      : (inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : ''));
+
+    const mergedAnswers = {
+      ...userAnswers,
+      ...(activeAnswer ? { [currentIndex]: activeAnswer } : {})
+    };
+
+    const qaPairs = questions.map((q, idx) => ({
+      id: q.id || idx + 1,
+      stageLabel: q.stageLabel,
+      question: q.question,
+      answer: mergedAnswers[idx] || ''
+    })).filter(pair => pair.answer && pair.answer.trim());
+
+    return {
+      initialPitch,
+      answers: mergedAnswers,
+      qaPairs
+    };
   };
 
-  const handleSynthesizeNow = (e) => {
+  /**
+   * Advance to next question LOCALLY (0 network calls)
+   */
+  const handleNext = (e) => {
     e?.preventDefault();
     if (isLoading || isCompiling) return;
-    const answerToSend = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');
-    onCompileBrandKit(answerToSend);
+
+    const answerToCommit = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');
+    const updatedAnswers = {
+      ...userAnswers,
+      [currentIndex]: answerToCommit
+    };
+    setUserAnswers(updatedAnswers);
+
+    if (isLastQuestion) {
+      // Reached the end of 7 questions -> trigger compilation
+      onCompileBrandKit(buildQaPayload(answerToCommit));
+    } else {
+      // Step to next question instantaneously
+      setCurrentIndex(prev => Math.min(prev + 1, totalQuestions - 1));
+    }
   };
+
+  /**
+   * Go back to previous question locally
+   */
+  const handlePrevious = (e) => {
+    e?.preventDefault();
+    if (currentIndex <= 0 || isLoading || isCompiling) return;
+
+    const answerToCommit = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');
+    if (answerToCommit) {
+      setUserAnswers(prev => ({ ...prev, [currentIndex]: answerToCommit }));
+    }
+    setCurrentIndex(prev => Math.max(0, prev - 1));
+  };
+
+  /**
+   * Trigger early compilation at any point
+   */
+  const handleSynthesizeEarly = (e) => {
+    e?.preventDefault();
+    if (isLoading || isCompiling) return;
+    const answerToCommit = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');
+    onCompileBrandKit(buildQaPayload(answerToCommit));
+  };
+
+  const hasCurrentAnswer = Boolean(inputText.trim() || selectedOption !== null);
 
   return (
     <div className="w-full max-w-3xl mx-auto px-4 py-4 sm:py-8 flex flex-col justify-center animate-fade-in font-sans">
-      {/* Centered Stage Stepper */}
+      {/* 7-Stage Category Stepper */}
       <div className="mb-6 sm:mb-8">
-        <ProgressStepper 
-          currentRound={currentRound} 
-          readyForSynthesis={readyForSynthesis}
-          stageLabel={stageLabel}
+        <ProgressStepper
+          currentStep={currentRound}
+          totalSteps={totalQuestions}
+          activeLabel={stageLabel}
+          onStepClick={(targetIdx) => {
+            if (targetIdx < totalQuestions && !isLoading && !isCompiling) {
+              const answerToCommit = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');
+              if (answerToCommit) {
+                setUserAnswers(prev => ({ ...prev, [currentIndex]: answerToCommit }));
+              }
+              setCurrentIndex(targetIdx);
+            }
+          }}
         />
       </div>
 
@@ -77,65 +148,66 @@ export default function InterviewChat({
             Authoring your Brand Monograph...
           </h2>
           <p className="text-xs sm:text-sm text-stone-500 max-w-md mx-auto leading-relaxed">
-            Compiling typographic scales, contrasting color tokens, voice dos & don'ts, and the launch manifesto.
+            Synthesizing 7 discovery dimensions into typographic scales, contrasting color tokens, voice dos & don'ts, and launch manifesto.
           </p>
         </div>
       ) : isLoading ? (
-        /* State 2: Dedicated In-Flight Loading Card (Never Blank or Frozen) */
+        /* State 2: In-Flight Loading Card for Upfront Batch */
         <div className="bg-white rounded-[28px] border border-[#dbd7cd]/80 p-6 sm:p-10 max-w-2xl mx-auto shadow-sm w-full transition-all animate-fade-in space-y-6">
           <div className="flex items-center justify-between pb-3 border-b border-[#dbd7cd]/50">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-black animate-ping" />
               <span className="font-sans text-[10px] tracking-widest uppercase text-stone-500 font-medium">
-                STAGE {currentRound}: {stageLabel.toUpperCase()} &bull; DIAGNOSTIC IN PROGRESS
+                GENERATING 7 DISCOVERY DIMENSIONS
               </span>
             </div>
             <span className="font-sans text-[11px] text-stone-400">
-              Round {currentRound}
+              Batch Discovery Engine
             </span>
           </div>
 
           <div className="space-y-3 py-2">
             <div className="h-4 w-32 bg-stone-200/80 rounded-full animate-pulse" />
             <h2 className="font-serif text-2xl sm:text-[28px] font-light text-stone-800 tracking-tight leading-snug">
-              Synthesizing strategic trade-offs...
+              Mapping strategic discovery questions...
             </h2>
             <p className="text-xs text-stone-500 leading-relaxed">
-              Evaluating your position against market incumbents and formulating the next challenge.
+              Evaluating your concept to author 7 targeted inquiries across audience, villain, atmosphere, and competitive edge.
             </p>
           </div>
 
-          {/* Shimmer skeleton option rows */}
           <div className="space-y-2.5 pt-2">
-            <div className="w-full h-14 rounded-xl border border-[#dbd7cd]/60 bg-[#f9f8f6] animate-pulse flex items-center px-4 gap-3">
-              <div className="w-4 h-4 rounded-full border border-stone-300 shrink-0" />
-              <div className="h-3 bg-stone-200 rounded w-3/4" />
-            </div>
-            <div className="w-full h-14 rounded-xl border border-[#dbd7cd]/60 bg-[#f9f8f6] animate-pulse flex items-center px-4 gap-3">
-              <div className="w-4 h-4 rounded-full border border-stone-300 shrink-0" />
-              <div className="h-3 bg-stone-200 rounded w-1/2" />
-            </div>
-            <div className="w-full h-14 rounded-xl border border-[#dbd7cd]/60 bg-[#f9f8f6] animate-pulse flex items-center px-4 gap-3">
-              <div className="w-4 h-4 rounded-full border border-stone-300 shrink-0" />
-              <div className="h-3 bg-stone-200 rounded w-2/3" />
-            </div>
+            {[1, 2, 3].map(i => (
+              <div key={i} className="w-full h-14 rounded-xl border border-[#dbd7cd]/60 bg-[#f9f8f6] animate-pulse flex items-center px-4 gap-3">
+                <div className="w-4 h-4 rounded-full border border-stone-300 shrink-0" />
+                <div className="h-3 bg-stone-200 rounded w-2/3" />
+              </div>
+            ))}
           </div>
         </div>
       ) : (
-        /* State 3: Active Studio Decision Card */
+        /* State 3: Active Studio Decision Card (Local 0ms Navigation) */
         <div className="bg-white rounded-[28px] border border-[#dbd7cd]/80 p-6 sm:p-10 max-w-2xl mx-auto shadow-sm w-full transition-all">
           {/* Card Top Metadata Row */}
           <div className="flex items-center justify-between pb-3 border-b border-[#dbd7cd]/50">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-black" />
               <span className="font-sans text-[10px] tracking-widest uppercase text-stone-400 font-medium">
-                STAGE {currentRound}: {stageLabel.toUpperCase()}
+                DIMENSION {currentRound} OF {totalQuestions} &bull; {stageLabel.toUpperCase()}
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="font-sans text-[11px] text-stone-500">
-                Round {currentRound}
-              </span>
+              {/* Early Synthesis Button */}
+              <button
+                type="button"
+                onClick={handleSynthesizeEarly}
+                className="font-sans text-[11px] text-stone-600 hover:text-black hover:bg-[#f2f1ed] px-2.5 py-1 rounded-full border border-[#dbd7cd] transition-all flex items-center gap-1"
+                title="Synthesize early with completed answers"
+              >
+                <FastForward className="w-3 h-3 text-stone-500" />
+                <span>Synthesize Early</span>
+              </button>
+
               <button
                 onClick={onReset}
                 className="text-stone-400 hover:text-black transition-colors"
@@ -146,14 +218,14 @@ export default function InterviewChat({
             </div>
           </div>
 
-          {/* Display Question Headline */}
+          {/* Question Headline */}
           <div className="mt-5 mb-4">
             <h2 className="font-serif text-2xl sm:text-[28px] font-light leading-[1.2] text-black tracking-[-0.03em]">
               {questionHeadline}
             </h2>
           </div>
 
-          {/* Collapsible Strategic Context / Rationale */}
+          {/* Collapsible Strategic Rationale */}
           {reasoning && (
             <div className="mb-6">
               <button
@@ -179,7 +251,7 @@ export default function InterviewChat({
             </div>
           )}
 
-          {/* Structured Radio Selection Rows */}
+          {/* Suggested Answer Pills */}
           {suggestedAnswers.length > 0 && (
             <div className="mb-6">
               <span className="font-sans text-[11px] text-stone-400 mb-2.5 block">
@@ -188,19 +260,18 @@ export default function InterviewChat({
 
               <div className="space-y-2.5">
                 {suggestedAnswers.map((answer, index) => {
-                  const isSelected = selectedOption === index;
+                  const isSelected = selectedOption === index || userAnswers[currentIndex] === answer;
                   return (
                     <button
                       key={index}
                       type="button"
                       onClick={() => handleSelectOption(answer, index)}
-                      className={`w-full text-left p-3.5 sm:p-4 rounded-xl border transition-all flex items-start gap-3 group ${
+                      className={`w-full text-left p-3.5 sm:p-4 rounded-xl border transition-all duration-200 hover:-translate-y-0.5 flex items-start gap-3 group ${
                         isSelected
                           ? 'border-black bg-[#faf9f6] ring-1 ring-black/5'
                           : 'border-[#dbd7cd] bg-white hover:bg-[#faf9f6] hover:border-black/50'
                       }`}
                     >
-                      {/* Radio Circle Indicator */}
                       <div
                         className={`w-4 h-4 rounded-full border mt-0.5 flex items-center justify-center shrink-0 transition-colors ${
                           isSelected ? 'border-black' : 'border-stone-300 group-hover:border-stone-400'
@@ -209,7 +280,6 @@ export default function InterviewChat({
                         {isSelected && <div className="w-2 h-2 rounded-full bg-black" />}
                       </div>
 
-                      {/* Option Text */}
                       <div className="flex-1 font-sans text-[13px] text-stone-800 leading-snug">
                         {answer}
                       </div>
@@ -220,7 +290,7 @@ export default function InterviewChat({
             </div>
           )}
 
-          {/* Nuanced Input Area & Action Bar */}
+          {/* Nuanced Input Area */}
           <div className="space-y-4 pt-2">
             <div>
               <label
@@ -244,51 +314,41 @@ export default function InterviewChat({
               />
             </div>
 
-            {/* Bottom Action Row: Multi-Directional User Agency */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
-              {/* Secondary Option / Status */}
+            {/* Bottom Stepping Bar: 0ms Local Transitions */}
+            <div className="flex items-center justify-between gap-3 pt-2">
+              {/* Previous Button */}
               <div>
-                {readyForSynthesis ? (
+                {currentIndex > 0 && (
                   <button
                     type="button"
-                    onClick={handleProceedNextRound}
-                    disabled={!inputText.trim() && selectedOption === null}
-                    className="text-xs text-stone-600 hover:text-black border border-[#dbd7cd] rounded-full px-4 py-2 bg-white hover:bg-[#fcfbf9] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
+                    onClick={handlePrevious}
+                    className="text-xs text-stone-600 hover:text-black border border-[#dbd7cd] rounded-full px-4 py-2.5 bg-white hover:bg-[#fcfbf9] transition-all flex items-center gap-1.5"
                   >
-                    <span>Deepen Strategy (Round {currentRound + 1})</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={handleSynthesizeNow}
-                    className="text-xs text-stone-500 hover:text-black transition-colors flex items-center justify-center gap-1.5 py-1.5"
-                  >
-                    <span>Synthesize now with current insights &rarr;</span>
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                    <span>Previous</span>
                   </button>
                 )}
               </div>
 
-              {/* Primary Action Button */}
-              <div>
-                {readyForSynthesis ? (
+              {/* Next or Synthesize Button */}
+              <div className="flex items-center gap-2">
+                {isLastQuestion ? (
                   <button
                     type="button"
-                    onClick={handleSynthesizeNow}
-                    disabled={!inputText.trim() && selectedOption === null}
-                    className="w-full sm:w-auto font-sans bg-black text-white px-7 py-2.5 rounded-full text-xs font-medium hover:bg-neutral-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-none"
+                    onClick={handleNext}
+                    disabled={!hasCurrentAnswer}
+                    className="font-sans bg-black text-white px-7 py-2.5 rounded-full text-xs font-medium hover:bg-neutral-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-none"
                   >
                     <span>Synthesize Brand Kit ✦</span>
                   </button>
                 ) : (
                   <button
                     type="button"
-                    onClick={handleProceedNextRound}
-                    disabled={!inputText.trim() && selectedOption === null}
-                    className="w-full sm:w-auto font-sans bg-black text-white px-6 py-2.5 rounded-full text-xs hover:bg-neutral-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-none"
+                    onClick={handleNext}
+                    disabled={!hasCurrentAnswer}
+                    className="font-sans bg-black text-white px-6 py-2.5 rounded-full text-xs hover:bg-neutral-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-none"
                   >
-                    <span>Proceed to Round {currentRound + 1}</span>
-                    <ArrowRight className="w-3.5 h-3.5 stroke-[1.5]" />
+                    <span>Next Question &rarr;</span>
                   </button>
                 )}
               </div>
