@@ -17,7 +17,7 @@ export const questionSchema = {
     suggestedAnswers: {
       type: 'array',
       items: { type: 'string' },
-      description: 'Exactly 3 distinct clickable options. STRICT LIMIT: Under 8 words per option.'
+      description: 'Exactly 3 distinct clickable options tailored strictly to the business domain. STRICT LIMIT: Under 8 words per option.'
     },
     reasoning: {
       type: 'string',
@@ -25,7 +25,7 @@ export const questionSchema = {
     },
     stageLabel: {
       type: 'string',
-      description: 'Short 2-3 word stage title, e.g. Target Beachhead, Incumbent Critique, Brand Edge, Voice Boundaries, Category Moat.'
+      description: 'Short 2-3 word stage title, e.g. Target Diners, Culinary Ethos, Ingredient Integrity, Dining Ritual.'
     },
     readyForSynthesis: {
       type: 'boolean',
@@ -110,31 +110,140 @@ export const brandKitSchema = {
   required: ['brandStrategy', 'voiceSystem', 'visualTokens', 'launchContent']
 };
 
-function extractDomain(text = '') {
+/**
+ * Intelligent Domain Classifier
+ * Inspects all conversation turns to detect the business category.
+ */
+export function extractDomain(text = '') {
   const lower = text.toLowerCase();
-  if (lower.includes('resume') || lower.includes('cv') || lower.includes('job') || lower.includes('career') || lower.includes('hire')) {
-    return 'resume';
+  if (/(restaurant|food|dining|cuisine|culinary|chef|bistro|cafe|bar|bakery|coffee|eatery|pizza|burger|pasta|taco|cocktail|hospitality|kitchen|table|wine|menu)/i.test(lower)) {
+    return 'hospitality';
   }
-  if (lower.includes('data') || lower.includes('sql') || lower.includes('rust') || lower.includes('dev') || lower.includes('code') || lower.includes('api')) {
+  if (/(fashion|clothing|apparel|wear|luxury|garment|streetwear|shoe|jewelry|bag|textile|tailor|collection)/i.test(lower)) {
+    return 'fashion';
+  }
+  if (/(fitness|wellness|health|gym|workout|yoga|longevity|nutrition|mental health|therapy|meditation|supplement)/i.test(lower)) {
+    return 'wellness';
+  }
+  if (/(resume|cv|career|job|hiring|recruiting|portfolio|interview|candidate)/i.test(lower)) {
+    return 'career';
+  }
+  if (/(sql|database|rust|in-memory|backend|api|infrastructure|dev|developer|compiler|cloud|devops|kubernetes|linux)/i.test(lower)) {
     return 'developer';
   }
-  if (lower.includes('account') || lower.includes('finance') || lower.includes('bookkeeping') || lower.includes('tax') || lower.includes('money')) {
-    return 'finance';
+  if (/(creative|agency|design studio|animation|film|music|video|branding agency|photography)/i.test(lower)) {
+    return 'creative';
   }
   return 'general';
 }
 
 /**
- * Deterministic Mock Question Generator for fallback / offline testing (Continuous Discovery).
+ * Domain-specific guidance injected into Gemini system instructions
+ */
+function getDomainGuidance(domain) {
+  switch (domain) {
+    case 'hospitality':
+      return `DOMAIN: CULINARY, RESTAURANT & HOSPITALITY.
+- Focus: Culinary ethos, atmosphere, ingredient sourcing, neighborhood identity, dining rituals.
+- BANNED VOCABULARY: NEVER use software/tech words ("code", "developer", "SaaS", "APIs", "platforms", "users", "metrics").
+- Use culinary and sensory terminology (guests, diners, table, hearth, flavor, provenance, service, seasonal).
+- Visual Guidance: Warm organic earth tones, deep terracotta, olive, smoked charcoal, aged brass, warm cream.
+- Typography Guidance: Editorial artisanal serifs (Fraunces, Playfair Display, Cormorant Garamond, Newsreader) with warm grotesque bodies.`;
+
+    case 'fashion':
+      return `DOMAIN: FASHION, APPAREL & LUXURY.
+- Focus: Silhouette, aesthetic tension, fabric provenance, anti-fast-fashion stance, target tastemakers.
+- BANNED VOCABULARY: NEVER use software/tech jargon ("SaaS", "APIs", "software", "code").
+- Visual Guidance: Monochromatic luxury, sculptural geometry, stone, charcoal, ecru.
+- Typography Guidance: High-contrast high-fashion serifs or minimalist Swiss display grotesques.`;
+
+    case 'wellness':
+      return `DOMAIN: WELLNESS, HEALTH & FITNESS.
+- Focus: Biological conviction, performance vs restoration, clinical rigor vs holistic peace.
+- Visual Guidance: Sage, earthen clay, serene ocean mist, botanical tones.`;
+
+    case 'career':
+      return `DOMAIN: CAREER & PROFESSIONAL TOOLS.
+- Focus: Desperate job-seekers, recruiter 6-second glance, anti-generic template angle.`;
+
+    case 'developer':
+      return `DOMAIN: DEVELOPER TOOLS & TECHNICAL INFRASTRUCTURE.
+- Focus: Latency, developer friction, systems engineers, unbloated architecture.`;
+
+    default:
+      return `DOMAIN: GENERAL CONSUMER / PRODUCT DISCOVERY.
+- Focus on the specific human buyer, acute pain point, and broken legacy compromise.`;
+  }
+}
+
+/**
+ * Deterministic Multi-Domain Mock Question Generator for fallback / offline testing.
  */
 function getMockQuestion(round, userContext = '') {
   const domain = extractDomain(userContext);
 
-  if (round === 1) {
-    if (domain === 'resume') {
+  if (domain === 'hospitality') {
+    if (round === 1) {
       return {
         currentRound: 1,
-        stageLabel: "Target Beachhead",
+        stageLabel: "Target Diners",
+        question: "Casual diners prioritize convenience over culinary soul. Who is the passionate diner who will book three weeks in advance?",
+        suggestedAnswers: [
+          "Neighborhood epicures seeking unhurried dining.",
+          "Natural wine and wood-fired purists.",
+          "Date-night couples craving sensory intimacy."
+        ],
+        reasoning: "Defining your primary dining audience determines menu size and seating flow.",
+        readyForSynthesis: false
+      };
+    }
+    if (round === 2) {
+      return {
+        currentRound: 2,
+        stageLabel: "Culinary Integrity",
+        question: "Most restaurants cut corners with frozen distributor shortcuts. What sacred culinary compromise will you never allow in your kitchen?",
+        suggestedAnswers: [
+          "Zero frozen ingredients or pre-made sauces.",
+          "No high-turnover rushed table seatings.",
+          "Rejecting sterile QR-code menu hospitality."
+        ],
+        reasoning: "Great restaurants plant a flag against industrial dining shortcuts.",
+        readyForSynthesis: false
+      };
+    }
+    if (round === 3) {
+      return {
+        currentRound: 3,
+        stageLabel: "Atmosphere & Ritual",
+        question: "Safe restaurants feel forgettable and sterile. What specific dining habit or customer behavior are you totally comfortable alienating?",
+        suggestedAnswers: [
+          "Rushed diners demanding ten-minute food.",
+          "Corporate expense-account steakhouse crowds.",
+          "Casual diners wanting bland comfort food."
+        ],
+        reasoning: "Polarizing culinary conviction creates obsessive neighborhood loyalty.",
+        readyForSynthesis: true
+      };
+    }
+    return {
+      currentRound: round,
+      stageLabel: "Sensory Atmosphere",
+      question: "Ambiance dictates perceived flavor before the first bite. What sensory texture defines your dining room experience?",
+      suggestedAnswers: [
+        "Open wood hearth with crackling embers.",
+        "Intimate candlelight and vinyl acoustics.",
+        "Sunlit minimalist stone and linen."
+      ],
+      reasoning: "Sensory atmosphere shapes memory and brand word-of-mouth.",
+      readyForSynthesis: true
+    };
+  }
+
+  if (domain === 'career') {
+    if (round === 1) {
+      return {
+        currentRound: 1,
+        stageLabel: "Target Candidates",
         question: "Generic templates fail ambitious candidates. Who is the specific professional you help win interviews?",
         suggestedAnswers: [
           "Senior engineers with non-traditional gaps.",
@@ -145,23 +254,7 @@ function getMockQuestion(round, userContext = '') {
         readyForSynthesis: false
       };
     }
-
-    return {
-      currentRound: 1,
-      stageLabel: "Target Beachhead",
-      question: "Broad positioning dilutes early traction. Who feels this problem so acutely they will pay immediately?",
-      suggestedAnswers: [
-        "Founders stuck on brand identity.",
-        "Growth leads avoiding agency retainers.",
-        "Dev advocates needing distinct identity."
-      ],
-      reasoning: "A narrow beachhead audience provides rapid organic traction.",
-      readyForSynthesis: false
-    };
-  }
-
-  if (round === 2) {
-    if (domain === 'resume') {
+    if (round === 2) {
       return {
         currentRound: 2,
         stageLabel: "Incumbent Critique",
@@ -175,70 +268,184 @@ function getMockQuestion(round, userContext = '') {
         readyForSynthesis: false
       };
     }
+    return {
+      currentRound: round,
+      stageLabel: "Brand Edge",
+      question: "Safe brands get ignored. What specific tone or corporate habit are you completely comfortable alienating?",
+      suggestedAnswers: [
+        "Polite corporate buzzwords and clichés.",
+        "Inflated vanity metrics on resumes.",
+        "Generic pastel career advice tropes."
+      ],
+      reasoning: "Setting clear negative boundaries defines your visual and verbal identity.",
+      readyForSynthesis: true
+    };
+  }
 
+  // Developer / Technical
+  if (domain === 'developer') {
+    if (round === 1) {
+      return {
+        currentRound: 1,
+        stageLabel: "Technical ICP",
+        question: "Broad positioning dilutes early traction. Who feels this developer problem so acutely they will adopt today?",
+        suggestedAnswers: [
+          "Systems engineers crippled by query latency.",
+          "DevOps teams fighting cloud cost overruns.",
+          "Platform leads tired of complex ORMs."
+        ],
+        reasoning: "Narrow beachheads provide rapid organic developer adoption.",
+        readyForSynthesis: false
+      };
+    }
+    if (round === 2) {
+      return {
+        currentRound: 2,
+        stageLabel: "Architecture Critique",
+        question: "Legacy databases sacrifice speed for enterprise bloat. What fundamental compromise in existing tools do you refuse?",
+        suggestedAnswers: [
+          "Bloated garbage-collected runtimes.",
+          "Opaque proprietary cloud lock-in.",
+          "Complex multi-node clustering overhead."
+        ],
+        reasoning: "Differentiators must highlight legacy compromises.",
+        readyForSynthesis: false
+      };
+    }
+    return {
+      currentRound: round,
+      stageLabel: "Engineering Conviction",
+      question: "Competitors will copy features quickly. What contrarian engineering belief makes your product impossible to replicate?",
+      suggestedAnswers: [
+        "Bare-metal compiled performance over abstractions.",
+        "Zero-dependency single-binary simplicity.",
+        "Radical transparency with power users."
+      ],
+      reasoning: "Philosophical conviction forms an enduring competitive moat.",
+      readyForSynthesis: true
+    };
+  }
+
+  // General fallback
+  if (round === 1) {
+    return {
+      currentRound: 1,
+      stageLabel: "Target Audience",
+      question: "Broad positioning dilutes early traction. Who feels this problem so acutely they will pay immediately?",
+      suggestedAnswers: [
+        "Passionate early adopters craving quality.",
+        "Frustrated customers escaping legacy tools.",
+        "Discerning buyers demanding bespoke craft."
+      ],
+      reasoning: "A narrow beachhead audience provides rapid organic traction.",
+      readyForSynthesis: false
+    };
+  }
+  if (round === 2) {
     return {
       currentRound: 2,
       stageLabel: "Incumbent Critique",
-      question: "Incumbents already claim speed and ease. What fundamental compromise in today's tools are you fixing?",
+      question: "Incumbents rely on feature bloat and vanity claims. What fundamental industry compromise do you refuse to make?",
       suggestedAnswers: [
-        "Incumbents sell sterile corporate jargon.",
-        "Slow agencies charging exorbitant retainers.",
-        "Generic blue corporate templates."
+        "Cheap mass-produced commodity shortcuts.",
+        "Slow, bloated agency retainers.",
+        "Sterile corporate homogenisation."
       ],
       reasoning: "True differentiation comes from ideological contrast with legacy options.",
       readyForSynthesis: false
     };
   }
-
-  if (round === 3) {
-    return {
-      currentRound: 3,
-      stageLabel: "Brand Edge",
-      question: "Safe brands get ignored. What specific corporate habit or tone are you completely comfortable alienating?",
-      suggestedAnswers: [
-        "Bureaucratic committee consensus.",
-        "Sterile corporate buzzwords.",
-        "Polite surface-level marketing."
-      ],
-      reasoning: "Negative boundaries define visual and verbal edge.",
-      readyForSynthesis: true
-    };
-  }
-
-  if (round === 4) {
-    return {
-      currentRound: 4,
-      stageLabel: "Voice Boundaries",
-      question: "Unchecked copy sounds like generic SaaS. What phrases or attitudes are strictly forbidden in your messaging?",
-      suggestedAnswers: [
-        "Hype words like revolutionary and seamless.",
-        "Apologetic hedging and passive claims.",
-        "Vague claims of being all-in-one."
-      ],
-      reasoning: "Banned vocabulary preserves razor-sharp brand identity.",
-      readyForSynthesis: true
-    };
-  }
-
-  // Round 5+
   return {
     currentRound: round,
-    stageLabel: "Positioning Moat",
-    question: "Competitors will copy features quickly. What contrarian conviction makes your brand impossible to replicate?",
+    stageLabel: "Brand Edge",
+    question: "Safe brands get ignored in a crowded market. What specific habit or attitude are you completely comfortable alienating?",
     suggestedAnswers: [
-      "Craft and speed over consensus.",
-      "Algorithmic clarity over manual agencies.",
-      "Radical transparency with power users."
+      "Bureaucratic committee consensus.",
+      "Sterile corporate buzzwords.",
+      "Polite surface-level marketing."
     ],
-    reasoning: "Philosophical conviction forms an enduring competitive moat.",
+    reasoning: "Negative boundaries define visual and verbal edge.",
     readyForSynthesis: true
   };
 }
 
 /**
- * Deterministic Mock Brand Kit Generator for fallback / offline testing.
+ * Deterministic Multi-Domain Mock Brand Kit Generator for fallback / offline testing.
  */
-function getMockBrandKit(founderPitch = '') {
+function getMockBrandKit(founderPitch = '', fullHistory = []) {
+  const combinedContext = [founderPitch, ...fullHistory.map(m => m.content)].join(' ');
+  const domain = extractDomain(combinedContext);
+
+  if (domain === 'hospitality') {
+    return {
+      brandStrategy: {
+        brandName: "Atelier Umami",
+        tagline: "Unhurried Seasonal Hearth & Terroir-Driven Gastronomy",
+        mission: "To restore reverence for honest ingredients, wood-fired craft, and unhurried hospitality in an era of sterile, assembly-line dining.",
+        targetAudience: "Discerning culinary purists, neighborhood regulars, and food lovers who value provenance, craftsmanship, and memorable hospitality.",
+        coreValueProposition: "A micro-seasonal dining experience centered on an open wood hearth, where every plate celebrates local regenerative agriculture.",
+        antiHero: "Homogenized corporate restaurant groups serving microwaved distributor shortcuts under dim Edison bulbs.",
+        differentiator: "Zero frozen ingredients, 100% direct micro-farm relationships, and an open hearth kitchen where every dish has an uncompromised lineage."
+      },
+      voiceSystem: {
+        archetype: "The Master Artisan",
+        tone: [
+          "Unhurried",
+          "Reverent",
+          "Sensory",
+          "Warmly Discerning"
+        ],
+        dos: [
+          "Speak passionately about ingredient origin and seasonal harvest.",
+          "Describe culinary rituals and hearth techniques with sensory clarity.",
+          "Welcome guests as collaborators in an unhurried communal experience."
+        ],
+        donts: [
+          "Never use tech buzzwords, corporate jargon, or sterile hospitality clichés.",
+          "Do not brag about vanity awards or celebrity patrons.",
+          "Never compromise on culinary integrity to cater to rushed diners."
+        ],
+        vocabularyWords: [
+          "Terroir",
+          "Hearth",
+          "Provenance",
+          "Unhurried",
+          "Savor",
+          "Embers"
+        ]
+      },
+      visualTokens: {
+        palette: [
+          { name: "Smoked Charcoal", hex: "#1C1A17", role: "surface" },
+          { name: "Warm Terracotta", hex: "#C25E3E", role: "primary" },
+          { name: "Sage Olive", hex: "#5B6B4D", role: "secondary" },
+          { name: "Raw Ochre", hex: "#D49B42", role: "accent" },
+          { name: "Warm Linen", hex: "#F7F5F0", role: "text" }
+        ],
+        typography: {
+          headingFont: "Fraunces",
+          bodyFont: "Inter",
+          googleFontsUrl: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=Inter:wght@400;500&display=swap"
+        },
+        stylePhilosophy: "Warm organic brutalism with open-flame terracotta tones, unbleached linen textures, and expressive artisanal typography.",
+        borderCurvature: "rounded-2xl"
+      },
+      launchContent: {
+        heroHeadline: "Food Reclaimed From The Industrial Conveyor Belt.",
+        heroSubheadline: "A neighborhood hearth dedicated to regenerative micro-farms, wild fermentations, and unhurried conversation around open embers.",
+        callToAction: "Reserve a Table",
+        manifesto: "The modern dining landscape has been hijacked by private equity and ghost kitchens. Every concept looks like the same faux-industrial tavern serving the same sysco shortcuts. We believe true hospitality is sacred. We cook with wood, time, and ruthless respect for the land. When you sit at our table, you taste where food actually comes from.",
+        elevatorPitch: "Atelier Umami is an intimate wood-fired dining room that pairs micro-seasonal harvests from local regenerative farms with natural wines and unhurried communal hospitality.",
+        socialHooks: [
+          "Sysco didn't make this sauce. Our morning delivery from three local farms did.",
+          "If a restaurant can serve 40 entrees in 8 minutes, you aren't eating food—you're eating logistics.",
+          "We built our kitchen around an open hearth because real flavor demands patience."
+        ]
+      }
+    };
+  }
+
+  // Default tech/developer brand kit
   return {
     brandStrategy: {
       brandName: "Vortex Labs",
@@ -309,7 +516,7 @@ function getMockBrandKit(founderPitch = '') {
 
 /**
  * Controller: Evaluates interview history and returns the next Socratic question.
- * POST /api/interview/next (Supports Open-Ended Continuous Discovery)
+ * POST /api/interview/next (Domain-Adaptive & Continuous Discovery)
  */
 export async function handleNextQuestion(req, res) {
   try {
@@ -317,40 +524,38 @@ export async function handleNextQuestion(req, res) {
 
     const userMessages = history.filter(m => m.role === 'user');
     const userTurnCount = userMessages.length;
-
-    // Continuous dynamic round counter: round equals user turn count (1, 2, 3, 4, 5...)
     const currentRound = Math.max(userTurnCount, 1);
     const readyForSynthesis = currentRound >= 3;
+
+    const transcriptText = history
+      .map(m => `${m.role.toUpperCase()}: ${m.content}`)
+      .join('\n');
+
+    const domain = extractDomain(transcriptText);
 
     // Attempt Gemini invocation via dynamic model resolution if configured
     if (getGeminiClient()) {
       try {
-        const transcriptText = history
-          .map(m => `${m.role.toUpperCase()}: ${m.content}`)
-          .join('\n');
+        const domainGuidance = getDomainGuidance(domain);
 
-        const systemInstruction = `You are an elite, contrarian startup mentor and brand strategist.
-Your job is to ask sharp, probing questions that force founders to make clear, polarizing strategic choices.
+        const systemInstruction = `You are an elite, contrarian brand strategist and creative interrogator.
+Your job is to ask sharp, probing questions that force founders to make clear, polarizing strategic choices tailored to their business.
+
+${domainGuidance}
 
 CORE RULES:
-- ZERO corporate fluff, zero filler praise, zero buzzwords (ban: "killer", "game-changer", "supercharge", "what is your core strategic vision").
-- Question format: Exactly 2 short sentences, STRICTLY UNDER 25 WORDS TOTAL.
-  * Sentence 1: Highlight a critical market trade-off, risk, or incumbent flaw.
-  * Sentence 2: Ask a direct question forcing a definitive choice.
-- suggestedAnswers: Exactly 3 distinct, high-conviction options. STRICT LIMIT: Under 8 words per option.
-- reasoning: 1 brief diagnostic sentence under 15 words explaining the strategic stakes.
-- stageLabel: Short 2-3 word stage title (e.g., "Target Beachhead", "Incumbent Critique", "Brand Edge", "Voice Boundaries", "Category Moat").
-- readyForSynthesis: Set to true if currentRound >= 3 or baseline strategic context is sufficient.
-
-PROGRESSIVE INQUIRY ROADMAP:
-- Round 1: Target Beachhead (probe acute pain, eliminate generic demographic broadness).
-- Round 2: Incumbent Critique (target the broken compromise of legacy incumbents).
-- Round 3: Brand Edge & Polarizing Attitude (define who the brand is willing to alienate).
-- Round 4+: Voice Boundaries, Positioning Moat, or Distribution Conviction (deepen the thesis if requested).
+- TONE: Direct, discerning mentor. Zero filler praise, zero generic cheerleading.
+- STRICT QUESTION BUDGET: Exactly 2 short sentences, STRICTLY UNDER 25 WORDS TOTAL.
+  * Sentence 1 (Stakes / Risk): Highlight the industry trap, compromise, or cliche directly.
+  * Sentence 2 (Direct Choice): Ask a specific question forcing a definitive choice.
+- SUGGESTED ANSWERS: Exactly 3 distinct, high-conviction options tailored strictly to the business domain. STRICT LIMIT: Under 8 words per option.
+- REASONING: 1 brief diagnostic sentence under 15 words explaining the strategic risk.
+- STAGE LABEL: Short 2-3 word label reflecting this inquiry round.
+- READY FOR SYNTHESIS: Set to true if currentRound >= 3.
 
 Currently evaluating Round ${currentRound}.`;
 
-        const prompt = `Conversation Transcript:\n${transcriptText}\n\nFormulate the next question for Round ${currentRound}. Return structured JSON matching the schema.`;
+        const prompt = `Conversation Transcript:\n${transcriptText}\n\nDetected Domain: ${domain.toUpperCase()}.\nFormulate the next question for Round ${currentRound}. Return structured JSON matching schema.`;
 
         const result = await generateStructuredJson({
           systemInstruction,
@@ -362,18 +567,17 @@ Currently evaluating Round ${currentRound}.`;
         result.currentRound = currentRound;
         result.readyForSynthesis = Boolean(result.readyForSynthesis || readyForSynthesis);
         if (!result.stageLabel) {
-          result.stageLabel = currentRound === 1 ? "Target Beachhead" : currentRound === 2 ? "Incumbent Critique" : currentRound === 3 ? "Brand Edge" : "Strategic Moat";
+          result.stageLabel = currentRound === 1 ? "Target Audience" : currentRound === 2 ? "Core Differentiation" : currentRound === 3 ? "Brand Edge" : "Strategic Moat";
         }
 
         return res.status(200).json(result);
       } catch (geminiError) {
-        console.warn('[interviewerController] Gemini API call failed, using high-fidelity mock fallback:', geminiError.message);
+        console.warn('[interviewerController] Gemini API call failed, using domain-adaptive mock fallback:', geminiError.message);
       }
     }
 
-    // High-fidelity fallback
-    const lastUserMessage = userMessages[userMessages.length - 1]?.content || '';
-    const fallbackResponse = getMockQuestion(currentRound, lastUserMessage);
+    // High-fidelity domain-adaptive fallback
+    const fallbackResponse = getMockQuestion(currentRound, transcriptText);
     return res.status(200).json(fallbackResponse);
 
   } catch (error) {
@@ -387,33 +591,39 @@ Currently evaluating Round ${currentRound}.`;
 
 /**
  * Controller: Synthesizes full conversation transcript into structured Brand Kit.
- * POST /api/interview/compile
+ * POST /api/interview/compile (Domain-Adaptive Synthesis)
  */
 export async function handleCompileBrandKit(req, res) {
   try {
     const { history = [] } = req.body;
-    const firstPitch = history.find(m => m.role === 'user')?.content || 'Autonomous tech platform';
+    const transcriptText = history
+      .map(m => `${m.role.toUpperCase()}: ${m.content}`)
+      .join('\n');
+
+    const firstPitch = history.find(m => m.role === 'user')?.content || 'Hospitality dining experience';
+    const domain = extractDomain(transcriptText);
 
     if (getGeminiClient()) {
       try {
-        const transcriptText = history
-          .map(m => `${m.role.toUpperCase()}: ${m.content}`)
-          .join('\n');
+        const domainGuidance = getDomainGuidance(domain);
 
         const systemInstruction = `You are a world-class Chief Creative Officer and Design Director.
-Synthesize the founder's Socratic interview transcript into an unforgettable, high-signal Brand Kit.
+Synthesize the founder's Socratic interview transcript into an unforgettable, category-defining Brand Kit.
 Output MUST strictly follow the JSON Schema provided.
+
+${domainGuidance}
+
 Requirements:
-1. brandStrategy: Extract a compelling brandName, punchy tagline, clear mission, specific targetAudience, coreValueProposition, the antiHero (incumbent villain), and sharp differentiator.
-2. voiceSystem: Archetype, tone adjectives, 3 dos, 3 donts, and 6 signature vocabulary words.
+1. brandStrategy: Extract a compelling, authentic brandName (e.g. for restaurants, a resonant dining room name; for tech, a sharp tech name), punchy tagline, clear mission, specific targetAudience, coreValueProposition, the antiHero (industry villain/bad habit), and sharp differentiator.
+2. voiceSystem: Archetype, tone adjectives, 3 dos, 3 donts, and 6 signature vocabulary words reflecting the domain.
 3. visualTokens:
-   - Exactly 5 harmonious HEX colors (surface, primary, secondary, accent, text).
-   - Dynamic Google Fonts pair: headingFont, bodyFont, and a valid googleFontsUrl (e.g. from Google Fonts CDN).
+   - Exactly 5 harmonious HEX colors (surface, primary, secondary, accent, text) tailored to the business vibe.
+   - Dynamic Google Fonts pair: headingFont, bodyFont, and a valid googleFontsUrl (e.g. Fraunces, Playfair Display, or Cormorant Garamond for hospitality/luxury; Space Grotesk or Inter for software).
    - stylePhilosophy (1 sentence description).
    - borderCurvature ('rounded-none', 'rounded-lg', 'rounded-xl', or 'rounded-2xl').
 4. launchContent: Punchy heroHeadline, heroSubheadline, callToAction, a 3-paragraph inspiring manifesto, elevatorPitch, and 3 viral socialHooks.`;
 
-        const prompt = `Full Socratic Interview Transcript:\n${transcriptText}\n\nCompile the complete Brand Kit now.`;
+        const prompt = `Full Socratic Interview Transcript:\n${transcriptText}\n\nDetected Domain: ${domain.toUpperCase()}.\nCompile the complete Brand Kit now.`;
 
         const result = await generateStructuredJson({
           systemInstruction,
@@ -423,12 +633,12 @@ Requirements:
 
         return res.status(200).json(result);
       } catch (geminiError) {
-        console.warn('[interviewerController] Gemini compilation failed, utilizing high-fidelity mock brand kit:', geminiError.message);
+        console.warn('[interviewerController] Gemini compilation failed, utilizing domain-adaptive mock brand kit:', geminiError.message);
       }
     }
 
-    // High-fidelity fallback
-    const fallbackBrandKit = getMockBrandKit(firstPitch);
+    // High-fidelity domain-adaptive fallback
+    const fallbackBrandKit = getMockBrandKit(firstPitch, history);
     return res.status(200).json(fallbackBrandKit);
 
   } catch (error) {

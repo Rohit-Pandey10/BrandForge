@@ -3,7 +3,7 @@ import Header from './components/Header';
 import IntakeView from './components/IntakeView';
 import InterviewChat from './components/InterviewChat';
 import BrandKitDashboard from './components/BrandKitDashboard';
-import { mockBrandKit } from './data/mockBrandData';
+import { mockBrandKit, getDomainMockBrandKit, getDomainMockQuestion } from './data/mockBrandData';
 
 export default function App() {
   const [stage, setStage] = useState('intake'); // 'intake' | 'interview' | 'dashboard'
@@ -69,20 +69,8 @@ export default function App() {
           timestamp: Date.now()
         }
       ]);
-    } else {
-      // Local fallback if server unreachable
-      const fallbackQuestion = {
-        currentRound: 1,
-        stageLabel: "Target Beachhead",
-        question: "Broad positioning dilutes early traction. Who feels this problem so acutely they will pay immediately?",
-        suggestedAnswers: [
-          "Technical founders paralyzed by brand identity.",
-          "Growth leads avoiding high agency retainers.",
-          "Developer advocates needing distinct identity."
-        ],
-        reasoning: "A narrow beachhead audience provides the fastest path to traction.",
-        readyForSynthesis: false
-      };
+      // Local fallback if server unreachable (domain-adaptive)
+      const fallbackQuestion = getDomainMockQuestion(1, pitch);
       setCurrentQuestion(fallbackQuestion);
       setMessages(prev => [
         ...prev,
@@ -138,63 +126,10 @@ export default function App() {
         }
       ]);
     } else {
-      // Offline / network fallback progression (never abruptly cut off)
+      // Offline / network fallback progression (domain-adaptive)
       const userTurnCount = updatedMessages.filter(m => m.role === 'user').length;
-      let nextMock;
-
-      if (userTurnCount === 2) {
-        nextMock = {
-          currentRound: 2,
-          stageLabel: "Incumbent Critique",
-          question: "Incumbents rely on feature bloat. What fundamental industry compromise do you refuse to make?",
-          suggestedAnswers: [
-            "Predatory recurring subscription traps.",
-            "Visual templates that fail ATS checks.",
-            "Graphics that hide technical impact."
-          ],
-          reasoning: "Differentiators must highlight legacy compromises.",
-          readyForSynthesis: false
-        };
-      } else if (userTurnCount === 3) {
-        nextMock = {
-          currentRound: 3,
-          stageLabel: "Brand Edge",
-          question: "Safe brands get ignored. What specific corporate habit are you completely comfortable alienating?",
-          suggestedAnswers: [
-            "Bureaucratic committee consensus.",
-            "Sterile corporate buzzwords.",
-            "Polite surface-level marketing."
-          ],
-          reasoning: "Negative boundaries define visual and verbal edge.",
-          readyForSynthesis: true
-        };
-      } else if (userTurnCount === 4) {
-        nextMock = {
-          currentRound: 4,
-          stageLabel: "Voice Boundaries",
-          question: "Unchecked copy sounds like generic SaaS. What phrases or attitudes are strictly forbidden in your messaging?",
-          suggestedAnswers: [
-            "Hype words like revolutionary and seamless.",
-            "Apologetic hedging and passive claims.",
-            "Vague claims of being all-in-one."
-          ],
-          reasoning: "Banned vocabulary preserves razor-sharp brand identity.",
-          readyForSynthesis: true
-        };
-      } else {
-        nextMock = {
-          currentRound: userTurnCount,
-          stageLabel: "Positioning Moat",
-          question: "Competitors will copy features quickly. What contrarian conviction makes your brand impossible to replicate?",
-          suggestedAnswers: [
-            "Craft and speed over consensus.",
-            "Algorithmic clarity over manual agencies.",
-            "Radical transparency with power users."
-          ],
-          reasoning: "Philosophical conviction forms an enduring competitive moat.",
-          readyForSynthesis: true
-        };
-      }
+      const fullContext = updatedMessages.map(m => m.content).join(' ');
+      const nextMock = getDomainMockQuestion(userTurnCount, fullContext);
 
       setCurrentQuestion(nextMock);
       setMessages(prev => [
@@ -241,8 +176,9 @@ export default function App() {
     if (data && data.brandStrategy) {
       setBrandKit(data);
     } else {
-      // Fallback mock hydration
-      setBrandKit(mockBrandKit);
+      // Domain-adaptive fallback mock hydration
+      const fullContext = msgs.map(m => m.content).join(' ');
+      setBrandKit(getDomainMockBrandKit(fullContext));
     }
 
     setIsCompiling(false);
@@ -262,7 +198,8 @@ export default function App() {
    * Jump straight to dashboard with hydrated mock state
    */
   const handlePreviewMock = () => {
-    setBrandKit(mockBrandKit);
+    const fullContext = messages.map(m => m.content).join(' ');
+    setBrandKit(getDomainMockBrandKit(fullContext));
     setStage('dashboard');
   };
 

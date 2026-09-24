@@ -36,7 +36,7 @@ export default function IntakeView({ onStartInterview, onPreviewMock }) {
           Turn an unformed thought into an enduring identity.
         </h1>
         <p className="text-[#737373] text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-          A three-step Socratic dialogue to isolate your customer, challenge conventional compromises, and author a distinct visual and verbal system.
+          A focused Socratic dialogue to isolate your customer, challenge conventional compromises, and author a distinct visual and verbal system.
         </p>
       </div>
 

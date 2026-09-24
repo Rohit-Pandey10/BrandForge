@@ -30,7 +30,7 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
 
   const palette = visualTokens.palette || [];
   const typography = visualTokens.typography || {};
-  const brandName = brandStrategy.brandName || "Vortex Labs";
+  const brandName = brandStrategy.brandName || "Brand Monograph";
   const cleanName = brandName.toLowerCase().replace(/\s+/g, '-');
 
   // Dynamically inject Google Fonts stylesheet into <head>

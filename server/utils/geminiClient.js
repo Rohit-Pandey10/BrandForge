@@ -33,7 +33,13 @@ function cleanJsonString(str) {
 }
 
 const DEFAULT_MODEL = process.env.GEMINI_MODEL || "gemini-3.6-flash";
-const CANDIDATE_MODELS = ['gemini-3.6-flash', 'gemini-2.5-flash', 'gemini-2.0-flash'];
+const CANDIDATE_MODELS = [
+  'gemini-3.6-flash',
+  'gemini-3-flash-preview',
+  'gemini-flash-lite-latest',
+  'gemini-3.8-flash',
+  'gemini-flash-latest'
+];
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -116,10 +122,10 @@ export async function generateStructuredJson({
         let timerId;
         const timeoutPromise = new Promise((_, reject) => {
           timerId = setTimeout(() => {
-            const err = new Error(`TIMEOUT: Call to ${currentModel} exceeded 12000ms`);
+            const err = new Error(`TIMEOUT: Call to ${currentModel} exceeded 25000ms`);
             err.status = 503;
             reject(err);
-          }, 12000);
+          }, 25000);
         });
 
         const response = await Promise.race([generatePromise, timeoutPromise]).finally(() => {

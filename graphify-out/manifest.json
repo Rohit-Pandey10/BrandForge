@@ -1,0 +1,158 @@
+{
+  "client/package.json": {
+    "mtime": 1790249133.0604322,
+    "seen": 1790257120.718497,
+    "ast_hash": "3b3c2792e21cf2648588c9b103b5b99a",
+    "semantic_hash": ""
+  },
+  "client/postcss.config.js": {
+    "mtime": 1790249154.4793863,
+    "seen": 1790257120.7184992,
+    "ast_hash": "ef3ba2a81ba19f8ea5ddf625521e96f0",
+    "semantic_hash": ""
+  },
+  "client/src/App.jsx": {
+    "mtime": 1790260010.3521712,
+    "seen": 1790260681.256404,
+    "ast_hash": "2121da264916d03b081b88893dfb42f5",
+    "semantic_hash": ""
+  },
+  "client/src/components/BrandKitDashboard.jsx": {
+    "mtime": 1790260046.855264,
+    "seen": 1790260681.2564049,
+    "ast_hash": "417b86a81cedf736bb309182cf0d30b2",
+    "semantic_hash": ""
+  },
+  "client/src/components/Header.jsx": {
+    "mtime": 1790256574.6238756,
+    "seen": 1790257120.7185001,
+    "ast_hash": "6e15c4d3fdcce392e667230430744c17",
+    "semantic_hash": ""
+  },
+  "client/src/components/IntakeView.jsx": {
+    "mtime": 1790260017.636272,
+    "seen": 1790260681.256406,
+    "ast_hash": "485f1f2088762f202d7412dc1866288a",
+    "semantic_hash": ""
+  },
+  "client/src/components/InterviewChat.jsx": {
+    "mtime": 1790257680.4318526,
+    "seen": 1790258100.705137,
+    "ast_hash": "b8ef7e7aae22a5ac53e4a9d1aac53fe8",
+    "semantic_hash": ""
+  },
+  "client/src/components/ProgressStepper.jsx": {
+    "mtime": 1790257660.980076,
+    "seen": 1790258100.705138,
+    "ast_hash": "c1e6896483bbee802a9ab7de0b0b8aa1",
+    "semantic_hash": ""
+  },
+  "client/src/data/mockBrandData.js": {
+    "mtime": 1790259930.536439,
+    "seen": 1790260681.256408,
+    "ast_hash": "e48a851e4723c0d60c0d949fd51a2823",
+    "semantic_hash": ""
+  },
+  "client/src/main.jsx": {
+    "mtime": 1790249274.347327,
+    "seen": 1790257120.7185018,
+    "ast_hash": "253d4db42a0b217629b29497cec5becb",
+    "semantic_hash": ""
+  },
+  "client/src/types/brand.ts": {
+    "mtime": 1790249175.7151728,
+    "seen": 1790257120.718503,
+    "ast_hash": "3de6e3f4448552921b216d7c6335a585",
+    "semantic_hash": ""
+  },
+  "client/tailwind.config.js": {
+    "mtime": 1790255482.9740667,
+    "seen": 1790257120.718503,
+    "ast_hash": "e0f788e71a1555d2fee353e5364e6615",
+    "semantic_hash": ""
+  },
+  "client/vite.config.js": {
+    "mtime": 1790249141.0464706,
+    "seen": 1790257120.718503,
+    "ast_hash": "bd3f20e4b3d1e4af5e0a3e80c9319b72",
+    "semantic_hash": ""
+  },
+  "graphify/index.json": {
+    "mtime": 1790250525.897768,
+    "seen": 1790257120.718503,
+    "ast_hash": "3075fc8e94c5a5e5450f20f583b01f32",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1790249024.4549959,
+    "seen": 1790257120.718504,
+    "ast_hash": "5e55d6c3289c90b54d276de4a9d71f3d",
+    "semantic_hash": ""
+  },
+  "scripts/run-dev.js": {
+    "mtime": 1790249030.5638645,
+    "seen": 1790257120.718504,
+    "ast_hash": "b2d004c2510841f0d581819ed76cc4b1",
+    "semantic_hash": ""
+  },
+  "server/controllers/interviewerController.js": {
+    "mtime": 1790259596.2345014,
+    "seen": 1790260681.2564108,
+    "ast_hash": "4b4f8dbf2ac00e91b3343f7ea945d15c",
+    "semantic_hash": ""
+  },
+  "server/package.json": {
+    "mtime": 1790249041.6223145,
+    "seen": 1790257120.718505,
+    "ast_hash": "354e2d554be1ee03b9ba8d013416242c",
+    "semantic_hash": ""
+  },
+  "server/routes/brandRoutes.js": {
+    "mtime": 1790249079.9603221,
+    "seen": 1790257120.718505,
+    "ast_hash": "d30431ed28dc82557fe96e2c0fe7fc99",
+    "semantic_hash": ""
+  },
+  "server/server.js": {
+    "mtime": 1790258310.6753168,
+    "seen": 1790258409.21055,
+    "ast_hash": "383102456ec15352ff0c7a989096ea0e",
+    "semantic_hash": ""
+  },
+  "server/utils/geminiClient.js": {
+    "mtime": 1790259537.1786647,
+    "seen": 1790260681.256413,
+    "ast_hash": "a6a28466c620bd2a0b397d1eb844555b",
+    "semantic_hash": ""
+  },
+  "DESIGN.md": {
+    "mtime": 1790255648.1507537,
+    "seen": 1790257120.718506,
+    "ast_hash": "de9f6338efb4ec80a61462989eaddfe1",
+    "semantic_hash": ""
+  },
+  "DEVSTATE.md": {
+    "mtime": 1790258364.4368742,
+    "seen": 1790258409.210552,
+    "ast_hash": "6d5d57a1d7a68585d6da4abe1f4ecfe1",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1790250582.792316,
+    "seen": 1790257120.718507,
+    "ast_hash": "216e6d262430bf51bdd2295d67e15369",
+    "semantic_hash": ""
+  },
+  "client/index.html": {
+    "mtime": 1790255463.9242635,
+    "seen": 1790257120.718507,
+    "ast_hash": "b3d4e3addf58af700bd3875f94d8b963",
+    "semantic_hash": ""
+  },
+  "graphify/architecture.graph.md": {
+    "mtime": 1790250502.828808,
+    "seen": 1790257120.718507,
+    "ast_hash": "7c6b2bb84927cf68baf5b0b84b758a98",
+    "semantic_hash": ""
+  }
+}

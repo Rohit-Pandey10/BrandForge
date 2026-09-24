@@ -13,9 +13,11 @@
   - `Header.jsx`: Lowercase serif wordmark `brand builder.`, status badge `Socratic Brand Studio`, context-aware utility actions (`Skip to Synthesis`, `Export JSON`, `Export CSS Tokens`, `Download SVG`, `Print / PDF`).
   - `InterviewChat.jsx`: Focused Studio Decision Card featuring display question headline, expandable `Under-the-Hood Strategic Rationale` diagnostic disclosure, stacked structured radio rows with custom text refinement textarea, and primary round progression CTA.
   - `BrandKitDashboard.jsx`: 5-tab segmented dashboard (`Live Brand Preview`, `Brand Strategy`, `Voice & Tone`, `Visual Design Tokens`, `Launch Copy & Manifesto`) with generous color swatch slabs, typography sandboxes, live browser preview hero, and inspectable `:root` CSS token panel.
-- **Primary Model Target:** `gemini-3.6-flash` via `@google/genai` (Configured dynamically via `process.env.GEMINI_MODEL`, with automatic failover to `gemini-2.5-flash` and `gemini-2.0-flash`)
-- **API Health:** Verified LIVE with Google Gemini API; Continuous Socratic flow and full Brand Kit synthesis confirmed working.
-- **Fallback Mode:** Domain-aware mock hydration safety net enabled (zero-dependency offline development)
+- **Primary Model Target:** `gemini-3.6-flash` via `@google/genai` (Configured dynamically via `process.env.GEMINI_MODEL`, with resilient candidate failover across `gemini-3.6-flash`, `gemini-3-flash-preview`, `gemini-flash-lite-latest`, `gemini-3.8-flash`, and `gemini-flash-latest`, with a 25s execution budget).
+- **Domain Adaptation Engine:** Dynamic domain classification (`extractDomain`) detecting hospitality/culinary, fashion, wellness, career, and systems software. Injects domain-specific guidance and bans SaaS tropes for consumer/dining products.
+- **Continuous Discovery Engine:** Founders can explore multi-round strategy or synthesize on demand once baseline context is established (Round >= 3).
+- **API Health:** Verified LIVE with Google Gemini API; culinary queries tested with live browser subagent confirming authentic gastronomic positioning, terracotta/olive color tokens, and Fraunces typography.
+- **Fallback Mode:** Dual-layer domain-adaptive mock hydration safety net (both server-side and client-side) ensuring restaurant inputs never see Vortex Labs or developer jargon under any network condition.
 
 ---
 
