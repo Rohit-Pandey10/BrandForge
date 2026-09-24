@@ -231,54 +231,6 @@
       "source_location": "L7"
     },
     {
-      "id": "client_src_components_header_header",
-      "label": "Header()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "header()",
-      "source_file": "client/src/components/Header.jsx",
-      "source_location": "L4"
-    },
-    {
-      "id": "client_src_components_intakeview_intakeview",
-      "label": "IntakeView()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "intakeview()",
-      "source_file": "client/src/components/IntakeView.jsx",
-      "source_location": "L5"
-    },
-    {
-      "id": "client_src_components_interviewchat_interviewchat",
-      "label": "InterviewChat()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "interviewchat()",
-      "source_file": "client/src/components/InterviewChat.jsx",
-      "source_location": "L5"
-    },
-    {
-      "id": "client_src_components_progressstepper_progressstepper",
-      "label": "ProgressStepper()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "progressstepper()",
-      "source_file": "client/src/components/ProgressStepper.jsx",
-      "source_location": "L9"
-    },
-    {
       "id": "client_src_utils_exportutils_buildcsstokens",
       "label": "buildCssTokens()",
       "_callable": true,
@@ -639,19 +591,7 @@
       "source_location": "L62"
     },
     {
-      "id": "server_utils_geminiclient_cleanjsonstring",
-      "label": "cleanJsonString()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "cleanjsonstring()",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L27"
-    },
-    {
-      "id": "server_utils_geminiclient_generatestructuredjson",
+      "id": "server_utils_llmclient_generatestructuredjson",
       "label": "generateStructuredJson()",
       "_callable": true,
       "_origin": "ast",
@@ -659,44 +599,20 @@
       "community_name": "mockEngine.js",
       "file_type": "code",
       "norm_label": "generatestructuredjson()",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L77"
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L39"
     },
     {
-      "id": "server_utils_geminiclient_getgeminiclient",
-      "label": "getGeminiClient()",
+      "id": "server_utils_llmclient_isllmconfigured",
+      "label": "isLlmConfigured()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
       "community_name": "mockEngine.js",
       "file_type": "code",
-      "norm_label": "getgeminiclient()",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L12"
-    },
-    {
-      "id": "server_utils_geminiclient_istransienterror",
-      "label": "isTransientError()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "istransienterror()",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L49"
-    },
-    {
-      "id": "server_utils_geminiclient_sleep",
-      "label": "sleep()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "sleep()",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L44"
+      "norm_label": "isllmconfigured()",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L13"
     },
     {
       "id": "shared_domainconfig_classifydomain",
@@ -733,6 +649,66 @@
       "norm_label": "runverification()",
       "source_file": "scripts/test-restaurant-flow.js",
       "source_location": "L4"
+    },
+    {
+      "id": "server_utils_geminiclient_cleanjsonstring",
+      "label": "cleanJsonString()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "geminiClient.js",
+      "file_type": "code",
+      "norm_label": "cleanjsonstring()",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L27"
+    },
+    {
+      "id": "server_utils_geminiclient_generatestructuredjson",
+      "label": "generateStructuredJson()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "geminiClient.js",
+      "file_type": "code",
+      "norm_label": "generatestructuredjson()",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L77"
+    },
+    {
+      "id": "server_utils_geminiclient_getgeminiclient",
+      "label": "getGeminiClient()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "geminiClient.js",
+      "file_type": "code",
+      "norm_label": "getgeminiclient()",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L12"
+    },
+    {
+      "id": "server_utils_geminiclient_istransienterror",
+      "label": "isTransientError()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "geminiClient.js",
+      "file_type": "code",
+      "norm_label": "istransienterror()",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L49"
+    },
+    {
+      "id": "server_utils_geminiclient_sleep",
+      "label": "sleep()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "geminiClient.js",
+      "file_type": "code",
+      "norm_label": "sleep()",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L44"
     },
     {
       "id": "scripts_run_dev_cleanup",
@@ -807,6 +783,54 @@
       "source_location": "L13"
     },
     {
+      "id": "client_src_components_header_header",
+      "label": "Header()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "header()",
+      "source_file": "client/src/components/Header.jsx",
+      "source_location": "L4"
+    },
+    {
+      "id": "client_src_components_intakeview_intakeview",
+      "label": "IntakeView()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "intakeview()",
+      "source_file": "client/src/components/IntakeView.jsx",
+      "source_location": "L5"
+    },
+    {
+      "id": "client_src_components_interviewchat_interviewchat",
+      "label": "InterviewChat()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "interviewchat()",
+      "source_file": "client/src/components/InterviewChat.jsx",
+      "source_location": "L5"
+    },
+    {
+      "id": "client_src_components_progressstepper_progressstepper",
+      "label": "ProgressStepper()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "progressstepper()",
+      "source_file": "client/src/components/ProgressStepper.jsx",
+      "source_location": "L9"
+    },
+    {
       "id": "client_src_data_domainconfig_classifydomain",
       "label": "classifyDomain()",
       "_callable": true,
@@ -853,17 +877,6 @@
       "norm_label": "getdomainmockquestion()",
       "source_file": "client/src/data/mockBrandData.js",
       "source_location": "L305"
-    },
-    {
-      "id": "client_src_app",
-      "label": "App.jsx",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "app.jsx",
-      "source_file": "client/src/App.jsx",
-      "source_location": "L1"
     },
     {
       "id": "client_src_components_brandkitdashboard",
@@ -943,72 +956,6 @@
       "source_location": "L1"
     },
     {
-      "id": "client_src_components_header",
-      "label": "Header.jsx",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "header.jsx",
-      "source_file": "client/src/components/Header.jsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_src_components_intakeview",
-      "label": "IntakeView.jsx",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "intakeview.jsx",
-      "source_file": "client/src/components/IntakeView.jsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_src_components_interviewchat",
-      "label": "InterviewChat.jsx",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "interviewchat.jsx",
-      "source_file": "client/src/components/InterviewChat.jsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_src_components_progressstepper",
-      "label": "ProgressStepper.jsx",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "progressstepper.jsx",
-      "source_file": "client/src/components/ProgressStepper.jsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_src_components_progressstepper_base_stages",
-      "label": "BASE_STAGES",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "base_stages",
-      "source_file": "client/src/components/ProgressStepper.jsx",
-      "source_location": "L3"
-    },
-    {
-      "id": "client_src_main",
-      "label": "main.jsx",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "main.jsx",
-      "source_file": "client/src/main.jsx",
-      "source_location": "L1"
-    },
-    {
       "id": "client_src_utils_exportutils",
       "label": "exportUtils.js",
       "_origin": "ast",
@@ -1018,51 +965,6 @@
       "norm_label": "exportutils.js",
       "source_file": "client/src/utils/exportUtils.js",
       "source_location": "L1"
-    },
-    {
-      "id": "ref_lucide_react",
-      "label": "lucide-react",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "concept",
-      "norm_label": "lucide-react",
-      "source_file": "client/package.json",
-      "source_location": "L12"
-    },
-    {
-      "id": "ref_react",
-      "label": "react",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "concept",
-      "norm_label": "react",
-      "source_file": "client/package.json",
-      "source_location": "L13"
-    },
-    {
-      "id": "ref_react_dom",
-      "label": "react-dom",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "concept",
-      "norm_label": "react-dom",
-      "source_file": "client/package.json",
-      "source_location": "L14"
-    },
-    {
-      "id": "devstate_frontend_developer_agent",
-      "label": "Frontend Developer Agent:",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "frontend developer agent:",
-      "source_file": "DEVSTATE.md",
-      "source_location": "L162"
     },
     {
       "id": "scripts_verify_fixes",
@@ -1197,28 +1099,6 @@
       "source_location": "L1"
     },
     {
-      "id": "server_utils_geminiclient",
-      "label": "geminiClient.js",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "geminiclient.js",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_utils_geminiclient_candidate_models",
-      "label": "CANDIDATE_MODELS",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "candidate_models",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L36"
-    },
-    {
       "id": "shared_domainconfig",
       "label": "shared/domainConfig.js",
       "_origin": "ast",
@@ -1305,6 +1185,28 @@
       "norm_label": "test-restaurant-flow.js",
       "source_file": "scripts/test-restaurant-flow.js",
       "source_location": "L1"
+    },
+    {
+      "id": "server_utils_geminiclient",
+      "label": "geminiClient.js",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "geminiClient.js",
+      "file_type": "code",
+      "norm_label": "geminiclient.js",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_utils_geminiclient_candidate_models",
+      "label": "CANDIDATE_MODELS",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "geminiClient.js",
+      "file_type": "code",
+      "norm_label": "candidate_models",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L36"
     },
     {
       "id": "client_package",
@@ -1569,6 +1471,17 @@
       "norm_label": "postcss",
       "source_file": "client/package.json",
       "source_location": "L21"
+    },
+    {
+      "id": "ref_react_dom",
+      "label": "react-dom",
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "client/package.json",
+      "file_type": "concept",
+      "norm_label": "react-dom",
+      "source_file": "client/package.json",
+      "source_location": "L14"
     },
     {
       "id": "ref_tailwindcss",
@@ -1895,6 +1808,17 @@
       "source_location": "L12"
     },
     {
+      "id": "server_package_dependencies_groq_sdk",
+      "label": "groq-sdk",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "server/package.json",
+      "file_type": "code",
+      "norm_label": "groq-sdk",
+      "source_file": "server/package.json",
+      "source_location": "L16"
+    },
+    {
       "id": "server_package_description",
       "label": "description",
       "_origin": "ast",
@@ -1914,7 +1838,7 @@
       "file_type": "code",
       "norm_label": "devdependencies",
       "source_file": "server/package.json",
-      "source_location": "L17"
+      "source_location": "L18"
     },
     {
       "id": "server_package_devdependencies_nodemon",
@@ -1925,7 +1849,7 @@
       "file_type": "code",
       "norm_label": "nodemon",
       "source_file": "server/package.json",
-      "source_location": "L18"
+      "source_location": "L19"
     },
     {
       "id": "server_package_main",
@@ -2071,6 +1995,39 @@
       "source_location": "L21"
     },
     {
+      "id": "server_utils_llmclient",
+      "label": "llmClient.js",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "server/package.json",
+      "file_type": "code",
+      "norm_label": "llmclient.js",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_utils_llmclient_getllmclient",
+      "label": "getLlmClient",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "server/package.json",
+      "file_type": "code",
+      "norm_label": "getllmclient",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L19"
+    },
+    {
+      "id": "server_utils_llmclient_groq_candidate_models",
+      "label": "GROQ_CANDIDATE_MODELS",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "server/package.json",
+      "file_type": "code",
+      "norm_label": "groq_candidate_models",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L22"
+    },
+    {
       "id": "ref_cors",
       "label": "cors",
       "_origin": "ast",
@@ -2115,6 +2072,17 @@
       "source_location": "L12"
     },
     {
+      "id": "ref_groq_sdk",
+      "label": "groq-sdk",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "server/package.json",
+      "file_type": "concept",
+      "norm_label": "groq-sdk",
+      "source_file": "server/package.json",
+      "source_location": "L16"
+    },
+    {
       "id": "ref_nodemon",
       "label": "nodemon",
       "_origin": "ast",
@@ -2123,7 +2091,7 @@
       "file_type": "concept",
       "norm_label": "nodemon",
       "source_file": "server/package.json",
-      "source_location": "L18"
+      "source_location": "L19"
     },
     {
       "id": "package",
@@ -2574,6 +2542,17 @@
       "source_location": "L27"
     },
     {
+      "id": "client_src_app",
+      "label": "App.jsx",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "app.jsx",
+      "source_file": "client/src/App.jsx",
+      "source_location": "L1"
+    },
+    {
       "id": "client_src_components_dashboard_livepreviewtab",
       "label": "LivePreviewTab.jsx",
       "_origin": "ast",
@@ -2583,6 +2562,61 @@
       "norm_label": "livepreviewtab.jsx",
       "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
       "source_location": "L1"
+    },
+    {
+      "id": "client_src_components_header",
+      "label": "Header.jsx",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "header.jsx",
+      "source_file": "client/src/components/Header.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_src_components_intakeview",
+      "label": "IntakeView.jsx",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "intakeview.jsx",
+      "source_file": "client/src/components/IntakeView.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_src_components_interviewchat",
+      "label": "InterviewChat.jsx",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "interviewchat.jsx",
+      "source_file": "client/src/components/InterviewChat.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_src_components_progressstepper",
+      "label": "ProgressStepper.jsx",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "progressstepper.jsx",
+      "source_file": "client/src/components/ProgressStepper.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_src_components_progressstepper_base_stages",
+      "label": "BASE_STAGES",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "base_stages",
+      "source_file": "client/src/components/ProgressStepper.jsx",
+      "source_location": "L3"
     },
     {
       "id": "client_src_data_domainconfig",
@@ -2706,14 +2740,59 @@
       "source_location": "L498"
     },
     {
-      "id": "client_src_index",
-      "label": "client_src_index",
+      "id": "client_src_main",
+      "label": "main.jsx",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "code",
+      "norm_label": "main.jsx",
+      "source_file": "client/src/main.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "ref_lucide_react",
+      "label": "lucide-react",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "concept",
+      "norm_label": "lucide-react",
+      "source_file": "client/package.json",
+      "source_location": "L12"
+    },
+    {
+      "id": "ref_react",
+      "label": "react",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "concept",
+      "norm_label": "react",
+      "source_file": "client/package.json",
+      "source_location": "L13"
+    },
+    {
+      "id": "devstate_frontend_developer_agent",
+      "label": "Frontend Developer Agent:",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "frontend developer agent:",
+      "source_file": "DEVSTATE.md",
+      "source_location": "L162"
+    },
+    {
+      "id": "server_controllers_interviewercontroller_extractdomain",
+      "label": "server_controllers_interviewercontroller_extractdomain",
       "_origin": "semantic",
-      "community": 0,
-      "community_name": "BrandKitDashboard.jsx",
+      "community": 1,
+      "community_name": "mockEngine.js",
       "external": true,
       "file_type": "concept",
-      "norm_label": "client_src_index",
+      "norm_label": "server_controllers_interviewercontroller_extractdomain",
       "source_file": "",
       "type": "external"
     },
@@ -2754,24 +2833,26 @@
       "type": "external"
     },
     {
-      "id": "server_controllers_interviewercontroller_extractdomain",
-      "label": "server_controllers_interviewercontroller_extractdomain",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "server_controllers_interviewercontroller_extractdomain",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "client_src_data_mockbranddata_extractclientdomain",
       "label": "client_src_data_mockbranddata_extractclientdomain",
+      "_origin": "semantic",
       "community": 9,
       "community_name": "mockBrandData.js",
       "external": true,
       "file_type": "concept",
       "norm_label": "client_src_data_mockbranddata_extractclientdomain",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "client_src_index",
+      "label": "client_src_index",
+      "_origin": "semantic",
+      "community": 9,
+      "community_name": "mockBrandData.js",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "client_src_index",
       "source_file": "",
       "type": "external"
     }
@@ -3103,7 +3184,7 @@
     },
     {
       "source": "server_services_compilerservice_compilebrandkit",
-      "target": "server_utils_geminiclient_getgeminiclient",
+      "target": "server_utils_llmclient_isllmconfigured",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3127,7 +3208,7 @@
     },
     {
       "source": "server_services_compilerservice_compilebrandkit",
-      "target": "server_utils_geminiclient_generatestructuredjson",
+      "target": "server_utils_llmclient_generatestructuredjson",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3175,7 +3256,7 @@
     },
     {
       "source": "server_services_interviewservice_generatenextquestion",
-      "target": "server_utils_geminiclient_getgeminiclient",
+      "target": "server_utils_llmclient_isllmconfigured",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3199,7 +3280,7 @@
     },
     {
       "source": "server_services_interviewservice_generatenextquestion",
-      "target": "server_utils_geminiclient_generatestructuredjson",
+      "target": "server_utils_llmclient_generatestructuredjson",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -4027,6 +4108,18 @@
     },
     {
       "source": "server_package",
+      "target": "ref_groq_sdk",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/package.json",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "server_package",
       "target": "ref_nodemon",
       "relation": "imports",
       "_origin": "ast",
@@ -4034,7 +4127,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "server/package.json",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -4051,7 +4144,7 @@
     },
     {
       "source": "server_server",
-      "target": "server_utils_geminiclient_getgeminiclient",
+      "target": "server_utils_llmclient_isllmconfigured",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -4111,7 +4204,7 @@
     },
     {
       "source": "server_services_compilerservice",
-      "target": "server_utils_geminiclient_generatestructuredjson",
+      "target": "server_utils_llmclient_generatestructuredjson",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -4123,7 +4216,7 @@
     },
     {
       "source": "server_services_compilerservice",
-      "target": "server_utils_geminiclient_getgeminiclient",
+      "target": "server_utils_llmclient_isllmconfigured",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -4183,7 +4276,7 @@
     },
     {
       "source": "server_services_interviewservice",
-      "target": "server_utils_geminiclient_generatestructuredjson",
+      "target": "server_utils_llmclient_generatestructuredjson",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -4195,7 +4288,7 @@
     },
     {
       "source": "server_services_interviewservice",
-      "target": "server_utils_geminiclient_getgeminiclient",
+      "target": "server_utils_llmclient_isllmconfigured",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -4831,7 +4924,7 @@
     },
     {
       "source": "server_server",
-      "target": "server_utils_geminiclient",
+      "target": "server_utils_llmclient",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -4879,7 +4972,7 @@
     },
     {
       "source": "server_services_compilerservice",
-      "target": "server_utils_geminiclient",
+      "target": "server_utils_llmclient",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -4927,7 +5020,7 @@
     },
     {
       "source": "server_services_interviewservice",
-      "target": "server_utils_geminiclient",
+      "target": "server_utils_llmclient",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -4971,6 +5064,42 @@
       "context": "import",
       "source_file": "server/utils/geminiClient.js",
       "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "server_utils_llmclient",
+      "target": "ref_groq_sdk",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "server_utils_llmclient",
+      "target": "ref_google_genai",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "server_utils_llmclient",
+      "target": "ref_dotenv",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L3",
       "weight": 1.0
     },
     {
@@ -6470,7 +6599,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/package.json",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -6584,6 +6713,17 @@
       "weight": 1.0
     },
     {
+      "source": "server_package_dependencies",
+      "target": "server_package_dependencies_groq_sdk",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/package.json",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
       "source": "server_package_devdependencies",
       "target": "server_package_devdependencies_nodemon",
       "relation": "contains",
@@ -6591,7 +6731,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/package.json",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -6936,6 +7076,28 @@
       "weight": 1.0
     },
     {
+      "source": "server_utils_llmclient",
+      "target": "server_utils_llmclient_getllmclient",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "server_utils_llmclient",
+      "target": "server_utils_llmclient_groq_candidate_models",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
       "source": "shared_domainconfig",
       "target": "shared_domainconfig_classifydomain",
       "relation": "contains",
@@ -7036,6 +7198,30 @@
       "weight": 1.0
     },
     {
+      "source": "server_utils_llmclient",
+      "target": "server_utils_llmclient_generatestructuredjson",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "collection",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "server_utils_llmclient",
+      "target": "server_utils_llmclient_isllmconfigured",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "collection",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
       "source": "devstate_2_active_pipeline_state_machine",
       "target": "client_src_types_brand_brandkit",
       "relation": "references",
@@ -7121,5 +7307,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "43f37999de89c21ebec2c34a8aa0f8761cb1d47a"
+  "built_at_commit": "7ebc9d62cf8a06d07a0b5c3771d688a688fea701"
 }

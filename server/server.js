@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import brandRoutes from './routes/brandRoutes.js';
-import { getGeminiClient } from './utils/geminiClient.js';
+import { isLlmConfigured } from './utils/llmClient.js';
 
 dotenv.config();
 
@@ -58,12 +58,14 @@ app.use((req, res, next) => {
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  const geminiConfigured = Boolean(getGeminiClient());
+  const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
   res.json({
     status: 'ok',
     service: 'brand-builder-server',
-    geminiConfigured,
-    model: process.env.GEMINI_MODEL || 'gemini-3.6-flash',
+    provider,
+    groqConfigured: Boolean(process.env.GROQ_API_KEY),
+    geminiConfigured: Boolean(process.env.GEMINI_API_KEY),
+    model: provider === 'groq' ? 'llama-3.3-70b-versatile' : (process.env.GEMINI_MODEL || 'gemini-2.5-flash'),
     uptime: process.uptime()
   });
 });
@@ -81,10 +83,11 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
+  const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
   console.log('----------------------------------------------------');
   console.log(`⚡ Brand Builder Backend running on http://localhost:${PORT}`);
-  console.log(`🤖 Gemini Client Status: ${getGeminiClient() ? 'ACTIVE (Live API)' : 'MOCK MODE (Fallback Active)'}`);
-  console.log(`🎯 Preferred Model: ${process.env.GEMINI_MODEL || 'gemini-3.6-flash'}`);
+  console.log(`🤖 Primary LLM Provider: ${provider.toUpperCase()} (${provider === 'groq' ? 'llama-3.3-70b-versatile' : (process.env.GEMINI_MODEL || 'gemini-2.5-flash')})`);
+  console.log(`🔄 Fallback Engine: ${process.env.GEMINI_API_KEY ? 'Gemini API' : 'Domain-Adaptive Mock Engine'}`);
   console.log('----------------------------------------------------');
 });
 

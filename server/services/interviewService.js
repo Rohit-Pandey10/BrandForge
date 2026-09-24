@@ -6,7 +6,7 @@
  * uses brandPrompts for system instructions, and falls back to mockEngine.
  */
 
-import { generateStructuredJson, getGeminiClient } from '../utils/geminiClient.js';
+import { generateStructuredJson, isLlmConfigured } from '../utils/llmClient.js';
 import { classifyDomain, isFamilyIntent } from '../data/domainConfig.js';
 import { buildQuestionSystemInstruction } from '../prompts/brandPrompts.js';
 import { getMockQuestion } from './mockEngine.js';
@@ -62,7 +62,7 @@ export async function generateNextQuestion(history = []) {
   const domain = classifyDomain(transcriptText);
   const isFamily = isFamilyIntent(transcriptText);
 
-  if (getGeminiClient()) {
+  if (isLlmConfigured()) {
     try {
       const systemInstruction = buildQuestionSystemInstruction(domain, isFamily, currentRound);
       const prompt = `Conversation Transcript:\n${transcriptText}\n\nDetected Domain: ${domain.toUpperCase()}${isFamily ? ' (FAMILY DINING INTENT)' : ''}.\nFormulate the next question for Round ${currentRound}. Return structured JSON matching schema.`;
@@ -76,8 +76,8 @@ export async function generateNextQuestion(history = []) {
         result.stageLabel = _defaultStageLabel(currentRound, isFamily);
       }
       return result;
-    } catch (geminiError) {
-      console.warn('[interviewService] Gemini API failed, using mock fallback:', geminiError.message);
+    } catch (llmError) {
+      console.warn('[interviewService] LLM API call failed, using mock fallback:', llmError.message);
     }
   }
 

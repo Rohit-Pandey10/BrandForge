@@ -6,7 +6,7 @@
  * Delegates to Gemini when available, falls back to mockEngine.
  */
 
-import { generateStructuredJson, getGeminiClient } from '../utils/geminiClient.js';
+import { generateStructuredJson, isLlmConfigured } from '../utils/llmClient.js';
 import { classifyDomain, isFamilyIntent } from '../data/domainConfig.js';
 import { buildCompileSystemInstruction } from '../prompts/brandPrompts.js';
 import { getMockBrandKit } from './mockEngine.js';
@@ -100,15 +100,15 @@ export async function compileBrandKit(history = []) {
   const domain = classifyDomain(transcriptText);
   const isFamily = isFamilyIntent(transcriptText);
 
-  if (getGeminiClient()) {
+  if (isLlmConfigured()) {
     try {
       const systemInstruction = buildCompileSystemInstruction(domain, isFamily);
       const prompt = `Full Socratic Interview Transcript:\n${transcriptText}\n\nDetected Domain: ${domain.toUpperCase()}${isFamily ? ' (FAMILY DINING INTENT)' : ''}.\nCompile the complete Brand Kit now.`;
 
       const result = await generateStructuredJson({ systemInstruction, prompt, schema: brandKitSchema });
       return result;
-    } catch (geminiError) {
-      console.warn('[compilerService] Gemini compilation failed, using domain-adaptive mock:', geminiError.message);
+    } catch (llmError) {
+      console.warn('[compilerService] LLM compilation failed, using domain-adaptive mock:', llmError.message);
     }
   }
 
