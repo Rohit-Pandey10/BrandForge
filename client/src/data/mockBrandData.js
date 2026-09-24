@@ -279,26 +279,9 @@ export const careerBrandKit = {
  */
 export const mockBrandKit = hospitalityBrandKit;
 
-/**
- * Domain Classifier & Family Intent Detector
- */
-export function isClientFamilyIntent(text = '') {
-  return /(family|kid|child|children|toddler|parent|all-ages|all ages|multi-generation|casual diner|sharing table|high chair|soccer team)/i.test(String(text));
-}
+import { DOMAINS, classifyDomain, isFamilyIntent, extractClientDomain, isClientFamilyIntent } from './domainConfig';
 
-export function extractClientDomain(text = '') {
-  const lower = String(text).toLowerCase();
-  if (/(restaurant|food|dining|cuisine|culinary|chef|bistro|cafe|bar|bakery|coffee|eatery|pizza|burger|pasta|taco|cocktail|hospitality|kitchen|table|wine|menu|dish)/i.test(lower)) {
-    return 'hospitality';
-  }
-  if (/(resume|career|job|hiring|portfolio|cv|recruiter|interview|ats)/i.test(lower)) {
-    return 'career';
-  }
-  if (/(database|compiler|code|dev|developer|api|rust|backend|infrastructure|saas|terminal|cli|software)/i.test(lower)) {
-    return 'developer';
-  }
-  return 'hospitality'; // Default to hospitality/general craft over generic dev
-}
+export { DOMAINS, classifyDomain, isFamilyIntent, extractClientDomain, isClientFamilyIntent };
 
 /**
  * Returns a domain-adaptive brand kit based on user pitch or history

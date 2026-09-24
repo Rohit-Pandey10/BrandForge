@@ -1,23 +1,23 @@
 # Graph Report - brand-builder  (2026-09-24)
 
 ## Corpus Check
-- 27 files · ~20,121 words
+- 40 files · ~22,031 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 4 file(s) not represented in the graph (top: .example 2, (none) 1, .css 1)
 
 ## Summary
-- 183 nodes · 247 edges · 14 communities (11 shown, 3 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 11 edges (avg confidence: 0.92)
+- 241 nodes · 377 edges · 14 communities (11 shown, 3 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e5f1fdbd`
+- Built from commit: `43f37999`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- App.jsx
-- interviewerController.js
+- BrandKitDashboard.jsx
+- mockEngine.js
 - client/package.json
 - brand.ts
 - server/package.json
@@ -25,24 +25,22 @@
 - Brand Builder ⚡
 - run-dev.js
 - DESIGN.md — Handhold Editorial Design System
-- DEVSTATE.md — AI Agent Runtime & Architecture State
-- devDependencies
+- mockBrandData.js
+- shared/domainConfig.js
 
 ## God Nodes (most connected - your core abstractions)
-1. `react` - 8 edges
-2. `handleNextQuestion()` - 8 edges
-3. `handleCompileBrandKit()` - 8 edges
-4. `generateStructuredJson()` - 8 edges
-5. `scripts` - 7 edges
-6. `extractDomain()` - 7 edges
-7. `isFamilyIntent()` - 6 edges
-8. `getGeminiClient()` - 6 edges
-9. `Brand Builder ⚡` - 6 edges
-10. `lucide-react` - 5 edges
+1. `react` - 13 edges
+2. `classifyDomain()` - 10 edges
+3. `isFamilyIntent()` - 10 edges
+4. `generateNextQuestion()` - 10 edges
+5. `getMockQuestion()` - 10 edges
+6. `compileBrandKit()` - 9 edges
+7. `getMockBrandKit()` - 9 edges
+8. `generateStructuredJson()` - 9 edges
+9. `lucide-react` - 8 edges
+10. `scripts` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `1. Project Overview & Sprint Status` --references--> `extractDomain()`  [INFERRED]
-  DEVSTATE.md → server/controllers/interviewerController.js
 - `Frontend Developer Agent:` --references--> `BrandKitDashboard()`  [INFERRED]
   DEVSTATE.md → client/src/components/BrandKitDashboard.jsx
 - `Frontend Developer Agent:` --references--> `IntakeView()`  [INFERRED]
@@ -51,31 +49,33 @@
   DEVSTATE.md → client/src/components/InterviewChat.jsx
 - `Frontend Developer Agent:` --references--> `ProgressStepper()`  [INFERRED]
   DEVSTATE.md → client/src/components/ProgressStepper.jsx
+- `2. Active Pipeline State Machine` --references--> `BrandKit`  [INFERRED]
+  DEVSTATE.md → client/src/types/brand.ts
 
 ## Import Cycles
 - None detected.
 
 ## Communities (14 total, 3 thin omitted)
 
-### Community 0 - "App.jsx"
-Cohesion: 0.14
-Nodes (23): App(), BrandKitDashboard(), cleanXml(), Header(), IntakeView(), InterviewChat(), BASE_STAGES, ProgressStepper() (+15 more)
+### Community 0 - "BrandKitDashboard.jsx"
+Cohesion: 0.12
+Nodes (26): BrandKitDashboard(), TABS, BrandStrategyTab(), LaunchCopyTab(), getContrastVsWhite(), VIEWPORT_SIZES, VisualTokensTab(), wcagLevel() (+18 more)
 
-### Community 1 - "interviewerController.js"
-Cohesion: 0.15
-Nodes (22): dotenv, express, brandNamesWithAmpersand, testQueries, brandKitSchema, extractDomain(), getDomainGuidance(), getMockBrandKit() (+14 more)
+### Community 1 - "mockEngine.js"
+Cohesion: 0.12
+Nodes (34): brandNamesWithAmpersand, testQueries, server_controllers_interviewercontroller_extractdomain, handleCompileBrandKit(), handleNextQuestion(), validateHistory(), classifyDomain(), DOMAINS (+26 more)
 
 ### Community 2 - "client/package.json"
-Cohesion: 0.10
-Nodes (19): dependencies, lucide-react, react, react-dom, name, private, scripts, build (+11 more)
+Cohesion: 0.07
+Nodes (27): dependencies, lucide-react, react, react-dom, devDependencies, autoprefixer, postcss, tailwindcss (+19 more)
 
 ### Community 3 - "brand.ts"
-Cohesion: 0.11
-Nodes (17): BrandKit, BrandStrategy, ChatMessage, ColorRole, ColorToken, LaunchContent, QuestionResponse, TypographyTokens (+9 more)
+Cohesion: 0.07
+Nodes (25): BrandKit, BrandStrategy, ChatMessage, ColorRole, ColorToken, LaunchContent, QuestionResponse, TypographyTokens (+17 more)
 
 ### Community 4 - "server/package.json"
-Cohesion: 0.11
-Nodes (18): cors, @google/genai, nodemon, dependencies, cors, dotenv, express, @google/genai (+10 more)
+Cohesion: 0.09
+Nodes (24): cors, dotenv, express, @google/genai, nodemon, dependencies, cors, dotenv (+16 more)
 
 ### Community 5 - "package.json"
 Cohesion: 0.14
@@ -93,33 +93,33 @@ Nodes (8): ref_child_process, ref_path, ref_url, client, __dirname, __filename, 
 Cohesion: 0.22
 Nodes (8): 1. Color Palette (Zero Chromatic Noise — Strict Monochrome), 2. Typography Contract (Two Fonts, Two Weights Only), 3. Geometry, Shapes & Elevation, 4. Component Manifest, Body & Interface, Critical Rules:, DESIGN.md — Handhold Editorial Design System, Display Headlines
 
-### Community 9 - "DEVSTATE.md — AI Agent Runtime & Architecture State"
-Cohesion: 0.22
-Nodes (8): 1. Project Overview & Sprint Status, 3. Implemented Schemas & JSON Contracts, 4. Known Blockers & Next Actions for AI Agents, A. Question Schema (`questionSchema`), B. Brand Kit Schema (`brandKitSchema`), Backend Developer Agent:, Demo & Presentation Agent:, DEVSTATE.md — AI Agent Runtime & Architecture State
+### Community 9 - "mockBrandData.js"
+Cohesion: 0.14
+Nodes (16): App(), LivePreviewTab(), classifyDomain(), DOMAINS, extractClientDomain, isClientFamilyIntent, isFamilyIntent(), careerBrandKit (+8 more)
 
-### Community 10 - "devDependencies"
-Cohesion: 0.25
-Nodes (8): devDependencies, autoprefixer, postcss, tailwindcss, @types/react, @types/react-dom, vite, @vitejs/plugin-react
+### Community 10 - "shared/domainConfig.js"
+Cohesion: 0.33
+Nodes (3): DOMAINS, extractClientDomain, isClientFamilyIntent
 
 ## Knowledge Gaps
-- **92 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+87 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 107 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **97 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+92 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 119 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `DEVSTATE.md — AI Agent Runtime & Architecture State` connect `DEVSTATE.md — AI Agent Runtime & Architecture State` to `brand.ts`?**
-  _High betweenness centrality (0.343) - this node is a cross-community bridge._
-- **Why does `4. Known Blockers & Next Actions for AI Agents` connect `DEVSTATE.md — AI Agent Runtime & Architecture State` to `App.jsx`?**
-  _High betweenness centrality (0.278) - this node is a cross-community bridge._
-- **Why does `Frontend Developer Agent:` connect `App.jsx` to `DEVSTATE.md — AI Agent Runtime & Architecture State`?**
-  _High betweenness centrality (0.269) - this node is a cross-community bridge._
+- **Why does `Frontend Developer Agent:` connect `BrandKitDashboard.jsx` to `brand.ts`?**
+  _High betweenness centrality (0.086) - this node is a cross-community bridge._
+- **Why does `4. Known Blockers & Next Actions for AI Agents` connect `brand.ts` to `BrandKitDashboard.jsx`?**
+  _High betweenness centrality (0.086) - this node is a cross-community bridge._
 - **What connects `name`, `private`, `version` to the rest of the system?**
-  _92 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `App.jsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.13763440860215054 - nodes in this community are weakly interconnected._
+  _97 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `BrandKitDashboard.jsx` be split into smaller, more focused modules?**
+  _Cohesion score 0.11522048364153627 - nodes in this community are weakly interconnected._
+- **Should `mockEngine.js` be split into smaller, more focused modules?**
+  _Cohesion score 0.1184939091915836 - nodes in this community are weakly interconnected._
 - **Should `client/package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.1 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
 - **Should `brand.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._

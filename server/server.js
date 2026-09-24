@@ -10,20 +10,22 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 const CLIENT_ORIGIN = process.env.CLIENT_URL || process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 
-// CORS configuration supporting Vite dev server & production previews
+// Strict CORS whitelist — only explicitly allowed origins pass
 const allowedOrigins = [
   CLIENT_ORIGIN,
   'http://localhost:5173',
   'http://127.0.0.1:5173',
   'http://localhost:3000'
-];
+].filter(Boolean);
 
-app.use(cors({
+const corsOptions = {
   origin: (origin, callback) => {
-    // allow requests with no origin (like mobile apps, curl, server-to-server)
+    // Allow requests with no Origin header (curl, mobile apps, server-to-server)
     if (!origin) return callback(null, true);
+    // Allow explicitly whitelisted origins
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    // Allow known deployment platform subdomains
     if (
-      allowedOrigins.includes(origin) ||
       origin.endsWith('.vercel.app') ||
       origin.endsWith('.netlify.app') ||
       origin.endsWith('.railway.app') ||
@@ -31,12 +33,15 @@ app.use(cors({
     ) {
       return callback(null, true);
     }
-    // Allow for hackathon demo compatibility
-    return callback(null, true);
+    // Reject all other origins with a proper CORS error
+    return callback(new Error(`CORS policy violation: Origin ${origin} not allowed`));
   },
-  methods: ['GET', 'POST', 'OPTIONS'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-}));
+};
+
+app.use(cors(corsOptions));
 
 // Body parser
 app.use(express.json({ limit: '10mb' }));

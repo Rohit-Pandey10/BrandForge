@@ -12,15 +12,15 @@
     "semantic_hash": ""
   },
   "client/src/App.jsx": {
-    "mtime": 1790260010.3521712,
-    "seen": 1790260681.256404,
-    "ast_hash": "2121da264916d03b081b88893dfb42f5",
+    "mtime": 1790264957.8273969,
+    "seen": 1790265825.0006762,
+    "ast_hash": "378823519e7e9cf77e8d7c8d33fcc637",
     "semantic_hash": ""
   },
   "client/src/components/BrandKitDashboard.jsx": {
-    "mtime": 1790261818.3815494,
-    "seen": 1790262164.133215,
-    "ast_hash": "279a910a45e9d58437b2ff09e86c9513",
+    "mtime": 1790265733.9795501,
+    "seen": 1790265825.0006762,
+    "ast_hash": "d415ae2b88f83f411a40872fcbc80db0",
     "semantic_hash": ""
   },
   "client/src/components/Header.jsx": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "client/src/data/mockBrandData.js": {
-    "mtime": 1790261774.4411604,
-    "seen": 1790262164.133218,
-    "ast_hash": "cf1ec6389656ba243c24bdbd294cc758",
+    "mtime": 1790265351.3147862,
+    "seen": 1790265825.000679,
+    "ast_hash": "cb1c92d03802a03e7fcecd27f10280f1",
     "semantic_hash": ""
   },
   "client/src/main.jsx": {
@@ -96,9 +96,9 @@
     "semantic_hash": ""
   },
   "server/controllers/interviewerController.js": {
-    "mtime": 1790261729.9326143,
-    "seen": 1790262164.1332228,
-    "ast_hash": "c7b7e12912e39fbe11729f2e95e302df",
+    "mtime": 1790265282.0175624,
+    "seen": 1790265825.000684,
+    "ast_hash": "a6071edbaa9652c0a7420ff66bd52a80",
     "semantic_hash": ""
   },
   "server/package.json": {
@@ -120,9 +120,9 @@
     "semantic_hash": ""
   },
   "server/utils/geminiClient.js": {
-    "mtime": 1790259537.1786647,
-    "seen": 1790260681.256413,
-    "ast_hash": "a6a28466c620bd2a0b397d1eb844555b",
+    "mtime": 1790265654.2744122,
+    "seen": 1790265825.0006862,
+    "ast_hash": "77a2b864ea708348b9ff564b8224b41b",
     "semantic_hash": ""
   },
   "DESIGN.md": {
@@ -159,6 +159,12 @@
     "mtime": 1790262093.705791,
     "seen": 1790262164.1332219,
     "ast_hash": "b653463575a55c1d6b6f9e58cf09817c",
+    "semantic_hash": ""
+  },
+  "scripts/verify-fixes.js": {
+    "mtime": 1790265509.488045,
+    "seen": 1790265825.000683,
+    "ast_hash": "ad944f8e8bf37d65dd67fd7d96cc5e9f",
     "semantic_hash": ""
   }
 }

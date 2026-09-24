@@ -41,6 +41,7 @@ export default function App() {
    */
   const handleStartInterview = async (pitch) => {
     setIsLoading(true);
+    setCurrentQuestion(null);
 
     const initialHistory = [{ role: 'user', content: pitch }];
     const initialMessages = [{
@@ -57,11 +58,12 @@ export default function App() {
     const data = await callApi('/api/interview/next', { history: initialHistory });
 
     if (data) {
+      // API succeeded — commit only this single response, never inject a fallback on top
       setCurrentQuestion(data);
       setMessages(prev => [
         ...prev,
         {
-          id: `msg-${Date.now()}`,
+          id: `msg-ai-${Date.now()}`,
           role: 'assistant',
           content: data.question,
           reasoning: data.reasoning,
@@ -69,13 +71,14 @@ export default function App() {
           timestamp: Date.now()
         }
       ]);
-      // Local fallback if server unreachable (domain-adaptive)
+    } else {
+      // API unreachable — use domain-adaptive local fallback only in this branch
       const fallbackQuestion = getDomainMockQuestion(1, pitch);
       setCurrentQuestion(fallbackQuestion);
       setMessages(prev => [
         ...prev,
         {
-          id: `msg-${Date.now()}`,
+          id: `msg-ai-${Date.now()}`,
           role: 'assistant',
           content: fallbackQuestion.question,
           reasoning: fallbackQuestion.reasoning,
@@ -104,6 +107,7 @@ export default function App() {
 
     setMessages(updatedMessages);
     setIsLoading(true);
+    setCurrentQuestion(null);
 
     const historyForApi = updatedMessages.map(m => ({
       role: m.role,

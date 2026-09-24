@@ -1,6 +1,6 @@
 {
-  "0": "App.jsx",
-  "1": "interviewerController.js",
+  "0": "BrandKitDashboard.jsx",
+  "1": "mockEngine.js",
   "2": "client/package.json",
   "3": "brand.ts",
   "4": "server/package.json",
@@ -8,8 +8,8 @@
   "6": "Brand Builder ⚡",
   "7": "run-dev.js",
   "8": "DESIGN.md — Handhold Editorial Design System",
-  "9": "DEVSTATE.md — AI Agent Runtime & Architecture State",
-  "10": "devDependencies",
+  "9": "mockBrandData.js",
+  "10": "shared/domainConfig.js",
   "11": "tailwind.config.js",
   "12": "postcss.config.js",
   "13": "test-restaurant-flow.js"
