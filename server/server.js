@@ -1,0 +1,86 @@
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import brandRoutes from './routes/brandRoutes.js';
+import { getGeminiClient } from './utils/geminiClient.js';
+
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 5001;
+const CLIENT_ORIGIN = process.env.CLIENT_URL || process.env.CLIENT_ORIGIN || 'http://localhost:5173';
+
+// CORS configuration supporting Vite dev server & production previews
+const allowedOrigins = [
+  CLIENT_ORIGIN,
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:3000'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // allow requests with no origin (like mobile apps, curl, server-to-server)
+    if (!origin) return callback(null, true);
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      origin.endsWith('.netlify.app') ||
+      origin.endsWith('.railway.app') ||
+      origin.endsWith('.render.com')
+    ) {
+      return callback(null, true);
+    }
+    // Allow for hackathon demo compatibility
+    return callback(null, true);
+  },
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Body parser
+app.use(express.json({ limit: '10mb' }));
+
+// Request logging middleware
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    console.log(`[HTTP] ${req.method} ${req.path} -> ${res.statusCode} (${duration}ms)`);
+  });
+  next();
+});
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  const geminiConfigured = Boolean(getGeminiClient());
+  res.json({
+    status: 'ok',
+    service: 'brand-builder-server',
+    geminiConfigured,
+    model: process.env.GEMINI_MODEL || 'gemini-3.5-flash',
+    uptime: process.uptime()
+  });
+});
+
+// Mount Brand Interview API routes
+app.use('/api/interview', brandRoutes);
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error('[server] Uncaught server error:', err);
+  res.status(500).json({
+    error: 'Internal Server Error',
+    message: err.message
+  });
+});
+
+app.listen(PORT, () => {
+  console.log('----------------------------------------------------');
+  console.log(`⚡ Brand Builder Backend running on http://localhost:${PORT}`);
+  console.log(`🤖 Gemini Client Status: ${getGeminiClient() ? 'ACTIVE (Live API)' : 'MOCK MODE (Fallback Active)'}`);
+  console.log(`🎯 Preferred Model: ${process.env.GEMINI_MODEL || 'gemini-3.6-flash'}`);
+  console.log('----------------------------------------------------');
+});
+
+export default app;

@@ -1,0 +1,22 @@
+{
+  "name": "brand-builder-workspace",
+  "version": "1.0.0",
+  "description": "Adaptive Socratic Brand Interviewer & Token Synthesizer powered by Gemini 2.5 Flash",
+  "scripts": {
+    "dev": "node scripts/run-dev.js",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "install:all": "npm install && (cd server && npm install) && (cd client && npm install)",
+    "build:client": "cd client && npm run build",
+    "test:health": "curl -s http://localhost:5001/health | jq ."
+  },
+  "keywords": [
+    "brand-builder",
+    "gemini",
+    "socratic-interviewer",
+    "design-tokens",
+    "ai-hackathon"
+  ],
+  "author": "Brand Builder Team",
+  "license": "MIT"
+}

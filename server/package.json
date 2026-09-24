@@ -1,0 +1,20 @@
+{
+  "name": "brand-builder-server",
+  "version": "1.0.0",
+  "description": "Express Backend and Google Gemini 2.5 Flash controller for Brand Builder",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@google/genai": "^2.24.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

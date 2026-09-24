@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+*/node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment files & Secrets
+.env
+.env.*
+!.env.example
+*.env
+server/.env
+client/.env
+
+# Production builds
+dist/
+client/dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Editor & AI tooling
+.vscode/
+.idea/
+.antigravity/
