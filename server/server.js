@@ -58,7 +58,7 @@ app.get('/health', (req, res) => {
     status: 'ok',
     service: 'brand-builder-server',
     geminiConfigured,
-    model: process.env.GEMINI_MODEL || 'gemini-3.5-flash',
+    model: process.env.GEMINI_MODEL || 'gemini-3.6-flash',
     uptime: process.uptime()
   });
 });

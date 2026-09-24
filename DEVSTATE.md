@@ -13,8 +13,8 @@
   - `Header.jsx`: Lowercase serif wordmark `brand builder.`, status badge `Socratic Brand Studio`, context-aware utility actions (`Skip to Synthesis`, `Export JSON`, `Export CSS Tokens`, `Download SVG`, `Print / PDF`).
   - `InterviewChat.jsx`: Focused Studio Decision Card featuring display question headline, expandable `Under-the-Hood Strategic Rationale` diagnostic disclosure, stacked structured radio rows with custom text refinement textarea, and primary round progression CTA.
   - `BrandKitDashboard.jsx`: 5-tab segmented dashboard (`Live Brand Preview`, `Brand Strategy`, `Voice & Tone`, `Visual Design Tokens`, `Launch Copy & Manifesto`) with generous color swatch slabs, typography sandboxes, live browser preview hero, and inspectable `:root` CSS token panel.
-- **Primary Model Target:** `gemini-3.5-flash` via `@google/genai` (Configured dynamically via `process.env.GEMINI_MODEL`, with automatic failover to `gemini-3.7-flash` and `gemini-3.5-flash-lite`)
-- **API Health:** Verified LIVE with Google Gemini API; Round 1-3 Socratic flow and full Brand Kit synthesis confirmed working.
+- **Primary Model Target:** `gemini-3.6-flash` via `@google/genai` (Configured dynamically via `process.env.GEMINI_MODEL`, with automatic failover to `gemini-2.5-flash` and `gemini-2.0-flash`)
+- **API Health:** Verified LIVE with Google Gemini API; Continuous Socratic flow and full Brand Kit synthesis confirmed working.
 - **Fallback Mode:** Domain-aware mock hydration safety net enabled (zero-dependency offline development)
 
 ---
@@ -22,15 +22,15 @@
 ## 2. Active Pipeline State Machine
 
 ```
-[Stage 1: Intake & ICP] ──> [Stage 2: Differentiation] ──> [Stage 3: Attitude & Edge] ──> [Stage 4: Synthesis]
+[Stage 1: Intake & ICP] ──> [Stage 2: Differentiation] ──> [Stage 3: Attitude & Edge] ──> [Stage 4+: Deepening / Synthesis]
        (Verified)                  (Verified)                     (Verified)                (Verified)
 ```
 
 | Pipeline Stage | Focus / Objective | Output Entity | Status | Next Milestone |
 | :--- | :--- | :--- | :--- | :--- |
-| **Stage 1: Intake & ICP Discovery** | Captures 1-sentence value claim; probes beachhead user, severe pain, and urgency via `gemini-3.5-flash`. | Initial Pitch + Round 1 response | **Verified** | Concise 2-sentence mentor format with <6-word pills |
-| **Stage 2: Differentiation & Critique** | Uncovers the incumbent status quo, attacks legacy compromises, enforces Anti-Cliche mandate via `gemini-3.5-flash`. | Round 2 response | **Verified** | Highlight compromise and unique angle in real-time |
-| **Stage 3: Attitude Boundaries & Edge** | Tests tone boundaries, negative constraints, and brand aesthetic archetype via `gemini-3.5-flash`. | Round 3 response + completion flag | **Verified** | 3 quick-reply pill options under 6 words each |
+| **Stage 1: Intake & ICP Discovery** | Captures 1-sentence value claim; probes beachhead user, severe pain, and urgency via `gemini-3.6-flash`. | Initial Pitch + Round 1 response | **Verified** | Concise 2-sentence mentor format with <8-word pills |
+| **Stage 2: Differentiation & Critique** | Uncovers the incumbent status quo, attacks legacy compromises, enforces Anti-Cliche mandate via `gemini-3.6-flash`. | Round 2 response | **Verified** | Highlight compromise and unique angle in real-time |
+| **Stage 3: Attitude Boundaries & Edge** | Tests tone boundaries, negative constraints, and brand aesthetic archetype via `gemini-3.6-flash`. | Round 3 response + readyForSynthesis flag | **Verified** | 3 quick-reply pill options under 8 words each |
 | **Stage 4: Brand Kit Synthesis** | Full Socratic transcript is compiled into strategic narrative + visual/voice design tokens with SVG/PDF exports. | Complete `BrandKit` object | **Verified** | Export tokens.json, palette.svg, and print-ready Brand Book PDF |
 
 ---

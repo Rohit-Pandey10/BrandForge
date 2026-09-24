@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, ChevronDown, ChevronUp, Sparkles, RotateCcw, Settings } from 'lucide-react';
+import { ArrowRight, ChevronDown, ChevronUp, Sparkles, RotateCcw, Settings, Layers } from 'lucide-react';
 import ProgressStepper from './ProgressStepper';
-
-const STAGE_NAMES = {
-  1: 'BEACHHEAD & CORE PAIN',
-  2: 'DIFFERENTIATION & INCUMBENT CRITIQUE',
-  3: 'BRAND PERSONALITY & AESTHETIC POLARITY'
-};
 
 export default function InterviewChat({
   messages = [],
@@ -22,13 +16,17 @@ export default function InterviewChat({
   const [showRationale, setShowRationale] = useState(false);
 
   const currentRound = currentQuestion?.currentRound || 1;
-  const isComplete = currentQuestion?.isComplete || false;
-  const stageName = STAGE_NAMES[currentRound] || 'STRATEGIC DISCOVERY';
+  const stageLabel = currentQuestion?.stageLabel || (
+    currentRound === 1 ? 'Target Beachhead' :
+    currentRound === 2 ? 'Incumbent Critique' :
+    currentRound === 3 ? 'Brand Edge' : 'Strategic Moat'
+  );
+  const readyForSynthesis = Boolean(currentQuestion?.readyForSynthesis || currentRound >= 3);
   const suggestedAnswers = currentQuestion?.suggestedAnswers || [];
-  const questionHeadline = currentQuestion?.question || 'What is your core strategic vision?';
+  const questionHeadline = currentQuestion?.question || '';
   const reasoning = currentQuestion?.reasoning || '';
 
-  // Clear selections when moving to a new question/round
+  // Reset local state when a new question arrives
   useEffect(() => {
     setSelectedOption(null);
     setInputText('');
@@ -40,36 +38,40 @@ export default function InterviewChat({
     setInputText(answer);
   };
 
-  const handleProceed = (e) => {
+  const handleProceedNextRound = (e) => {
     e?.preventDefault();
     if (isLoading || isCompiling) return;
-
     const answerToSend = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');
     if (!answerToSend) return;
+    onSendMessage(answerToSend, false); // false = don't synthesize, continue discovery
+  };
 
-    if (currentRound >= 3 || isComplete) {
-      // Final round completion: send final answer then compile, or compile directly
-      onSendMessage(answerToSend);
-    } else {
-      onSendMessage(answerToSend);
-    }
+  const handleSynthesizeNow = (e) => {
+    e?.preventDefault();
+    if (isLoading || isCompiling) return;
+    const answerToSend = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');
+    onCompileBrandKit(answerToSend);
   };
 
   return (
     <div className="w-full max-w-3xl mx-auto px-4 py-4 sm:py-8 flex flex-col justify-center animate-fade-in font-sans">
       {/* Centered Stage Stepper */}
       <div className="mb-6 sm:mb-8">
-        <ProgressStepper currentRound={currentRound} isComplete={isComplete} />
+        <ProgressStepper 
+          currentRound={currentRound} 
+          readyForSynthesis={readyForSynthesis}
+          stageLabel={stageLabel}
+        />
       </div>
 
-      {/* Compiling Monograph Full-Card Overlay */}
+      {/* State 1: Synthesis In-Progress Monograph Overlay */}
       {isCompiling ? (
         <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-10 sm:p-14 text-center max-w-2xl mx-auto shadow-sm animate-fade-in space-y-4">
-          <div className="w-10 h-10 mx-auto rounded-full bg-[#f2f1ed] border border-[#dbd7cd] flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto rounded-full bg-[#f2f1ed] border border-[#dbd7cd] flex items-center justify-center">
             <Sparkles className="w-5 h-5 text-black animate-spin" />
           </div>
           <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block">
-            Synthesis in progress
+            SYNTHESIS IN PROGRESS
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-light text-black tracking-[-0.03em] leading-tight">
             Authoring your Brand Monograph...
@@ -78,20 +80,61 @@ export default function InterviewChat({
             Compiling typographic scales, contrasting color tokens, voice dos & don'ts, and the launch manifesto.
           </p>
         </div>
+      ) : isLoading ? (
+        /* State 2: Dedicated In-Flight Loading Card (Never Blank or Frozen) */
+        <div className="bg-white rounded-[28px] border border-[#dbd7cd]/80 p-6 sm:p-10 max-w-2xl mx-auto shadow-sm w-full transition-all animate-fade-in space-y-6">
+          <div className="flex items-center justify-between pb-3 border-b border-[#dbd7cd]/50">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-black animate-ping" />
+              <span className="font-sans text-[10px] tracking-widest uppercase text-stone-500 font-medium">
+                STAGE {currentRound}: {stageLabel.toUpperCase()} &bull; DIAGNOSTIC IN PROGRESS
+              </span>
+            </div>
+            <span className="font-sans text-[11px] text-stone-400">
+              Round {currentRound}
+            </span>
+          </div>
+
+          <div className="space-y-3 py-2">
+            <div className="h-4 w-32 bg-stone-200/80 rounded-full animate-pulse" />
+            <h2 className="font-serif text-2xl sm:text-[28px] font-light text-stone-800 tracking-tight leading-snug">
+              Synthesizing strategic trade-offs...
+            </h2>
+            <p className="text-xs text-stone-500 leading-relaxed">
+              Evaluating your position against market incumbents and formulating the next challenge.
+            </p>
+          </div>
+
+          {/* Shimmer skeleton option rows */}
+          <div className="space-y-2.5 pt-2">
+            <div className="w-full h-14 rounded-xl border border-[#dbd7cd]/60 bg-[#f9f8f6] animate-pulse flex items-center px-4 gap-3">
+              <div className="w-4 h-4 rounded-full border border-stone-300 shrink-0" />
+              <div className="h-3 bg-stone-200 rounded w-3/4" />
+            </div>
+            <div className="w-full h-14 rounded-xl border border-[#dbd7cd]/60 bg-[#f9f8f6] animate-pulse flex items-center px-4 gap-3">
+              <div className="w-4 h-4 rounded-full border border-stone-300 shrink-0" />
+              <div className="h-3 bg-stone-200 rounded w-1/2" />
+            </div>
+            <div className="w-full h-14 rounded-xl border border-[#dbd7cd]/60 bg-[#f9f8f6] animate-pulse flex items-center px-4 gap-3">
+              <div className="w-4 h-4 rounded-full border border-stone-300 shrink-0" />
+              <div className="h-3 bg-stone-200 rounded w-2/3" />
+            </div>
+          </div>
+        </div>
       ) : (
-        /* The Single Focused Studio Decision Card */
+        /* State 3: Active Studio Decision Card */
         <div className="bg-white rounded-[28px] border border-[#dbd7cd]/80 p-6 sm:p-10 max-w-2xl mx-auto shadow-sm w-full transition-all">
           {/* Card Top Metadata Row */}
           <div className="flex items-center justify-between pb-3 border-b border-[#dbd7cd]/50">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-black" />
               <span className="font-sans text-[10px] tracking-widest uppercase text-stone-400 font-medium">
-                STAGE {currentRound}: {stageName}
+                STAGE {currentRound}: {stageLabel.toUpperCase()}
               </span>
             </div>
             <div className="flex items-center gap-3">
               <span className="font-sans text-[11px] text-stone-500">
-                Round {currentRound} of 3
+                Round {currentRound}
               </span>
               <button
                 onClick={onReset}
@@ -136,7 +179,7 @@ export default function InterviewChat({
             </div>
           )}
 
-          {/* Structured Radio Selection Rows (Replacing Tiny Pills) */}
+          {/* Structured Radio Selection Rows */}
           {suggestedAnswers.length > 0 && (
             <div className="mb-6">
               <span className="font-sans text-[11px] text-stone-400 mb-2.5 block">
@@ -151,7 +194,6 @@ export default function InterviewChat({
                       key={index}
                       type="button"
                       onClick={() => handleSelectOption(answer, index)}
-                      disabled={isLoading}
                       className={`w-full text-left p-3.5 sm:p-4 rounded-xl border transition-all flex items-start gap-3 group ${
                         isSelected
                           ? 'border-black bg-[#faf9f6] ring-1 ring-black/5'
@@ -193,50 +235,60 @@ export default function InterviewChat({
                 value={inputText}
                 onChange={(e) => {
                   setInputText(e.target.value);
-                  // If user edits manually, clear strict radio match if it deviates
                   if (selectedOption !== null && e.target.value !== suggestedAnswers[selectedOption]) {
                     setSelectedOption(null);
                   }
                 }}
-                disabled={isLoading}
                 placeholder="Refine the selected response or type your exact conviction..."
                 className="border border-[#dbd7cd] rounded-xl p-3 text-sm text-black focus:outline-none focus:border-black w-full bg-[#fcfbf9] min-h-[72px] resize-none transition-colors"
               />
             </div>
 
-            {/* Bottom Action Row */}
-            <div className="flex items-center justify-between pt-2">
-              <div className="text-[11px] text-stone-400">
-                {isLoading ? (
-                  <span className="flex items-center gap-1.5 animate-pulse text-stone-500">
-                    <span className="w-1.5 h-1.5 rounded-full bg-black animate-ping" />
-                    Formulating challenge...
-                  </span>
-                ) : (
-                  <span>Shift + Enter or click button to proceed</span>
-                )}
-              </div>
-
-              {/* Right-Aligned Primary CTA */}
+            {/* Bottom Action Row: Multi-Directional User Agency */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
+              {/* Secondary Option / Status */}
               <div>
-                {currentRound < 3 && !isComplete ? (
+                {readyForSynthesis ? (
                   <button
                     type="button"
-                    onClick={handleProceed}
-                    disabled={isLoading || (!inputText.trim() && selectedOption === null)}
-                    className="font-sans bg-black text-white px-6 py-2.5 rounded-full text-xs hover:bg-neutral-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 shadow-none"
+                    onClick={handleProceedNextRound}
+                    disabled={!inputText.trim() && selectedOption === null}
+                    className="text-xs text-stone-600 hover:text-black border border-[#dbd7cd] rounded-full px-4 py-2 bg-white hover:bg-[#fcfbf9] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
                   >
-                    <span>Proceed to Round {currentRound + 1}</span>
-                    <ArrowRight className="w-3.5 h-3.5 stroke-[1.5]" />
+                    <span>Deepen Strategy (Round {currentRound + 1})</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 ) : (
                   <button
                     type="button"
-                    onClick={handleProceed}
-                    disabled={isLoading || (!inputText.trim() && selectedOption === null)}
-                    className="font-sans bg-black text-white px-7 py-2.5 rounded-full text-xs font-medium hover:bg-neutral-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 shadow-none"
+                    onClick={handleSynthesizeNow}
+                    className="text-xs text-stone-500 hover:text-black transition-colors flex items-center justify-center gap-1.5 py-1.5"
+                  >
+                    <span>Synthesize now with current insights &rarr;</span>
+                  </button>
+                )}
+              </div>
+
+              {/* Primary Action Button */}
+              <div>
+                {readyForSynthesis ? (
+                  <button
+                    type="button"
+                    onClick={handleSynthesizeNow}
+                    disabled={!inputText.trim() && selectedOption === null}
+                    className="w-full sm:w-auto font-sans bg-black text-white px-7 py-2.5 rounded-full text-xs font-medium hover:bg-neutral-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-none"
                   >
                     <span>Synthesize Brand Kit ✦</span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleProceedNextRound}
+                    disabled={!inputText.trim() && selectedOption === null}
+                    className="w-full sm:w-auto font-sans bg-black text-white px-6 py-2.5 rounded-full text-xs hover:bg-neutral-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-none"
+                  >
+                    <span>Proceed to Round {currentRound + 1}</span>
+                    <ArrowRight className="w-3.5 h-3.5 stroke-[1.5]" />
                   </button>
                 )}
               </div>

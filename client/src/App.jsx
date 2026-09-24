@@ -72,15 +72,16 @@ export default function App() {
     } else {
       // Local fallback if server unreachable
       const fallbackQuestion = {
-        isComplete: false,
         currentRound: 1,
-        question: "Who is the single most desperate user who will revolt if this product disappears tomorrow, and what specific nightmare does your product eliminate for them?",
+        stageLabel: "Target Beachhead",
+        question: "Broad positioning dilutes early traction. Who feels this problem so acutely they will pay immediately?",
         suggestedAnswers: [
-          "Technical founders paralyzed by brand identity indecision.",
-          "Early growth leads tired of $20k agency decks.",
-          "Developer advocates needing punchy, un-boring documentation identity."
+          "Technical founders paralyzed by brand identity.",
+          "Growth leads avoiding high agency retainers.",
+          "Developer advocates needing distinct identity."
         ],
-        reasoning: "Isolates the beachhead ICP from casual tire-kickers and demands an acute, urgent pain point."
+        reasoning: "A narrow beachhead audience provides the fastest path to traction.",
+        readyForSynthesis: false
       };
       setCurrentQuestion(fallbackQuestion);
       setMessages(prev => [
@@ -100,7 +101,7 @@ export default function App() {
   };
 
   /**
-   * Step 2: Answer question in InterviewChat
+   * Step 2: Answer question in InterviewChat (Continuous Discovery)
    */
   const handleSendMessage = async (text) => {
     const updatedMessages = [
@@ -114,14 +115,6 @@ export default function App() {
     ];
 
     setMessages(updatedMessages);
-
-    // If current round is 3, proceed directly to compilation!
-    const currentRound = currentQuestion?.currentRound || 1;
-    if (currentRound >= 3) {
-      handleCompileBrandKit(updatedMessages);
-      return;
-    }
-
     setIsLoading(true);
 
     const historyForApi = updatedMessages.map(m => ({
@@ -145,41 +138,61 @@ export default function App() {
         }
       ]);
     } else {
-      // Offline / network fallback progression
+      // Offline / network fallback progression (never abruptly cut off)
       const userTurnCount = updatedMessages.filter(m => m.role === 'user').length;
       let nextMock;
 
       if (userTurnCount === 2) {
         nextMock = {
-          isComplete: false,
           currentRound: 2,
-          question: "What sacred cow in your industry are you killing, and why does the conventional incumbent solution secretly fail users?",
+          stageLabel: "Incumbent Critique",
+          question: "Incumbents rely on feature bloat. What fundamental industry compromise do you refuse to make?",
           suggestedAnswers: [
-            "Incumbents sell sterile corporate jargon; we deliver personality.",
-            "Agencies take 8 weeks; we synthesize in 3 minutes.",
-            "Identical blue SaaS templates with zero distinct edge."
+            "Predatory recurring subscription traps.",
+            "Visual templates that fail ATS checks.",
+            "Graphics that hide technical impact."
           ],
-          reasoning: "Forces differentiation away from incremental claims to ideological opposition."
+          reasoning: "Differentiators must highlight legacy compromises.",
+          readyForSynthesis: false
         };
       } else if (userTurnCount === 3) {
         nextMock = {
-          isComplete: false,
           currentRound: 3,
-          question: "If your brand were a person entering a room, what is their attitude, and who are they totally comfortable alienating?",
+          stageLabel: "Brand Edge",
+          question: "Safe brands get ignored. What specific corporate habit are you completely comfortable alienating?",
           suggestedAnswers: [
-            "Irreverent, sharp, and hostile toward bureaucratic committees.",
-            "Hyper-focused, minimal, and allergic to corporate buzzwords.",
-            "Provocative cyberpunk craftsman speaking directly to power builders."
+            "Bureaucratic committee consensus.",
+            "Sterile corporate buzzwords.",
+            "Polite surface-level marketing."
           ],
-          reasoning: "Defines the edge of the brand personality and sets up design tokens."
+          reasoning: "Negative boundaries define visual and verbal edge.",
+          readyForSynthesis: true
+        };
+      } else if (userTurnCount === 4) {
+        nextMock = {
+          currentRound: 4,
+          stageLabel: "Voice Boundaries",
+          question: "Unchecked copy sounds like generic SaaS. What phrases or attitudes are strictly forbidden in your messaging?",
+          suggestedAnswers: [
+            "Hype words like revolutionary and seamless.",
+            "Apologetic hedging and passive claims.",
+            "Vague claims of being all-in-one."
+          ],
+          reasoning: "Banned vocabulary preserves razor-sharp brand identity.",
+          readyForSynthesis: true
         };
       } else {
         nextMock = {
-          isComplete: true,
-          currentRound: 3,
-          question: "You have carved out a razor-sharp positioning. Ready to synthesize your complete Brand Kit?",
-          suggestedAnswers: ["Synthesize Brand Kit Now"],
-          reasoning: "Discovery completed."
+          currentRound: userTurnCount,
+          stageLabel: "Positioning Moat",
+          question: "Competitors will copy features quickly. What contrarian conviction makes your brand impossible to replicate?",
+          suggestedAnswers: [
+            "Craft and speed over consensus.",
+            "Algorithmic clarity over manual agencies.",
+            "Radical transparency with power users."
+          ],
+          reasoning: "Philosophical conviction forms an enduring competitive moat.",
+          readyForSynthesis: true
         };
       }
 
@@ -201,12 +214,23 @@ export default function App() {
   };
 
   /**
-   * Step 3: Synthesize Brand Kit
+   * Step 3: Synthesize Brand Kit (Triggered on-demand at any time)
    */
-  const handleCompileBrandKit = async (customMessages) => {
+  const handleCompileBrandKit = async (optionalFinalAnswer) => {
     setIsCompiling(true);
 
-    const msgs = customMessages || messages;
+    let msgs = [...messages];
+    if (optionalFinalAnswer && typeof optionalFinalAnswer === 'string' && optionalFinalAnswer.trim()) {
+      const finalMsg = {
+        id: `msg-user-final-${Date.now()}`,
+        role: 'user',
+        content: optionalFinalAnswer.trim(),
+        timestamp: Date.now()
+      };
+      msgs.push(finalMsg);
+      setMessages(msgs);
+    }
+
     const historyForApi = msgs.map(m => ({
       role: m.role,
       content: m.content

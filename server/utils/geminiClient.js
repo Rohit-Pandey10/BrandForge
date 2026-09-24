@@ -32,8 +32,8 @@ function cleanJsonString(str) {
     .trim();
 }
 
-const DEFAULT_MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash";
-const CANDIDATE_MODELS = ['gemini-3.5-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite'];
+const DEFAULT_MODEL = process.env.GEMINI_MODEL || "gemini-3.6-flash";
+const CANDIDATE_MODELS = ['gemini-3.6-flash', 'gemini-2.5-flash', 'gemini-2.0-flash'];
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -65,7 +65,7 @@ function isTransientError(error) {
  * @param {string} [options.systemInstruction] - High-level system behavior prompt
  * @param {string|Array} options.prompt - Prompt content
  * @param {Object} [options.schema] - JSON Schema to enforce
- * @param {string} [options.model] - Model name (defaults to GEMINI_MODEL env or gemini-3.5-flash)
+ * @param {string} [options.model] - Model name (defaults to GEMINI_MODEL env or gemini-3.6-flash)
  * @returns {Promise<Object>} Parsed JSON object matching the requested schema
  */
 export async function generateStructuredJson({

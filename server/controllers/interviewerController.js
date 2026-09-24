@@ -1,34 +1,38 @@
 import { generateStructuredJson, getGeminiClient } from '../utils/geminiClient.js';
 
 /**
- * Question Schema for Socratic Interview Loop
+ * Question Schema for Socratic Interview Loop (Continuous Discovery)
  */
 export const questionSchema = {
   type: 'object',
   properties: {
-    isComplete: {
-      type: 'boolean',
-      description: 'True if all 3 interview rounds have concluded and the brand is ready to synthesize.'
-    },
     currentRound: {
       type: 'integer',
-      description: 'Current interview round number: 1, 2, or 3.'
+      description: 'Current interview round number (1, 2, 3, 4, 5, etc.).'
     },
     question: {
       type: 'string',
-      description: 'Exactly 2 short sentences, under 30 words total. Sentence 1 points out the market risk directly. Sentence 2 asks a specific question.'
+      description: 'Strictly under 25 words total. Exactly 2 short sentences. Sentence 1 points out the market risk or trade-off. Sentence 2 asks a direct choice.'
     },
     suggestedAnswers: {
       type: 'array',
       items: { type: 'string' },
-      description: 'Exactly 3 clickable options. STRICT LIMIT: Under 6 words per option.'
+      description: 'Exactly 3 distinct clickable options. STRICT LIMIT: Under 8 words per option.'
     },
     reasoning: {
       type: 'string',
-      description: '1 brief sentence explaining why this decision matters.'
+      description: '1 brief diagnostic sentence under 15 words explaining the strategic risk.'
+    },
+    stageLabel: {
+      type: 'string',
+      description: 'Short 2-3 word stage title, e.g. Target Beachhead, Incumbent Critique, Brand Edge, Voice Boundaries, Category Moat.'
+    },
+    readyForSynthesis: {
+      type: 'boolean',
+      description: 'True if baseline context is sufficient for brand kit synthesis, but more discovery can still be requested.'
     }
   },
-  required: ['isComplete', 'currentRound', 'question', 'suggestedAnswers', 'reasoning']
+  required: ['currentRound', 'question', 'suggestedAnswers', 'reasoning', 'stageLabel', 'readyForSynthesis']
 };
 
 /**
@@ -121,86 +125,113 @@ function extractDomain(text = '') {
 }
 
 /**
- * Deterministic Mock Question Generator for fallback / offline testing.
+ * Deterministic Mock Question Generator for fallback / offline testing (Continuous Discovery).
  */
 function getMockQuestion(round, userContext = '') {
-  const normalizedRound = Math.min(Math.max(round, 1), 3);
   const domain = extractDomain(userContext);
 
-  if (normalizedRound === 1) {
+  if (round === 1) {
     if (domain === 'resume') {
       return {
-        isComplete: false,
         currentRound: 1,
+        stageLabel: "Target Beachhead",
         question: "Generic templates fail ambitious candidates. Who is the specific professional you help win interviews?",
         suggestedAnswers: [
           "Senior engineers with non-traditional gaps.",
           "Career switchers translating past experience.",
           "New grads needing verified proof."
         ],
-        reasoning: "Focusing on a specific target user prevents commoditization."
+        reasoning: "Focusing on a specific target user prevents commoditization.",
+        readyForSynthesis: false
       };
     }
 
     return {
-      isComplete: false,
       currentRound: 1,
-      question: "Broad positioning kills early startups. Who feels this problem so acutely they will pay immediately?",
+      stageLabel: "Target Beachhead",
+      question: "Broad positioning dilutes early traction. Who feels this problem so acutely they will pay immediately?",
       suggestedAnswers: [
         "Founders stuck on brand identity.",
-        "Growth leads avoiding agency fees.",
+        "Growth leads avoiding agency retainers.",
         "Dev advocates needing distinct identity."
       ],
-      reasoning: "A narrow beachhead audience provides the fastest path to traction."
+      reasoning: "A narrow beachhead audience provides rapid organic traction.",
+      readyForSynthesis: false
     };
   }
 
-  if (normalizedRound === 2) {
-    const isCliche = /faster|cheaper|easier|simple|convenient|better|best|all-in-one/i.test(userContext);
-
+  if (round === 2) {
     if (domain === 'resume') {
       return {
-        isComplete: false,
         currentRound: 2,
-        question: isCliche
-          ? "Incumbents already claim speed and ease. What specific compromise in current tools do you eliminate?"
-          : "Most builders optimize for bots rather than hiring managers. What industry compromise do you refuse to make?",
+        stageLabel: "Incumbent Critique",
+        question: "Most tools optimize for bots rather than managers. What industry compromise do you refuse to make?",
         suggestedAnswers: [
           "Predatory recurring subscription traps.",
-          "Visual templates that fail ATS.",
+          "Visual templates that fail ATS checks.",
           "Graphics hiding actual business impact."
         ],
-        reasoning: "Clear differentiation requires highlighting the compromises of existing solutions."
+        reasoning: "Clear differentiation requires highlighting the compromises of existing solutions.",
+        readyForSynthesis: false
       };
     }
 
-    const question = isCliche
-      ? "Incumbents already claim speed and ease. What specific compromise in current tools do you eliminate?"
-      : "Every incumbent promises speed and simplicity. What fundamental flaw in today's tools are you fixing?";
-
     return {
-      isComplete: false,
       currentRound: 2,
-      question,
+      stageLabel: "Incumbent Critique",
+      question: "Incumbents already claim speed and ease. What fundamental compromise in today's tools are you fixing?",
       suggestedAnswers: [
         "Incumbents sell sterile corporate jargon.",
         "Slow agencies charging exorbitant retainers.",
         "Generic blue corporate templates."
       ],
-      reasoning: "True differentiation comes from ideological contrast with legacy options."
+      reasoning: "True differentiation comes from ideological contrast with legacy options.",
+      readyForSynthesis: false
     };
   }
 
+  if (round === 3) {
+    return {
+      currentRound: 3,
+      stageLabel: "Brand Edge",
+      question: "Safe brands get ignored. What specific corporate habit or tone are you completely comfortable alienating?",
+      suggestedAnswers: [
+        "Bureaucratic committee consensus.",
+        "Sterile corporate buzzwords.",
+        "Polite surface-level marketing."
+      ],
+      reasoning: "Negative boundaries define visual and verbal edge.",
+      readyForSynthesis: true
+    };
+  }
+
+  if (round === 4) {
+    return {
+      currentRound: 4,
+      stageLabel: "Voice Boundaries",
+      question: "Unchecked copy sounds like generic SaaS. What phrases or attitudes are strictly forbidden in your messaging?",
+      suggestedAnswers: [
+        "Hype words like revolutionary and seamless.",
+        "Apologetic hedging and passive claims.",
+        "Vague claims of being all-in-one."
+      ],
+      reasoning: "Banned vocabulary preserves razor-sharp brand identity.",
+      readyForSynthesis: true
+    };
+  }
+
+  // Round 5+
   return {
-    isComplete: false,
-    currentRound: 3,
-    question: "Strong brands make distinct personality trade-offs. What specific tone or style will you never adopt?",
+    currentRound: round,
+    stageLabel: "Positioning Moat",
+    question: "Competitors will copy features quickly. What contrarian conviction makes your brand impossible to replicate?",
     suggestedAnswers: [
-      "Hostile toward bureaucratic committees.",
-      "Allergic to corporate buzzwords.",
-      "Direct craftsman speaking to builders."
+      "Craft and speed over consensus.",
+      "Algorithmic clarity over manual agencies.",
+      "Radical transparency with power users."
     ],
-    reasoning: "Setting clear negative boundaries defines your visual and verbal identity."
+    reasoning: "Philosophical conviction forms an enduring competitive moat.",
+    readyForSynthesis: true
   };
 }
 
@@ -278,36 +309,18 @@ function getMockBrandKit(founderPitch = '') {
 
 /**
  * Controller: Evaluates interview history and returns the next Socratic question.
- * POST /api/interview/next
+ * POST /api/interview/next (Supports Open-Ended Continuous Discovery)
  */
 export async function handleNextQuestion(req, res) {
   try {
     const { history = [] } = req.body;
 
-    // Count user turns to determine round progress:
-    // Turn 1 (initial pitch) -> Round 1 (Beachhead & Acute Pain)
-    // Turn 2 (answer 1) -> Round 2 (Differentiation & Incumbent Critique)
-    // Turn 3 (answer 2) -> Round 3 (Attitude Boundaries & Edge)
-    // Turn >= 4 (answer 3) -> Complete
     const userMessages = history.filter(m => m.role === 'user');
     const userTurnCount = userMessages.length;
 
-    const currentRound = Math.min(Math.max(userTurnCount, 1), 3);
-    const isComplete = userTurnCount >= 4;
-
-    if (isComplete) {
-      return res.status(200).json({
-        isComplete: true,
-        currentRound: 3,
-        question: "You have carved out a razor-sharp positioning. Ready to synthesize your complete Brand Kit, Design Tokens, and Launch Manifesto?",
-        suggestedAnswers: [
-          "Synthesize Brand Kit Now",
-          "Review Core Identity",
-          "Polish Tone of Voice"
-        ],
-        reasoning: "All three Socratic interview stages (ICP, Differentiation, and Edge) have been thoroughly explored."
-      });
-    }
+    // Continuous dynamic round counter: round equals user turn count (1, 2, 3, 4, 5...)
+    const currentRound = Math.max(userTurnCount, 1);
+    const readyForSynthesis = currentRound >= 3;
 
     // Attempt Gemini invocation via dynamic model resolution if configured
     if (getGeminiClient()) {
@@ -316,27 +329,26 @@ export async function handleNextQuestion(req, res) {
           .map(m => `${m.role.toUpperCase()}: ${m.content}`)
           .join('\n');
 
-        const systemInstruction = `You are an expert startup advisor and brand strategist.
-Your job is to ask sharp, focused questions that help founders make crisp branding choices.
+        const systemInstruction = `You are an elite, contrarian startup mentor and brand strategist.
+Your job is to ask sharp, probing questions that force founders to make clear, polarizing strategic choices.
 
-TONE & STYLE RULES:
-- Zero corporate fluff, zero theater, zero buzzwords (ban: "killer", "game-changer", "bleeding-neck", "supercharge", "revolutionary", "calling bullshit").
-- Be concise, direct, and constructive.
-- Format for "question": Exactly 2 short sentences (under 30 words total).
-  * Sentence 1 (Advice / Risk): Point out the core market risk or trade-off directly.
-  * Sentence 2 (Question): Ask a specific question to resolve it.
+CORE RULES:
+- ZERO corporate fluff, zero filler praise, zero buzzwords (ban: "killer", "game-changer", "supercharge", "what is your core strategic vision").
+- Question format: Exactly 2 short sentences, STRICTLY UNDER 25 WORDS TOTAL.
+  * Sentence 1: Highlight a critical market trade-off, risk, or incumbent flaw.
+  * Sentence 2: Ask a direct question forcing a definitive choice.
+- suggestedAnswers: Exactly 3 distinct, high-conviction options. STRICT LIMIT: Under 8 words per option.
+- reasoning: 1 brief diagnostic sentence under 15 words explaining the strategic stakes.
+- stageLabel: Short 2-3 word stage title (e.g., "Target Beachhead", "Incumbent Critique", "Brand Edge", "Voice Boundaries", "Category Moat").
+- readyForSynthesis: Set to true if currentRound >= 3 or baseline strategic context is sufficient.
 
-3-ROUND ROADMAP:
-- Round 1 (Target User): If their audience is too broad, advise narrowing it down. Ask who feels the problem most acutely.
-- Round 2 (Differentiation): Advise focusing on the specific compromise users make today. Ask what they do differently.
-- Round 3 (Brand Edge): Advise picking a clear personality direction. Ask what specific tone or vibe they want to avoid.
+PROGRESSIVE INQUIRY ROADMAP:
+- Round 1: Target Beachhead (probe acute pain, eliminate generic demographic broadness).
+- Round 2: Incumbent Critique (target the broken compromise of legacy incumbents).
+- Round 3: Brand Edge & Polarizing Attitude (define who the brand is willing to alienate).
+- Round 4+: Voice Boundaries, Positioning Moat, or Distribution Conviction (deepen the thesis if requested).
 
-OUTPUT CONSTRAINTS:
-1. question: Under 30 words total. No filler praise.
-2. suggestedAnswers: Exactly 3 clickable options. STRICT LIMIT: Under 6 words per option.
-3. reasoning: 1 brief sentence explaining why this decision matters.
-
-Currently we are evaluating Round ${currentRound} of 3.`;
+Currently evaluating Round ${currentRound}.`;
 
         const prompt = `Conversation Transcript:\n${transcriptText}\n\nFormulate the next question for Round ${currentRound}. Return structured JSON matching the schema.`;
 
@@ -346,9 +358,12 @@ Currently we are evaluating Round ${currentRound} of 3.`;
           schema: questionSchema
         });
 
-        // Ensure round number aligns
+        // Ensure round and readiness flags are synchronized
         result.currentRound = currentRound;
-        result.isComplete = isComplete;
+        result.readyForSynthesis = Boolean(result.readyForSynthesis || readyForSynthesis);
+        if (!result.stageLabel) {
+          result.stageLabel = currentRound === 1 ? "Target Beachhead" : currentRound === 2 ? "Incumbent Critique" : currentRound === 3 ? "Brand Edge" : "Strategic Moat";
+        }
 
         return res.status(200).json(result);
       } catch (geminiError) {
