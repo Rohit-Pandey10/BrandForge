@@ -274,10 +274,78 @@ export const careerBrandKit = {
   }
 };
 
+export const fashionBrandKit = {
+  brandStrategy: {
+    brandName: "Kuro Selvedge Co.",
+    tagline: "Heavyweight Japanese Raw Denim",
+    mission: "To liberate denim from disposable fast-fashion and synthetic stretch through 14oz shuttle-loom raw selvedge built to fade over decades.",
+    targetAudience: "Discerning creatives, denim purists, architects, and makers seeking a timeless, durable daily uniform that molds to their body.",
+    coreValueProposition: "Unwashed 14oz narrow-loom Japanese raw selvedge, custom solid copper hardware, and free lifetime repairs.",
+    antiHero: "Fast-fashion mall jeans with synthetic elastane stretch, fake laser-whisker distressing, and disposable 6-month lifespans.",
+    differentiator: "Woven on restored vintage Toyoda shuttle looms in Kojima, Japan; zero synthetic fibers, and a lifelong repair guarantee."
+  },
+  voiceSystem: {
+    archetype: "The Radical Craftsman",
+    tone: [
+      "Tactile",
+      "Restrained",
+      "Uncompromising",
+      "Enduring"
+    ],
+    dos: [
+      "Talk about weave tension, fabric weight, copper rivets, and honest patina.",
+      "Celebrate the slow break-in ritual and natural indigo fades.",
+      "Emphasize durability, repairs, and timeless silhouette over seasonal hype."
+    ],
+    donts: [
+      "Never mention food, dining, kitchen, or culinary terms.",
+      "Never use tech buzzwords like SaaS, algorithms, or APIs.",
+      "No fake marketing hype or disposable trend chasing."
+    ],
+    vocabularyWords: [
+      "Selvedge",
+      "Shuttle Loom",
+      "Patina",
+      "Ring-Spun",
+      "Unwashed",
+      "Rivets"
+    ]
+  },
+  visualTokens: {
+    palette: [
+      { name: "Raw Indigo Navy", hex: "#16233B", role: "primary" },
+      { name: "Selvedge Redline", hex: "#A82020", role: "accent" },
+      { name: "Unbleached Ecru", hex: "#F3EDE2", role: "surface" },
+      { name: "Gunmetal Copper", hex: "#3A3532", role: "secondary" },
+      { name: "Obsidian Ink", hex: "#11141A", role: "text" }
+    ],
+    typography: {
+      headingFont: "Space Grotesk",
+      bodyFont: "Inter",
+      googleFontsUrl: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap",
+      rationale: "Space Grotesk provides muscular, industrial modernist geometry for garment labels and lookbooks, paired with Inter for clear digital e-commerce specifications."
+    },
+    stylePhilosophy: "Restrained industrial minimalism inspired by vintage Japanese textile mills, with deep raw indigo, selvedge redline accents, and tactile ecru surfaces.",
+    borderCurvature: "rounded-lg"
+  },
+  launchContent: {
+    heroHeadline: "Built to Fade. Made to Endure.",
+    heroSubheadline: "14oz narrow-loom Japanese raw selvedge cut for daily creative work. Zero synthetic stretch, unwashed authenticity, and lifetime repairs.",
+    callToAction: "Shop Collection",
+    manifesto: "Denim was never meant to be disposable. Somewhere along the line, the industry replaced durable 14-ounce cotton with plastic stretch blends and washed away character with chemical distressing before you even touched it. We reject artificial aging. We weave on slow, vintage shuttle looms where every imperfection tells a story. Put them on stiff. Wear them hard. Earn your fades.",
+    elevatorPitch: "Kuro Selvedge Co. crafts heirloom 14oz Japanese raw selvedge denim for creatives and purists who value uncompromised textile craft and lifetime durability.",
+    socialHooks: [
+      "No synthetic stretch. No fake laser fades. Just 14oz raw Japanese selvedge.",
+      "Denim that molds to your life, not a mall mannequin. Earn your fades.",
+      "Woven on vintage low-tension shuttle looms. Built to outlive the hype."
+    ]
+  }
+};
+
 /**
  * Default mock brand kit export
  */
-export const mockBrandKit = hospitalityBrandKit;
+export const mockBrandKit = fashionBrandKit;
 
 import { DOMAINS, classifyDomain, isFamilyIntent, extractClientDomain, isClientFamilyIntent } from './domainConfig';
 
@@ -288,6 +356,7 @@ export { DOMAINS, classifyDomain, isFamilyIntent, extractClientDomain, isClientF
  */
 export function getDomainMockBrandKit(contextText = '') {
   const domain = extractClientDomain(contextText);
+  if (domain === 'fashion') return fashionBrandKit;
   if (domain === 'hospitality') {
     if (isClientFamilyIntent(contextText)) {
       return familyHospitalityBrandKit;
@@ -296,7 +365,7 @@ export function getDomainMockBrandKit(contextText = '') {
   }
   if (domain === 'career') return careerBrandKit;
   if (domain === 'developer') return developerBrandKit;
-  return hospitalityBrandKit;
+  return fashionBrandKit;
 }
 
 /**
@@ -498,6 +567,18 @@ export function getDomainMockQuestion(round = 1, contextText = '') {
 export function getDomainMockBatch(contextText = '') {
   const domain = extractClientDomain(contextText);
   const isFamily = isClientFamilyIntent(contextText);
+
+  if (domain === 'fashion') {
+    return [
+      { id: 1, stageLabel: "Audience", question: "Who is the primary person investing in your denim on day one?", suggestedAnswers: ["Raw denim purists & collectors", "Architects & studio creatives", "Everyday workwear enthusiasts"], reasoning: "Clarifies fit requirements, price tolerance, and fabric weight." },
+      { id: 2, stageLabel: "Experience", question: "What frustrating flaw in modern jeans brings buyers to you?", suggestedAnswers: ["Cheap elastane stretch blowout", "Fake laser-whisker distressing", "Fast-fashion disposable quality"], reasoning: "Sharpens your textile stance against disposable garments." },
+      { id: 3, stageLabel: "Villain", question: "Which common fashion industry habit do you reject completely?", suggestedAnswers: ["Planned obsolescence & stretch blends", "Seasonal clearance hype cycles", "Chemical wash environmental damage"], reasoning: "Establishes your brand's moral and material anti-hero." },
+      { id: 4, stageLabel: "Vibe", question: "What is the aesthetic feel of your studio or packaging?", suggestedAnswers: ["Japanese mill minimalism", "Raw industrial workwear", "Restrained gallery archive"], reasoning: "Shapes your visual tokens, unboxing, and store atmosphere." },
+      { id: 5, stageLabel: "Pricing", question: "How should buyers view your price point?", suggestedAnswers: ["Heirloom investment ($180–$250)", "Accessible direct-to-consumer craft", "Limited-edition luxury run"], reasoning: "Anchors your margin model and hardware specifications." },
+      { id: 6, stageLabel: "Tone", question: "What must your brand voice NEVER sound like?", suggestedAnswers: ["Trendy hypebeast influencer slang", "Snobby luxury elitism", "Corporate mass-market cheer"], reasoning: "Defines negative brand voice and verbal boundaries." },
+      { id: 7, stageLabel: "Edge", question: "What singular reason makes someone choose you over Levi's?", suggestedAnswers: ["14oz Toyoda shuttle-loom selvedge", "Free lifetime repair guarantee", "Zero synthetic fibers, custom fit"], reasoning: "Your singular unfair competitive advantage in apparel." }
+    ];
+  }
 
   if (domain === 'hospitality') {
     if (isFamily) {

@@ -127,9 +127,9 @@ export async function compileBrandKit(payload = []) {
   }
 
   if (!firstPitch && history.length > 0) {
-    firstPitch = history.find(m => m.role === 'user')?.content || 'Hospitality dining experience';
+    firstPitch = history.find(m => m.role === 'user')?.content || 'Distinctive brand concept';
   } else if (!firstPitch) {
-    firstPitch = 'Hospitality dining experience';
+    firstPitch = 'Distinctive brand concept';
   }
 
   const transcriptText = history.map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n');

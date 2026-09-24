@@ -1,20 +1,20 @@
 /**
  * Live Preview Tab — Dynamic Industry Archetype Previews
  *
- * Renders one of 3 rich, domain-specific website preview mockups based on
- * the detected industry from the synthesized brand kit. All previews bind
- * synthesized CSS custom properties dynamically.
+ * Renders domain-specific website preview mockups based on the detected industry
+ * from the synthesized brand kit (Apparel / Hospitality / Developer / Editorial).
+ * All previews bind synthesized CSS custom properties and color tokens dynamically.
  */
 
 import React from 'react';
-import { Utensils, Calendar, Clock, MapPin, Terminal, ShieldCheck, Heart, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Scissors, ShieldCheck, ArrowRight, MapPin, Clock, Calendar, CheckCircle2 } from 'lucide-react';
 import { extractClientDomain } from '../../data/mockBrandData';
 
 export default function LivePreviewTab({ brandStrategy, voiceSystem, visualTokens, launchContent }) {
   const palette = visualTokens?.palette || [];
   const typography = visualTokens?.typography || {};
   const brandName = brandStrategy?.brandName || 'Brand Monograph';
-  const cleanName = brandName.toLowerCase().replace(/\s+/g, '-');
+  const cleanName = brandName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
   const primaryColor = palette.find(c => c.role === 'primary')?.hex || '#000000';
   const radiusCurvature =
@@ -31,6 +31,7 @@ export default function LivePreviewTab({ brandStrategy, voiceSystem, visualToken
   const detectedDomain = extractClientDomain(combinedContext);
 
   const domainUrl =
+    detectedDomain === 'fashion'     ? `https://${cleanName}.shop` :
     detectedDomain === 'hospitality' ? `https://${cleanName}.restaurant` :
     detectedDomain === 'developer'   ? `https://${cleanName}.dev` :
                                        `https://${cleanName}.com`;
@@ -44,7 +45,7 @@ export default function LivePreviewTab({ brandStrategy, voiceSystem, visualToken
     <div className="space-y-8 animate-fade-in">
       {/* Simulated Browser Viewport */}
       <div
-        className="bg-white border border-[#dbd7cd] overflow-hidden"
+        className="bg-white border border-[#dbd7cd] overflow-hidden shadow-sm"
         style={{
           borderRadius: '28px',
           '--color-primary': primaryColor,
@@ -63,13 +64,22 @@ export default function LivePreviewTab({ brandStrategy, voiceSystem, visualToken
           <div className="px-6 py-1 rounded-full bg-white border border-[#dbd7cd] text-[11px] font-mono text-stone-500 max-w-xs truncate">
             {domainUrl}
           </div>
-          <span className="text-[10px] uppercase font-mono text-stone-400">
-            {detectedDomain.toUpperCase()} PREVIEW
+          <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400">
+            {detectedDomain === 'fashion' ? 'APPAREL PREVIEW' : `${detectedDomain.toUpperCase()} PREVIEW`}
           </span>
         </div>
 
-        {/* ARCHETYPE 1: HOSPITALITY */}
-        {detectedDomain === 'hospitality' ? (
+        {/* DOMAIN ARCHETYPE SWITCHER */}
+        {detectedDomain === 'fashion' ? (
+          <ApparelPreview
+            brandStrategy={brandStrategy}
+            launchContent={launchContent}
+            voiceSystem={voiceSystem}
+            primaryColor={primaryColor}
+            radiusCurvature={radiusCurvature}
+            fontStyle={fontStyle}
+          />
+        ) : detectedDomain === 'hospitality' ? (
           <HospitalityPreview
             brandStrategy={brandStrategy}
             launchContent={launchContent}
@@ -79,7 +89,6 @@ export default function LivePreviewTab({ brandStrategy, voiceSystem, visualToken
             fontStyle={fontStyle}
           />
         ) : detectedDomain === 'developer' ? (
-          /* ARCHETYPE 2: DEVELOPER */
           <DeveloperPreview
             brandStrategy={brandStrategy}
             launchContent={launchContent}
@@ -89,7 +98,6 @@ export default function LivePreviewTab({ brandStrategy, voiceSystem, visualToken
             fontStyle={fontStyle}
           />
         ) : (
-          /* ARCHETYPE 3: EDITORIAL / CAREER / GENERAL */
           <EditorialPreview
             brandStrategy={brandStrategy}
             launchContent={launchContent}
@@ -105,10 +113,151 @@ export default function LivePreviewTab({ brandStrategy, voiceSystem, visualToken
 }
 
 // ---------------------------------------------------------------------------
-// Hospitality Preview
+// 1. APPAREL & FASHION PREVIEW (e.g. Raw Denim, Modern Basics, Streetwear)
+// ---------------------------------------------------------------------------
+function ApparelPreview({ brandStrategy, launchContent, voiceSystem, primaryColor, radiusCurvature, fontStyle }) {
+  const brandName = brandStrategy?.brandName || 'Brand';
+
+  return (
+    <div className="p-6 sm:p-12 min-h-[540px] flex flex-col justify-between bg-[#faf8f5]">
+      {/* Store Header Navigation */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-[#dbd7cd] gap-4">
+        <div className="flex items-center gap-3">
+          <span className="text-2xl sm:text-3xl font-medium tracking-tight text-black" style={{ fontFamily: fontStyle.display }}>
+            {brandName}
+          </span>
+          <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-[#f0ede6] text-stone-700 border border-[#dbd7cd]">
+            {voiceSystem?.archetype || 'Apparel & Goods'}
+          </span>
+        </div>
+        <div className="flex items-center gap-6 text-xs text-stone-700">
+          <span className="hover:text-black cursor-pointer font-medium">Collection</span>
+          <span className="hover:text-black cursor-pointer hidden sm:inline">Raw Selvedge</span>
+          <span className="hover:text-black cursor-pointer hidden md:inline">Our Fit Guide</span>
+          <button
+            className="px-5 py-2 text-xs font-medium text-white transition-all hover:opacity-90 flex items-center gap-2"
+            style={{ backgroundColor: primaryColor, borderRadius: radiusCurvature }}
+          >
+            <ShoppingBag className="w-3.5 h-3.5" />
+            <span>{launchContent?.callToAction || 'Shop Collection'}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Hero Banner (Clean, editorial, strictly apparel) */}
+      <div className="max-w-3xl my-2">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono mb-4 border border-[#dbd7cd] bg-white text-stone-600">
+          <Scissors className="w-3 h-3 text-stone-500" />
+          <span>SHUTTLE-LOOM CRAFT • ZERO SYNTHETIC STRETCH • LIFETIME REPAIRS</span>
+        </div>
+        <h2 className="text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight leading-[1.08] text-black mb-4" style={{ fontFamily: fontStyle.display }}>
+          {launchContent?.heroHeadline || 'Built to Fade. Made to Endure.'}
+        </h2>
+        <p className="text-base sm:text-lg text-stone-700 max-w-2xl leading-relaxed mb-6" style={{ fontFamily: fontStyle.body }}>
+          {launchContent?.heroSubheadline || brandStrategy?.coreValueProposition}
+        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            className="px-6 py-3 text-xs font-medium tracking-wide text-white flex items-center gap-2 shadow-sm transition-all hover:opacity-90"
+            style={{ backgroundColor: primaryColor, borderRadius: radiusCurvature }}
+          >
+            <ShoppingBag className="w-3.5 h-3.5" />
+            <span>{launchContent?.callToAction || 'Shop Collection'}</span>
+          </button>
+          <button
+            className="px-6 py-3 text-xs font-medium text-stone-900 bg-white border border-[#dbd7cd] hover:border-black transition-all flex items-center gap-2"
+            style={{ borderRadius: radiusCurvature }}
+          >
+            <span>Our Fit Guide</span>
+            <ArrowRight className="w-3 h-3 text-stone-400" />
+          </button>
+        </div>
+      </div>
+
+      {/* Section 1: Apparel Product Showcase */}
+      <div className="my-8 pt-8 border-t border-[#dbd7cd]">
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500">SIGNATURE EDITIONS & CORE PIECES</span>
+          <span className="text-xs text-stone-400 font-mono">Small-Batch Production</span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            {
+              name: 'Raw Selvedge Straight-Leg',
+              price: '$185',
+              desc: '14oz narrow-loom Japanese selvedge denim, custom solid copper hardware, and zero synthetic stretch.',
+              tag: '14OZ TOYODA SHUTTLE LOOM'
+            },
+            {
+              name: 'Relaxed Taper Work Pant',
+              price: '$165',
+              desc: 'Heavyweight organic cotton duck canvas, triple-needle chainstitch construction, reinforced pockets.',
+              tag: 'HEAVYWEIGHT DUCK CANVAS'
+            },
+            {
+              name: 'Type III Selvedge Jacket',
+              price: '$245',
+              desc: '15.5oz unwashed raw denim, vintage brass shank buttons, interior selvedge ID line, tailored boxy fit.',
+              tag: 'HEIRLOOM 15.5OZ'
+            }
+          ].map(product => (
+            <div
+              key={product.name}
+              className="p-5 bg-white border border-[#dbd7cd] flex flex-col justify-between transition-all hover:border-stone-400"
+              style={{ borderRadius: radiusCurvature }}
+            >
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <h4 className="text-base font-medium text-black" style={{ fontFamily: fontStyle.display }}>{product.name}</h4>
+                  <span className="font-mono text-xs font-semibold text-stone-900">{product.price}</span>
+                </div>
+                <p className="text-xs text-stone-600 leading-relaxed" style={{ fontFamily: fontStyle.body }}>{product.desc}</p>
+              </div>
+              <span className="text-[10px] font-mono text-stone-500 bg-[#f4f1ea] px-2 py-1 rounded w-fit mt-4 block">
+                {product.tag}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Section 2: Craftsmanship Pillars */}
+      <div className="my-2 p-5 bg-white border border-[#dbd7cd] flex flex-col sm:flex-row items-center justify-between gap-4" style={{ borderRadius: radiusCurvature }}>
+        <div className="flex items-center gap-3">
+          <ShieldCheck className="w-5 h-5 text-stone-700 shrink-0" />
+          <div className="text-xs">
+            <span className="font-semibold text-black block">The Zero-Obsolescence Vow</span>
+            <span className="text-stone-600">100% natural fibers, zero elastane blowout, and free lifetime repairs on all seams.</span>
+          </div>
+        </div>
+        <span className="text-[11px] font-mono text-stone-500 whitespace-nowrap bg-[#faf8f5] px-3 py-1 rounded-full border border-[#dbd7cd]">
+          KOJIMA MILL SOURCING
+        </span>
+      </div>
+
+      {/* Section 3: Strategic Narrative Footers */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#dbd7cd]">
+        {[
+          { label: '01 / The Textile Edge', value: brandStrategy?.differentiator },
+          { label: '02 / Core Creative Audience', value: brandStrategy?.targetAudience },
+          { label: '03 / Fast-Fashion Antidote', value: brandStrategy?.antiHero }
+        ].map(card => (
+          <div key={card.label} className="p-4 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
+            <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">{card.label}</span>
+            <p className="text-xs text-stone-800 font-medium leading-snug">{card.value}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// 2. HOSPITALITY & CULINARY PREVIEW (Clean, no hardcoded image placeholders)
 // ---------------------------------------------------------------------------
 function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, primaryColor, radiusCurvature, fontStyle }) {
   const brandName = brandStrategy?.brandName || 'Brand';
+
   return (
     <div className="p-6 sm:p-12 min-h-[520px] flex flex-col justify-between bg-[#fcfbf9]">
       {/* Nav */}
@@ -125,8 +274,11 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, primary
           <span className="hover:text-black cursor-pointer font-medium">Daily Menu</span>
           <span className="hover:text-black cursor-pointer hidden sm:inline">The Table</span>
           <span className="hover:text-black cursor-pointer hidden md:inline">Private Dining</span>
-          <button className="px-5 py-2 text-xs font-medium text-white transition-all hover:opacity-90" style={{ backgroundColor: primaryColor, borderRadius: radiusCurvature }}>
-            {launchContent?.callToAction || 'Reserve a Table'}
+          <button
+            className="px-5 py-2 text-xs font-medium text-white transition-all hover:opacity-90"
+            style={{ backgroundColor: primaryColor, borderRadius: radiusCurvature }}
+          >
+            {launchContent?.callToAction || 'Reserve Table'}
           </button>
         </div>
       </div>
@@ -134,33 +286,10 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, primary
       {/* Location pill */}
       <div className="flex items-center gap-2 text-[11px] font-mono text-stone-500 mb-6 bg-white px-3.5 py-1.5 rounded-full border border-[#dbd7cd] w-fit">
         <MapPin className="w-3.5 h-3.5 text-stone-400" />
-        <span>142 Bedford Ave • Wed–Sun 4pm–10pm • Walk-ins & Family Tables Welcome</span>
+        <span>Neighborhood Dining • Wed–Sun 4pm–10pm • Walk-ins & Tables Welcome</span>
       </div>
 
-      {/* Hero hearth banner */}
-      <div
-        className="relative w-full h-48 sm:h-64 overflow-hidden mb-8 border border-[#dbd7cd] flex items-end p-6"
-        style={{ borderRadius: radiusCurvature, background: 'linear-gradient(135deg, #1f1815 0%, #2b201b 50%, #15110f 100%)' }}
-      >
-        <div className="absolute inset-0 opacity-15 flex items-center justify-center pointer-events-none">
-          <Utensils className="w-36 h-36 text-amber-100 stroke-[1]" />
-        </div>
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-end justify-between w-full gap-4 text-white">
-          <div>
-            <span className="text-[10px] uppercase font-mono tracking-widest text-amber-300 px-2 py-0.5 rounded bg-black/40 border border-white/10 inline-block mb-1.5">
-              OPEN HEARTH • 900° LIVE OAK
-            </span>
-            <h3 className="text-xl sm:text-2xl font-light text-white" style={{ fontFamily: fontStyle.display }}>
-              Naturally Fermented Sourdough • Hand-Crafted Hospitality
-            </h3>
-          </div>
-          <span className="text-xs font-mono px-3.5 py-1.5 rounded-full bg-white/15 border border-white/20 text-white self-start sm:self-end">
-            Walk-ins & Big Tables Welcome
-          </span>
-        </div>
-      </div>
-
-      {/* Hero headline */}
+      {/* Hero headline & story */}
       <div className="max-w-3xl my-2">
         <h2 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.08] text-black mb-4" style={{ fontFamily: fontStyle.display }}>
           {launchContent?.heroHeadline || 'Big Tables. Honest Slices. Bring Everyone.'}
@@ -169,11 +298,16 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, primary
           {launchContent?.heroSubheadline || brandStrategy?.coreValueProposition}
         </p>
         <div className="flex flex-wrap items-center gap-3">
-          <button className="px-6 py-3 text-xs font-medium tracking-wide text-white flex items-center gap-2" style={{ backgroundColor: primaryColor, borderRadius: radiusCurvature }}>
-            <Utensils className="w-3.5 h-3.5" />
-            <span>{launchContent?.callToAction || 'Reserve a Table'}</span>
+          <button
+            className="px-6 py-3 text-xs font-medium tracking-wide text-white flex items-center gap-2"
+            style={{ backgroundColor: primaryColor, borderRadius: radiusCurvature }}
+          >
+            <span>{launchContent?.callToAction || 'Reserve Table'}</span>
           </button>
-          <button className="px-6 py-3 text-xs font-medium text-stone-900 bg-white border border-[#dbd7cd] hover:border-black transition-all flex items-center gap-2" style={{ borderRadius: radiusCurvature }}>
+          <button
+            className="px-6 py-3 text-xs font-medium text-stone-900 bg-white border border-[#dbd7cd] hover:border-black transition-all flex items-center gap-2"
+            style={{ borderRadius: radiusCurvature }}
+          >
             <Clock className="w-3.5 h-3.5 text-stone-500" />
             <span>Order Ahead</span>
           </button>
@@ -187,14 +321,29 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, primary
       {/* Daily menu board */}
       <div className="my-8 pt-8 border-t border-[#dbd7cd]">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500">FROM THE KITCHEN & WOOD OVEN</span>
-          <span className="text-xs text-stone-400 font-mono">Seasonal Daily Board</span>
+          <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500">SEASONAL HIGHLIGHTS & SPECIALS</span>
+          <span className="text-xs text-stone-400 font-mono">Daily Board</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { name: 'Sourdough Margherita', price: '$18', desc: '72-hour naturally fermented crust, sweet San Marzano tomatoes, fresh fior di latte, cold-pressed olive oil.', tag: 'WOOD-FIRED • 900° LIVE OAK' },
-            { name: 'Crispy Fennel Sausage', price: '$22', desc: 'Heritage pork sausage, roasted garlic cream, charred scallions, organic hot honey drizzle.', tag: 'NEIGHBORHOOD FAVORITE' },
-            { name: 'Family Chopped Salad', price: '$14', desc: 'Crisp seasonal greens, shaved radishes, pickled peppers, toasted chickpeas, wild oregano vinaigrette.', tag: 'SHARING PLATTER • ALL-AGES' }
+            {
+              name: 'House Signature Dish',
+              price: '$18',
+              desc: 'Prepared fresh daily with locally sourced seasonal ingredients and zero shortcuts.',
+              tag: 'CHEF FAVORITE'
+            },
+            {
+              name: 'Wood-Fired Special',
+              price: '$22',
+              desc: 'High-heat blistering technique, hand-crafted seasonings, and rich savory finish.',
+              tag: 'NEIGHBORHOOD STAPLE'
+            },
+            {
+              name: 'Seasonal Sharing Platter',
+              price: '$14',
+              desc: 'Generous sharing portion built for the table, crisp herbs, and house-made dressing.',
+              tag: 'TABLE SHARING'
+            }
           ].map(item => (
             <div key={item.name} className="p-5 bg-white border border-[#dbd7cd] flex flex-col justify-between" style={{ borderRadius: radiusCurvature }}>
               <div>
@@ -228,7 +377,7 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, primary
 }
 
 // ---------------------------------------------------------------------------
-// Developer Preview
+// 3. DEVELOPER TOOLS & SAAS PREVIEW
 // ---------------------------------------------------------------------------
 function DeveloperPreview({ brandStrategy, launchContent, cleanName, primaryColor, radiusCurvature, fontStyle }) {
   const brandName = brandStrategy?.brandName || 'Brand';
@@ -302,7 +451,7 @@ function DeveloperPreview({ brandStrategy, launchContent, cleanName, primaryColo
 }
 
 // ---------------------------------------------------------------------------
-// Editorial Preview
+// 4. EDITORIAL & GENERAL PREVIEW
 // ---------------------------------------------------------------------------
 function EditorialPreview({ brandStrategy, launchContent, voiceSystem, primaryColor, radiusCurvature, fontStyle }) {
   const brandName = brandStrategy?.brandName || 'Brand';
