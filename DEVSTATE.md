@@ -7,8 +7,12 @@
 ## 1. Project Overview & Sprint Status
 - **Project Name:** Brand Builder (Socratic Brand Interviewer & Token Synthesizer)
 - **Target Event:** 24-Hour Hackathon
-- **Current Sprint Phase:** Phase 3 (Handhold Editorial Design System Overhaul & Monograph Presentation)
+- **Current Sprint Phase:** Phase 4 (Studio Card Decision Architecture, Tabbed Monograph Dashboard, and Multi-Format Token Exporters)
 - **Design System:** Handhold Editorial (`DESIGN.md`) — Warm paper cream (`#f2f1ed`), pure white surfaces (`#ffffff`), ink black (`#000000`), hairline dividers (`#dbd7cd`), Cormorant Garamond 300 display typography, Inter 400 interface typography, flat zero-shadow elevation.
+- **Frontend Architecture:**
+  - `Header.jsx`: Lowercase serif wordmark `brand builder.`, status badge `Socratic Brand Studio`, context-aware utility actions (`Skip to Synthesis`, `Export JSON`, `Export CSS Tokens`, `Download SVG`, `Print / PDF`).
+  - `InterviewChat.jsx`: Focused Studio Decision Card featuring display question headline, expandable `Under-the-Hood Strategic Rationale` diagnostic disclosure, stacked structured radio rows with custom text refinement textarea, and primary round progression CTA.
+  - `BrandKitDashboard.jsx`: 5-tab segmented dashboard (`Live Brand Preview`, `Brand Strategy`, `Voice & Tone`, `Visual Design Tokens`, `Launch Copy & Manifesto`) with generous color swatch slabs, typography sandboxes, live browser preview hero, and inspectable `:root` CSS token panel.
 - **Primary Model Target:** `gemini-3.5-flash` via `@google/genai` (Configured dynamically via `process.env.GEMINI_MODEL`, with automatic failover to `gemini-3.7-flash` and `gemini-3.5-flash-lite`)
 - **API Health:** Verified LIVE with Google Gemini API; Round 1-3 Socratic flow and full Brand Kit synthesis confirmed working.
 - **Fallback Mode:** Domain-aware mock hydration safety net enabled (zero-dependency offline development)

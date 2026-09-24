@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import {
-  ArrowLeft,
   Copy,
   Check,
   Download,
   Palette,
   Printer,
-  ExternalLink
+  ExternalLink,
+  Code,
+  Sparkles,
+  ArrowRight,
+  Eye,
+  Target,
+  Mic,
+  Sliders,
+  FileText
 } from 'lucide-react';
 
 export default function BrandKitDashboard({ brandKit, onStartNew }) {
+  const [activeTab, setActiveTab] = useState('preview'); // 'preview' | 'strategy' | 'voice' | 'tokens' | 'manifesto'
   const [copiedHex, setCopiedHex] = useState(null);
-  const [copiedSection, setCopiedSection] = useState(null);
+  const [copiedIdentifier, setCopiedIdentifier] = useState(null);
 
   const {
     brandStrategy = {},
@@ -22,6 +30,8 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
 
   const palette = visualTokens.palette || [];
   const typography = visualTokens.typography || {};
+  const brandName = brandStrategy.brandName || "Vortex Labs";
+  const cleanName = brandName.toLowerCase().replace(/\s+/g, '-');
 
   // Dynamically inject Google Fonts stylesheet into <head>
   useEffect(() => {
@@ -45,14 +55,25 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
       setCopiedHex(identifier.replace('hex-', ''));
       setTimeout(() => setCopiedHex(null), 2000);
     } else {
-      setCopiedSection(identifier);
-      setTimeout(() => setCopiedSection(null), 2000);
+      setCopiedIdentifier(identifier);
+      setTimeout(() => setCopiedIdentifier(null), 2000);
     }
   };
 
+  // Compile CSS Custom Properties
+  const compiledCss = `:root {
+  /* Brand: ${brandName} */
+${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z0-9]/g, '-')}: ${c.hex}; /* ${c.name} */`).join('\n')}
+
+  /* Typography Scale */
+  --font-display: '${typography.headingFont || 'Cormorant Garamond'}', Georgia, serif;
+  --font-body: '${typography.bodyFont || 'Inter'}', system-ui, sans-serif;
+
+  /* Geometry & Shape */
+  --radius-curvature: ${visualTokens.borderCurvature === 'rounded-none' ? '0px' : visualTokens.borderCurvature === 'rounded-full' ? '9999px' : '16px'};
+}`;
+
   const handleDownloadTokensJson = () => {
-    const brandName = brandStrategy.brandName || 'brand';
-    const cleanName = brandName.toLowerCase().replace(/\s+/g, '-');
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(brandKit, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
@@ -62,9 +83,17 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
     downloadAnchor.remove();
   };
 
+  const handleDownloadCssTokens = () => {
+    const dataStr = "data:text/css;charset=utf-8," + encodeURIComponent(compiledCss);
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `${cleanName}-tokens.css`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  };
+
   const handleExportPaletteSvg = () => {
-    const brandName = brandStrategy.brandName || 'Brand';
-    const cleanName = brandName.toLowerCase().replace(/\s+/g, '-');
     const width = 1000;
     const height = 360;
     const swatchWidth = 160;
@@ -78,8 +107,8 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
       return `
         <g transform="translate(${x}, ${y})">
           <rect width="${swatchWidth}" height="${swatchHeight}" rx="20" fill="${c.hex}" stroke="#dbd7cd" stroke-width="1" />
-          <text x="${swatchWidth / 2}" y="${swatchHeight + 28}" fill="#737373" font-size="11" font-weight="400" text-anchor="middle" font-family="'Inter', system-ui, sans-serif" letter-spacing="1">${(c.role || '').toUpperCase()}</text>
-          <text x="${swatchWidth / 2}" y="${swatchHeight + 48}" fill="#000000" font-size="13" font-weight="400" text-anchor="middle" font-family="'Inter', system-ui, sans-serif">${c.name || 'Color'}</text>
+          <text x="${swatchWidth / 2}" y="${swatchHeight + 28}" fill="#737373" font-size="11" font-weight="400" text-anchor="middle" font-family="'Inter', sans-serif" letter-spacing="1">${(c.role || '').toUpperCase()}</text>
+          <text x="${swatchWidth / 2}" y="${swatchHeight + 48}" fill="#000000" font-size="13" font-weight="500" text-anchor="middle" font-family="'Inter', sans-serif">${c.name || 'Color'}</text>
           <text x="${swatchWidth / 2}" y="${swatchHeight + 68}" fill="#000000" font-size="12" font-weight="400" text-anchor="middle" font-family="monospace">${c.hex}</text>
         </g>
       `;
@@ -88,8 +117,8 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
     const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
   <rect width="100%" height="100%" fill="#f2f1ed" />
-  <text x="${width / 2}" y="50" fill="#000000" font-size="28" font-weight="300" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif">${brandName} — Color Palette</text>
-  <text x="${width / 2}" y="76" fill="#737373" font-size="12" font-weight="400" text-anchor="middle" font-family="'Inter', sans-serif">Brand Architecture &amp; Token System</text>
+  <text x="${width / 2}" y="50" fill="#000000" font-size="28" font-weight="300" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif">${brandName} — Color System</text>
+  <text x="${width / 2}" y="76" fill="#737373" font-size="12" font-weight="400" text-anchor="middle" font-family="'Inter', sans-serif">Synthesized Design Tokens</text>
   ${swatchesSvg}
 </svg>`;
 
@@ -104,415 +133,659 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
     URL.revokeObjectURL(url);
   };
 
-  const handlePrintPdf = () => {
-    window.print();
-  };
+  const tabs = [
+    { id: 'preview', label: 'Live Brand Preview', icon: Eye },
+    { id: 'strategy', label: 'Brand Strategy', icon: Target },
+    { id: 'voice', label: 'Voice & Tone', icon: Mic },
+    { id: 'tokens', label: 'Visual Design Tokens', icon: Sliders },
+    { id: 'manifesto', label: 'Launch Copy & Manifesto', icon: FileText }
+  ];
+
+  const primaryColor = palette.find(c => c.role === 'primary')?.hex || '#000000';
+  const surfaceColor = palette.find(c => c.role === 'surface')?.hex || '#ffffff';
+  const accentColor = palette.find(c => c.role === 'accent')?.hex || '#000000';
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 py-6 sm:py-10 animate-fade-in pb-24 font-sans text-black">
-      {/* Top Action & Navigation Bar */}
-      <div className="no-print flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10 pb-6 border-b border-[#dbd7cd]">
-        <button
-          onClick={onStartNew}
-          className="inline-flex items-center gap-2 text-xs text-[#737373] hover:text-black px-4 py-2 rounded-full border border-[#dbd7cd] bg-white hover:bg-[#f2f1ed] transition-colors"
-        >
-          <ArrowLeft className="w-3.5 h-3.5 stroke-[1.5]" />
-          <span>New Brand Dialogue</span>
-        </button>
-
-        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-          <button
-            onClick={() => copyToClipboard(JSON.stringify(brandKit, null, 2), 'all-json')}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-[#f2f1ed] border border-[#dbd7cd] hover:border-black text-xs text-black transition-all"
-            title="Copy tokens JSON to clipboard"
+    <div className="w-full max-w-6xl mx-auto px-4 py-4 sm:py-8 animate-fade-in pb-24 font-sans text-black">
+      {/* Editorial Identity Header Bar */}
+      <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-2">
+            SYNTHESIZED BRAND MONOGRAPH &bull; SPECIFICATION 01
+          </span>
+          <h1 
+            className="font-serif text-4xl sm:text-6xl font-light text-black tracking-[-0.03em] leading-tight mb-2"
+            style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
           >
-            {copiedSection === 'all-json' ? <Check className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5 text-[#737373]" />}
-            <span>{copiedSection === 'all-json' ? 'Copied' : 'Copy JSON'}</span>
-          </button>
+            {brandName}
+          </h1>
+          <p 
+            className="text-sm sm:text-base text-stone-600 max-w-2xl font-normal leading-relaxed"
+            style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
+          >
+            {brandStrategy.tagline || "Autonomous brand architecture synthesized from first-principles conviction."}
+          </p>
+        </div>
 
+        {/* Quick Utility Actions */}
+        <div className="no-print flex flex-wrap items-center gap-2 self-start md:self-center shrink-0">
           <button
             onClick={handleDownloadTokensJson}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-[#f2f1ed] border border-[#dbd7cd] hover:border-black text-xs text-black transition-all"
+            className="inline-flex items-center gap-1.5 border border-[#dbd7cd] bg-[#fcfbf9] text-stone-800 text-xs px-3.5 py-1.5 rounded-full hover:border-black transition-all"
             title="Download design tokens as JSON"
           >
-            <Download className="w-3.5 h-3.5 text-[#737373]" />
+            <Download className="w-3.5 h-3.5 text-stone-500" />
             <span>tokens.json</span>
           </button>
 
           <button
-            onClick={handleExportPaletteSvg}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-white hover:bg-[#f2f1ed] border border-[#dbd7cd] hover:border-black text-xs text-black transition-all"
-            title="Export 5-color palette as SVG asset"
+            onClick={handleDownloadCssTokens}
+            className="inline-flex items-center gap-1.5 border border-[#dbd7cd] bg-[#fcfbf9] text-stone-800 text-xs px-3.5 py-1.5 rounded-full hover:border-black transition-all"
+            title="Download compiled CSS custom properties"
           >
-            <Palette className="w-3.5 h-3.5 text-[#737373]" />
+            <Code className="w-3.5 h-3.5 text-stone-500" />
+            <span>tokens.css</span>
+          </button>
+
+          <button
+            onClick={handleExportPaletteSvg}
+            className="inline-flex items-center gap-1.5 border border-[#dbd7cd] bg-[#fcfbf9] text-stone-800 text-xs px-3.5 py-1.5 rounded-full hover:border-black transition-all"
+            title="Download SVG swatches"
+          >
+            <Palette className="w-3.5 h-3.5 text-stone-500" />
             <span>palette.svg</span>
           </button>
-
-          <button
-            onClick={handlePrintPdf}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-full bg-black text-white hover:bg-neutral-800 text-xs transition-all"
-            title="Print or save Brand Book as PDF"
-          >
-            <Printer className="w-3.5 h-3.5 stroke-[1.5]" />
-            <span>Brand Book (PDF)</span>
-          </button>
         </div>
       </div>
 
-      {/* Editorial Monograph Cover / Header Spread */}
-      <div className="bg-white rounded-[32px] border border-[#dbd7cd] p-8 sm:p-14 mb-10">
-        <div className="max-w-3xl">
-          <span className="text-[11px] uppercase tracking-[0.08em] text-[#737373] block mb-4">
-            Brand Monograph &bull; Identity System
-          </span>
-
-          <h1 
-            className="font-serif text-5xl sm:text-7xl md:text-8xl font-light text-black tracking-[-0.03em] leading-[1.0] mb-4"
-            style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
-          >
-            {brandStrategy.brandName || "Vortex Labs"}
-          </h1>
-
-          <p 
-            className="text-lg sm:text-2xl text-[#737373] font-normal leading-snug mb-8 max-w-2xl"
-            style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
-          >
-            {brandStrategy.tagline || "High-Velocity Brand Architecture for Relentless Builders"}
-          </p>
-
-          <div className="flex flex-wrap items-center gap-2 pt-4 border-t border-[#dbd7cd]">
-            <span className="text-xs px-3.5 py-1.5 rounded-full border border-[#dbd7cd] bg-[#f2f1ed] text-black">
-              Archetype: {voiceSystem.archetype || "The Rebel"}
-            </span>
-            <span className="text-xs px-3.5 py-1.5 rounded-full border border-[#dbd7cd] bg-[#f2f1ed] text-black">
-              Heading: {typography.headingFont || "Cormorant Garamond"}
-            </span>
-            <span className="text-xs px-3.5 py-1.5 rounded-full border border-[#dbd7cd] bg-[#f2f1ed] text-black">
-              Body: {typography.bodyFont || "Inter"}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Section 1: Visual Tokens & Palette */}
-      <section className="mb-12">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-serif text-3xl font-light text-black tracking-[-0.03em]">
-            Visual Tokens &bull; Palette
-          </h2>
-          <span className="text-xs text-[#737373]">Click any swatch to copy HEX</span>
-        </div>
-
-        {/* 5 Flat Swatch Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5 mb-6">
-          {palette.map((color, idx) => {
-            const isCopied = copiedHex === color.hex;
-            return (
-              <button
-                key={idx}
-                onClick={() => copyToClipboard(color.hex, `hex-${color.hex}`)}
-                className="bg-white rounded-[24px] border border-[#dbd7cd] p-3 text-left hover:border-black transition-colors group"
-              >
-                <div 
-                  className="w-full h-24 rounded-2xl mb-3 border border-[#dbd7cd]/50 relative flex items-center justify-center"
-                  style={{ backgroundColor: color.hex }}
+      {/* Top Segmented Tab Bar Strip */}
+      <div className="no-print mb-8">
+        <div className="flex items-center justify-start sm:justify-center overflow-x-auto pb-2 gap-1.5 scrollbar-none">
+          <div className="inline-flex p-1.5 bg-white rounded-full border border-[#dbd7cd] shadow-none max-w-full">
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.id;
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
+                    isActive
+                      ? 'bg-black text-white shadow-none'
+                      : 'text-stone-600 hover:text-black hover:bg-[#f2f1ed]'
+                  }`}
                 >
-                  <span className={`text-[11px] font-mono px-2 py-0.5 rounded-full bg-white/90 text-black border border-black/10 transition-opacity ${
-                    isCopied ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                  }`}>
-                    {isCopied ? 'Copied' : 'Copy'}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-xs text-black font-normal truncate">{color.name}</span>
-                  <span className="text-[10px] uppercase tracking-wider text-[#737373]">
-                    {color.role}
-                  </span>
-                </div>
-                <div className="font-mono text-xs text-[#737373]">
-                  {color.hex}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Typography System Card */}
-        <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-[#dbd7cd]">
-            <div>
-              <span className="text-[11px] uppercase tracking-[0.08em] text-[#737373] block mb-1">
-                Typography Pairing
-              </span>
-              <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em]">
-                {typography.headingFont} &bull; {typography.bodyFont}
-              </h3>
-            </div>
-            {typography.googleFontsUrl && (
-              <a
-                href={typography.googleFontsUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs text-[#737373] hover:text-black flex items-center gap-1.5 transition-colors"
-              >
-                <span>View Google Fonts</span>
-                <ExternalLink className="w-3 h-3 stroke-[1.5]" />
-              </a>
-            )}
+                  <Icon className="w-3.5 h-3.5 stroke-[1.5]" />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
           </div>
+        </div>
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <span className="text-xs uppercase tracking-[0.05em] text-[#737373] block mb-2">
-                Display Scale ({typography.headingFont})
-              </span>
-              <div 
-                className="font-serif text-3xl sm:text-4xl font-light text-black leading-[1.05] tracking-[-0.03em]"
-                style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
-              >
-                Conviction builds enduring value. Clarity commands attention.
+      {/* TAB 1: LIVE BRAND PREVIEW */}
+      {activeTab === 'preview' && (
+        <div className="space-y-8 animate-fade-in">
+          {/* Simulated Browser Viewport Card */}
+          <div className="bg-white rounded-[28px] border border-[#dbd7cd] overflow-hidden shadow-sm">
+            {/* Browser Top Chrome */}
+            <div className="bg-[#faf9f6] border-b border-[#dbd7cd] px-5 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
+                <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
+                <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
               </div>
+              <div className="px-6 py-1 rounded-full bg-white border border-[#dbd7cd] text-[11px] font-mono text-stone-500 max-w-xs truncate">
+                https://{cleanName}.com
+              </div>
+              <span className="text-[10px] uppercase font-mono text-stone-400">Preview</span>
             </div>
 
-            <div>
-              <span className="text-xs uppercase tracking-[0.05em] text-[#737373] block mb-2">
-                Body & Editorial Scale ({typography.bodyFont})
-              </span>
-              <p 
-                className="text-sm text-[#737373] leading-relaxed"
-                style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
-              >
-                {visualTokens.stylePhilosophy || "Refined, high-contrast monochrome typography with disciplined whitespace and razor-sharp typographic hierarchy."}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 2: Strategy & Differentiation */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-        {/* Strategic Foundation Card */}
-        <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between space-y-6">
-          <div>
-            <span className="text-[11px] uppercase tracking-[0.08em] text-[#737373] block mb-2">
-              Foundation
-            </span>
-            <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-6">
-              Strategic Foundation
-            </h3>
-
-            <div className="space-y-4">
-              <div>
-                <span className="text-xs uppercase tracking-[0.05em] text-[#737373] block mb-1">
-                  Target Beachhead (ICP)
+            {/* Simulated Live Brand Landing Page Hero */}
+            <div className="p-8 sm:p-16 min-h-[480px] flex flex-col justify-between bg-white">
+              {/* Mock Nav */}
+              <div className="flex items-center justify-between pb-8 mb-8 border-b border-stone-200">
+                <span 
+                  className="font-serif text-2xl font-light tracking-tight text-black"
+                  style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
+                >
+                  {brandName}.
                 </span>
-                <p className="text-sm text-black bg-[#f2f1ed] p-3.5 rounded-xl border border-[#dbd7cd]">
-                  {brandStrategy.targetAudience}
-                </p>
-              </div>
-
-              <div>
-                <span className="text-xs uppercase tracking-[0.05em] text-[#737373] block mb-1">
-                  Core Value Proposition
-                </span>
-                <p className="text-sm text-black bg-[#f2f1ed] p-3.5 rounded-xl border border-[#dbd7cd]">
-                  {brandStrategy.coreValueProposition}
-                </p>
-              </div>
-
-              <div>
-                <span className="text-xs uppercase tracking-[0.05em] text-[#737373] block mb-1">
-                  Mission
-                </span>
-                <p className="text-xs text-[#737373] leading-relaxed pt-1">
-                  {brandStrategy.mission}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Incumbent Villain & Differentiation Card */}
-        <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between space-y-6">
-          <div>
-            <span className="text-[11px] uppercase tracking-[0.08em] text-[#737373] block mb-2">
-              Positioning
-            </span>
-            <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-6">
-              Villain & Differentiation
-            </h3>
-
-            <div className="space-y-4">
-              <div>
-                <span className="text-xs uppercase tracking-[0.05em] text-black block mb-1">
-                  The Anti-Hero (What We Fight)
-                </span>
-                <p className="text-sm text-black bg-[#f2f1ed] p-3.5 rounded-xl border border-[#dbd7cd]">
-                  {brandStrategy.antiHero}
-                </p>
-              </div>
-
-              <div>
-                <span className="text-xs uppercase tracking-[0.05em] text-black block mb-1">
-                  Unfair Differentiator
-                </span>
-                <p className="text-sm text-black bg-[#f2f1ed] p-3.5 rounded-xl border border-[#dbd7cd]">
-                  {brandStrategy.differentiator}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 3: Voice System & Boundaries */}
-      <section className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 mb-12">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-[#dbd7cd]">
-          <div>
-            <span className="text-[11px] uppercase tracking-[0.08em] text-[#737373] block mb-1">
-              Verbal Identity
-            </span>
-            <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em]">
-              Brand Voice System & Attitude Boundaries
-            </h3>
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {voiceSystem.tone?.map((t, idx) => (
-              <span key={idx} className="px-3 py-1 rounded-full border border-[#dbd7cd] bg-[#f2f1ed] text-black text-xs">
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Dos */}
-          <div className="bg-[#f2f1ed]/50 rounded-2xl p-5 border border-[#dbd7cd]">
-            <h4 className="text-xs uppercase tracking-[0.05em] text-black mb-3">
-              Voice Dos (Speak Like This)
-            </h4>
-            <ul className="space-y-2 text-xs sm:text-sm text-[#737373]">
-              {voiceSystem.dos?.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-black mt-2 shrink-0" />
-                  <span className="text-black">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Don'ts */}
-          <div className="bg-[#f2f1ed]/50 rounded-2xl p-5 border border-[#dbd7cd]">
-            <h4 className="text-xs uppercase tracking-[0.05em] text-black mb-3">
-              Voice Don'ts (Banned Habits)
-            </h4>
-            <ul className="space-y-2 text-xs sm:text-sm text-[#737373]">
-              {voiceSystem.donts?.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <span className="text-xs font-mono text-black leading-none mt-0.5">&times;</span>
-                  <span className="text-black">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Signature Vocabulary Cloud */}
-        <div>
-          <span className="text-xs uppercase tracking-[0.05em] text-[#737373] block mb-3">
-            Signature Brand Lexicon
-          </span>
-          <div className="flex flex-wrap gap-2">
-            {voiceSystem.vocabularyWords?.map((word, idx) => (
-              <span
-                key={idx}
-                className="px-3.5 py-1.5 rounded-full border border-[#dbd7cd] bg-white text-xs font-sans text-black"
-              >
-                {word}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4: Launch Content & Manifesto */}
-      <section className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#dbd7cd]">
-          <div>
-            <span className="text-[11px] uppercase tracking-[0.08em] text-[#737373] block mb-1">
-              Editorial Copy
-            </span>
-            <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em]">
-              Launch Content & Brand Manifesto
-            </h3>
-          </div>
-          <button
-            onClick={() => copyToClipboard(launchContent.manifesto, 'manifesto')}
-            className="text-xs text-[#737373] hover:text-black flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#dbd7cd] hover:border-black transition-colors"
-          >
-            {copiedSection === 'manifesto' ? <Check className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5 text-[#737373]" />}
-            <span>{copiedSection === 'manifesto' ? 'Copied' : 'Copy Manifesto'}</span>
-          </button>
-        </div>
-
-        {/* Headline Preview Banner */}
-        <div className="bg-[#f2f1ed]/50 p-6 sm:p-8 rounded-2xl border border-[#dbd7cd] mb-8">
-          <span className="text-[11px] uppercase tracking-[0.08em] text-[#737373] block mb-2">
-            Hero Headline &amp; Call To Action
-          </span>
-          <h4 
-            className="font-serif text-3xl sm:text-4xl font-light text-black mb-3 leading-snug tracking-[-0.03em]"
-            style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
-          >
-            {launchContent.heroHeadline}
-          </h4>
-          <p className="text-sm sm:text-base text-[#737373] mb-6 max-w-2xl leading-relaxed">
-            {launchContent.heroSubheadline}
-          </p>
-          <button 
-            className="px-6 py-2.5 rounded-full bg-black text-white hover:bg-neutral-800 text-xs font-normal tracking-wide transition-all"
-          >
-            {launchContent.callToAction || "Forge Your Identity"}
-          </button>
-        </div>
-
-        {/* Full Manifesto Box */}
-        <div className="bg-white p-6 sm:p-8 rounded-2xl border border-[#dbd7cd] mb-8">
-          <span className="text-xs uppercase tracking-[0.05em] text-[#737373] block mb-4">
-            The Brand Manifesto
-          </span>
-          <div className="font-serif text-xl sm:text-2xl text-black font-light leading-relaxed whitespace-pre-line italic border-l-2 border-black pl-6 py-1">
-            "{launchContent.manifesto}"
-          </div>
-        </div>
-
-        {/* Social Launch Campaign */}
-        <div>
-          <span className="text-xs uppercase tracking-[0.05em] text-[#737373] block mb-4">
-            Launch Social Hooks (30-Day Campaign)
-          </span>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {launchContent.socialHooks?.map((hook, idx) => (
-              <div 
-                key={idx}
-                className="bg-[#f2f1ed]/40 p-5 rounded-2xl border border-[#dbd7cd] flex flex-col justify-between gap-4 text-xs leading-relaxed"
-              >
-                <p className="text-black font-normal">"{hook}"</p>
-                <div className="flex justify-between items-center pt-3 border-t border-[#dbd7cd]">
-                  <span className="text-[11px] text-[#737373] font-mono">Hook 0{idx + 1}</span>
-                  <button
-                    onClick={() => copyToClipboard(hook, `hook-${idx}`)}
-                    className="text-[#737373] hover:text-black transition-colors"
+                <div className="flex items-center gap-4 text-xs text-stone-600 font-sans">
+                  <span>Product</span>
+                  <span>Manifesto</span>
+                  <button 
+                    className="px-4 py-1.5 rounded-full text-xs font-medium transition-all"
+                    style={{ backgroundColor: primaryColor, color: '#ffffff' }}
                   >
-                    {copiedSection === `hook-${idx}` ? <Check className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5" />}
+                    {launchContent.callToAction || "Get Started"}
                   </button>
                 </div>
               </div>
-            ))}
+
+              {/* Hero Section Content */}
+              <div className="max-w-3xl my-auto py-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs mb-6 border border-stone-300 bg-stone-50 text-stone-700">
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primaryColor }} />
+                  <span>Category Definition: {voiceSystem.archetype || "Radical Pioneer"}</span>
+                </div>
+
+                <h2 
+                  className="text-4xl sm:text-6xl font-light tracking-tight leading-[1.05] text-black mb-6"
+                  style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
+                >
+                  {launchContent.heroHeadline || "Category Leadership Without Apology."}
+                </h2>
+
+                <p 
+                  className="text-base sm:text-lg text-stone-600 max-w-2xl leading-relaxed mb-8"
+                  style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
+                >
+                  {launchContent.heroSubheadline || brandStrategy.coreValueProposition}
+                </p>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  <button 
+                    className="px-6 py-3 rounded-full text-xs font-medium tracking-wide transition-all shadow-sm"
+                    style={{ backgroundColor: primaryColor, color: '#ffffff' }}
+                  >
+                    {launchContent.callToAction || "Explore Architecture"} &rarr;
+                  </button>
+                  <button 
+                    className="px-6 py-3 rounded-full text-xs text-stone-800 bg-white border border-[#dbd7cd] hover:border-black transition-all"
+                  >
+                    Read Manifesto
+                  </button>
+                </div>
+              </div>
+
+              {/* Feature Highlights Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-10 border-t border-stone-200">
+                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
+                  <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">01 / Differentiator</span>
+                  <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.differentiator}</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
+                  <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">02 / ICP Beachhead</span>
+                  <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.targetAudience}</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
+                  <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">03 / Villain</span>
+                  <p className="text-xs text-stone-800 font-medium leading-snug">{brandStrategy.antiHero}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      )}
+
+      {/* TAB 2: BRAND STRATEGY */}
+      {activeTab === 'strategy' && (
+        <div className="space-y-6 animate-fade-in">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Target Beachhead Card */}
+            <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-2">
+                  AUDIENCE FOUNDATION
+                </span>
+                <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-4">
+                  Beachhead ICP & Acute Pain
+                </h3>
+                <p className="text-sm text-stone-700 bg-[#fcfbf9] p-4 rounded-2xl border border-[#dbd7cd] leading-relaxed">
+                  {brandStrategy.targetAudience}
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#dbd7cd] text-xs text-stone-500">
+                Identifies the single most desperate segment that cannot tolerate status-quo solutions.
+              </div>
+            </div>
+
+            {/* Core Value Proposition */}
+            <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-2">
+                  POSITIONING ANCHOR
+                </span>
+                <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-4">
+                  Core Value Proposition
+                </h3>
+                <p className="text-sm text-stone-700 bg-[#fcfbf9] p-4 rounded-2xl border border-[#dbd7cd] leading-relaxed">
+                  {brandStrategy.coreValueProposition}
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#dbd7cd] text-xs text-stone-500">
+                The primary transformational promise delivered directly to the beachhead user.
+              </div>
+            </div>
+
+            {/* The Anti-Hero / Villain */}
+            <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-2">
+                  IDEOLOGICAL OPPOSITION
+                </span>
+                <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-4">
+                  The Incumbent Villain (What We Kill)
+                </h3>
+                <p className="text-sm text-stone-700 bg-[#fcfbf9] p-4 rounded-2xl border border-[#dbd7cd] leading-relaxed">
+                  {brandStrategy.antiHero}
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#dbd7cd] text-xs text-stone-500">
+                Declares the broken incumbent practice that gives the brand moral authority to exist.
+              </div>
+            </div>
+
+            {/* Unfair Differentiator */}
+            <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-2">
+                  COMPETITIVE MOAT
+                </span>
+                <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-4">
+                  Unfair Differentiator
+                </h3>
+                <p className="text-sm text-stone-700 bg-[#fcfbf9] p-4 rounded-2xl border border-[#dbd7cd] leading-relaxed">
+                  {brandStrategy.differentiator}
+                </p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-[#dbd7cd] text-xs text-stone-500">
+                The structural mechanism that makes copycat competition ineffective.
+              </div>
+            </div>
+          </div>
+
+          {/* Mission & Purpose */}
+          <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
+            <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-2">
+              PURPOSE & REACH
+            </span>
+            <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-3">
+              Brand Mission
+            </h3>
+            <p className="text-base text-stone-800 leading-relaxed font-normal">
+              {brandStrategy.mission}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 3: VOICE & TONE */}
+      {activeTab === 'voice' && (
+        <div className="space-y-6 animate-fade-in">
+          {/* Verbal Identity Summary Card */}
+          <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#dbd7cd]">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-1">
+                  VERBAL IDENTITY
+                </span>
+                <h3 className="font-serif text-3xl font-light text-black tracking-[-0.03em]">
+                  Voice Archetype: {voiceSystem.archetype || "The Rebel"}
+                </h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {voiceSystem.tone?.map((t, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3.5 py-1 rounded-full border border-[#dbd7cd] bg-[#fcfbf9] text-xs text-black font-medium"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Dos and Don'ts Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
+              {/* Voice Dos */}
+              <div className="p-5 rounded-2xl bg-[#faf9f6] border border-[#dbd7cd]/80">
+                <span className="text-xs uppercase tracking-wider text-black font-medium block mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-black" />
+                  <span>Voice Dos (Speak Like This)</span>
+                </span>
+                <ul className="space-y-3 text-xs sm:text-sm text-stone-700">
+                  {voiceSystem.dos?.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-stone-400 mt-2 shrink-0" />
+                      <span className="leading-snug">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Voice Don'ts */}
+              <div className="p-5 rounded-2xl bg-[#faf9f6] border border-[#dbd7cd]/80">
+                <span className="text-xs uppercase tracking-wider text-black font-medium block mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-stone-400" />
+                  <span>Voice Don'ts (Banned Habits)</span>
+                </span>
+                <ul className="space-y-3 text-xs sm:text-sm text-stone-700">
+                  {voiceSystem.donts?.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="text-xs font-mono text-stone-500 leading-none mt-0.5">&times;</span>
+                      <span className="leading-snug">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Lexicon Cloud */}
+            <div className="pt-6 mt-6 border-t border-[#dbd7cd]">
+              <span className="text-xs uppercase tracking-wider text-stone-500 block mb-3">
+                Signature Brand Lexicon (Power Words)
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {voiceSystem.vocabularyWords?.map((word, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3.5 py-1.5 rounded-full border border-[#dbd7cd] bg-white text-xs font-sans text-stone-900"
+                  >
+                    {word}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 4: VISUAL DESIGN TOKENS */}
+      {activeTab === 'tokens' && (
+        <div className="space-y-8 animate-fade-in">
+          {/* Color System Section */}
+          <section className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-[#dbd7cd]">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-1">
+                  PALETTE SPECIFICATION
+                </span>
+                <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em]">
+                  Color System — Synthesized Palette Swatches
+                </h3>
+              </div>
+              <span className="text-xs text-stone-500">Click any swatch to copy HEX code</span>
+            </div>
+
+            {/* 5 Swatch Blocks: Rounded-2xl slabs (Top 2/3 color, Bottom 1/3 white container) */}
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
+              {palette.map((color, idx) => {
+                const isCopied = copiedHex === color.hex;
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => copyToClipboard(color.hex, `hex-${color.hex}`)}
+                    className="rounded-2xl border border-[#dbd7cd] overflow-hidden bg-white text-left hover:border-black transition-all group flex flex-col shadow-none"
+                    title={`Copy ${color.hex}`}
+                  >
+                    {/* Top 2/3: Solid color block */}
+                    <div 
+                      className="h-24 w-full relative flex items-center justify-center transition-transform group-hover:scale-[1.02]"
+                      style={{ backgroundColor: color.hex }}
+                    >
+                      <span className={`text-[11px] font-mono px-2 py-0.5 rounded-full bg-white/95 text-black border border-black/10 transition-opacity ${
+                        isCopied ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                      }`}>
+                        {isCopied ? 'Copied' : 'Copy'}
+                      </span>
+                    </div>
+
+                    {/* Bottom 1/3: Swatch metadata in white container */}
+                    <div className="p-3 bg-white flex flex-col justify-between flex-1 border-t border-[#dbd7cd]/40">
+                      <div>
+                        <div className="flex items-center justify-between mb-0.5">
+                          <span className="font-sans text-[11px] font-medium text-black truncate">
+                            {color.name}
+                          </span>
+                        </div>
+                        <span className="text-[10px] uppercase tracking-wider text-stone-400 block">
+                          {color.role}
+                        </span>
+                      </div>
+                      <div className="mt-2 flex items-center justify-between">
+                        <span className="font-mono text-xs text-stone-700">{color.hex}</span>
+                        {isCopied ? (
+                          <Check className="w-3 h-3 text-black" />
+                        ) : (
+                          <Copy className="w-3 h-3 text-stone-400 group-hover:text-black transition-colors" />
+                        )}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Typography Sandbox Row (2-Column Grid) */}
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Left Card: Display Typography */}
+            <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3 pb-3 border-b border-[#dbd7cd]">
+                  <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium">
+                    DISPLAY TYPOGRAPHY
+                  </span>
+                  <span className="text-xs font-mono text-stone-500">
+                    {typography.headingFont || 'Cormorant Garamond'}
+                  </span>
+                </div>
+
+                <div 
+                  className="font-serif text-3xl sm:text-4xl font-light text-black leading-tight tracking-[-0.03em] mb-4"
+                  style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
+                >
+                  Conviction builds enduring value.
+                </div>
+
+                <div className="p-3 bg-[#faf9f6] rounded-xl border border-[#dbd7cd] font-mono text-xs text-stone-600 mb-4 leading-relaxed">
+                  Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz 0123456789
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-[#dbd7cd] text-xs text-stone-500">
+                Rationale: Selected for razor-sharp editorial tension and stark modern authority.
+              </div>
+            </div>
+
+            {/* Right Card: Body & UI Typography */}
+            <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3 pb-3 border-b border-[#dbd7cd]">
+                  <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium">
+                    BODY & UI TYPOGRAPHY
+                  </span>
+                  <span className="text-xs font-mono text-stone-500">
+                    {typography.bodyFont || 'Inter'}
+                  </span>
+                </div>
+
+                <p 
+                  className="text-sm text-stone-700 leading-relaxed mb-4"
+                  style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}
+                >
+                  Interface text, long-form editorial paragraphs, and system labels are rendered with balanced geometric neutral letterforms to preserve maximum legibility at high data density.
+                </p>
+
+                {/* Sample UI specimens */}
+                <div className="flex flex-wrap items-center gap-2 pt-2">
+                  <span className="px-3 py-1 rounded-full text-xs bg-black text-white">Primary Action</span>
+                  <span className="px-3 py-1 rounded-full text-xs border border-[#dbd7cd] bg-white text-stone-800">Neutral Button</span>
+                  <span className="px-3 py-1 rounded-full text-xs bg-[#faf9f6] text-stone-600 border border-[#dbd7cd]">Tag Specimen</span>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-[#dbd7cd] text-xs text-stone-500">
+                Weight: 400 Regular &bull; UI Hierarchy optimized for responsive viewports.
+              </div>
+            </div>
+          </section>
+
+          {/* Style Philosophy & Border Curvature Cards (2-Column Grid) */}
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Card 1: Style Philosophy */}
+            <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
+              <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-2">
+                AESTHETIC FOUNDATION
+              </span>
+              <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-3">
+                Style Philosophy
+              </h3>
+              <p className="text-sm text-stone-700 leading-relaxed bg-[#fcfbf9] p-4 rounded-xl border border-[#dbd7cd]">
+                {visualTokens.stylePhilosophy || "Refined monochrome typography with disciplined whitespace, hairline boundaries, and high-contrast editorial clarity."}
+              </p>
+            </div>
+
+            {/* Card 2: Border Curvature Spec */}
+            <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-2">
+                  GEOMETRY RULES
+                </span>
+                <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-3">
+                  Border Curvature Spec
+                </h3>
+                <div className="flex items-center gap-4 bg-[#fcfbf9] p-4 rounded-xl border border-[#dbd7cd]">
+                  <div className={`w-14 h-14 bg-stone-900 border border-stone-800 flex items-center justify-center text-white text-[10px] font-mono ${visualTokens.borderCurvature || 'rounded-xl'}`}>
+                    Shape
+                  </div>
+                  <div>
+                    <span className="font-mono text-xs text-black font-medium block">
+                      {visualTokens.borderCurvature || 'rounded-xl'}
+                    </span>
+                    <span className="text-xs text-stone-500">
+                      Standardized container and interactive element radius.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* CSS Custom Properties Code Panel */}
+          <section className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#dbd7cd]">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-1">
+                  COMPILED CODE SPECIFICATION
+                </span>
+                <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em]">
+                  CSS Custom Properties (:root)
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => copyToClipboard(compiledCss, 'css-tokens')}
+                className="inline-flex items-center gap-1.5 text-xs text-stone-700 hover:text-black px-3.5 py-1.5 rounded-full border border-[#dbd7cd] bg-[#fcfbf9] hover:border-black transition-all"
+              >
+                {copiedIdentifier === 'css-tokens' ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-black" />
+                    <span>Copied CSS</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5 text-stone-500" />
+                    <span>Copy CSS</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            <pre className="p-4 rounded-2xl bg-[#faf9f6] border border-[#dbd7cd] font-mono text-xs text-stone-800 overflow-x-auto leading-relaxed">
+              <code>{compiledCss}</code>
+            </pre>
+          </section>
+        </div>
+      )}
+
+      {/* TAB 5: LAUNCH COPY & MANIFESTO */}
+      {activeTab === 'manifesto' && (
+        <div className="space-y-6 animate-fade-in">
+          {/* Brand Manifesto Box */}
+          <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-10">
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#dbd7cd]">
+              <div>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-1">
+                  CORE IDEOLOGY
+                </span>
+                <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em]">
+                  The Brand Manifesto
+                </h3>
+              </div>
+              <button
+                onClick={() => copyToClipboard(launchContent.manifesto, 'manifesto')}
+                className="text-xs text-stone-700 hover:text-black flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[#dbd7cd] hover:border-black transition-colors"
+              >
+                {copiedIdentifier === 'manifesto' ? <Check className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5 text-stone-500" />}
+                <span>{copiedIdentifier === 'manifesto' ? 'Copied' : 'Copy Manifesto'}</span>
+              </button>
+            </div>
+
+            <div 
+              className="font-serif text-xl sm:text-2xl text-black font-light leading-relaxed whitespace-pre-line italic border-l-2 border-black pl-6 sm:pl-8 py-2"
+              style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
+            >
+              "{launchContent.manifesto || "We believe true category leaders don't blend in—they plant a flag, declare an enemy, and build with relentless conviction."}"
+            </div>
+          </div>
+
+          {/* Hero Copy Specimen */}
+          <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
+            <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-3">
+              LAUNCH HEADLINE & PITCH
+            </span>
+            <h4 
+              className="font-serif text-3xl sm:text-4xl font-light text-black mb-3 leading-snug tracking-[-0.03em]"
+              style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
+            >
+              {launchContent.heroHeadline}
+            </h4>
+            <p className="text-sm sm:text-base text-stone-600 mb-6 max-w-2xl leading-relaxed">
+              {launchContent.heroSubheadline}
+            </p>
+            <div className="pt-4 border-t border-[#dbd7cd]">
+              <span className="text-[11px] uppercase tracking-wider text-stone-400 block mb-1">
+                Elevator Pitch:
+              </span>
+              <p className="text-xs sm:text-sm text-stone-800 leading-relaxed">
+                {launchContent.elevatorPitch || brandStrategy.coreValueProposition}
+              </p>
+            </div>
+          </div>
+
+          {/* Social Hooks Grid */}
+          <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
+            <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-4">
+              LAUNCH SOCIAL HOOKS (30-DAY CAMPAIGN)
+            </span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {launchContent.socialHooks?.map((hook, idx) => (
+                <div 
+                  key={idx}
+                  className="bg-[#faf9f6] p-5 rounded-2xl border border-[#dbd7cd] flex flex-col justify-between gap-4 text-xs leading-relaxed"
+                >
+                  <p className="text-stone-900 font-normal">"{hook}"</p>
+                  <div className="flex justify-between items-center pt-3 border-t border-[#dbd7cd]">
+                    <span className="text-[11px] text-stone-400 font-mono">Hook 0{idx + 1}</span>
+                    <button
+                      onClick={() => copyToClipboard(hook, `hook-${idx}`)}
+                      className="text-stone-500 hover:text-black transition-colors"
+                      title="Copy hook"
+                    >
+                      {copiedIdentifier === `hook-${idx}` ? <Check className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import Header from './components/Header';
 import IntakeView from './components/IntakeView';
 import InterviewChat from './components/InterviewChat';
 import BrandKitDashboard from './components/BrandKitDashboard';
 import { mockBrandKit } from './data/mockBrandData';
-import { Sparkles, Cpu, Layers } from 'lucide-react';
 
 export default function App() {
   const [stage, setStage] = useState('intake'); // 'intake' | 'interview' | 'dashboard'
@@ -12,7 +12,6 @@ export default function App() {
   const [brandKit, setBrandKit] = useState(mockBrandKit);
   const [isLoading, setIsLoading] = useState(false);
   const [isCompiling, setIsCompiling] = useState(false);
-  const [apiError, setApiError] = useState(null);
 
   const API_BASE = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '';
 
@@ -42,7 +41,6 @@ export default function App() {
    */
   const handleStartInterview = async (pitch) => {
     setIsLoading(true);
-    setApiError(null);
 
     const initialHistory = [{ role: 'user', content: pitch }];
     const initialMessages = [{
@@ -116,6 +114,14 @@ export default function App() {
     ];
 
     setMessages(updatedMessages);
+
+    // If current round is 3, proceed directly to compilation!
+    const currentRound = currentQuestion?.currentRound || 1;
+    if (currentRound >= 3) {
+      handleCompileBrandKit(updatedMessages);
+      return;
+    }
+
     setIsLoading(true);
 
     const historyForApi = updatedMessages.map(m => ({
@@ -197,10 +203,11 @@ export default function App() {
   /**
    * Step 3: Synthesize Brand Kit
    */
-  const handleCompileBrandKit = async () => {
+  const handleCompileBrandKit = async (customMessages) => {
     setIsCompiling(true);
 
-    const historyForApi = messages.map(m => ({
+    const msgs = customMessages || messages;
+    const historyForApi = msgs.map(m => ({
       role: m.role,
       content: m.content
     }));
@@ -235,39 +242,117 @@ export default function App() {
     setStage('dashboard');
   };
 
+  /**
+   * Fast-forward synthesis from Header
+   */
+  const handleSkipToSynthesis = () => {
+    if (messages.length > 0) {
+      handleCompileBrandKit();
+    } else {
+      handlePreviewMock();
+    }
+  };
+
+  /**
+   * Global Export Actions for Header
+   */
+  const cleanBrandName = (brandKit?.brandStrategy?.brandName || 'brand').toLowerCase().replace(/\s+/g, '-');
+
+  const handleExportJson = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(brandKit, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `${cleanBrandName}-tokens.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  };
+
+  const handleExportCss = () => {
+    const palette = brandKit?.visualTokens?.palette || [];
+    const typography = brandKit?.visualTokens?.typography || {};
+    const css = `:root {
+  /* Brand: ${brandKit?.brandStrategy?.brandName || 'Brand'} */
+${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z0-9]/g, '-')}: ${c.hex}; /* ${c.name} */`).join('\n')}
+
+  /* Typography Scale */
+  --font-display: '${typography.headingFont || 'Cormorant Garamond'}', Georgia, serif;
+  --font-body: '${typography.bodyFont || 'Inter'}', system-ui, sans-serif;
+
+  /* Geometry & Shape */
+  --radius-curvature: ${brandKit?.visualTokens?.borderCurvature === 'rounded-none' ? '0px' : brandKit?.visualTokens?.borderCurvature === 'rounded-full' ? '9999px' : '16px'};
+}`;
+
+    const dataStr = "data:text/css;charset=utf-8," + encodeURIComponent(css);
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `${cleanBrandName}-tokens.css`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  };
+
+  const handleExportSvg = () => {
+    const palette = brandKit?.visualTokens?.palette || [];
+    const width = 1000;
+    const height = 360;
+    const swatchWidth = 160;
+    const swatchHeight = 160;
+    const gap = 24;
+    const startX = (width - (palette.length * swatchWidth + (palette.length - 1) * gap)) / 2;
+
+    const swatchesSvg = palette.map((c, i) => {
+      const x = startX + i * (swatchWidth + gap);
+      const y = 110;
+      return `
+        <g transform="translate(${x}, ${y})">
+          <rect width="${swatchWidth}" height="${swatchHeight}" rx="20" fill="${c.hex}" stroke="#dbd7cd" stroke-width="1" />
+          <text x="${swatchWidth / 2}" y="${swatchHeight + 28}" fill="#737373" font-size="11" font-weight="400" text-anchor="middle" font-family="'Inter', sans-serif" letter-spacing="1">${(c.role || '').toUpperCase()}</text>
+          <text x="${swatchWidth / 2}" y="${swatchHeight + 48}" fill="#000000" font-size="13" font-weight="500" text-anchor="middle" font-family="'Inter', sans-serif">${c.name || 'Color'}</text>
+          <text x="${swatchWidth / 2}" y="${swatchHeight + 68}" fill="#000000" font-size="12" font-weight="400" text-anchor="middle" font-family="monospace">${c.hex}</text>
+        </g>
+      `;
+    }).join('\n');
+
+    const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
+  <rect width="100%" height="100%" fill="#f2f1ed" />
+  <text x="${width / 2}" y="50" fill="#000000" font-size="28" font-weight="300" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif">${brandKit?.brandStrategy?.brandName || 'Brand'} — Color System</text>
+  <text x="${width / 2}" y="76" fill="#737373" font-size="12" font-weight="400" text-anchor="middle" font-family="'Inter', sans-serif">Synthesized Design Tokens</text>
+  ${swatchesSvg}
+</svg>`;
+
+    const blob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${cleanBrandName}-palette.svg`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const handlePrintPdf = () => {
+    window.print();
+  };
+
   return (
     <div className="min-h-screen bg-[#f2f1ed] text-[#000000] flex flex-col justify-between selection:bg-black selection:text-white font-sans">
       {/* Editorial Navigation Header */}
-      <header className="no-print sticky top-0 z-50 bg-[#f2f1ed]/90 backdrop-blur-md px-6 sm:px-12 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Logo Mark: Lowercase Editorial Serif Wordmark */}
-          <button 
-            onClick={handleReset}
-            className="text-left group transition-opacity hover:opacity-70"
-          >
-            <span className="font-serif text-2xl tracking-[-0.03em] font-light text-[#000000]">
-              brand builder.
-            </span>
-          </button>
-
-          {/* Right Header Navigation: Handhold Pill Button */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handlePreviewMock}
-              className={`text-xs px-4 py-2 rounded-full border transition-all ${
-                stage === 'dashboard'
-                  ? 'bg-black text-white border-black'
-                  : 'bg-white text-black border-[#dbd7cd] hover:border-black hover:bg-[#f2f1ed]'
-              }`}
-            >
-              Preview Brand Kit
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header
+        stage={stage}
+        onReset={handleReset}
+        onSkipToSynthesis={handleSkipToSynthesis}
+        onPreviewMock={handlePreviewMock}
+        onExportJson={handleExportJson}
+        onExportCss={handleExportCss}
+        onExportSvg={handleExportSvg}
+        onPrintPdf={handlePrintPdf}
+      />
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col justify-center py-6 sm:py-10">
+      <main className="flex-1 flex flex-col justify-center py-4 sm:py-8">
         {stage === 'intake' && (
           <IntakeView
             onStartInterview={handleStartInterview}
@@ -296,9 +381,9 @@ export default function App() {
       </main>
 
       {/* Minimalist Editorial Footer */}
-      <footer className="no-print py-6 px-6 text-center text-xs text-[#737373]">
+      <footer className="no-print py-6 px-6 text-center text-xs text-[#737373] border-t border-[#dbd7cd]/50">
         <p>
-          &copy; {new Date().getFullYear()} Brand Builder. Turn raw ideas into launch-ready identity systems.
+          &copy; {new Date().getFullYear()} Brand Builder. Socratic Brand Studio &bull; Handhold Editorial Design System.
         </p>
       </footer>
     </div>
