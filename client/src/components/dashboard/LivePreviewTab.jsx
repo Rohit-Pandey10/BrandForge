@@ -64,15 +64,20 @@ export function resolveArchetype(kit = {}) {
   return 'retail_cpg';
 }
 
-// ─── Contrast Calculator ───────────────────────────────────────────────────────
-function getContrastColor(hexColor) {
-  if (!hexColor || typeof hexColor !== 'string') return '#ffffff';
-  const hex = hexColor.replace('#', '');
-  if (hex.length !== 6) return '#ffffff';
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
-  return (r * 299 + g * 587 + b * 114) / 1000 >= 140 ? '#000000' : '#ffffff';
+// ─── Luminance & Contrast Calculator ──────────────────────────────────────────
+export function isDarkColor(hex) {
+  if (!hex || typeof hex !== 'string') return false;
+  const clean = hex.replace('#', '');
+  if (clean.length !== 6) return false;
+  const r = parseInt(clean.substring(0, 2), 16);
+  const g = parseInt(clean.substring(2, 4), 16);
+  const b = parseInt(clean.substring(4, 6), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance < 0.55;
+}
+
+export function getContrastColor(hexColor) {
+  return isDarkColor(hexColor) ? '#ffffff' : '#000000';
 }
 
 // ─── Main Export ──────────────────────────────────────────────────────────────
@@ -124,7 +129,7 @@ export default function LivePreviewTab(props) {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in pb-20">
+    <div className="space-y-6 animate-fade-in pb-28">
       <div
         className="bg-white border border-[#dbd7cd] overflow-hidden shadow-sm transition-all"
         style={{
@@ -164,12 +169,42 @@ export default function LivePreviewTab(props) {
 // =============================================================================
 // SECTION DISPATCHER
 // =============================================================================
-function SectionDispatcher({ sections, primaryColor, primaryContrast, accentColor, radiusCurvature, fontStyle, brandStrategy }) {
+function SectionDispatcher({
+  sections,
+  primaryColor,
+  primaryContrast,
+  secondaryColor,
+  accentColor,
+  radiusCurvature,
+  fontStyle,
+  brandStrategy,
+  isDarkTheme = false,
+  headingTextColor = '#111111',
+  bodyTextColor = '#4b5563',
+  subtleTextColor = '#6b7280',
+  cardBgColor = '#ffffff',
+  cardBorderColor = '#dbd7cd'
+}) {
   if (!sections || sections.length === 0) return null;
   return (
-    <div className="space-y-8 mt-8 pt-8 border-t border-[#dbd7cd]">
+    <div className="space-y-8 mt-8 pt-8 border-t" style={{ borderColor: cardBorderColor }}>
       {sections.map((section, i) => {
-        const common = { key: i, section, primaryColor, primaryContrast, accentColor, radiusCurvature, fontStyle };
+        const common = {
+          key: i,
+          section,
+          primaryColor,
+          primaryContrast,
+          secondaryColor,
+          accentColor,
+          radiusCurvature,
+          fontStyle,
+          isDarkTheme,
+          headingTextColor,
+          bodyTextColor,
+          subtleTextColor,
+          cardBgColor,
+          cardBorderColor
+        };
         switch (section.type) {
           case 'catalog_grid':       return <CatalogGrid {...common} />;
           case 'ritual_steps':       return <RitualSteps {...common} />;
@@ -184,52 +219,106 @@ function SectionDispatcher({ sections, primaryColor, primaryContrast, accentColo
 }
 
 // ─── Catalog Grid ────────────────────────────────────────────────────────────
-function CatalogGrid({ section, primaryColor, primaryContrast, accentColor, radiusCurvature, fontStyle }) {
+function CatalogGrid({
+  section,
+  accentColor,
+  radiusCurvature,
+  fontStyle,
+  isDarkTheme = false,
+  headingTextColor = '#111111',
+  bodyTextColor = '#4b5563',
+  subtleTextColor = '#6b7280',
+  cardBgColor = '#ffffff',
+  cardBorderColor = '#dbd7cd'
+}) {
   const [addedItem, setAddedItem] = useState(null);
   const handleAdd = (label) => { setAddedItem(label); setTimeout(() => setAddedItem(null), 2000); };
   const cols = section.items?.length === 2 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-3';
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500">{section.title}</span>
-        {section.subtitle && <span className="text-xs text-stone-400 font-mono">{section.subtitle}</span>}
+        <span className="text-[11px] uppercase font-mono tracking-widest" style={{ color: subtleTextColor }}>
+          {section.title}
+        </span>
+        {section.subtitle && (
+          <span className="text-xs font-mono" style={{ color: subtleTextColor }}>
+            {section.subtitle}
+          </span>
+        )}
       </div>
       <div className={`grid ${cols} gap-4`}>
         {(section.items || []).map((item, i) => {
           const isAdded = addedItem === item.label;
           return (
-            <div key={i} className="p-5 bg-white flex flex-col justify-between transition-all"
-              style={{ borderRadius: radiusCurvature, border: `1px solid ${accentColor}25` }}>
+            <div
+              key={i}
+              className="p-5 flex flex-col justify-between transition-all border"
+              style={{
+                borderRadius: radiusCurvature,
+                backgroundColor: cardBgColor,
+                borderColor: cardBorderColor
+              }}
+            >
               <div>
                 <div className="flex items-start justify-between mb-1.5 gap-2">
-                  <h4 className="text-sm font-medium text-black leading-snug" style={{ fontFamily: fontStyle.display }}>{item.label}</h4>
+                  <h4
+                    className="text-sm font-medium leading-snug"
+                    style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+                  >
+                    {item.label}
+                  </h4>
                   {/* Price highlighted in accent color */}
                   {item.metricOrPrice && (
-                    <span className="font-mono text-xs font-bold shrink-0 px-1.5 py-0.5 rounded"
-                      style={{ backgroundColor: `${accentColor}18`, color: accentColor }}>
+                    <span
+                      className="font-mono text-xs font-bold shrink-0 px-1.5 py-0.5 rounded"
+                      style={{
+                        backgroundColor: `${accentColor}18`,
+                        color: accentColor,
+                        border: isDarkTheme ? `1px solid ${accentColor}40` : 'none'
+                      }}
+                    >
                       {item.metricOrPrice}
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-stone-600 leading-relaxed">{item.description}</p>
+                <p
+                  className="text-xs leading-relaxed"
+                  style={{ color: bodyTextColor, fontFamily: fontStyle.body }}
+                >
+                  {item.description}
+                </p>
               </div>
-              <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between">
+              <div
+                className="mt-4 pt-3 border-t flex items-center justify-between"
+                style={{ borderColor: isDarkTheme ? cardBorderColor : '#f3f4f6' }}
+              >
                 {/* Tag badge using accent tint */}
                 {item.tag && (
-                  <span className="text-[10px] font-mono px-2 py-1 rounded font-semibold"
-                    style={{ backgroundColor: `${accentColor}15`, color: accentColor }}>
+                  <span
+                    className="text-[10px] font-mono px-2 py-1 rounded font-semibold"
+                    style={{
+                      backgroundColor: `${accentColor}15`,
+                      color: accentColor,
+                      border: isDarkTheme ? `1px solid ${accentColor}30` : 'none'
+                    }}
+                  >
                     {item.tag}
                   </span>
                 )}
                 <button
                   onClick={() => handleAdd(item.label)}
                   className="text-xs font-medium px-3 py-1.5 flex items-center gap-1 transition-all ml-auto border"
-                  style={{ borderRadius: radiusCurvature, borderColor: isAdded ? 'transparent' : `${accentColor}60`,
-                    backgroundColor: isAdded ? `${accentColor}15` : 'transparent', color: isAdded ? accentColor : 'inherit' }}
+                  style={{
+                    borderRadius: radiusCurvature,
+                    borderColor: isAdded ? 'transparent' : (isDarkTheme ? cardBorderColor : `${accentColor}60`),
+                    backgroundColor: isAdded ? `${accentColor}20` : 'transparent',
+                    color: isAdded ? accentColor : headingTextColor
+                  }}
                 >
                   {isAdded
                     ? <><Check className="w-3 h-3" style={{ color: accentColor }} /><span>Added</span></>
-                    : <><Plus className="w-3 h-3 text-stone-500" /><span>Add</span></>
+                    : <><Plus className="w-3 h-3" style={{ color: subtleTextColor }} /><span>Add</span></>
                   }
                 </button>
               </div>
@@ -242,23 +331,63 @@ function CatalogGrid({ section, primaryColor, primaryContrast, accentColor, radi
 }
 
 // ─── Ritual Steps ────────────────────────────────────────────────────────────
-function RitualSteps({ section, primaryColor, radiusCurvature, fontStyle }) {
+function RitualSteps({
+  section,
+  primaryColor,
+  radiusCurvature,
+  fontStyle,
+  headingTextColor = '#111111',
+  bodyTextColor = '#4b5563',
+  subtleTextColor = '#6b7280',
+  cardBgColor = '#ffffff',
+  cardBorderColor = '#dbd7cd'
+}) {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500">{section.title}</span>
-        {section.subtitle && <span className="text-xs text-stone-400 font-mono">{section.subtitle}</span>}
+        <span className="text-[11px] uppercase font-mono tracking-widest" style={{ color: subtleTextColor }}>
+          {section.title}
+        </span>
+        {section.subtitle && (
+          <span className="text-xs font-mono" style={{ color: subtleTextColor }}>
+            {section.subtitle}
+          </span>
+        )}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {(section.items || []).map((item, i) => (
-          <div key={i} className="p-5 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
-            <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold mb-3"
-              style={{ backgroundColor: primaryColor, color: getContrastColor(primaryColor) }}>
+          <div
+            key={i}
+            className="p-5 border transition-all"
+            style={{
+              backgroundColor: cardBgColor,
+              borderColor: cardBorderColor,
+              borderRadius: radiusCurvature
+            }}
+          >
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold mb-3"
+              style={{ backgroundColor: primaryColor, color: getContrastColor(primaryColor) }}
+            >
               {String(i + 1).padStart(2, '0')}
             </div>
-            <h4 className="text-sm font-semibold text-black mb-1.5" style={{ fontFamily: fontStyle.display }}>{item.label}</h4>
-            <p className="text-xs text-stone-600 leading-relaxed">{item.description}</p>
-            {item.metricOrPrice && <span className="text-[10px] font-mono text-stone-400 mt-3 block">{item.metricOrPrice}</span>}
+            <h4
+              className="text-sm font-semibold mb-1.5"
+              style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+            >
+              {item.label}
+            </h4>
+            <p
+              className="text-xs leading-relaxed"
+              style={{ color: bodyTextColor, fontFamily: fontStyle.body }}
+            >
+              {item.description}
+            </p>
+            {item.metricOrPrice && (
+              <span className="text-[10px] font-mono mt-3 block" style={{ color: subtleTextColor }}>
+                {item.metricOrPrice}
+              </span>
+            )}
           </div>
         ))}
       </div>
@@ -267,24 +396,68 @@ function RitualSteps({ section, primaryColor, radiusCurvature, fontStyle }) {
 }
 
 // ─── Flavor Profile ──────────────────────────────────────────────────────────
-function FlavorProfile({ section, primaryColor, radiusCurvature, fontStyle }) {
+function FlavorProfile({
+  section,
+  primaryColor,
+  radiusCurvature,
+  fontStyle,
+  isDarkTheme = false,
+  headingTextColor = '#111111',
+  bodyTextColor = '#4b5563',
+  subtleTextColor = '#6b7280',
+  cardBgColor = '#ffffff',
+  cardBorderColor = '#dbd7cd'
+}) {
   const icons = [<Droplets className="w-4 h-4" />, <Leaf className="w-4 h-4" />, <Sparkles className="w-4 h-4" />, <Zap className="w-4 h-4" />];
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500">{section.title}</span>
-        {section.subtitle && <span className="text-xs text-stone-400 font-mono">{section.subtitle}</span>}
+        <span className="text-[11px] uppercase font-mono tracking-widest" style={{ color: subtleTextColor }}>
+          {section.title}
+        </span>
+        {section.subtitle && (
+          <span className="text-xs font-mono" style={{ color: subtleTextColor }}>
+            {section.subtitle}
+          </span>
+        )}
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {(section.items || []).map((item, i) => (
-          <div key={i} className="p-4 bg-white border border-[#dbd7cd] text-center" style={{ borderRadius: radiusCurvature }}>
-            <div className="w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-2 text-stone-600"
-              style={{ backgroundColor: `${primaryColor}18` }}>
+          <div
+            key={i}
+            className="p-4 border text-center transition-all"
+            style={{
+              backgroundColor: cardBgColor,
+              borderColor: cardBorderColor,
+              borderRadius: radiusCurvature
+            }}
+          >
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-2"
+              style={{
+                backgroundColor: `${primaryColor}20`,
+                color: isDarkTheme ? '#ffffff' : primaryColor
+              }}
+            >
               {icons[i % icons.length]}
             </div>
-            <h4 className="text-xs font-semibold text-black mb-1" style={{ fontFamily: fontStyle.display }}>{item.label}</h4>
-            <p className="text-[11px] text-stone-500 leading-relaxed">{item.description}</p>
-            {item.tag && <span className="text-[10px] font-mono text-stone-400 mt-2 block">{item.tag}</span>}
+            <h4
+              className="text-xs font-semibold mb-1"
+              style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+            >
+              {item.label}
+            </h4>
+            <p
+              className="text-[11px] leading-relaxed"
+              style={{ color: bodyTextColor, fontFamily: fontStyle.body }}
+            >
+              {item.description}
+            </p>
+            {item.tag && (
+              <span className="text-[10px] font-mono mt-2 block" style={{ color: subtleTextColor }}>
+                {item.tag}
+              </span>
+            )}
           </div>
         ))}
       </div>
@@ -293,45 +466,107 @@ function FlavorProfile({ section, primaryColor, radiusCurvature, fontStyle }) {
 }
 
 // ─── Comparative Ledger ──────────────────────────────────────────────────────
-function ComparativeLedger({ section, brandStrategy, primaryColor, radiusCurvature, fontStyle }) {
+function ComparativeLedger({
+  section,
+  brandStrategy,
+  radiusCurvature,
+  isDarkTheme = false,
+  headingTextColor = '#111111',
+  subtleTextColor = '#6b7280',
+  cardBgColor = '#ffffff',
+  cardBorderColor = '#dbd7cd'
+}) {
   const items   = section.items || [];
   const half    = Math.ceil(items.length / 2);
   const ours    = items.slice(0, half);
   const theirs  = items.slice(half);
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500">{section.title}</span>
-        {section.subtitle && <span className="text-xs text-stone-400 font-mono">{section.subtitle}</span>}
+        <span className="text-[11px] uppercase font-mono tracking-widest" style={{ color: subtleTextColor }}>
+          {section.title}
+        </span>
+        {section.subtitle && (
+          <span className="text-xs font-mono" style={{ color: subtleTextColor }}>
+            {section.subtitle}
+          </span>
+        )}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="p-5 border-2 border-black bg-white" style={{ borderRadius: radiusCurvature }}>
-          <span className="text-[10px] uppercase font-mono tracking-widest text-black font-bold block mb-3">
-            {brandStrategy.brandName || 'This Brand'}
+        {/* Brand column */}
+        <div
+          className="p-5 transition-all"
+          style={{
+            borderRadius: radiusCurvature,
+            backgroundColor: cardBgColor,
+            borderColor: isDarkTheme ? 'rgba(255, 255, 255, 0.4)' : '#000000',
+            borderWidth: '2px',
+            borderStyle: 'solid'
+          }}
+        >
+          <span
+            className="text-[10px] uppercase font-mono tracking-widest font-bold block mb-3"
+            style={{ color: headingTextColor }}
+          >
+            {brandStrategy?.brandName || 'This Brand'}
           </span>
           <div className="space-y-2.5">
             {(ours.length > 0 ? ours : items).map((item, i) => (
               <div key={i} className="flex items-start gap-2">
-                <Check className="w-3.5 h-3.5 mt-0.5 text-emerald-600 shrink-0" />
+                <Check className="w-3.5 h-3.5 mt-0.5 text-emerald-500 shrink-0" />
                 <div>
-                  <span className="text-xs font-semibold text-black block">{item.label}</span>
-                  {item.description && <span className="text-[11px] text-stone-500">{item.description}</span>}
+                  <span className="text-xs font-semibold block" style={{ color: headingTextColor }}>
+                    {item.label}
+                  </span>
+                  {item.description && (
+                    <span className="text-[11px]" style={{ color: subtleTextColor }}>
+                      {item.description}
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="p-5 border border-[#dbd7cd] bg-[#faf8f5]" style={{ borderRadius: radiusCurvature }}>
-          <span className="text-[10px] uppercase font-mono tracking-widest text-stone-400 font-medium block mb-3">
+
+        {/* Industry default column */}
+        <div
+          className="p-5 border transition-all"
+          style={{
+            borderRadius: radiusCurvature,
+            backgroundColor: isDarkTheme ? 'rgba(0, 0, 0, 0.25)' : '#faf8f5',
+            borderColor: cardBorderColor
+          }}
+        >
+          <span
+            className="text-[10px] uppercase font-mono tracking-widest font-medium block mb-3"
+            style={{ color: subtleTextColor }}
+          >
             The Industry Default
           </span>
           <div className="space-y-2.5">
-            {(theirs.length > 0 ? theirs : [{ label: brandStrategy.antiHero || 'Generic compromise', description: '' }]).map((item, i) => (
+            {(theirs.length > 0 ? theirs : [{ label: brandStrategy?.antiHero || 'Generic compromise', description: '' }]).map((item, i) => (
               <div key={i} className="flex items-start gap-2">
-                <span className="w-3.5 h-px mt-2 bg-stone-300 shrink-0" />
+                <span
+                  className="w-3.5 h-px mt-2 shrink-0"
+                  style={{ backgroundColor: subtleTextColor }}
+                />
                 <div>
-                  <span className="text-xs font-medium text-stone-400 block line-through decoration-stone-300">{item.label}</span>
-                  {item.description && <span className="text-[11px] text-stone-400">{item.description}</span>}
+                  <span
+                    className="text-xs font-medium block line-through"
+                    style={{
+                      color: subtleTextColor,
+                      textDecorationColor: subtleTextColor
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                  {item.description && (
+                    <span className="text-[11px]" style={{ color: subtleTextColor }}>
+                      {item.description}
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
@@ -343,24 +578,55 @@ function ComparativeLedger({ section, brandStrategy, primaryColor, radiusCurvatu
 }
 
 // ─── Press Quotes ────────────────────────────────────────────────────────────
-function PressQuotes({ section, primaryColor, fontStyle }) {
+function PressQuotes({
+  section,
+  radiusCurvature,
+  fontStyle,
+  isDarkTheme = false,
+  headingTextColor = '#111111',
+  subtleTextColor = '#6b7280',
+  cardBgColor = '#ffffff',
+  cardBorderColor = '#dbd7cd'
+}) {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500">{section.title}</span>
+        <span className="text-[11px] uppercase font-mono tracking-widest" style={{ color: subtleTextColor }}>
+          {section.title}
+        </span>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {(section.items || []).map((item, i) => (
-          <div key={i} className="p-5 bg-white border border-[#dbd7cd] rounded-2xl">
-            <Quote className="w-5 h-5 text-stone-300 mb-3" />
-            <p className="text-sm text-stone-800 leading-relaxed italic mb-3" style={{ fontFamily: fontStyle.display }}>
+          <div
+            key={i}
+            className="p-5 border transition-all"
+            style={{
+              backgroundColor: cardBgColor,
+              borderColor: cardBorderColor,
+              borderRadius: radiusCurvature || '16px'
+            }}
+          >
+            <Quote className="w-5 h-5 mb-3" style={{ color: subtleTextColor }} />
+            <p
+              className="text-sm leading-relaxed italic mb-3"
+              style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+            >
               "{item.description}"
             </p>
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-stone-200" />
+              <div
+                className="w-6 h-6 rounded-full shrink-0"
+                style={{ backgroundColor: isDarkTheme ? 'rgba(255, 255, 255, 0.15)' : '#e5e7eb' }}
+              />
               <div>
-                <span className="text-xs font-semibold text-black block">{item.label}</span>
-                {item.tag && <span className="text-[10px] text-stone-400 font-mono">{item.tag}</span>}
+                <span className="text-xs font-semibold block" style={{ color: headingTextColor }}>
+                  {item.label}
+                </span>
+                {item.tag && (
+                  <span className="text-[10px] font-mono" style={{ color: subtleTextColor }}>
+                    {item.tag}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -373,33 +639,72 @@ function PressQuotes({ section, primaryColor, fontStyle }) {
 // =============================================================================
 // ARCHETYPE A: PHYSICAL CPG & RETAIL
 // =============================================================================
-function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint, primaryColor, primaryContrast, secondaryColor, secondaryContrast, accentColor, surfaceColor, radiusCurvature, fontStyle }) {
-  const brandName      = brandStrategy.brandName || 'Brand';
-  const badge          = blueprint?.badge || voiceSystem?.archetype || 'Retail & CPG';
-  const annBar         = blueprint?.announcementBar || 'Free standard shipping on orders over $50 · 100% satisfaction guarantee';
-  const primaryCta     = blueprint?.primaryCta || launchContent?.callToAction || 'Shop Now';
-  const secondaryCta   = blueprint?.secondaryCta || 'Craft & Sourcing Story';
-  const accentContrast = getContrastColor(accentColor);
+function RetailCpgPreview({
+  brandStrategy,
+  launchContent,
+  voiceSystem,
+  blueprint,
+  primaryColor,
+  primaryContrast,
+  secondaryColor,
+  secondaryContrast,
+  accentColor,
+  surfaceColor,
+  textColor,
+  radiusCurvature,
+  fontStyle
+}) {
+  const isDarkTheme = isDarkColor(surfaceColor);
+  const headingTextColor = isDarkTheme ? '#ffffff' : (textColor || '#111111');
+  const bodyTextColor    = isDarkTheme ? '#d1d5db' : '#4b5563';
+  const subtleTextColor  = isDarkTheme ? '#9ca3af' : '#6b7280';
+  const cardBgColor      = isDarkTheme ? 'rgba(255, 255, 255, 0.05)' : '#ffffff';
+  const cardBorderColor  = isDarkTheme ? 'rgba(255, 255, 255, 0.12)' : '#dbd7cd';
+
+  const brandName    = brandStrategy?.brandName || 'Brand';
+  const badge        = blueprint?.badge || voiceSystem?.archetype || 'Retail & CPG';
+  const annBar       = blueprint?.announcementBar || 'Free standard shipping on orders over $50 · 100% satisfaction guarantee';
+  const primaryCta   = blueprint?.primaryCta || launchContent?.callToAction || 'Shop Now';
+  const secondaryCta = blueprint?.secondaryCta || 'Craft & Sourcing Story';
+
+  const ghostBorderColor = isDarkTheme
+    ? (isDarkColor(secondaryColor) ? 'rgba(255, 255, 255, 0.3)' : secondaryColor)
+    : secondaryColor;
+  const ghostTextColor = isDarkTheme
+    ? (isDarkColor(secondaryColor) ? '#ffffff' : secondaryColor)
+    : secondaryColor;
 
   return (
     <div className="p-6 sm:p-12 min-h-[580px] flex flex-col" style={{ backgroundColor: surfaceColor }}>
       {/* Nav */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-[#dbd7cd] gap-4">
+      <div
+        className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b gap-4"
+        style={{ borderColor: cardBorderColor }}
+      >
         <div className="flex items-center gap-3">
-          <span className="text-2xl sm:text-3xl font-medium tracking-tight text-black" style={{ fontFamily: fontStyle.display }}>{brandName}</span>
+          <span
+            className="text-2xl sm:text-3xl font-medium tracking-tight"
+            style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+          >
+            {brandName}
+          </span>
           {/* Accent badge pill */}
           <span
             className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full font-semibold"
             style={{ backgroundColor: `${accentColor}20`, color: accentColor, border: `1px solid ${accentColor}50` }}
-          >{badge}</span>
+          >
+            {badge}
+          </span>
         </div>
-        <div className="flex items-center gap-6 text-xs text-stone-700">
-          <span className="hover:text-black cursor-pointer font-medium">Products</span>
-          <span className="hover:text-black cursor-pointer hidden sm:inline">Craft & Sourcing</span>
-          <span className="hover:text-black cursor-pointer hidden md:inline">Stockists</span>
+        <div className="flex items-center gap-6 text-xs" style={{ color: bodyTextColor }}>
+          <span className="cursor-pointer font-medium hover:opacity-80 transition-opacity">Products</span>
+          <span className="cursor-pointer hidden sm:inline hover:opacity-80 transition-opacity">Craft & Sourcing</span>
+          <span className="cursor-pointer hidden md:inline hover:opacity-80 transition-opacity">Stockists</span>
           {/* Secondary color on bag counter */}
-          <button className="px-5 py-2 text-xs font-medium transition-all hover:opacity-90 flex items-center gap-2"
-            style={{ backgroundColor: secondaryColor, color: secondaryContrast, borderRadius: radiusCurvature }}>
+          <button
+            className="px-5 py-2 text-xs font-medium transition-all hover:opacity-90 flex items-center gap-2"
+            style={{ backgroundColor: secondaryColor, color: secondaryContrast, borderRadius: radiusCurvature }}
+          >
             <ShoppingBag className="w-3.5 h-3.5" /><span>Bag (0)</span>
           </button>
         </div>
@@ -416,21 +721,37 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
 
       {/* Hero */}
       <div className="max-w-3xl mb-6">
-        <h2 className="text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight leading-[1.08] text-black mb-4" style={{ fontFamily: fontStyle.display }}>
+        <h2
+          className="text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight leading-[1.08] mb-4"
+          style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+        >
           {launchContent.heroHeadline || 'Crafted for Pure Impact.'}
         </h2>
-        <p className="text-base sm:text-lg text-stone-700 max-w-2xl leading-relaxed mb-6">
+        <p
+          className="text-base sm:text-lg max-w-2xl leading-relaxed mb-6"
+          style={{ color: bodyTextColor, fontFamily: fontStyle.body }}
+        >
           {launchContent.heroSubheadline || brandStrategy.coreValueProposition}
         </p>
         <div className="flex flex-wrap items-center gap-3">
-          <button className="px-6 py-3 text-xs font-medium tracking-wide flex items-center gap-2 shadow-sm transition-all hover:opacity-90"
-            style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}>
+          <button
+            className="px-6 py-3 text-xs font-medium tracking-wide flex items-center gap-2 shadow-sm transition-all hover:opacity-90"
+            style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}
+          >
             <ShoppingBag className="w-3.5 h-3.5" /><span>{primaryCta}</span>
           </button>
           {/* Secondary color on ghost CTA */}
-          <button className="px-6 py-3 text-xs font-medium transition-all flex items-center gap-2"
-            style={{ borderRadius: radiusCurvature, border: `1.5px solid ${secondaryColor}`, color: secondaryColor, background: 'transparent' }}>
-            <span>{secondaryCta}</span><ArrowRight className="w-3 h-3" style={{ color: secondaryColor }} />
+          <button
+            className="px-6 py-3 text-xs font-medium transition-all flex items-center gap-2"
+            style={{
+              borderRadius: radiusCurvature,
+              border: `1.5px solid ${ghostBorderColor}`,
+              color: ghostTextColor,
+              background: 'transparent'
+            }}
+          >
+            <span>{secondaryCta}</span>
+            <ArrowRight className="w-3 h-3" style={{ color: ghostTextColor }} />
           </button>
         </div>
       </div>
@@ -438,7 +759,7 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
       {/* ── Body Sections ── */}
       {(() => {
         const sections = blueprint?.sections || [];
-        const hasManySectons = sections.length > 1;
+        const hasManySections = sections.length > 1;
         return (
           <>
             {/* Always dispatch whatever the LLM returned */}
@@ -447,25 +768,46 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
                 sections={sections}
                 primaryColor={primaryColor}
                 primaryContrast={primaryContrast}
+                secondaryColor={secondaryColor}
                 accentColor={accentColor}
                 radiusCurvature={radiusCurvature}
                 fontStyle={fontStyle}
                 brandStrategy={brandStrategy}
+                isDarkTheme={isDarkTheme}
+                headingTextColor={headingTextColor}
+                bodyTextColor={bodyTextColor}
+                subtleTextColor={subtleTextColor}
+                cardBgColor={cardBgColor}
+                cardBorderColor={cardBorderColor}
               />
             )}
 
             {/* If only 0–1 sections came back, pad with an inline comparative ledger */}
-            {!hasManySectons && (
-              <div className="mt-8 pt-8 border-t border-[#dbd7cd] space-y-6">
+            {!hasManySections && (
+              <div className="mt-8 pt-8 border-t space-y-6" style={{ borderColor: cardBorderColor }}>
                 {/* Comparative Positioning Ledger */}
                 <div>
-                  <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500 block mb-4">
+                  <span className="text-[11px] uppercase font-mono tracking-widest block mb-4" style={{ color: subtleTextColor }}>
                     THE STANDARD WE REJECT
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Brand side */}
-                    <div className="p-5 border-2 border-black bg-white" style={{ borderRadius: radiusCurvature }}>
-                      <span className="text-[10px] uppercase font-mono tracking-widest text-black font-bold block mb-3">{brandName}</span>
+                    <div
+                      className="p-5 transition-all"
+                      style={{
+                        borderRadius: radiusCurvature,
+                        backgroundColor: cardBgColor,
+                        borderColor: isDarkTheme ? 'rgba(255, 255, 255, 0.4)' : '#000000',
+                        borderWidth: '2px',
+                        borderStyle: 'solid'
+                      }}
+                    >
+                      <span
+                        className="text-[10px] uppercase font-mono tracking-widest font-bold block mb-3"
+                        style={{ color: headingTextColor }}
+                      >
+                        {brandName}
+                      </span>
                       <div className="space-y-2">
                         {[
                           { label: brandStrategy.differentiator || 'Pure-grade formulation', desc: 'Our core promise' },
@@ -473,18 +815,34 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
                           { label: 'Compostable & zero-waste packaging', desc: 'Built-in from day one' }
                         ].map((row, i) => (
                           <div key={i} className="flex items-start gap-2">
-                            <Check className="w-3.5 h-3.5 mt-0.5 text-emerald-600 shrink-0" />
+                            <Check className="w-3.5 h-3.5 mt-0.5 text-emerald-500 shrink-0" />
                             <div>
-                              <span className="text-xs font-semibold text-black block">{row.label}</span>
-                              <span className="text-[11px] text-stone-500">{row.desc}</span>
+                              <span className="text-xs font-semibold block" style={{ color: headingTextColor }}>
+                                {row.label}
+                              </span>
+                              <span className="text-[11px]" style={{ color: subtleTextColor }}>
+                                {row.desc}
+                              </span>
                             </div>
                           </div>
                         ))}
                       </div>
                     </div>
                     {/* Anti-hero side */}
-                    <div className="p-5 border border-[#dbd7cd] bg-[#faf8f5]" style={{ borderRadius: radiusCurvature }}>
-                      <span className="text-[10px] uppercase font-mono tracking-widest text-stone-400 font-medium block mb-3">The Industry Default</span>
+                    <div
+                      className="p-5 border transition-all"
+                      style={{
+                        borderRadius: radiusCurvature,
+                        backgroundColor: isDarkTheme ? 'rgba(0, 0, 0, 0.25)' : '#faf8f5',
+                        borderColor: cardBorderColor
+                      }}
+                    >
+                      <span
+                        className="text-[10px] uppercase font-mono tracking-widest font-medium block mb-3"
+                        style={{ color: subtleTextColor }}
+                      >
+                        The Industry Default
+                      </span>
                       <div className="space-y-2">
                         {[
                           { label: brandStrategy.antiHero || 'Generic compromise' },
@@ -492,8 +850,16 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
                           { label: 'Plastic excess and greenwashing' }
                         ].map((row, i) => (
                           <div key={i} className="flex items-start gap-2">
-                            <span className="w-3 h-px mt-2 bg-stone-300 shrink-0" />
-                            <span className="text-xs font-medium text-stone-400 line-through decoration-stone-300">{row.label}</span>
+                            <span className="w-3 h-px mt-2 shrink-0" style={{ backgroundColor: subtleTextColor }} />
+                            <span
+                              className="text-xs font-medium line-through"
+                              style={{
+                                color: subtleTextColor,
+                                textDecorationColor: subtleTextColor
+                              }}
+                            >
+                              {row.label}
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -508,9 +874,21 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
                     { label: '02 / Customer Commitment',   value: brandStrategy.targetAudience      || 'Discerning enthusiasts' },
                     { label: '03 / The Standard We Reject', value: brandStrategy.antiHero            || 'Disposable shortcuts' }
                   ].map(card => (
-                    <div key={card.label} className="p-4 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
-                      <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">{card.label}</span>
-                      <p className="text-xs text-stone-800 font-medium leading-snug">{card.value}</p>
+                    <div
+                      key={card.label}
+                      className="p-4 border transition-all"
+                      style={{
+                        borderRadius: radiusCurvature,
+                        backgroundColor: cardBgColor,
+                        borderColor: cardBorderColor
+                      }}
+                    >
+                      <span className="text-[10px] uppercase font-mono block mb-1" style={{ color: subtleTextColor }}>
+                        {card.label}
+                      </span>
+                      <p className="text-xs font-medium leading-snug" style={{ color: headingTextColor }}>
+                        {card.value}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -519,15 +897,27 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
 
             {/* Fallback base grid when no blueprint at all */}
             {sections.length === 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t border-[#dbd7cd] mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t mt-4" style={{ borderColor: cardBorderColor }}>
                 {[
                   { label: '01 / Product Moat',          value: brandStrategy.differentiator || 'Pure-grade formulation' },
                   { label: '02 / Target Consumer',        value: brandStrategy.targetAudience || 'Discerning enthusiasts' },
                   { label: '03 / Industry Flaw Rejected', value: brandStrategy.antiHero      || 'Disposable shortcuts' }
                 ].map(card => (
-                  <div key={card.label} className="p-4 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
-                    <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">{card.label}</span>
-                    <p className="text-xs text-stone-800 font-medium leading-snug">{card.value}</p>
+                  <div
+                    key={card.label}
+                    className="p-4 border transition-all"
+                    style={{
+                      borderRadius: radiusCurvature,
+                      backgroundColor: cardBgColor,
+                      borderColor: cardBorderColor
+                    }}
+                  >
+                    <span className="text-[10px] uppercase font-mono block mb-1" style={{ color: subtleTextColor }}>
+                      {card.label}
+                    </span>
+                    <p className="text-xs font-medium leading-snug" style={{ color: headingTextColor }}>
+                      {card.value}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -537,15 +927,25 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
       })()}
 
       {/* ── Editorial In-Frame Footer ── */}
-      <div className="mt-10 pt-5 border-t border-[#dbd7cd] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div
+        className="mt-10 pt-5 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+        style={{ borderColor: cardBorderColor }}
+      >
         <div>
-          <span className="text-sm font-medium text-black block" style={{ fontFamily: fontStyle.display }}>{brandName}</span>
-          <span className="text-[10px] text-stone-400 font-mono">{brandStrategy.tagline || launchContent.heroHeadline || ''}</span>
+          <span
+            className="text-sm font-medium block"
+            style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+          >
+            {brandName}
+          </span>
+          <span className="text-[10px] font-mono" style={{ color: subtleTextColor }}>
+            {brandStrategy.tagline || launchContent.heroHeadline || ''}
+          </span>
         </div>
-        <div className="flex items-center gap-4 text-[10px] text-stone-400 font-mono">
-          <span className="hover:text-black cursor-pointer">Shipping & Returns</span>
-          <span className="hover:text-black cursor-pointer">Wholesale Inquiries</span>
-          <span className="hover:text-black cursor-pointer">Ingredient Transparency</span>
+        <div className="flex items-center gap-4 text-[10px] font-mono" style={{ color: subtleTextColor }}>
+          <span className="hover:opacity-80 cursor-pointer">Shipping & Returns</span>
+          <span className="hover:opacity-80 cursor-pointer">Wholesale Inquiries</span>
+          <span className="hover:opacity-80 cursor-pointer">Ingredient Transparency</span>
         </div>
       </div>
     </div>
@@ -555,30 +955,69 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
 // =============================================================================
 // ARCHETYPE B: HOSPITALITY & DINING
 // =============================================================================
-function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, blueprint, primaryColor, primaryContrast, secondaryColor, secondaryContrast, accentColor, surfaceColor, radiusCurvature, fontStyle }) {
-  const brandName    = brandStrategy.brandName || 'Brand';
+function HospitalityPreview({
+  brandStrategy,
+  launchContent,
+  voiceSystem,
+  blueprint,
+  primaryColor,
+  primaryContrast,
+  secondaryColor,
+  secondaryContrast,
+  accentColor,
+  surfaceColor,
+  textColor,
+  radiusCurvature,
+  fontStyle
+}) {
+  const isDarkTheme = isDarkColor(surfaceColor);
+  const headingTextColor = isDarkTheme ? '#ffffff' : (textColor || '#111111');
+  const bodyTextColor    = isDarkTheme ? '#d1d5db' : '#4b5563';
+  const subtleTextColor  = isDarkTheme ? '#9ca3af' : '#6b7280';
+  const cardBgColor      = isDarkTheme ? 'rgba(255, 255, 255, 0.05)' : '#ffffff';
+  const cardBorderColor  = isDarkTheme ? 'rgba(255, 255, 255, 0.12)' : '#dbd7cd';
+
+  const brandName    = brandStrategy?.brandName || 'Brand';
   const badge        = blueprint?.badge || voiceSystem?.archetype || 'Hospitality & Dining';
   const annBar       = blueprint?.announcementBar || 'Open Daily from 5:00 PM · Walk-ins & Communal Tables Welcome';
   const primaryCta   = blueprint?.primaryCta  || launchContent?.callToAction || 'Reserve Table';
   const secondaryCta = blueprint?.secondaryCta || "View Tonight's Menu";
-  const accentContrast = getContrastColor(accentColor);
+
+  const ghostBorderColor = isDarkTheme
+    ? (isDarkColor(secondaryColor) ? 'rgba(255, 255, 255, 0.3)' : secondaryColor)
+    : secondaryColor;
+  const ghostTextColor = isDarkTheme
+    ? (isDarkColor(secondaryColor) ? '#ffffff' : secondaryColor)
+    : secondaryColor;
 
   return (
     <div className="p-6 sm:p-12 min-h-[560px] flex flex-col" style={{ backgroundColor: surfaceColor }}>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-[#dbd7cd] gap-4">
+      <div
+        className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b gap-4"
+        style={{ borderColor: cardBorderColor }}
+      >
         <div className="flex items-center gap-3">
-          <span className="text-2xl sm:text-3xl font-light tracking-tight text-black" style={{ fontFamily: fontStyle.display }}>{brandName}</span>
+          <span
+            className="text-2xl sm:text-3xl font-light tracking-tight"
+            style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+          >
+            {brandName}
+          </span>
           <span
             className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full font-semibold"
             style={{ backgroundColor: `${accentColor}20`, color: accentColor, border: `1px solid ${accentColor}50` }}
-          >{badge}</span>
+          >
+            {badge}
+          </span>
         </div>
-        <div className="flex items-center gap-5 text-xs text-stone-700">
-          <span className="hover:text-black cursor-pointer font-medium">Daily Menu</span>
-          <span className="hover:text-black cursor-pointer hidden sm:inline">Private Dining</span>
-          <span className="hover:text-black cursor-pointer hidden md:inline">Location & Hours</span>
-          <button className="px-5 py-2 text-xs font-medium transition-all hover:opacity-90"
-            style={{ backgroundColor: secondaryColor, color: secondaryContrast, borderRadius: radiusCurvature }}>
+        <div className="flex items-center gap-5 text-xs" style={{ color: bodyTextColor }}>
+          <span className="cursor-pointer font-medium hover:opacity-80 transition-opacity">Daily Menu</span>
+          <span className="cursor-pointer hidden sm:inline hover:opacity-80 transition-opacity">Private Dining</span>
+          <span className="cursor-pointer hidden md:inline hover:opacity-80 transition-opacity">Location & Hours</span>
+          <button
+            className="px-5 py-2 text-xs font-medium transition-all hover:opacity-90"
+            style={{ backgroundColor: secondaryColor, color: secondaryContrast, borderRadius: radiusCurvature }}
+          >
             Reserve a Table
           </button>
         </div>
@@ -589,24 +1028,41 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, bluepri
         className="inline-flex items-center gap-2 text-[11px] font-mono mb-6 px-3.5 py-1.5 rounded-full w-fit"
         style={{ backgroundColor: `${accentColor}15`, border: `1px solid ${accentColor}40`, color: accentColor }}
       >
-        <Clock className="w-3.5 h-3.5" style={{ color: accentColor }} /><span>{annBar}</span>
+        <Clock className="w-3.5 h-3.5" style={{ color: accentColor }} />
+        <span>{annBar}</span>
       </div>
 
       <div className="max-w-3xl mb-6">
-        <h2 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.08] text-black mb-4" style={{ fontFamily: fontStyle.display }}>
+        <h2
+          className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.08] mb-4"
+          style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+        >
           {launchContent.heroHeadline || 'Honest Plates. Natural Pours. Welcome In.'}
         </h2>
-        <p className="text-base sm:text-lg text-stone-700 max-w-2xl leading-relaxed mb-6">
+        <p
+          className="text-base sm:text-lg max-w-2xl leading-relaxed mb-6"
+          style={{ color: bodyTextColor, fontFamily: fontStyle.body }}
+        >
           {launchContent.heroSubheadline || brandStrategy.coreValueProposition}
         </p>
         <div className="flex flex-wrap items-center gap-3">
-          <button className="px-6 py-3 text-xs font-medium tracking-wide flex items-center gap-2 shadow-sm transition-all hover:opacity-90"
-            style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}>
+          <button
+            className="px-6 py-3 text-xs font-medium tracking-wide flex items-center gap-2 shadow-sm transition-all hover:opacity-90"
+            style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}
+          >
             <Utensils className="w-3.5 h-3.5" /><span>{primaryCta}</span>
           </button>
-          <button className="px-6 py-3 text-xs font-medium transition-all flex items-center gap-2"
-            style={{ borderRadius: radiusCurvature, border: `1.5px solid ${secondaryColor}`, color: secondaryColor, background: 'transparent' }}>
-            <Calendar className="w-3.5 h-3.5" style={{ color: secondaryColor }} /><span>{secondaryCta}</span>
+          <button
+            className="px-6 py-3 text-xs font-medium transition-all flex items-center gap-2"
+            style={{
+              borderRadius: radiusCurvature,
+              border: `1.5px solid ${ghostBorderColor}`,
+              color: ghostTextColor,
+              background: 'transparent'
+            }}
+          >
+            <Calendar className="w-3.5 h-3.5" style={{ color: ghostTextColor }} />
+            <span>{secondaryCta}</span>
           </button>
         </div>
       </div>
@@ -614,7 +1070,7 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, bluepri
       {/* ── Body Sections ── */}
       {(() => {
         const sections = blueprint?.sections || [];
-        const hasManySectons = sections.length > 1;
+        const hasManySections = sections.length > 1;
         return (
           <>
             {sections.length > 0 && (
@@ -622,23 +1078,44 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, bluepri
                 sections={sections}
                 primaryColor={primaryColor}
                 primaryContrast={primaryContrast}
+                secondaryColor={secondaryColor}
                 accentColor={accentColor}
                 radiusCurvature={radiusCurvature}
                 fontStyle={fontStyle}
                 brandStrategy={brandStrategy}
+                isDarkTheme={isDarkTheme}
+                headingTextColor={headingTextColor}
+                bodyTextColor={bodyTextColor}
+                subtleTextColor={subtleTextColor}
+                cardBgColor={cardBgColor}
+                cardBorderColor={cardBorderColor}
               />
             )}
 
-            {!hasManySectons && (
-              <div className="mt-8 pt-8 border-t border-[#dbd7cd] space-y-6">
+            {!hasManySections && (
+              <div className="mt-8 pt-8 border-t space-y-6" style={{ borderColor: cardBorderColor }}>
                 {/* Tonight's culinary philosophy ledger */}
                 <div>
-                  <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500 block mb-4">
+                  <span className="text-[11px] uppercase font-mono tracking-widest block mb-4" style={{ color: subtleTextColor }}>
                     OUR KITCHEN PHILOSOPHY
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="p-5 border-2 border-black bg-white" style={{ borderRadius: radiusCurvature }}>
-                      <span className="text-[10px] uppercase font-mono tracking-widest text-black font-bold block mb-3">{brandName}</span>
+                    <div
+                      className="p-5 transition-all"
+                      style={{
+                        borderRadius: radiusCurvature,
+                        backgroundColor: cardBgColor,
+                        borderColor: isDarkTheme ? 'rgba(255, 255, 255, 0.4)' : '#000000',
+                        borderWidth: '2px',
+                        borderStyle: 'solid'
+                      }}
+                    >
+                      <span
+                        className="text-[10px] uppercase font-mono tracking-widest font-bold block mb-3"
+                        style={{ color: headingTextColor }}
+                      >
+                        {brandName}
+                      </span>
                       <div className="space-y-2">
                         {[
                           { label: brandStrategy.differentiator || 'Heritage grain sourcing', desc: 'Our culinary moat' },
@@ -646,17 +1123,33 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, bluepri
                           { label: 'Zero industrial additives or stabilisers', desc: 'In every plate, every service' }
                         ].map((row, i) => (
                           <div key={i} className="flex items-start gap-2">
-                            <Check className="w-3.5 h-3.5 mt-0.5 text-emerald-600 shrink-0" />
+                            <Check className="w-3.5 h-3.5 mt-0.5 text-emerald-500 shrink-0" />
                             <div>
-                              <span className="text-xs font-semibold text-black block">{row.label}</span>
-                              <span className="text-[11px] text-stone-500">{row.desc}</span>
+                              <span className="text-xs font-semibold block" style={{ color: headingTextColor }}>
+                                {row.label}
+                              </span>
+                              <span className="text-[11px]" style={{ color: subtleTextColor }}>
+                                {row.desc}
+                              </span>
                             </div>
                           </div>
                         ))}
                       </div>
                     </div>
-                    <div className="p-5 border border-[#dbd7cd] bg-[#faf8f5]" style={{ borderRadius: radiusCurvature }}>
-                      <span className="text-[10px] uppercase font-mono tracking-widest text-stone-400 font-medium block mb-3">The Industry Default</span>
+                    <div
+                      className="p-5 border transition-all"
+                      style={{
+                        borderRadius: radiusCurvature,
+                        backgroundColor: isDarkTheme ? 'rgba(0, 0, 0, 0.25)' : '#faf8f5',
+                        borderColor: cardBorderColor
+                      }}
+                    >
+                      <span
+                        className="text-[10px] uppercase font-mono tracking-widest font-medium block mb-3"
+                        style={{ color: subtleTextColor }}
+                      >
+                        The Industry Default
+                      </span>
                       <div className="space-y-2">
                         {[
                           { label: brandStrategy.antiHero || 'Rushed, industrialised dining' },
@@ -664,8 +1157,16 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, bluepri
                           { label: 'Formulaic menus that never change by season' }
                         ].map((row, i) => (
                           <div key={i} className="flex items-start gap-2">
-                            <span className="w-3 h-px mt-2 bg-stone-300 shrink-0" />
-                            <span className="text-xs font-medium text-stone-400 line-through decoration-stone-300">{row.label}</span>
+                            <span className="w-3 h-px mt-2 shrink-0" style={{ backgroundColor: subtleTextColor }} />
+                            <span
+                              className="text-xs font-medium line-through"
+                              style={{
+                                color: subtleTextColor,
+                                textDecorationColor: subtleTextColor
+                              }}
+                            >
+                              {row.label}
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -680,9 +1181,21 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, bluepri
                     { label: '02 / Core Guest Profile', value: brandStrategy.targetAudience || 'Neighbourhood regulars' },
                     { label: '03 / Convention We Reject', value: brandStrategy.antiHero    || 'Rushed industrial dining' }
                   ].map(card => (
-                    <div key={card.label} className="p-4 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
-                      <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">{card.label}</span>
-                      <p className="text-xs text-stone-800 font-medium leading-snug">{card.value}</p>
+                    <div
+                      key={card.label}
+                      className="p-4 border transition-all"
+                      style={{
+                        borderRadius: radiusCurvature,
+                        backgroundColor: cardBgColor,
+                        borderColor: cardBorderColor
+                      }}
+                    >
+                      <span className="text-[10px] uppercase font-mono block mb-1" style={{ color: subtleTextColor }}>
+                        {card.label}
+                      </span>
+                      <p className="text-xs font-medium leading-snug" style={{ color: headingTextColor }}>
+                        {card.value}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -690,15 +1203,27 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, bluepri
             )}
 
             {sections.length === 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t border-[#dbd7cd] mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t mt-4" style={{ borderColor: cardBorderColor }}>
                 {[
                   { label: '01 / Culinary Moat',      value: brandStrategy.differentiator || 'Heritage grain sourcing' },
                   { label: '02 / Core Guest Profile', value: brandStrategy.targetAudience || 'Neighbourhood regulars' },
                   { label: '03 / We Reject',          value: brandStrategy.antiHero       || 'Rushed industrial dining' }
                 ].map(card => (
-                  <div key={card.label} className="p-4 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
-                    <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">{card.label}</span>
-                    <p className="text-xs text-stone-800 font-medium leading-snug">{card.value}</p>
+                  <div
+                    key={card.label}
+                    className="p-4 border transition-all"
+                    style={{
+                      borderRadius: radiusCurvature,
+                      backgroundColor: cardBgColor,
+                      borderColor: cardBorderColor
+                    }}
+                  >
+                    <span className="text-[10px] uppercase font-mono block mb-1" style={{ color: subtleTextColor }}>
+                      {card.label}
+                    </span>
+                    <p className="text-xs font-medium leading-snug" style={{ color: headingTextColor }}>
+                      {card.value}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -708,15 +1233,25 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, bluepri
       })()}
 
       {/* ── Editorial In-Frame Footer ── */}
-      <div className="mt-10 pt-5 border-t border-[#dbd7cd] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div
+        className="mt-10 pt-5 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+        style={{ borderColor: cardBorderColor }}
+      >
         <div>
-          <span className="text-sm font-medium text-black block" style={{ fontFamily: fontStyle.display }}>{brandName}</span>
-          <span className="text-[10px] text-stone-400 font-mono">{brandStrategy.tagline || launchContent.heroHeadline || ''}</span>
+          <span
+            className="text-sm font-medium block"
+            style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+          >
+            {brandName}
+          </span>
+          <span className="text-[10px] font-mono" style={{ color: subtleTextColor }}>
+            {brandStrategy.tagline || launchContent.heroHeadline || ''}
+          </span>
         </div>
-        <div className="flex items-center gap-4 text-[10px] text-stone-400 font-mono">
-          <span className="hover:text-black cursor-pointer">Booking & Reservations</span>
-          <span className="hover:text-black cursor-pointer">Private Events</span>
-          <span className="hover:text-black cursor-pointer">Sourcing Philosophy</span>
+        <div className="flex items-center gap-4 text-[10px] font-mono" style={{ color: subtleTextColor }}>
+          <span className="hover:opacity-80 cursor-pointer">Booking & Reservations</span>
+          <span className="hover:opacity-80 cursor-pointer">Private Events</span>
+          <span className="hover:opacity-80 cursor-pointer">Sourcing Philosophy</span>
         </div>
       </div>
     </div>
