@@ -546,3 +546,124 @@ export function exportPaletteSvg(brandKit) {
 export function getAiPrompts(brandKit) {
   return buildAiPrompts(brandKit);
 }
+
+/**
+ * Generates an exhaustive, production-ready master prompt containing all Q&A transcript
+ * context, design tokens, and component blueprints that can be pasted directly into
+ * Bolt.new, Lovable, or Antigravity to build the full website.
+ */
+export function generateAiBuilderPrompt(kit, answers = []) {
+  const strategy = kit?.brandStrategy || {};
+  const tokens = kit?.visualTokens || {};
+  const blueprint = kit?.websiteBlueprint || {};
+  const palette = tokens.palette || [];
+  const typography = tokens.typography || {};
+
+  const primaryHex = palette.find(c => c.role === 'primary')?.hex || '#111111';
+  const secondaryHex = palette.find(c => c.role === 'secondary')?.hex || '#555555';
+  const accentHex = palette.find(c => c.role === 'accent')?.hex || '#EFAF3E';
+  const surfaceHex = palette.find(c => c.role === 'surface')?.hex || '#FAF8F5';
+  const textHex = palette.find(c => c.role === 'text')?.hex || '#18181B';
+
+  const answersFormatted = Array.isArray(answers) && answers.length > 0
+    ? answers.map((a, i) => `Q${i + 1} (${a.question || a.stageLabel || `Question ${i + 1}`}): "${a.answer}"`).join('\n')
+    : '';
+
+  return `
+### ROLE & SYSTEM OBJECTIVE
+You are an expert full-stack engineer and UI designer building a launch-ready landing page for "${strategy.brandName}".
+Use React, Tailwind CSS, Lucide React icons, and modern responsive design.
+
+### 1. BRAND STRATEGY & STRATEGIC CONTEXT
+- Brand Name: ${strategy.brandName}
+- Tagline: "${strategy.tagline}"
+- Core Value Proposition: ${strategy.coreValueProposition}
+- The Category Villain We Reject (Anti-Hero): ${strategy.antiHero}
+- The "Onlyness" Differentiator: ${strategy.differentiator}
+- Target Audience: ${strategy.targetAudience}
+
+### 2. FOUNDER'S SOCRATIC DISCOVERY TRANSCRIPT
+The following decisions were made during brand strategy discovery:
+${answersFormatted || 'Direct positioning: Premium quality with no conventional compromises.'}
+
+### 3. DESIGN SYSTEM & DESIGN TOKENS
+- Primary Brand Color: ${primaryHex} (Buttons, active states, key highlights)
+- Secondary Brand Color: ${secondaryHex} (Subtle borders, secondary actions)
+- Accent Highlight: ${accentHex} (Badges, price highlights, announcement pill)
+- Canvas Background: ${surfaceHex} (Page surface & card containers)
+- Body & Heading Text: ${textHex} (High-contrast typography)
+- Heading Google Font: "${typography.headingFont || 'Cormorant Garamond'}" (Include link in index.html)
+- Body Google Font: "${typography.bodyFont || 'Inter'}"
+
+### 4. MANDATORY WEBSITE ARCHITECTURE TO BUILD
+Build a complete, single-page responsive application with these sections:
+1. Navigation Bar: Wordmark in "${typography.headingFont}", nav links matching offerings, and a high-contrast action CTA.
+2. Announcement Ribbon: "${blueprint.announcementBar || 'Handcrafted daily with transparent sourcing.'}"
+3. Hero Section:
+   - Display Headline: "${kit?.launchContent?.heroHeadline || strategy.coreValueProposition}"
+   - Subheadline: "${kit?.launchContent?.heroSubheadline || strategy.tagline}"
+   - Primary CTA Button: "${blueprint.primaryCta || 'Explore Collection'}"
+4. Product / Menu Showcase Grid:
+   - Render 3 dynamic item cards with realistic prices ($14 - $38), tags, descriptions, and "+ Add / Order" buttons.
+5. Comparative Ledger (The Onlyness Test vs The Industry Default):
+   - Contrast "${strategy.brandName}" against the rejected incumbent: "${strategy.antiHero}".
+6. Sourcing & Craftsmanship Pillars:
+   - 3 clean editorial cards highlighting origin, quality, and community commitment.
+7. Footer:
+   - Wordmark, copyright, newsletter intake, and transparency links.
+
+### IMPLEMENTATION REQUIREMENTS
+- Produce clean, self-contained React components with Tailwind CSS.
+- NEVER use generic placeholders like "Lorem Ipsum". Use the exact brand copy and product context provided above.
+`.trim();
+}
+
+/**
+ * Google Antigravity & v0 UI Prompt
+ */
+export function generateAntigravityV0Prompt(kit, answers = []) {
+  const strategy = kit?.brandStrategy || {};
+  const tokens = kit?.visualTokens || {};
+  const blueprint = kit?.websiteBlueprint || {};
+  const lc = kit?.launchContent || {};
+  const palette = tokens.palette || [];
+  const typography = tokens.typography || {};
+
+  const primaryHex = palette.find(c => c.role === 'primary')?.hex || '#111111';
+  const secondaryHex = palette.find(c => c.role === 'secondary')?.hex || '#555555';
+  const accentHex = palette.find(c => c.role === 'accent')?.hex || '#EFAF3E';
+  const surfaceHex = palette.find(c => c.role === 'surface')?.hex || '#FAF8F5';
+  const textHex = palette.find(c => c.role === 'text')?.hex || '#18181B';
+
+  return `
+### ROLE & SYSTEM OBJECTIVE
+You are an expert UI engineer building a launch-ready web app in Google Antigravity or v0 for "${strategy.brandName}".
+
+### DESIGN TOKENS
+- Primary: ${primaryHex}
+- Secondary: ${secondaryHex}
+- Accent: ${accentHex}
+- Surface: ${surfaceHex}
+- Text: ${textHex}
+- Display Font: "${typography.headingFont || 'Cormorant Garamond'}"
+- Body Font: "${typography.bodyFont || 'Inter'}"
+
+### STRATEGIC CONTEXT
+- Brand: ${strategy.brandName}
+- Tagline: "${strategy.tagline}"
+- Core Value Prop: ${strategy.coreValueProposition}
+- Villain Rejected: ${strategy.antiHero}
+- Onlyness Differentiator: ${strategy.differentiator}
+
+### SECTIONS TO BUILD
+1. Announcement Ribbon: "${blueprint.announcementBar || 'Handcrafted daily with transparent sourcing.'}"
+2. Wordmark Navbar: "${strategy.brandName}" in ${typography.headingFont}, navigation links, and primary CTA button.
+3. Hero: Headline "${lc.heroHeadline || strategy.coreValueProposition}", Subheadline "${lc.heroSubheadline || strategy.tagline}", Button "${blueprint.primaryCta || 'Explore Collection'}".
+4. Product / Menu Showcase Grid: 3 cards with price badges, descriptions, and "+ Add / Order" buttons.
+5. Comparative Ledger: Contrast ${strategy.brandName} vs. "${strategy.antiHero}".
+6. Sourcing & Craftsmanship: 3 cards highlighting origin and standards.
+7. Footer: Wordmark, copyright, newsletter intake.
+
+Build as clean, responsive components with Tailwind CSS.
+`.trim();
+}

@@ -20,7 +20,14 @@ import LivePreviewTab      from './dashboard/LivePreviewTab';
 import BrandStrategyTab   from './dashboard/BrandStrategyTab';
 import LaunchCopyTab      from './dashboard/LaunchCopyTab';
 import PrintBrandDossier  from './dashboard/PrintBrandDossier';
-import { exportBrandKitJson, exportCssTokens, exportPaletteSvg, getAiPrompts } from '../utils/exportUtils';
+import { 
+  exportBrandKitJson, 
+  exportCssTokens, 
+  exportPaletteSvg, 
+  getAiPrompts,
+  generateAiBuilderPrompt,
+  generateAntigravityV0Prompt
+} from '../utils/exportUtils';
 
 const TABS = [
   { id: 'preview',   label: 'Live Website Preview',         Icon: Eye },
@@ -28,13 +35,14 @@ const TABS = [
   { id: 'manifesto', label: 'Launch Manifesto & Copy',      Icon: FileText }
 ];
 
-export default function BrandKitDashboard({ brandKit, onStartNew }) {
+export default function BrandKitDashboard({ brandKit, answers = [], onStartNew }) {
   const [activeTab, setActiveTab] = useState('preview');
   const [isSaving, setIsSaving] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [aiDrawerOpen, setAiDrawerOpen] = useState(false);
-  const [aiTab, setAiTab] = useState('copywriter');
+  const [aiTab, setAiTab] = useState('lovable');
   const [copiedPrompt, setCopiedPrompt] = useState(null);
+  const [toastMessage, setToastMessage] = useState('');
   const { isAuthenticated, saveBrandToLibrary, openAuthModal } = useAuth();
 
   const { brandStrategy = {}, voiceSystem = {}, visualTokens = {}, launchContent = {} } = brandKit || {};
@@ -58,19 +66,66 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
 
   const handlePrint = () => window.print();
 
-  const aiPrompts = getAiPrompts(brandKit);
-  const handleCopyPrompt = (key) => {
-    const text = aiPrompts[key] || '';
-    navigator.clipboard?.writeText(text);
-    setCopiedPrompt(key);
-    setTimeout(() => setCopiedPrompt(null), 2500);
-  };
+  const lovablePrompt = generateAiBuilderPrompt(brandKit, answers || brandKit?._answers || []);
+  const antigravityPrompt = generateAntigravityV0Prompt(brandKit, answers || brandKit?._answers || []);
+  const copywriterPrompt = getAiPrompts(brandKit).chatGptCopywriterSystemPrompt;
 
   const AI_TABS = [
-    { id: 'copywriter',  label: 'Copywriter (ChatGPT / Claude)', promptKey: 'chatGptCopywriterSystemPrompt' },
-    { id: 'midjourney',  label: 'Midjourney Photography',         promptKey: 'midjourneyProductShootPrompt' },
-    { id: 'ui',          label: 'UI Builder (v0 / Cursor)',        promptKey: 'cursorV0UiGenerationPrompt' },
+    {
+      id: 'lovable',
+      label: 'Lovable & Bolt.new Master Prompt',
+      shortLabel: 'Lovable & Bolt.new',
+      content: lovablePrompt,
+      platform: 'Lovable or Bolt.new',
+      description: 'Production-ready master prompt with design tokens, discovery Q&A transcript, and component blueprints.'
+    },
+    {
+      id: 'antigravity',
+      label: 'Google Antigravity & v0 UI Prompt',
+      shortLabel: 'Google Antigravity & v0',
+      content: antigravityPrompt,
+      platform: 'Google Antigravity or v0',
+      description: 'Scaffolds an ultra-clean, componentized layout matching your exact palette, fonts, and brand tokens.'
+    },
+    {
+      id: 'copywriter',
+      label: 'ChatGPT & Claude Brand Copywriter Prompt',
+      shortLabel: 'ChatGPT & Claude',
+      content: copywriterPrompt,
+      platform: 'ChatGPT or Claude',
+      description: 'Voice architecture and persona system prompt for writing headlines, launch ads, and landing copy in brand voice.'
+    }
   ];
+
+  const handleCopyPrompt = (tab) => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(tab.content || '').catch(() => {
+          const textarea = document.createElement('textarea');
+          textarea.value = tab.content || '';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+        });
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = tab.content || '';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+    } catch (e) {
+      // ignore
+    }
+    setCopiedPrompt(tab.id);
+    setToastMessage(`Prompt copied to clipboard! Ready to paste into ${tab.platform}.`);
+    setTimeout(() => {
+      setCopiedPrompt(null);
+      setToastMessage('');
+    }, 3500);
+  };
 
   const tabProps = { brandStrategy, voiceSystem, visualTokens, launchContent, brandKit, kit: brandKit };
 
@@ -243,7 +298,7 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
             title="AI Master Prompts"
           >
             <Sparkles className="w-3.5 h-3.5 text-indigo-200" />
-            <span>AI Prompts</span>
+            <span>✨ AI Prompts</span>
           </button>
         </div>
       </div>
@@ -254,6 +309,15 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
       <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center" onClick={() => setAiDrawerOpen(false)}>
         {/* Backdrop */}
         <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+
+        {/* Floating Toast Notification */}
+        {toastMessage && (
+          <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[70] px-4 py-2.5 bg-emerald-600 text-white text-xs font-semibold rounded-2xl shadow-xl flex items-center gap-2 animate-fade-in border border-emerald-500">
+            <Check className="w-4 h-4 text-emerald-100" />
+            <span>{toastMessage}</span>
+          </div>
+        )}
+
         {/* Panel */}
         <div
           className="relative w-full sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-t-3xl sm:rounded-3xl border border-zinc-200 shadow-2xl animate-fade-in"
@@ -264,9 +328,9 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
             <div>
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-indigo-500" />
-                <h2 className="text-sm font-bold text-zinc-900">AI Master Prompts</h2>
+                <h2 className="text-sm font-bold text-zinc-900">✨ AI Master Prompts Suite</h2>
               </div>
-              <p className="text-xs text-zinc-500 mt-0.5">Copy and paste into ChatGPT, Claude, Midjourney, or v0 to extend this brand kit.</p>
+              <p className="text-xs text-zinc-500 mt-0.5">Production-ready prompts to paste directly into Lovable, Bolt.new, Antigravity, or ChatGPT.</p>
             </div>
             <button onClick={() => setAiDrawerOpen(false)} className="p-1.5 rounded-lg hover:bg-zinc-100 transition-all cursor-pointer">
               <X className="w-4 h-4 text-zinc-500" />
@@ -274,46 +338,59 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-1.5 px-6 pt-4">
+          <div className="flex flex-wrap gap-1.5 px-6 pt-4 border-b border-zinc-100 pb-3">
             {AI_TABS.map(t => (
               <button
                 key={t.id}
                 onClick={() => setAiTab(t.id)}
                 className={`text-xs px-3.5 py-1.5 rounded-xl transition-all font-medium cursor-pointer ${
-                  aiTab === t.id ? 'bg-[#1a1a1a] text-white shadow-xs' : 'text-zinc-600 hover:bg-zinc-100'
+                  aiTab === t.id ? 'bg-[#1a1a1a] text-white shadow-xs font-semibold' : 'text-zinc-600 hover:bg-zinc-100'
                 }`}
               >
-                {t.label}
+                {t.shortLabel || t.label}
               </button>
             ))}
           </div>
 
+          {/* Visual feedback toast inside modal */}
+          {toastMessage && (
+            <div className="mx-6 mt-3 px-4 py-2.5 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-semibold rounded-2xl flex items-center gap-2 animate-fade-in shadow-xs">
+              <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>{toastMessage}</span>
+            </div>
+          )}
+
           {/* Prompt area */}
           {AI_TABS.map(t => aiTab === t.id && (
-            <div key={t.id} className="px-6 py-4">
-              <div className="relative">
-                <pre className="bg-zinc-50 border border-zinc-200 rounded-2xl p-4 text-xs font-mono text-zinc-800 leading-relaxed whitespace-pre-wrap max-h-64 overflow-y-auto">
-                  {aiPrompts[t.promptKey]}
-                </pre>
+            <div key={t.id} className="px-6 py-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-xs font-bold text-zinc-900">{t.label}</h3>
+                  <p className="text-[11px] text-zinc-500">{t.description}</p>
+                </div>
                 <button
-                  onClick={() => handleCopyPrompt(t.promptKey)}
-                  className="absolute top-3 right-3 inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-xl transition-all font-medium shadow-2xs cursor-pointer"
+                  onClick={() => handleCopyPrompt(t)}
+                  className="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-xl transition-all font-semibold shadow-xs cursor-pointer active:scale-95"
                   style={{
-                    background: copiedPrompt === t.promptKey ? '#ecfdf5' : '#fff',
-                    border: `1px solid ${copiedPrompt === t.promptKey ? '#6ee7b7' : '#e4e4e7'}`,
-                    color: copiedPrompt === t.promptKey ? '#059669' : '#18181b'
+                    background: copiedPrompt === t.id ? '#059669' : '#18181b',
+                    color: '#fff'
                   }}
                 >
-                  {copiedPrompt === t.promptKey
-                    ? <><Check className="w-3 h-3" /><span>Copied!</span></>
-                    : <><Copy className="w-3 h-3 text-zinc-400" /><span>Copy Prompt</span></>
+                  {copiedPrompt === t.id
+                    ? <><Check className="w-3.5 h-3.5" /><span>Copied!</span></>
+                    : <><Copy className="w-3.5 h-3.5 text-zinc-300" /><span>Copy Prompt</span></>
                   }
                 </button>
               </div>
-              <p className="text-xs text-zinc-500 font-mono mt-2 leading-relaxed">
-                {t.id === 'copywriter' && 'Paste as a System Prompt in ChatGPT, Claude, or Gemini.'}
-                {t.id === 'midjourney' && 'Paste directly into Midjourney /imagine or DALL·E 3.'}
-                {t.id === 'ui' && 'Paste into v0.dev or Cursor Composer to scaffold a new page.'}
+
+              <div className="relative">
+                <pre className="bg-zinc-50 border border-zinc-200 rounded-2xl p-4 text-xs font-mono text-zinc-800 leading-relaxed whitespace-pre-wrap max-h-72 overflow-y-auto">
+                  {t.content}
+                </pre>
+              </div>
+
+              <p className="text-[11px] text-zinc-500 font-mono leading-relaxed bg-zinc-100/70 p-2.5 rounded-xl border border-zinc-200/60">
+                Ready to paste directly into <span className="font-semibold text-zinc-800">{t.platform}</span>.
               </p>
             </div>
           ))}

@@ -96,41 +96,35 @@ export const socraticBatchPrompt = `
 You are an elite Brand Interrogator (in the style of Marty Neumeier, Collins, and Pentagram).
 Your goal is to challenge the founder's assumptions across 7 distinct dimensions so we can build a defensible, non-generic brand identity.
 
-PERSONALIZATION MANDATE:
-Every question and its suggestedAnswers must read as though written specifically for THIS founder's concept — not a generic category questionnaire with the domain name swapped in. Pull at least one concrete word, image, or detail from the founder's own pitch into the question or its answer options wherever it fits naturally. Two founders in the same category with differently worded pitches should end up with noticeably different questions and options, not the same 7 templated questions.
-
-CRITICAL DOMAIN ADAPTATION RULES:
-1. EVERYDAY PHYSICAL / CPG GOODS (Water bottles, backpacks, mugs, snacks, notebooks):
-   - NEVER use corporate or B2B jargon (BANNED: "status signaling", "executive archetype", "professional power-dressed", "consultant", "enterprise").
-   - Probe real human situations and product realities:
-     * Daily use-case & ritual (e.g., all-day desk hydration, rugged outdoor trails, intense gym sessions, or everyday school/commute).
-     * The physical pain / compromise (e.g., metallic aftertaste, leaking caps, denting easily, heavy insulation that weighs down bags).
-     * Material & construction stance (e.g., ceramic-lined for pure taste, double-wall stainless steel for ice retention, ultralight BPA-free Tritan).
-     * Packaging format and shelf context (e.g., resealable pouch vs. can vs. bulk bin, grocery vs. convenience-store placement).
-     * Aesthetic role (e.g., muted studio minimalist, rugged trail utilitarian, or vibrant expressive accessory).
-2. APPAREL & FASHION:
-   - Probe cuts, textiles, silhouette, durability, and subcultural fit.
-3. FOOD & HOSPITALITY:
-   - Probe flavor profiles, dining pace, neighborhood role, and cooking craft.
-4. SOFTWARE & TECH:
-   - Probe developer friction, system bottlenecks, and workflow latency.
+CRITICAL DOMAIN ADAPTATION & NEGATIVE CONSTRAINTS:
+1. FOOD, DINING, BURGERS, BEVERAGES & CPG:
+   - STRICTLY FORBIDDEN: Never ask about "technical users", "systems engineers", "status signaling", "devops", "query latency", or generic "gym enthusiasts".
+   - Probe real food and retail realities:
+     * Consumption Occasion: Quick lunch grab, late-night craving, neighborhood comfort, weekend family ritual.
+     * Taste & Culinary Stance: Smoked smash patty vs. gourmet brioche; natural grass-fed simplicity vs. indulgent craveability.
+     * Packaging & Format: Grease-resistant unbleached paper wraps, thermal delivery boxes, counter ordering vs. drive-thru.
+     * The Category Lie Rejected: Dry frozen patties, mystery sauce drowning bland beef, soggy cold delivery buns.
+2. CONSUMER UTILITY (Water bottles, mugs, notebooks, bags):
+   - Probe daily carry ritual, material durability, cleaning friction, and bag commute.
+3. SOFTWARE & DEVELOPER TOOLS (Only when pitch explicitly mentions code/APIs/databases):
+   - Probe system architecture, workflow latency, and developer ergonomics.
 
 QUESTION STRUCTURE RULES:
 - Every question must be under 22 words.
 - suggestedAnswers: Exactly 3 distinct, grounded options under 7 words each.
-- reasoning: 1 punchy sentence explaining the commercial trade-off.
+- reasoning: 1 punchy sentence explaining the strategic trade-off.
 - allowMultiple: Set to true for occasions, aesthetic traits, and boundaries; false for pricing and core wedge.
 
-OUTPUT SCHEMA (JSON):
+OUTPUT SCHEMA (STRICT JSON ONLY):
 {
   "stageQuestions": [
-    { "id": 1, "stageLabel": "Audience & Daily Context", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
-    { "id": 2, "stageLabel": "The Physical Friction", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
-    { "id": 3, "stageLabel": "The Standard Compromise We Reject", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
-    { "id": 4, "stageLabel": "Primary Use Environment", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
-    { "id": 5, "stageLabel": "Pricing & Shelf Tier", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
-    { "id": 6, "stageLabel": "Aesthetic & Material Boundary", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
-    { "id": 7, "stageLabel": "The Unfair Shelf Edge", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false }
+    { "id": 1, "stageLabel": "Audience & Occasion", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
+    { "id": 2, "stageLabel": "Taste & Physical Friction", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
+    { "id": 3, "stageLabel": "The Fast-Food Standard We Reject", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
+    { "id": 4, "stageLabel": "Dining & Delivery Atmosphere", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
+    { "id": 5, "stageLabel": "Pricing & Menu Tier", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
+    { "id": 6, "stageLabel": "Aesthetic & Packaging Stance", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
+    { "id": 7, "stageLabel": "The Irresistible Flavor Edge", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false }
   ]
 }
 `;
@@ -171,6 +165,13 @@ VOICE SYSTEM:
 
 VISUAL DESIGN SYSTEM:
 - Palette: 5 cohesive colors (primary, secondary, accent, surface, text).
+  MANDATORY PALETTE SELECTION RULES:
+  1. FOR FOOD, RESTAURANTS, BURGERS, BEVERAGES & PHYSICAL GOODS:
+     - STRICTLY FORBIDDEN: Do NOT generate dark-mode obsidian/pitch-black canvases (#0A0D14, #000000, #111111) for "surface".
+     - "surface" MUST be warm, appetizing, and inviting: Warm Cream (#FAF8F5, #F5F2EB), Fresh Milk (#FCFBF9), Toasted Linen (#F4EFEB), or Clean Porcelain (#FFFFFF).
+     - "text" MUST be deep, legible, high-contrast: Rich Charcoal (#18181B), Dark Espresso (#231C16), or Ink (#0F172A).
+     - "primary" & "accent": Warm, appetizing tones (e.g. Smashed Paprika, Golden Mustard, Toasted Sesame, Vine Tomato, Sage).
+  2. DARK THEMES: Only permitted if the category is explicitly nocturnal developer tooling, cybersecurity, or nightclub entertainment.
   * For food/snacks: appetizing, tactile colors (e.g., Warm Paprika, Sun-dried Ochre, Toasted Sea Salt, Deep Navy, Crisp Cream). Avoid dull or cold corporate tech palettes unless specifically requested.
   * Let the founder's aesthetic-boundary answer override the category default whenever the two conflict — their stated boundary wins.
   * Contrast check: the "surface" and "text" hex values must maintain at least 4.5:1 contrast (WCAG AA for body text) — never pair a dark surface with a dark text color, or a light surface with a light text color.

@@ -260,6 +260,7 @@ export async function generateInterviewBatch(initialPitch = '') {
         return result.stageQuestions;
       }
     } catch (llmError) {
+      console.error("CRITICAL AI ENGINE ERROR:", llmError?.message || llmError);
       console.warn('[interviewService] LLM Batch generation failed, using mock batch fallback:', llmError.message);
     }
   }
@@ -338,6 +339,7 @@ export async function generateNextQuestion(history = []) {
       }
       return result;
     } catch (llmError) {
+      console.error("CRITICAL AI ENGINE ERROR:", llmError?.message || llmError);
       console.warn('[interviewService] LLM API call failed, using mock fallback:', llmError.message);
     }
   }

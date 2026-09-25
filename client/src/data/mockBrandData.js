@@ -111,11 +111,11 @@ export const hospitalityBrandKit = {
   },
   visualTokens: {
     palette: [
-      { name: "Cast Iron Charcoal", hex: "#1C1917", role: "surface" },
+      { name: "Warm Cream", hex: "#FAF8F5", role: "surface" },
       { name: "Deep Terracotta", hex: "#C25E3E", role: "primary" },
       { name: "Toasted Fennel", hex: "#556B2F", role: "secondary" },
       { name: "Aged Brass", hex: "#C49A45", role: "accent" },
-      { name: "Warm Cream", hex: "#FAF8F5", role: "text" }
+      { name: "Cast Iron Charcoal", hex: "#1C1917", role: "text" }
     ],
     typography: {
       headingFont: "Fraunces",

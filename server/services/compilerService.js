@@ -220,6 +220,7 @@ export async function compileBrandKit(payload = []) {
       const result = await generateStructuredJson({ systemInstruction, prompt, schema: brandKitSchema });
       return result;
     } catch (llmError) {
+      console.error("CRITICAL AI ENGINE ERROR:", llmError?.message || llmError);
       console.warn('[compilerService] LLM compilation failed, using domain-adaptive mock:', llmError.message);
     }
   }

@@ -62,19 +62,10 @@ export default function IntakeView({ onStartInterview, onPreviewMock, isExpandin
       
       {/* ── System Status & Studio Pill ── */}
       <div className="flex items-center justify-center mb-6">
-        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-zinc-200 shadow-2xs text-xs text-zinc-600">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          <span className="font-semibold text-zinc-800">
-            Socratic Brand Studio
-          </span>
-          <span className="text-zinc-300">•</span>
-          <span className="text-zinc-500">
-            Gemini 2.5 Flash & Groq LLaMA 3.3
-          </span>
-        </div>
+        <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-medium tracking-wide bg-stone-100 text-stone-700 border border-stone-200 shadow-2xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+          Strategic Brand Studio
+        </span>
       </div>
 
       {/* ── Editorial Header ── */}

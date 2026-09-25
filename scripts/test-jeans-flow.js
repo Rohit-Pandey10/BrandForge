@@ -39,7 +39,8 @@ async function runJeansVerification() {
 
     const qText = `${q.question} ${(q.suggestedAnswers || []).join(' ')}`.toLowerCase();
     for (const word of forbiddenFoodWords) {
-      if (qText.includes(word)) {
+      const wordRegex = new RegExp(`\\b${word}\\b`, 'i');
+      if (wordRegex.test(qText)) {
         throw new Error(`FAILED: Question or options contain forbidden word "${word}": "${q.question}"`);
       }
     }

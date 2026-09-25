@@ -18,6 +18,7 @@ export default function App() {
   const [questions, setQuestions] = useState([]);
   const [initialPitch, setInitialPitch] = useState('');
   const [brandKit, setBrandKit] = useState(null);
+  const [interviewAnswers, setInterviewAnswers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isCompiling, setIsCompiling] = useState(false);
 
@@ -141,6 +142,8 @@ export default function App() {
 
     const payload = typeof qaData === 'object' ? qaData : {};
     const pitch = payload.initialPitch || initialPitch;
+    const answersList = Array.isArray(payload.qaPairs) ? payload.qaPairs : [];
+    setInterviewAnswers(answersList);
 
     const data = await callApi('/api/interview/compile', {
       initialPitch: pitch,
@@ -183,6 +186,7 @@ export default function App() {
     setExpandedConcepts([]);
     setIntakeError('');
     setBrandKit(null);
+    setInterviewAnswers([]);
   };
 
   /**
@@ -383,6 +387,7 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
         {stage === 'dashboard' && (
           <BrandKitDashboard
             brandKit={brandKit}
+            answers={interviewAnswers}
             onStartNew={handleReset}
           />
         )}
@@ -392,10 +397,10 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
       <footer className="no-print py-6 px-6 text-center text-xs text-zinc-500 border-t border-zinc-200/60 bg-white/40">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <p>
-            &copy; {new Date().getFullYear()} Brand Builder. Powered by Groq LLaMA 3.3 70B & Google Gemini 2.5 Flash.
+            &copy; 2026 Brand Builder. Strategic Positioning, Verbal Identity & Design Systems.
           </p>
-          <div className="flex items-center gap-3 text-zinc-500 font-mono text-[11px]">
-            <span>7-Stage Socratic Synthesis</span>
+          <div className="flex items-center gap-3 text-zinc-500 font-mono text-xs">
+            <span>Socratic Brand Synthesis</span>
             <span>•</span>
             <span>Design Tokens & Multi-Archetype Specimen</span>
           </div>

@@ -14,6 +14,20 @@ import { DOMAINS, classifyDomain, isFamilyIntent } from '../data/domainConfig.js
 // ---------------------------------------------------------------------------
 
 export function getMockQuestion(round, userContext = '') {
+  const lower = String(userContext || '').toLowerCase();
+  if (/(burger|smash|patty|patties|bun|fries|shake)/i.test(lower)) {
+    const batch = _burgerBatch();
+    const q = batch[Math.min(round - 1, batch.length - 1)];
+    return {
+      currentRound: round,
+      stageLabel: q.stageLabel,
+      question: q.question,
+      suggestedAnswers: q.suggestedAnswers,
+      reasoning: q.reasoning,
+      allowMultiple: Boolean(q.allowMultiple),
+      readyForSynthesis: round >= 3
+    };
+  }
   const domain = classifyDomain(userContext);
   const isFamily = isFamilyIntent(userContext);
 
@@ -33,6 +47,10 @@ export function getMockQuestion(round, userContext = '') {
 // ---------------------------------------------------------------------------
 
 export function getMockBatch(userContext = '') {
+  const lower = String(userContext || '').toLowerCase();
+  if (/(burger|smash|patty|patties|bun|fries|shake)/i.test(lower)) {
+    return _burgerBatch();
+  }
   const domain = classifyDomain(userContext);
   const isFamily = isFamilyIntent(userContext);
 
@@ -44,6 +62,67 @@ export function getMockBatch(userContext = '') {
   if (domain === DOMAINS.CAREER) return _careerBatch();
   if (domain === DOMAINS.DEVELOPER) return _developerBatch();
   return _generalBatch();
+}
+
+function _burgerBatch() {
+  return [
+    {
+      id: 1,
+      stageLabel: "Audience & Occasion",
+      question: "Which craving moment brings customers to your burger counter first?",
+      suggestedAnswers: ["Quick weekday lunch grab", "Late-night craveable post-bar feast", "Weekend neighborhood comfort ritual"],
+      reasoning: "Defines order volume peaks, counter speed, and opening hours.",
+      allowMultiple: false
+    },
+    {
+      id: 2,
+      stageLabel: "Taste & Physical Friction",
+      question: "What physical burger flaw will you refuse to tolerate?",
+      suggestedAnswers: ["Soggy buns from steam traps", "Dry overcooked grey beef patties", "Excess grease dissolving the bun"],
+      reasoning: "Directs griddle temperature, wrapping material, and bun toast degree.",
+      allowMultiple: true
+    },
+    {
+      id: 3,
+      stageLabel: "The Fast-Food Standard We Reject",
+      question: "Which fast-food compromise does your brand declare war against?",
+      suggestedAnswers: ["Frozen pre-formed mystery beef pucks", "Sugary dressing hiding flavorless patties", "Microwaved warming-drawer burgers"],
+      reasoning: "Builds high-conviction anti-hero positioning that earns trust.",
+      allowMultiple: false
+    },
+    {
+      id: 4,
+      stageLabel: "Dining & Delivery Atmosphere",
+      question: "How should customers experience the ordering environment?",
+      suggestedAnswers: ["Screaming hot open griddle counter", "Fast takeout in unbleached butcher wraps", "Retro diner warmth with counter seats"],
+      reasoning: "Directs kitchen layout, exhaust styling, and packaging choice.",
+      allowMultiple: true
+    },
+    {
+      id: 5,
+      stageLabel: "Pricing & Menu Tier",
+      question: "What pricing stance signals your culinary standard?",
+      suggestedAnswers: ["Accessible everyday street-eats ($9–$13)", "Gourmet double-smash craft tier ($14–$18)", "Curated bundle with tallow fries"],
+      reasoning: "Shapes check averages and ingredient sourcing margins.",
+      allowMultiple: false
+    },
+    {
+      id: 6,
+      stageLabel: "Aesthetic & Packaging Stance",
+      question: "What visual identity sets your butcher wrap and store apart?",
+      suggestedAnswers: ["Parchment wrap with bold stamped typography", "Warm cream, paprika, and mustard tones", "Vintage roadside diner neon nostalgia"],
+      reasoning: "Dictates color tokens, wrapper grease-proof paper, and signage.",
+      allowMultiple: true
+    },
+    {
+      id: 7,
+      stageLabel: "The Irresistible Flavor Edge",
+      question: "What is the singular taste detail competitors cannot clone?",
+      suggestedAnswers: ["Caramelized crispy lacy maillard edges", "Martin's potato buns toasted in beef tallow", "Dry-aged brisket blend with secret relish"],
+      reasoning: "Creates word-of-mouth conviction that competitors cannot match.",
+      allowMultiple: false
+    }
+  ];
 }
 
 function _familyBatch() {
@@ -464,16 +543,32 @@ function _generalQuestion(round) {
 
 export function getMockBrandKit(founderPitch = '', fullHistory = []) {
   const combined = [founderPitch, ...fullHistory.map(m => m.content)].join(' ');
+  const lower = combined.toLowerCase();
   const domain = classifyDomain(combined);
   const isFamily = isFamilyIntent(combined);
 
+  // 1. Direct burger / smash / diner check
+  if (/(burger|smash|patty|patties|bun|fries|shake)/i.test(lower)) {
+    return _burgerKit(founderPitch);
+  }
+  // 2. Apparel & Fashion
   if (domain === DOMAINS.FASHION) return _fashionKit();
+  // 3. Beverage & Functional drinks
   if (domain === DOMAINS.BEVERAGE) return _beverageKit();
+  // 4. Hospitality & Dining
   if (domain === DOMAINS.HOSPITALITY) {
     return isFamily ? _familyHospitalityKit() : _hospitalityKit();
   }
+  // 5. Career & Professional
   if (domain === DOMAINS.CAREER) return _careerKit();
-  return _developerKit(); // DEVELOPER + GENERAL
+  // 6. Developer SaaS (STRICT: only if developer keywords matched)
+  if (domain === DOMAINS.DEVELOPER) return _developerKit();
+
+  // 7. General fallback: if food or dining or CPG, return hospitality kit, never developer kit!
+  if (/(food|eat|dining|restaurant|kitchen|chef|snack|bakery|cpg)/i.test(lower)) {
+    return _hospitalityKit();
+  }
+  return _hospitalityKit();
 }
 
 function _fashionKit() {
@@ -693,11 +788,11 @@ function _hospitalityKit() {
     },
     visualTokens: {
       palette: [
-        { name: 'Cast Iron Charcoal', hex: '#1C1917', role: 'surface' },
+        { name: 'Warm Cream', hex: '#FAF8F5', role: 'surface' },
         { name: 'Deep Terracotta', hex: '#C25E3E', role: 'primary' },
         { name: 'Toasted Fennel', hex: '#556B2F', role: 'secondary' },
         { name: 'Aged Brass', hex: '#C49A45', role: 'accent' },
-        { name: 'Warm Cream', hex: '#FAF8F5', role: 'text' }
+        { name: 'Cast Iron Charcoal', hex: '#1C1917', role: 'text' }
       ],
       typography: {
         headingFont: 'Fraunces',
@@ -715,6 +810,113 @@ function _hospitalityKit() {
       manifesto: 'Dining out should be loud, joyful, and deeply satisfying. We are tired of stiff restaurants where you can\'t hear your friends and the bill feels like a down payment. We build around what matters: seasoned oak, blistering heat, fermented dough, and honest food served freely. Pull up a chair, order a pie, and stay as long as you want.',
       elevatorPitch: 'Campiña Hearth & Table is a vibrant wood-fired pizza and neighborhood dining room dedicated to sourdough craft, lively tables, and zero dining pretension.',
       socialHooks: ['Life is too short for stiff dining rooms and quiet whispers. Pass the pizza.', '72-hour fermented dough. 900-degree oak fire. 0 pretension.', 'Great hospitality doesn\'t need a lecture. Just pull up a chair.']
+    },
+    websiteBlueprint: {
+      badge: 'Naturally Fermented · Wood-Fired at 900°',
+      heroLayout: 'centered_minimal',
+      announcementBar: 'Naturally fermented sourdough pies baked over seasoned oak.',
+      primaryCta: 'Reserve a Table',
+      secondaryCta: 'View Evening Menu',
+      sections: [
+        {
+          type: 'catalog_grid',
+          title: 'Daily Hearth Specials',
+          subtitle: '72-hour sourdough crusts fired with local ingredients.',
+          items: [
+            { label: 'Charred Margherita Reserve', description: 'Crushed San Marzano tomatoes, buffalo mozzarella, fresh basil, cold-pressed olive oil.', metricOrPrice: '$21', tag: 'CLASSIC' },
+            { label: 'Spicy Soppressata & Hot Honey', description: 'Aged provolone, artisanal dry-cured soppressata, chili-infused wildflower honey.', metricOrPrice: '$24', tag: 'FAVORITE' },
+            { label: 'Wild Foraged Mushroom & Taleggio', description: 'Roasted maitake and chanterelles, creamy taleggio, fresh thyme, garlic cream.', metricOrPrice: '$26', tag: 'SEASONAL' }
+          ]
+        },
+        {
+          type: 'comparative_ledger',
+          title: 'The Table Standard',
+          subtitle: 'Why honest hearth dining outclasses stiff dining rooms.',
+          items: [
+            { label: 'Dough Fermentation', description: 'Campiña: 72-hour wild sourdough ferment. Conventional: 2-hour commercial yeast with dough relaxers.' },
+            { label: 'Dining Hospitality', description: 'Campiña: Generous, loud, communal sharing tables. Conventional: Stiff whispering rooms with rushed seat turn limits.' }
+          ]
+        }
+      ]
+    }
+  };
+}
+
+function _burgerKit(founderPitch = '') {
+  return {
+    brandStrategy: {
+      brandName: 'Iron & Patty',
+      tagline: 'Dry-Aged Smash Patties & Screaming Griddles',
+      mission: 'To liberate the classic American hamburger from frozen grey patties, limp buns, and corporate drive-thru shortcuts through live-fire smashed beef, caramelized lace crusts, and unbleached butcher paper.',
+      targetAudience: 'Discerning burger purists, late-night comfort seekers, and neighborhood food lovers who crave uncompromising smash patties with crispy maillard edges.',
+      coreValueProposition: 'Double dry-aged brisket & chuck blend smashed paper-thin on a 500° chrome flattop with charred crispy lace, melted aged cheddar, house pickle chips, and toasted Martin\'s potato buns.',
+      antiHero: 'Corporate fast-food giants serving lukewarm, frozen pre-formed pucks smothered in sugary secret sauce to conceal bland, grey beef.',
+      differentiator: 'Crispy lacy edges smashed paper-thin on seasoned cast-iron with tallow-toasted potato buns and zero frozen shortcuts.'
+    },
+    voiceSystem: {
+      archetype: 'The Culinary Craftsman',
+      tone: ['Punchy', 'Appetizing', 'Unpretentious', 'Obsessive'],
+      dos: ['Talk passionately about sizzling tallow, crispy lacy crusts, and toasted potato buns.', 'Keep the dining posture casual, energetic, and focused on pure craveability.', 'Celebrate dry-aged beef blend and house-pickled cucumbers.'],
+      donts: ['Never mention technical users, systems engineers, devops, or software.', 'No corporate wellness buzzwords or sterile diet claims.', 'Never apologize for unapologetic, craveable culinary indulgence.'],
+      vocabularyWords: ['Smashed', 'Lacy Crust', 'Flattop', 'Tallow', 'Potato Bun', 'Caramelized']
+    },
+    visualTokens: {
+      palette: [
+        { name: 'Warm Cream', hex: '#FAF8F5', role: 'surface' },
+        { name: 'Smashed Paprika', hex: '#C84B31', role: 'primary' },
+        { name: 'Toasted Sesame', hex: '#D9B48F', role: 'secondary' },
+        { name: 'Golden Mustard', hex: '#E89D38', role: 'accent' },
+        { name: 'Rich Charcoal', hex: '#18181B', role: 'text' }
+      ],
+      typography: {
+        headingFont: 'Fraunces',
+        bodyFont: 'Inter',
+        googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;700&family=Inter:wght@400;500;600&display=swap',
+        rationale: 'A muscular heritage serif that feels hand-stamped on butcher paper, paired with an ultra-clean sans-serif for responsive ordering.'
+      },
+      stylePhilosophy: 'Warm, appetizing culinary design with warm cream parchment surfaces, fiery paprika accents, and golden griddle warmth.',
+      borderCurvature: 'rounded-2xl'
+    },
+    launchContent: {
+      heroHeadline: 'Screaming Hot Griddles. Crispy Lacy Edges. Zero Freezers.',
+      heroSubheadline: 'Double dry-aged brisket patties smashed to order on 500-degree cast-iron, served on butter-toasted potato buns.',
+      callToAction: 'Order for Pickup',
+      manifesto: 'A burger should be an event, not a compromise. We got tired of lukewarm grey patties kept under heat lamps and drowned in high-fructose corn syrup dressing. We built Iron & Patty around one simple obsession: fresh ground beef smashed violently against scorching hot cast-iron until the edges caramelize into an irresistible crispy lace. Grab a double, grab some tallow fries, and taste what real burgers were meant to be.',
+      elevatorPitch: 'Iron & Patty is a neighborhood smash burger joint dedicated to dry-aged heritage beef, caramelized lacy crusts, and zero frozen shortcuts.',
+      socialHooks: [
+        'If the edges aren\'t crispy enough to shatter, it\'s not a real smash burger.',
+        'Zero frozen patties. Screaming hot cast iron. Smashed to order.',
+        'Martin\'s potato bun, dry-aged beef, house pickles. Nothing hidden.'
+      ]
+    },
+    websiteBlueprint: {
+      badge: 'Dry-Aged Beef · Smashed to Order',
+      heroLayout: 'centered_minimal',
+      announcementBar: 'Complimentary house beef-tallow fries with any double smash combo today.',
+      primaryCta: 'Order for Pickup',
+      secondaryCta: 'The Smash Technique',
+      sections: [
+        {
+          type: 'catalog_grid',
+          title: 'The Griddle Lineup',
+          subtitle: 'Double patties, screaming cast-iron, and tallow-toasted buns.',
+          items: [
+            { label: 'The Classic Double Smash', description: 'Double dry-aged blend, American cheddar, grilled onions, house pickle chips, secret griddle sauce.', metricOrPrice: '$14', tag: 'BESTSELLER' },
+            { label: 'Smoked Jalapeño & Bacon Smash', description: 'Double beef, charred pickled jalapeños, applewood smoked bacon, pepper jack, spicy paprika aioli.', metricOrPrice: '$16', tag: 'CHEF PICK' },
+            { label: 'The Truffle & Embers Reserve', description: 'Double patty, caramelized shallots, melted gruyère, black truffle aioli on toasted brioche.', metricOrPrice: '$18', tag: 'LIMITED' }
+          ]
+        },
+        {
+          type: 'comparative_ledger',
+          title: 'The Onlyness Standard',
+          subtitle: 'Why our screaming griddle beats the fast-food status quo.',
+          items: [
+            { label: 'Beef Provenance', description: 'Iron & Patty: Fresh daily dry-aged brisket & chuck grind. The Incumbent: Frozen pre-formed flash-frozen mystery pucks.' },
+            { label: 'The Crust Metric', description: 'Iron & Patty: Crispy, lacy caramelized maillard edges. The Incumbent: Steamed, rubbery grey meat cooked in warming drawers.' },
+            { label: 'The Bun Stance', description: 'Iron & Patty: Martin\'s potato buns toasted in beef tallow. The Incumbent: Dry, airy sesame buns loaded with preservatives.' }
+          ]
+        }
+      ]
     }
   };
 }

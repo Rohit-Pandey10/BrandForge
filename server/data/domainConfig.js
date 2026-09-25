@@ -36,7 +36,7 @@ export function classifyDomain(text = '') {
   }
 
   // 3. HOSPITALITY & CULINARY (Require explicit dining/food terms; do NOT match bare "table")
-  if (/(restaurant|food|dining|cuisine|culinary|chef|bistro|cafe|bakery|coffee|eatery|pizza|pizzeria|burger|pasta|taco|hospitality|kitchen|menu|dish|dishes|brewery|bar(?!code|chart)|cocktail|wine|diner|breakfast|lunch|dinner|tasting menu|dining table)/i.test(lower)) {
+  if (/(restaurant|food|dining|cuisine|culinary|chef|bistro|cafe|bakery|coffee|eatery|pizza|pizzeria|burger|burgers|smash|smashburger|patty|patties|grill|bun|buns|fries|shake|shakes|diner|pasta|taco|hospitality|kitchen|menu|dish|dishes|brewery|bar(?!code|chart)|cocktail|wine|breakfast|lunch|dinner|tasting menu|dining table|fast-casual|snack|cpg)/i.test(lower)) {
     return DOMAINS.HOSPITALITY;
   }
 

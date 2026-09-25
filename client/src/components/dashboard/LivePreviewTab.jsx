@@ -189,13 +189,14 @@ export default function LivePreviewTab(props) {
 
       {/* ── Viewport Specimen Frame (Desktop vs Mobile) ── */}
       <div
-        className={`w-full bg-white transition-all duration-300 ${
+        className={`w-full transition-all duration-300 ${
           isMobile
             ? 'max-w-[390px] mx-auto h-[780px] rounded-[48px] border-[6px] border-[#222222] shadow-2xl overflow-hidden my-4 flex flex-col relative'
-            : 'border border-[#dbd7cd] overflow-hidden shadow-sm rounded-[28px]'
+            : 'w-full bg-white border border-[#dbd7cd] overflow-hidden shadow-sm rounded-[28px]'
         }`}
         style={{
           borderRadius: isMobile ? '48px' : '28px',
+          backgroundColor: isMobile ? surfaceColor : undefined,
           '--brand-primary':    primaryColor,
           '--brand-secondary':  secondaryColor,
           '--brand-surface':    surfaceColor,
@@ -234,7 +235,15 @@ export default function LivePreviewTab(props) {
         )}
 
         {/* Inner Scrollable Viewport */}
-        <div className={isMobile ? 'flex-1 overflow-y-auto overflow-x-hidden relative' : ''}>
+        <div
+          className={isMobile ? 'w-full max-w-full flex-1 overflow-x-hidden overflow-y-auto relative box-border [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden' : 'w-full max-w-full'}
+          style={isMobile ? {
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch',
+            backgroundColor: surfaceColor
+          } : {}}
+        >
           {archetype === 'retail_cpg'   && <RetailCpgPreview   {...sharedProps} />}
           {archetype === 'hospitality'  && <HospitalityPreview  {...sharedProps} />}
           {archetype === 'digital_saas' && <DigitalSaasPreview  {...sharedProps} />}
@@ -777,7 +786,7 @@ function RetailCpgPreview({
 
   return (
     <div
-      className={`min-h-[580px] flex flex-col transition-all ${
+      className={`w-full max-w-full box-border min-h-[580px] flex flex-col transition-all overflow-x-hidden ${
         isMobile ? 'p-4 sm:p-6' : 'p-6 sm:p-12'
       }`}
       style={{ backgroundColor: surfaceColor }}
@@ -1097,7 +1106,7 @@ function HospitalityPreview({
 
   return (
     <div
-      className={`min-h-[560px] flex flex-col transition-all ${
+      className={`w-full max-w-full box-border min-h-[560px] flex flex-col transition-all overflow-x-hidden ${
         isMobile ? 'p-4 sm:p-6' : 'p-6 sm:p-12'
       }`}
       style={{ backgroundColor: surfaceColor }}
@@ -1393,7 +1402,7 @@ function DigitalSaasPreview({
 
   return (
     <div
-      className={`min-h-[560px] flex flex-col bg-[#0e1015] text-white transition-all ${
+      className={`w-full max-w-full box-border min-h-[560px] flex flex-col bg-[#0e1015] text-white transition-all overflow-x-hidden ${
         isMobile ? 'p-4 sm:p-6' : 'p-6 sm:p-14'
       }`}
     >
