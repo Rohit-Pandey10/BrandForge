@@ -2,7 +2,7 @@
   "0": "App.jsx",
   "1": "interviewService.js",
   "2": "client/package.json",
-  "3": "brand.ts",
+  "3": "run-dev.js",
   "4": "scripts",
   "5": "dependencies",
   "6": "Brand Builder ⚡",
@@ -13,11 +13,13 @@
   "11": "tailwind.config.js",
   "12": "postcss.config.js",
   "13": "test-restaurant-flow.js",
-  "14": "4. Completed Sprint Checklists",
+  "14": "brand.ts",
   "15": "test-jeans-flow.js",
   "16": "server/package.json",
   "17": "package.json",
   "18": "mockEngine.js",
   "19": "vite.config.js",
-  "20": "geminiClient.js"
+  "20": "geminiClient.js",
+  "21": "LivePreviewTab.jsx",
+  "22": "client_src_data_mockbranddata_extractclientdomain"
 }

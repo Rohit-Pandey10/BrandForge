@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "client/src/components/BrandKitDashboard.jsx": {
-    "mtime": 1790329890.0857344,
-    "seen": 1790330367.538014,
-    "ast_hash": "ca49377c91396acae1d01c35d0f031fe",
+    "mtime": 1790330618.3620589,
+    "seen": 1790331024.8212721,
+    "ast_hash": "ec7633c7be09a63a5ec7fb879043f451",
     "semantic_hash": ""
   },
   "client/src/components/Header.jsx": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "DEVSTATE.md": {
-    "mtime": 1790330360.3161166,
-    "seen": 1790330367.5380359,
-    "ast_hash": "a4415d7616f8b555384fd37f6007380c",
+    "mtime": 1790331014.750448,
+    "seen": 1790331024.821295,
+    "ast_hash": "620b3afc445c334fc1f4a50dccf84091",
     "semantic_hash": ""
   },
   "README.md": {
@@ -180,9 +180,9 @@
     "semantic_hash": ""
   },
   "client/src/components/dashboard/LivePreviewTab.jsx": {
-    "mtime": 1790276229.9735332,
-    "seen": 1790276476.9386828,
-    "ast_hash": "137f97e6bd356b4e11d4a53484588e3c",
+    "mtime": 1790330933.0787659,
+    "seen": 1790331024.821277,
+    "ast_hash": "c6f89cea047bc07d8a937bd75f593287",
     "semantic_hash": ""
   },
   "client/src/components/dashboard/VisualTokensTab.jsx": {

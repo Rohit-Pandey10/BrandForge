@@ -54,7 +54,7 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
 
   const handlePrint = () => window.print();
 
-  const tabProps = { brandStrategy, voiceSystem, visualTokens, launchContent };
+  const tabProps = { brandStrategy, voiceSystem, visualTokens, launchContent, brandKit, kit: brandKit };
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-4 sm:py-8 animate-fade-in pb-32 font-sans text-black">

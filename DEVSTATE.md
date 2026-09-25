@@ -195,3 +195,7 @@
 - [x] Removed Voice & Tone and standalone Visual Design Tokens tabs from dashboard navigation.
 - [x] Set activeTab default to 'preview' (Live Website Preview).
 - [x] Verified persistence and export actions intact in header and dashboard (Save to Library, Export JSON, Export CSS, Download SVG, Print PDF).
+- [x] Implemented Step 2 Adaptive Multi-Archetype Preview Engine in LivePreviewTab (Retail CPG, Hospitality & Dining, Digital Tools & SaaS).
+- [x] Bound synthesized design tokens dynamically (--brand-primary, --brand-secondary, --brand-surface, --brand-text, --brand-accent, Google Fonts, radius curvature).
+- [x] Added interactive PaletteTokenBar beneath the frame with one-click HEX copy toast feedback.
+
