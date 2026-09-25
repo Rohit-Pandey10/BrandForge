@@ -397,7 +397,7 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
       <footer className="no-print py-6 px-6 text-center text-xs text-zinc-500 border-t border-zinc-200/60 bg-white/40">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <p>
-            &copy; 2026 Brand Builder. Strategic Positioning, Verbal Identity & Design Systems.
+            &copy; 2026 BrandLoom. Strategic Positioning, Verbal Identity & Design Systems.
           </p>
           <div className="flex items-center gap-3 text-zinc-500 font-mono text-xs">
             <span>Socratic Brand Synthesis</span>

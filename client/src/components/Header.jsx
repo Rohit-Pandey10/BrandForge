@@ -89,7 +89,7 @@ export default function Header({
           <button
             onClick={onReset}
             className="text-left group transition-transform hover:opacity-90 flex items-center gap-2.5 cursor-pointer"
-            title="Brand Builder Home"
+            title="BrandLoom Home"
           >
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-xs shadow-orange-500/25 group-hover:scale-105 transition-transform">
               <svg
@@ -101,7 +101,7 @@ export default function Header({
               </svg>
             </div>
             <span className="text-xl font-bold tracking-tight text-zinc-900">
-              Brand<span className="text-orange-500">Builder</span>
+              Brand<span className="text-orange-500">Loom</span>
             </span>
           </button>
 

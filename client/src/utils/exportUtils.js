@@ -87,7 +87,7 @@ export function buildCssTokens(brandKit) {
 
   return `/**
  * ✦ ${brandName} — DESIGN SYSTEM TOKENS
- * Synthesized via Brand Builder Studio
+ * Synthesized via BrandLoom Studio
  * Scalable for Web, Tailwind CSS, and Figma Variables
  *
  * Usage:
@@ -509,7 +509,7 @@ export function exportBrandKitJson(brandKit) {
   const payload = {
     _meta: {
       exportedAt: new Date().toISOString(),
-      exportedBy: 'Brand Builder Studio',
+      exportedBy: 'BrandLoom Studio',
       version: '2.0',
       usage: 'Use aiImprovisationPrompts to extend this kit in ChatGPT, Claude, Midjourney, and v0/Cursor.'
     },
