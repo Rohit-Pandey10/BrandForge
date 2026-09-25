@@ -12,5 +12,7 @@
   "10": "shared/domainConfig.js",
   "11": "tailwind.config.js",
   "12": "postcss.config.js",
-  "13": "test-restaurant-flow.js"
+  "13": "test-restaurant-flow.js",
+  "14": "geminiClient.js",
+  "15": "test-jeans-flow.js"
 }
