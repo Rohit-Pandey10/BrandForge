@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar';
 import AuthModal from './components/AuthModal';
 import { useAuth, MAX_GUEST_RUNS } from './context/AuthContext';
 import { mockBrandKit, getDomainMockBrandKit, getDomainMockBatch, getDomainMockQuestion } from './data/mockBrandData';
+import { API_BASE } from './utils/apiConfig';
 
 export default function App() {
   const [stage, setStage] = useState('intake'); // 'intake' | 'refinement' | 'interview' | 'dashboard'
@@ -29,8 +30,6 @@ export default function App() {
     saveGuestKitLocally,
     openAuthModal
   } = useAuth();
-
-  const API_BASE = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '';
 
   /**
    * Helper to call backend API with fallback

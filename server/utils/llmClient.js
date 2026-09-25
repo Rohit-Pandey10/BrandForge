@@ -11,7 +11,7 @@ const gemini = process.env.GEMINI_API_KEY ? new GoogleGenAI({ apiKey: process.en
  * Returns true if at least one LLM provider is configured.
  */
 export function isLlmConfigured() {
-  const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
+  const provider = (process.env.LLM_PROVIDER || 'groq').split('#')[0].replace(/['"]/g, '').trim().toLowerCase();
   if (provider === 'groq' && groq) return true;
   return Boolean(groq || gemini);
 }
@@ -37,7 +37,7 @@ const GROQ_CANDIDATE_MODELS = [
  * @returns {Promise<Object>}
  */
 export async function generateStructuredJson({ systemInstruction, prompt, schema }) {
-  const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
+  const provider = (process.env.LLM_PROVIDER || 'groq').split('#')[0].replace(/['"]/g, '').trim().toLowerCase();
 
   // Primary: Try Groq if selected and configured
   if (provider === 'groq' && groq) {

@@ -1,6 +1,7 @@
 {
   "name": "brand-builder-workspace",
   "version": "1.0.0",
+  "type": "module",
   "description": "Adaptive Socratic Brand Interviewer & Token Synthesizer powered by Groq & Gemini",
   "workspaces": [
     "server",
@@ -43,6 +44,7 @@
     "nodemon": "^3.1.9",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
+    "vercel": "^60.0.1",
     "vite": "^6.0.7"
   },
   "keywords": [
