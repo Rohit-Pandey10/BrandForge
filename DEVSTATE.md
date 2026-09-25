@@ -2,173 +2,140 @@
 
 > **Notice for Teammate Agents:** Read this file before initiating any code changes. Update this state file after completing any pipeline phase, modifying API contracts, or resolving blockers.
 
-
+---
 
 ## 1. Project Overview & Sprint Status
-- **Project Name:** Brand Builder (Socratic Brand Interviewer & Token Synthesizer)
-- **Target Event:** 24-Hour Hackathon
-- **Current Sprint Phase:** Phase 4 (Studio Card Decision Architecture, Tabbed Monograph Dashboard, and Multi-Format Token Exporters)
+- **Project Name:** Brand Builder (Socratic Brand Interviewer, Token Synthesizer & Brand Library)
+- **Current Sprint Phase:** Phase 5 (Authentication, Guest-First Gating, MongoDB Atlas Persistence, and Session History Sidebar)
 - **Design System:** Handhold Editorial (`DESIGN.md`) — Warm paper cream (`#f2f1ed`), pure white surfaces (`#ffffff`), ink black (`#000000`), hairline dividers (`#dbd7cd`), Cormorant Garamond 300 display typography, Inter 400 interface typography, flat zero-shadow elevation.
 - **Frontend Architecture:**
-  - `Header.jsx`: Lowercase serif wordmark `brand builder.`, status badge `Socratic Brand Studio`, context-aware utility actions (`Skip to Synthesis`, `Export JSON`, `Export CSS Tokens`, `Download SVG`, `Print / PDF`).
-  - `InterviewChat.jsx`: Focused Studio Decision Card featuring display question headline, expandable `Under-the-Hood Strategic Rationale` diagnostic disclosure, stacked structured radio rows with custom text refinement textarea, and primary round progression CTA.
-  - `BrandKitDashboard.jsx`: 5-tab segmented dashboard (`Live Brand Preview`, `Brand Strategy`, `Voice & Tone`, `Visual Design Tokens`, `Launch Copy & Manifesto`) with generous color swatch slabs, typography sandboxes, live browser preview hero, and inspectable `:root` CSS token panel.
-- **Primary Model Target:** `gemini-3.6-flash` via `@google/genai` (Configured dynamically via `process.env.GEMINI_MODEL`, with resilient candidate failover across `gemini-3.6-flash`, `gemini-3-flash-preview`, `gemini-flash-lite-latest`, `gemini-3.8-flash`, and `gemini-flash-latest`, with a 25s execution budget).
-- **Domain Adaptation Engine:** Dynamic domain classification (`extractDomain`) detecting hospitality/culinary, fashion, wellness, career, and systems software. Injects domain-specific guidance and bans SaaS tropes for consumer/dining products.
-- **Continuous Discovery Engine:** Founders can explore multi-round strategy or synthesize on demand once baseline context is established (Round >= 3).
-- **API Health:** Verified LIVE with Google Gemini API; culinary queries tested with live browser subagent confirming authentic gastronomic positioning, terracotta/olive color tokens, and Fraunces typography.
-- **Fallback Mode:** Dual-layer domain-adaptive mock hydration safety net (both server-side and client-side) ensuring restaurant inputs never see Vortex Labs or developer jargon under any network condition.
+  - `Header.jsx`: Lowercase serif wordmark `brand builder.`, Socratic Studio badge, Left Sidebar trigger (`Library`), context-aware persistence gating action (`Save to Library`), guest usage counter (`X/2 Free`), user profile pill, and export actions (`JSON`, `CSS`, `Download SVG`, `Print / PDF`).
+  - `Sidebar.jsx`: Expandable/collapsible Left Sidebar drawer featuring saved MongoDB Atlas brand sessions, 1-click brand rehydration into the active workspace, visual token color swatches, session deletion, and guest pass usage meter.
+  - `AuthModal.jsx`: Contextual authentication modal supporting Google One-Click Sign-In (`@react-oauth/google`), strict `@gmail.com` validation regex (`/^[a-zA-Z0-9._%+-]+@gmail\.com$/`), and registration with real-time confirm-password match validation.
+  - `AuthContext.jsx`: Global authentication & session provider managing JWT tokens, guest run gating (`MAX_GUEST_RUNS = 2`), local guest brand buffering, automatic post-login MongoDB migration, and library state.
+  - `IntakeView.jsx`: High-aesthetic input card with domain-adaptive sample chips and 1-sentence value proposition input.
+  - `InterviewChat.jsx`: Focused Studio Decision Card with batch question progression, structured radio options, and strategic rationale disclosures.
+  - `BrandKitDashboard.jsx`: 5-tab segmented brand monograph (`Live Brand Preview`, `Brand Strategy`, `Voice & Tone`, `Visual Design Tokens`, `Launch Copy & Manifesto`) with embedded `"Save to Library"` action and floating export toolbar.
+- **LLM Orchestration:**
+  - **Primary Provider:** Groq (`llama-3.3-70b-versatile`) for ultra-low latency structured JSON generation.
+  - **Secondary Provider:** Google Gemini API (`gemini-3.6-flash` / `@google/genai`) configured with automatic candidate failovers.
+  - **Domain Adaptation Engine:** Real-time domain detection (`extractDomain`) preventing tech/SaaS bias for culinary, fashion, and consumer brands.
+- **Database & Storage Architecture:**
+  - **Primary:** MongoDB Atlas via Mongoose (`User` and `BrandSession` schemas) connected with secure TLS connection strings.
+  - **Resilience Engine:** `resilientStore.js` dual-mode adapter ensuring that if MongoDB Atlas is offline or credentials are missing during local development, all auth and brand persistence operations fall back gracefully without 500 crashes.
 
 ---
 
 ## 2. Active Pipeline State Machine
 
 ```
-[Stage 1: Intake & ICP] ──> [Stage 2: Differentiation] ──> [Stage 3: Attitude & Edge] ──> [Stage 4+: Deepening / Synthesis]
-       (Verified)                  (Verified)                     (Verified)                (Verified)
+[Guest Trial: 0/2 Used] ──> [Guest Trial: 1/2 Used] ──> [Guest Limit: 2/2 Used]
+           │                           │                          │
+           ▼                           ▼                          ▼
+   [Create Brand 1]            [Create Brand 2]         [GATED: Auth Modal]
+           │                           │                          │
+           └───────────────────────────┴──────────────────────────┘
+                                       │
+                                (Login / Register)
+                                       │
+                                       ▼
+                       [Auto-Migrate In-Memory Kits]
+                                       │
+                                       ▼
+                     [MongoDB Atlas Cloud Brand Library]
+                                       │
+                    [1-Click Workspace Rehydration Sidebar]
 ```
 
-| Pipeline Stage | Focus / Objective | Output Entity | Status | Next Milestone |
-| :--- | :--- | :--- | :--- | :--- |
-| **Stage 1: Intake & ICP Discovery** | Captures 1-sentence value claim; probes beachhead user, severe pain, and urgency via `gemini-3.6-flash`. | Initial Pitch + Round 1 response | **Verified** | Concise 2-sentence mentor format with <8-word pills |
-| **Stage 2: Differentiation & Critique** | Uncovers the incumbent status quo, attacks legacy compromises, enforces Anti-Cliche mandate via `gemini-3.6-flash`. | Round 2 response | **Verified** | Highlight compromise and unique angle in real-time |
-| **Stage 3: Attitude Boundaries & Edge** | Tests tone boundaries, negative constraints, and brand aesthetic archetype via `gemini-3.6-flash`. | Round 3 response + readyForSynthesis flag | **Verified** | 3 quick-reply pill options under 8 words each |
-| **Stage 4: Brand Kit Synthesis** | Full Socratic transcript is compiled into strategic narrative + visual/voice design tokens with SVG/PDF exports. | Complete `BrandKit` object | **Verified** | Export tokens.json, palette.svg, and print-ready Brand Book PDF |
+| Pipeline Milestone | Status | Key Contract / Responsibility |
+| :--- | :--- | :--- |
+| **Guest-First Flow** | **Verified** | Allows unauthenticated visitors up to 2 full brand creation tests. 3rd attempt is hard-gated by `AuthModal`. |
+| **Persistence Gating** | **Verified** | Prominent `"Save to Library"` button in Header and Dashboard. Prompts guest to sign in or saves directly for authenticated users. |
+| **Strict @gmail.com Auth** | **Verified** | Custom credentials reject non-`@gmail.com` addresses on client & server (`GMAIL_REGEX`). Bcrypt hash + 14d JWT tokens. |
+| **Confirm Password Match** | **Verified** | Registration view provides real-time matching indicator and locks submission until passwords match. |
+| **Google OAuth** | **Verified** | One-click Google sign-in via `@react-oauth/google` with server-side ID token verification (`google-auth-library`). |
+| **Session Auto-Migration** | **Verified** | Unsaved guest creations buffer in `localStorage` and automatically migrate to MongoDB Atlas on login (`POST /api/brands/sync-guest`). |
+| **Left Sidebar & Rehydration** | **Verified** | Expandable drawer with saved sessions, color swatch dots, delete action, and 1-click active workspace rehydration. |
+| **MongoDB Atlas Connection** | **Verified** | Connected to live Atlas shard `ac-9qpotsl-shard-00-02.wrf7nno.mongodb.net` with resilient local fallback. |
 
 ---
 
-## 3. Implemented Schemas & JSON Contracts
+## 3. Implemented API Contracts & Schemas
 
-### A. Question Schema (`questionSchema`)
-Endpoint: `POST /api/interview/next`
-```json
-{
-  "type": "object",
-  "properties": {
-    "isComplete": {
-      "type": "boolean",
-      "description": "True if all 3 interview rounds are concluded and the brand is ready to synthesize."
-    },
-    "currentRound": {
-      "type": "integer",
-      "description": "Current interview round (1, 2, or 3)."
-    },
-    "question": {
-      "type": "string",
-      "description": "Sharp, probing Socratic question drilling into the founder's brand identity."
-    },
-    "suggestedAnswers": {
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "Exactly 3 distinct, high-signal suggested responses the user can click."
-    },
-    "reasoning": {
-      "type": "string",
-      "description": "Under-the-hood rationale for why this question challenges the founder's assumptions."
-    }
-  },
-  "required": ["isComplete", "currentRound", "question", "suggestedAnswers", "reasoning"]
-}
-```
+### A. Authentication API (`/api/auth`)
 
-### B. Brand Kit Schema (`brandKitSchema`)
-Endpoint: `POST /api/interview/compile`
-```json
-{
-  "type": "object",
-  "properties": {
-    "brandStrategy": {
-      "type": "object",
-      "properties": {
-        "brandName": { "type": "string" },
-        "tagline": { "type": "string" },
-        "mission": { "type": "string" },
-        "targetAudience": { "type": "string" },
-        "coreValueProposition": { "type": "string" },
-        "antiHero": { "type": "string" },
-        "differentiator": { "type": "string" }
-      },
-      "required": ["brandName", "tagline", "mission", "targetAudience", "coreValueProposition", "antiHero", "differentiator"]
-    },
-    "voiceSystem": {
-      "type": "object",
-      "properties": {
-        "archetype": { "type": "string" },
-        "tone": { "type": "array", "items": { "type": "string" } },
-        "dos": { "type": "array", "items": { "type": "string" } },
-        "donts": { "type": "array", "items": { "type": "string" } },
-        "vocabularyWords": { "type": "array", "items": { "type": "string" } }
-      },
-      "required": ["archetype", "tone", "dos", "donts", "vocabularyWords"]
-    },
-    "visualTokens": {
-      "type": "object",
-      "properties": {
-        "palette": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": { "type": "string" },
-              "hex": { "type": "string" },
-              "role": { "type": "string", "enum": ["primary", "secondary", "accent", "surface", "text"] }
-            },
-            "required": ["name", "hex", "role"]
-          }
-        },
-        "typography": {
-          "type": "object",
-          "properties": {
-            "headingFont": { "type": "string" },
-            "bodyFont": { "type": "string" },
-            "googleFontsUrl": { "type": "string" }
-          },
-          "required": ["headingFont", "bodyFont", "googleFontsUrl"]
-        },
-        "stylePhilosophy": { "type": "string" },
-        "borderCurvature": { "type": "string" }
-      },
-      "required": ["palette", "typography", "stylePhilosophy", "borderCurvature"]
-    },
-    "launchContent": {
-      "type": "object",
-      "properties": {
-        "heroHeadline": { "type": "string" },
-        "heroSubheadline": { "type": "string" },
-        "callToAction": { "type": "string" },
-        "manifesto": { "type": "string" },
-        "elevatorPitch": { "type": "string" },
-        "socialHooks": { "type": "array", "items": { "type": "string" } }
-      },
-      "required": ["heroHeadline", "heroSubheadline", "callToAction", "manifesto", "elevatorPitch", "socialHooks"]
-    }
-  },
-  "required": ["brandStrategy", "voiceSystem", "visualTokens", "launchContent"]
-}
-```
+#### 1. Register (`POST /api/auth/register`)
+- **Body:** `{ email: string, password: string, displayName?: string }`
+- **Rule:** `email` MUST match `/^[a-zA-Z0-9._%+-]+@gmail\.com$/`
+- **Response (201):** `{ token: string, user: { id, email, displayName, authProvider }, message: string }`
+
+#### 2. Login (`POST /api/auth/login`)
+- **Body:** `{ email: string, password: string }`
+- **Response (200):** `{ token: string, user: { id, email, displayName, authProvider }, message: string }`
+
+#### 3. Google OAuth (`POST /api/auth/google`)
+- **Body:** `{ credential: string }` (Google ID Token)
+- **Response (200):** `{ token: string, user: { id, email, displayName, avatarUrl, authProvider } }`
+
+#### 4. Current User (`GET /api/auth/me`)
+- **Headers:** `Authorization: Bearer <token>`
+- **Response (200):** `{ user: { id, email, displayName, avatarUrl, authProvider } }`
 
 ---
 
-## 4. Known Blockers & Next Actions for AI Agents
+### B. Brand History & Library API (`/api/brands`)
+*All endpoints require `Authorization: Bearer <token>`.*
 
-### Backend Developer Agent:
-- [x] Scaffold Express server with CORS & JSON body parsing
-- [x] Configure `@google/genai` wrapper with structured response schemas
-- [x] Implement robust mock fallback for `POST /api/interview/next`
-- [x] Implement robust mock fallback for `POST /api/interview/compile`
-- [x] Add rate-limit retry logic with exponential backoff for Gemini API calls
-- [ ] Implement optional server-side streaming or SSE for compiling long manifesto copy
+#### 1. Fetch Saved Sessions (`GET /api/brands`)
+- **Response (200):** `{ sessions: BrandSession[], count: number }`
 
-### Frontend Developer Agent:
-- [x] Build `IntakeView` component with interactive sample pitch pills
-- [x] Build `InterviewChat` component with 3 clickable suggested answer pill chips
-- [x] Build `ProgressStepper` component with 3-stage visual progress
-- [x] Build `BrandKitDashboard` with dynamic Google Fonts loading, interactive HEX copy buttons, and CSS variables
-- [x] Integrate instant Mock Hydration toggle so anyone can test the dashboard immediately
-- [x] Add PDF / SVG export button for design tokens and color swatches
-- [ ] Add sound effects or haptic micro-interactions on pill selection
+#### 2. Save Active Brand (`POST /api/brands`)
+- **Body:** `{ brandName, tagline, initialPitch, domain, brandKit }`
+- **Response (201):** `{ session: BrandSession, message: string }`
 
-### Demo & Presentation Agent:
-- [x] Ensure zero-setup mock mode allows a full demo even without a `GEMINI_API_KEY`
-- [x] Prepare 3 preset founder pitch cards (e.g., "Developer-first DB", "AI Nutritionist for Gamers", "Anti-SaaS Accounting")
-- [ ] Record a 60-second walkthrough video of the Socratic flow generating a cyber-punk developer tool brand
+#### 3. Auto-Migrate Guest Kits (`POST /api/brands/sync-guest`)
+- **Body:** `{ brandSessions: Array<{ brandName, tagline, initialPitch, domain, brandKit }> }`
+- **Response (200):** `{ syncedCount: number, sessions: BrandSession[], message: string }`
+
+#### 4. Delete Brand Session (`DELETE /api/brands/:id`)
+- **Response (200):** `{ success: true, id: string, message: string }`
+
+---
+
+### C. Socratic Interview & Synthesis API (`/api/interview`)
+
+#### 1. Start Interview (`POST /api/interview/start`)
+- **Body:** `{ initialPitch: string }`
+- **Response (200):** `{ questions: Question[], domain: string }` (Generates 7 upfront questions)
+
+#### 2. Synthesize Brand Kit (`POST /api/interview/compile`)
+- **Body:** `{ initialPitch: string, answers: Array<{ question, answer }> }`
+- **Response (200):** Complete `BrandKit` object adhering to:
+  - `brandStrategy`: `{ brandName, tagline, mission, targetAudience, coreValueProposition, antiHero, differentiator }`
+  - `voiceSystem`: `{ archetype, tone, dos, donts, vocabularyWords }`
+  - `visualTokens`: `{ palette: Array<{ name, hex, role }>, typography: { headingFont, bodyFont, googleFontsUrl }, stylePhilosophy, borderCurvature }`
+  - `launchContent`: `{ heroHeadline, heroSubheadline, callToAction, manifesto, elevatorPitch, socialHooks }`
+
+---
+
+## 4. Completed Sprint Checklists
+
+### Backend Engineering:
+- [x] Scaffold Express API with strict CORS whitelist and request timing middleware
+- [x] Configure dual LLM orchestration: Groq (`llama-3.3-70b-versatile`) + Gemini API (`gemini-3.6-flash`)
+- [x] Scaffold Mongoose `User` schema with strict `@gmail.com` regex validation
+- [x] Scaffold Mongoose `BrandSession` schema with user association and timestamps
+- [x] Build `resilientStore.js` dual-mode fallback data layer for local/offline testing
+- [x] Implement JWT Bearer token middleware (`requireAuth`)
+- [x] Implement Auth Controller (`register`, `login`, `googleAuth`, `getMe`)
+- [x] Implement Brand History Controller (`list`, `save`, `syncGuest`, `delete`)
+- [x] Connect backend to live MongoDB Atlas cluster (`ac-9qpotsl-shard-00-02.wrf7nno.mongodb.net`)
+
+### Frontend Engineering & UI/UX:
+- [x] Implement `AuthContext.jsx` with guest run tracker (`MAX_GUEST_RUNS = 2`)
+- [x] Build editorial `AuthModal.jsx` with Google Sign-In, strict `@gmail.com` warning, and password match validation
+- [x] Build expandable/collapsible `Sidebar.jsx` with 1-click brand rehydration, swatch dots, and session deletion
+- [x] Add `"Save to Library"` persistence gating button to sticky `Header.jsx` and `BrandKitDashboard.jsx`
+- [x] Implement automatic post-login migration of buffered guest creations (`syncGuestSessions`)
+- [x] Verify complete guest flow in Playwright browser (2 tests permitted, 3rd blocked, registration, auto-migration, and rehydration)
+- [x] Keep all Git commits local on `main` (no unapproved remote pushes)
