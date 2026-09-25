@@ -5,8 +5,8 @@ import { AuthProvider } from './context/AuthContext';
 import App from './App.jsx';
 import './index.css';
 
-// Fallback client ID if not yet defined in .env so GoogleOAuthProvider initializes safely
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '1029384756-dummy-client-id.apps.googleusercontent.com';
+// Google OAuth Web Client ID (configured in Google Cloud Console)
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '281883142806-j9aqfp522gv4phq85kiq3k1mq2ntii62.apps.googleusercontent.com';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
