@@ -1,19 +1,40 @@
 import Groq from 'groq-sdk';
 import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Robustly load .env from server dir, root dir, or cwd
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 dotenv.config();
 
-const groq = process.env.GROQ_API_KEY ? new Groq({ apiKey: process.env.GROQ_API_KEY }) : null;
-const gemini = process.env.GEMINI_API_KEY ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }) : null;
+let _groq = null;
+function getGroqClient() {
+  if (!_groq && process.env.GROQ_API_KEY) {
+    _groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+  }
+  return _groq;
+}
+
+let _gemini = null;
+function getGeminiClient() {
+  if (!_gemini && process.env.GEMINI_API_KEY) {
+    _gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  }
+  return _gemini;
+}
 
 /**
  * Returns true if at least one LLM provider is configured.
  */
 export function isLlmConfigured() {
   const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
-  if (provider === 'groq' && groq) return true;
-  return Boolean(groq || gemini);
+  if (provider === 'groq' && Boolean(process.env.GROQ_API_KEY)) return true;
+  return Boolean(process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY);
 }
 
 export const getLlmClient = isLlmConfigured;
@@ -21,10 +42,10 @@ export const getLlmClient = isLlmConfigured;
 // Priority list for Groq models with graceful fallback for decommissioned model IDs
 const GROQ_CANDIDATE_MODELS = [
   process.env.GROQ_MODEL,
-  'llama-3.3-70b-versatile',
   'openai/gpt-oss-120b',
   'qwen/qwen3.8-27b',
-  'openai/gpt-oss-20b'
+  'openai/gpt-oss-20b',
+  'llama-3.3-70b-versatile'
 ].filter(Boolean);
 
 /**
@@ -38,14 +59,17 @@ const GROQ_CANDIDATE_MODELS = [
  */
 export async function generateStructuredJson({ systemInstruction, prompt, schema }) {
   const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
+  const groq = getGroqClient();
+  const gemini = getGeminiClient();
 
   // Primary: Try Groq if selected and configured
   if (provider === 'groq' && groq) {
-    console.log('[LLM Client] Dispatching request to Groq (llama-3.3-70b-versatile)...');
+    console.log('[LLM Client] Dispatching request to Groq...');
 
     for (let i = 0; i < GROQ_CANDIDATE_MODELS.length; i++) {
       const groqModel = GROQ_CANDIDATE_MODELS[i];
       try {
+        console.log(`[LLM Client] Attempting Groq model: ${groqModel}`);
         const response = await groq.chat.completions.create({
           model: groqModel,
           messages: [
@@ -56,7 +80,7 @@ export async function generateStructuredJson({ systemInstruction, prompt, schema
             { role: 'user', content: prompt }
           ],
           response_format: { type: 'json_object' },
-          temperature: 0.6
+          temperature: 0.65
         });
 
         const raw = response.choices[0]?.message?.content || '{}';
@@ -65,7 +89,7 @@ export async function generateStructuredJson({ systemInstruction, prompt, schema
         const msg = (err.message || '').toLowerCase();
         const isModelUnavailable = err.status === 404 || err.status === 400 || msg.includes('does not exist') || msg.includes('decommissioned');
         if (isModelUnavailable && i < GROQ_CANDIDATE_MODELS.length - 1) {
-          // Model decommissioned or unavailable on current Groq tier — failover to active Groq model
+          console.warn(`[LLM Client] Model ${groqModel} unavailable, trying next candidate...`);
           continue;
         }
         console.warn('[LLM Client] Groq call failed or rate-limited. Falling back to Gemini...', err.message);
@@ -85,7 +109,7 @@ export async function generateStructuredJson({ systemInstruction, prompt, schema
         systemInstruction,
         responseMimeType: 'application/json',
         responseSchema: schema,
-        temperature: 0.6
+        temperature: 0.65
       }
     });
 

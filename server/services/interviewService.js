@@ -130,20 +130,39 @@ function getFallbackConcepts(input, domain) {
     ];
   }
 
-  // General default fallback
-  const label = input.length > 25 ? input.slice(0, 22) + '...' : input;
+  // If beverage / drinkware / water bottle / hydration
+  if (domain === 'beverage' || lower.includes('water') || lower.includes('bottle') || lower.includes('flask') || lower.includes('tumbler') || lower.includes('drink')) {
+    return [
+      {
+        id: 'concept_a',
+        title: 'Nalu Thermal Vessel',
+        expandedPitch: 'Aerospace-grade double-walled titanium flasks with zero metallic taste, engineered for alpine trails and everyday hydration.',
+        strategicAngle: 'Indestructible lifetime thermal retention with sub-zero chill for 36 hours.'
+      },
+      {
+        id: 'concept_b',
+        title: 'HydroPure UV Filtration',
+        expandedPitch: 'Borosilicate glass and matte silicone bottles with an integrated self-cleaning UV-C cap purifying water in 60 seconds.',
+        strategicAngle: 'Zero-plastic pure water ritual designed for mindful urban wellness and travel.'
+      }
+    ];
+  }
+
+  // General default fallback: sanitize label and avoid generic tech clichés
+  const rawClean = input.replace(/\b(company|co|inc|app|startup|tool|service|platform|system|the)\b/gi, '').trim() || input;
+  const brandNameClean = rawClean.split(' ').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ') || 'Vessel';
   return [
     {
       id: 'concept_a',
-      title: `${label} Studio`,
-      expandedPitch: `A streamlined, high-signal modern solution designed to strip away legacy friction for discerning modern professionals.`,
-      strategicAngle: 'Extreme clarity and precision tailored for immediate daily utility.'
+      title: `${brandNameClean} Atelier`,
+      expandedPitch: `A purpose-built modern standard crafted to replace generic mass-market compromises with disciplined physical execution.`,
+      strategicAngle: 'Uncompromising material integrity and immediate daily functional utility.'
     },
     {
       id: 'concept_b',
-      title: `${label} Collective`,
+      title: `${brandNameClean} Standard`,
       expandedPitch: `An artisanal, high-touch craft alternative built around sustainable materials and transparent customer trust.`,
-      strategicAngle: 'Premium uncompromising execution over commoditized mass market competition.'
+      strategicAngle: 'Heirloom-grade design language over commoditized disposable alternatives.'
     }
   ];
 }

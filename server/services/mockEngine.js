@@ -262,13 +262,67 @@ function _careerBatch() {
   ];
 }
 
+function _beverageBatch() {
+  return [
+    {
+      id: 1,
+      stageLabel: "Audience",
+      question: "Which dedicated tribe will carry your bottle or drink every single day?",
+      suggestedAnswers: ["Endurance athletes and trail runners", "Urban subway and office commuters", "Mindful clean-hydration purists"],
+      reasoning: "A distinct daily-carry tribe anchors product ergonomics and brand status."
+    },
+    {
+      id: 2,
+      stageLabel: "Experience",
+      question: "What annoying compromise in existing drinkware or beverages are you eliminating?",
+      suggestedAnswers: ["Lukewarm water after three hours in the sun", "Lingering metallic taste and smelly caps", "Heavy, clumsy vessels that leak in backpacks"],
+      reasoning: "Directly solves the primary friction that drives everyday vessel replacement."
+    },
+    {
+      id: 3,
+      stageLabel: "Villain",
+      question: "What wasteful mass-market standard or category bad habit do you strictly reject?",
+      suggestedAnswers: ["Single-use plastic bottles choking landfill", "Cheap stainless steel that dents on first drop", "Overpriced gimmick lids with impossible cleaning crevices"],
+      reasoning: "Ideological contrast creates fiercely loyal brand advocates."
+    },
+    {
+      id: 4,
+      stageLabel: "Vibe",
+      question: "What physical aesthetic and tactile finish defines the object in hand?",
+      suggestedAnswers: ["Matte powder-coated architectural minimalism", "Brushed aerospace titanium and laser etching", "Translucent frosted glass with textured silicone grip"],
+      reasoning: "Tactile industrial design dictates premium customer perceived value."
+    },
+    {
+      id: 5,
+      stageLabel: "Pricing",
+      question: "What is your commercial pricing and replacement stance?",
+      suggestedAnswers: ["Accessible everyday durable utility", "Heirloom luxury vessel built for decades", "Refill-reward club with lifetime lid replacement"],
+      reasoning: "Signals category positioning against commoditized department-store bottles."
+    },
+    {
+      id: 6,
+      stageLabel: "Tone",
+      question: "What must your brand voice and packaging NEVER look or sound like?",
+      suggestedAnswers: ["Aggressive neon gym-bro energy hype", "Pretentious luxury wellness elitism", "Sterile corporate promotional giveaway merch"],
+      reasoning: "Verbal boundaries ensure the brand feels elevated and authentic."
+    },
+    {
+      id: 7,
+      stageLabel: "Edge",
+      question: "What unfair engineering or sourcing moat makes your vessel uncopyable?",
+      suggestedAnswers: ["48-hour sub-zero vacuum thermal core", "Medical-grade passivated interior with zero taste", "Patented leak-proof magnetic one-click cap"],
+      reasoning: "The tangible reason buyers pay a premium over basic mass-market flasks."
+    }
+  ];
+}
+
 function _generalBatch() {
   return [
     {
       id: 1,
       stageLabel: "Audience",
       question: "Who is the acute early adopter who will buy immediately?",
-      suggestedAnswers: ["Discerning buyers craving authentic craft", "Frustrated users fleeing legacy compromises", "Early-adopter power users building fast"],
+      suggestedAnswers: ["Discerning buyers craving authentic craft", "Frustrated customers fleeing cheap shortcuts", "Everyday users seeking durable reliability"],
       reasoning: "A narrow beachhead audience unlocks rapid organic traction."
     },
     {
@@ -378,6 +432,39 @@ function _hospitalityQuestion(round) {
     question: 'What memorable table ritual will guests tell their friends about tomorrow morning?',
     suggestedAnswers: ['Sizzling skillet brought table-side', 'Generous carafes poured at table', 'Warm bread fresh from embers'],
     reasoning: 'Signature rituals create word-of-mouth without paid marketing.',
+    readyForSynthesis: true
+  };
+}
+
+function _beverageQuestion(round) {
+  const questions = [
+    {
+      currentRound: 1, stageLabel: 'Daily Ritual',
+      question: 'Where does your vessel or beverage live? High-performance endurance workouts, urban commuter bags, or desk-side wellness?',
+      suggestedAnswers: ['High-performance athletic workouts', 'Urban commuter everyday carry', 'Desk-side mindful hydration'],
+      reasoning: 'Use-case ergonomics determine physical volume, thermal insulation, and cap mechanisms.',
+      readyForSynthesis: false
+    },
+    {
+      currentRound: 2, stageLabel: 'Material Stance',
+      question: 'Most mass-market bottles cut corners with cheap liners or smelly plastic lids. What material standard do you mandate?',
+      suggestedAnswers: ['Medical-grade titanium zero-taste core', 'Recycled ocean steel with lifetime repair', 'Borosilicate glass with silicone protection'],
+      reasoning: 'Material conviction justifies premium pricing and customer loyalty.',
+      readyForSynthesis: false
+    },
+    {
+      currentRound: 3, stageLabel: 'Category Villain',
+      question: 'What bad habit in the hydration industry do you stand firmly against?',
+      suggestedAnswers: ['Single-use plastic bottled water', 'Cheap dent-prone promotional bottles', 'Gimmicky smart lids that break quickly'],
+      reasoning: 'Taking a clear stand against industry waste creates passionate brand ambassadors.',
+      readyForSynthesis: true
+    }
+  ];
+  return questions[Math.min(round - 1, 2)] ?? {
+    currentRound: round, stageLabel: 'Brand Moat',
+    question: 'What enduring reason makes someone carry your brand over a Yeti or Hydro Flask?',
+    suggestedAnswers: ['Sub-zero 48-hour thermal retention', 'Featherweight aerospace engineering', 'Pure taste with zero metallic taint'],
+    reasoning: 'Defines your defensible market wedge against category giants.',
     readyForSynthesis: true
   };
 }
@@ -576,30 +663,6 @@ function _beverageKit() {
   };
 }
 
-function _beverageBatch() {
-  return [
-    { id: 1, stageLabel: 'Audience Wedge', question: 'Which consumer group feels most underserved by current energy drinks?', suggestedAnswers: ['Health-conscious professionals', 'Endurance athletes & movers', 'Mindful creators & builders'], reasoning: 'Focusing on a specific ritual wedge builds defensibility.' },
-    { id: 2, stageLabel: 'The Tension / Friction', question: 'What frustrating side effect of commercial energy drinks will you eradicate?', suggestedAnswers: ['Jittery palpitations and anxiety', 'The brutal 3 PM sugar crash', 'Chemical aftertaste from sucralose'], reasoning: 'Addressing real physical friction drives organic word of mouth.' },
-    { id: 3, stageLabel: 'The Sacred Cow', question: 'Which sacred assumption of the beverage industry do you openly challenge?', suggestedAnswers: ['More caffeine equals better energy', 'Energy drinks must taste like candy', 'Neon cans with aggressive graphics'], reasoning: 'Challenging an industry dogma establishes clear brand positioning.' },
-    { id: 4, stageLabel: 'Atmosphere & Setting', question: 'In what exact ritual should this drink become indispensable?', suggestedAnswers: ['Morning deep-work focus block', 'Mid-day post-lunch reset', 'Pre-workout movement ritual'], reasoning: 'Grounding the drink in daily rituals creates habitual repeat purchases.' },
-    { id: 5, stageLabel: 'Pricing Stance', question: 'How should your price point signal your formulation standard?', suggestedAnswers: ['Premium single-can craft tier', 'Everyday accessible wellness tier', 'Direct-to-consumer case subscriptions'], reasoning: 'Price communicates ingredient integrity and target market tier.' },
-    { id: 6, stageLabel: 'Aesthetic Boundary', question: 'What visual direction immediately sets your can apart on the shelf?', suggestedAnswers: ['Botanical elegance with linen textures', 'Muted earth tones and warm minimalism', 'Vibrant citrus blocks with crisp typography'], reasoning: 'Shelf visual contrast stops scrolling and commands attention.' },
-    { id: 7, stageLabel: 'Unfair Moat', question: 'What core ingredient or formulation truth cannot be easily cloned?', suggestedAnswers: ['Clinically dosed wild adaptogens', 'Direct-farm botanical extracts', 'Zero artificial sweeteners or gums'], reasoning: 'A defensible product truth builds enduring brand equity.' }
-  ];
-}
-
-function _beverageQuestion(round) {
-  const batch = _beverageBatch();
-  const q = batch[Math.min(round - 1, batch.length - 1)];
-  return {
-    currentRound: round,
-    stageLabel: q.stageLabel,
-    question: q.question,
-    suggestedAnswers: q.suggestedAnswers,
-    reasoning: q.reasoning,
-    readyForSynthesis: round >= 3
-  };
-}
 
 function _fashionBatch() {
   return [

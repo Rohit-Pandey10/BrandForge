@@ -52,5 +52,10 @@
     "ai-hackathon"
   ],
   "author": "Brand Builder Team",
-  "license": "MIT"
+  "license": "MIT",
+  "allowScripts": {
+    "@google/genai@2.24.0": true,
+    "esbuild@0.25.12": true,
+    "protobufjs@7.6.6": true
+  }
 }

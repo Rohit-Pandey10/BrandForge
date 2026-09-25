@@ -15,12 +15,11 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Download, Palette, Code, Eye, Target, Mic, Sliders, FileText, Printer, RotateCcw, Bookmark, Check } from 'lucide-react';
+import { Download, Palette, Code, Eye, Target, Sliders, FileText, Printer, RotateCcw, Bookmark, Check } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 import LivePreviewTab    from './dashboard/LivePreviewTab';
 import BrandStrategyTab from './dashboard/BrandStrategyTab';
-import VoiceAndToneTab  from './dashboard/VoiceAndToneTab';
 import VisualTokensTab  from './dashboard/VisualTokensTab';
 import LaunchCopyTab    from './dashboard/LaunchCopyTab';
 import { exportBrandKitJson, exportCssTokens, exportPaletteSvg } from '../utils/exportUtils';
@@ -28,7 +27,6 @@ import { exportBrandKitJson, exportCssTokens, exportPaletteSvg } from '../utils/
 const TABS = [
   { id: 'preview',   label: 'Live Brand Preview',      Icon: Eye },
   { id: 'strategy',  label: 'Brand Strategy',           Icon: Target },
-  { id: 'voice',     label: 'Voice & Tone',             Icon: Mic },
   { id: 'tokens',    label: 'Visual Design Tokens',     Icon: Sliders },
   { id: 'manifesto', label: 'Launch Copy & Manifesto',  Icon: FileText }
 ];
@@ -166,7 +164,6 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
       {/* ── Tab Content ── */}
       {activeTab === 'preview'   && <LivePreviewTab   {...tabProps} />}
       {activeTab === 'strategy'  && <BrandStrategyTab {...tabProps} />}
-      {activeTab === 'voice'     && <VoiceAndToneTab  {...tabProps} />}
       {activeTab === 'tokens'    && <VisualTokensTab  {...tabProps} />}
       {activeTab === 'manifesto' && <LaunchCopyTab    {...tabProps} />}
 

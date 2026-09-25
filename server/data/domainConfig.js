@@ -30,8 +30,8 @@ export function classifyDomain(text = '') {
     return DOMAINS.FASHION;
   }
 
-  // 2. BEVERAGE & FUNCTIONAL DRINKS
-  if (/(drink|drinks|beverage|beverages|energy drink|clean caffeine|caffeine|adaptogen|adaptogens|kombucha|seltzer|soda|tonic|botanicals?|elixir|nootropics?|hydration|smoothie|juice|cold brew|sparkling water)/i.test(lower)) {
+  // 2. BEVERAGE, DRINKWARE & HYDRATION
+  if (/(drink|drinks|beverage|beverages|bottle|bottles|water bottle|flask|flasks|tumbler|tumblers|thermos|cup|mug|drinkware|hydration|water|energy drink|clean caffeine|caffeine|adaptogen|adaptogens|kombucha|seltzer|soda|tonic|botanicals?|elixir|nootropics?|smoothie|juice|cold brew|sparkling water)/i.test(lower)) {
     return DOMAINS.BEVERAGE;
   }
 
