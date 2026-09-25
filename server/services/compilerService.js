@@ -149,8 +149,8 @@ export const brandKitSchema = {
         summary: { type: 'string', description: "Crisp 1-2 sentence commercial defensibility verdict." },
         strengths: {
           type: 'array',
-          minItems: 4,
-          maxItems: 4,
+          minItems: 2,
+          maxItems: 3,
           items: {
             type: 'object',
             properties: {
@@ -163,8 +163,8 @@ export const brandKitSchema = {
         },
         weaknesses: {
           type: 'array',
-          minItems: 4,
-          maxItems: 4,
+          minItems: 2,
+          maxItems: 3,
           items: {
             type: 'object',
             properties: {
@@ -177,8 +177,8 @@ export const brandKitSchema = {
         },
         opportunities: {
           type: 'array',
-          minItems: 4,
-          maxItems: 4,
+          minItems: 2,
+          maxItems: 3,
           items: {
             type: 'object',
             properties: {
@@ -191,8 +191,8 @@ export const brandKitSchema = {
         },
         threats: {
           type: 'array',
-          minItems: 4,
-          maxItems: 4,
+          minItems: 2,
+          maxItems: 3,
           items: {
             type: 'object',
             properties: {

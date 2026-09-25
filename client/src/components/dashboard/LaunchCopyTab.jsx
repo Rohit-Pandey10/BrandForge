@@ -22,7 +22,7 @@ export default function LaunchCopyTab({ brandStrategy, voiceSystem, visualTokens
       <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-10 transition-all duration-200 hover:-translate-y-0.5">
         <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#dbd7cd]">
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium block mb-1">CORE IDEOLOGY</span>
+            <span className="text-xs font-mono font-medium uppercase tracking-wider text-stone-400 block mb-1">CORE IDEOLOGY</span>
             <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em]">The Brand Manifesto</h3>
           </div>
           <button
@@ -43,7 +43,7 @@ export default function LaunchCopyTab({ brandStrategy, voiceSystem, visualTokens
 
       {/* Hero Copy Specimen */}
       <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 transition-all duration-200 hover:-translate-y-0.5">
-        <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium block mb-3">LAUNCH HEADLINE & PITCH</span>
+        <span className="text-xs font-mono font-medium uppercase tracking-wider text-stone-400 block mb-3">LAUNCH HEADLINE & PITCH</span>
         <h4
           className="font-serif text-3xl sm:text-4xl font-light text-black mb-3 leading-snug tracking-[-0.03em]"
           style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
@@ -52,14 +52,14 @@ export default function LaunchCopyTab({ brandStrategy, voiceSystem, visualTokens
         </h4>
         <p className="text-sm sm:text-base text-stone-600 mb-6 max-w-2xl leading-relaxed">{heroSubheadline}</p>
         <div className="pt-4 border-t border-[#dbd7cd]">
-          <span className="text-[11px] uppercase tracking-wider text-stone-400 block mb-1">Elevator Pitch:</span>
+          <span className="text-xs font-mono uppercase tracking-wider text-stone-400 block mb-1">Elevator Pitch:</span>
           <p className="text-xs sm:text-sm text-stone-800 leading-relaxed">{elevatorPitch || brandStrategy?.coreValueProposition}</p>
         </div>
       </div>
 
       {/* Social Hooks Grid */}
       <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
-        <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium block mb-4">LAUNCH SOCIAL HOOKS (30-DAY CAMPAIGN)</span>
+        <span className="text-xs font-mono font-medium uppercase tracking-wider text-stone-400 block mb-4">LAUNCH SOCIAL HOOKS (30-DAY CAMPAIGN)</span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {socialHooks.map((hook, idx) => (
             <div
@@ -68,7 +68,7 @@ export default function LaunchCopyTab({ brandStrategy, voiceSystem, visualTokens
             >
               <p className="text-stone-900 font-normal">"{hook}"</p>
               <div className="flex justify-between items-center pt-3 border-t border-[#dbd7cd]">
-                <span className="text-[11px] text-stone-400 font-mono">Hook 0{idx + 1}</span>
+                <span className="text-xs text-stone-400 font-mono font-medium">Hook 0{idx + 1}</span>
                 <button onClick={() => copyToClipboard(hook, `hook-${idx}`)} className="text-stone-500 hover:text-black transition-colors" title="Copy hook">
                   {copiedId === `hook-${idx}` ? <Check className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5" />}
                 </button>

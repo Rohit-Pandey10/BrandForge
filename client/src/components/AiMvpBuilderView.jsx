@@ -10,7 +10,7 @@ import { Copy, Check, Sparkles, Code2, Terminal, Layers, ArrowUpRight, Zap, Bot,
  * Adheres strictly to the standardized typography:
  * - Headlines: Cormorant Garamond
  * - Interface / Body: Inter
- * - Metadata / Badges / Code: JetBrains Mono (text-[11px])
+ * - Metadata / Badges / Code: JetBrains Mono (text-xs)
  */
 export default function AiMvpBuilderView({ brandKit, answers = [] }) {
   const [activeSubTab, setActiveSubTab] = useState('bolt-lovable');
@@ -189,7 +189,7 @@ Generate modular, highly polished React components with inline Tailwind CSS clas
 
 2. \`<HeroSection />\`:
    - Background: bg-[${surfaceHex}] with subtle hairline border border-[#dbd7cd].
-   - Eyebrow: text-[11px] font-mono uppercase tracking-[0.2em] text-[${accentHex}].
+   - Eyebrow: text-xs font-mono uppercase tracking-[0.2em] text-[${accentHex}].
    - Headline: font-serif text-4xl sm:text-6xl font-light text-[${textHex}] tracking-tight leading-[1.05].
    - Subhead: text-stone-600 text-base sm:text-lg max-w-2xl font-sans mt-4.
    - CTA Group: High-contrast primary button + outlined secondary button.
@@ -277,11 +277,11 @@ Whenever asked to write for ${strategy.brandName}:
         <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-            <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-orange-900 font-semibold">
+            <span className="text-xs font-mono uppercase tracking-[0.2em] text-orange-900 font-semibold">
               ✦ PRODUCTION AI SYSTEM PROMPTS • ZERO CODE DRIFT
             </span>
           </div>
-          <span className="text-[11px] font-mono text-stone-500 bg-white px-3 py-1 rounded-full border border-[#E5E0D8]">
+          <span className="text-xs font-mono text-stone-500 bg-white px-3 py-1 rounded-full border border-[#E5E0D8]">
             Vite + React + Tailwind Ready
           </span>
         </div>
@@ -298,7 +298,7 @@ Whenever asked to write for ${strategy.brandName}:
 
         {/* Quick External Platform Badges */}
         <div className="flex flex-wrap items-center gap-2 pt-5 mt-6 border-t border-[#E5E0D8]/60 text-xs font-medium text-stone-600">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 mr-1">Target Engines:</span>
+          <span className="text-xs font-mono uppercase tracking-wider text-stone-400 mr-1">Target Engines:</span>
           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[#E5E0D8] text-xs">
             <Zap className="w-3 h-3 text-orange-500" /> Bolt.new
           </span>
@@ -390,7 +390,7 @@ Whenever asked to write for ${strategy.brandName}:
             <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
             <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
             <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
-            <span className="ml-2 text-[11px] font-mono text-stone-400">
+            <span className="ml-2 text-xs font-mono text-stone-400">
               {activeSubTab === 'bolt-lovable' && 'bolt-lovable-system-prompt.md'}
               {activeSubTab === 'antigravity-v0' && 'antigravity-v0-modular-spec.md'}
               {activeSubTab === 'copywriter' && 'brand-copy-director-instruction.md'}
@@ -398,13 +398,13 @@ Whenever asked to write for ${strategy.brandName}:
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono text-stone-500 hidden sm:inline">
+            <span className="text-xs font-mono text-stone-500 hidden sm:inline">
               Markdown • Ready to paste
             </span>
             <button
               type="button"
               onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-stone-800 hover:bg-stone-700 text-[11px] font-mono text-stone-200 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-stone-800 hover:bg-stone-700 text-xs font-mono text-stone-200 transition-colors"
             >
               {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
               <span>{copied ? 'Copied' : 'Copy'}</span>
@@ -413,7 +413,7 @@ Whenever asked to write for ${strategy.brandName}:
         </div>
 
         {/* Code Content */}
-        <pre className="p-6 sm:p-8 font-mono text-xs sm:text-[13px] text-stone-300 overflow-x-auto max-h-[620px] scrollbar-thin leading-relaxed selection:bg-orange-500/30 whitespace-pre-wrap">
+        <pre className="p-6 sm:p-8 font-mono text-xs sm:text-sm text-stone-300 overflow-x-auto max-h-[620px] scrollbar-thin leading-relaxed selection:bg-orange-500/30 whitespace-pre-wrap">
           <code>{activePromptText}</code>
         </pre>
       </div>
@@ -421,7 +421,7 @@ Whenever asked to write for ${strategy.brandName}:
       {/* ── 3-Step Quick Guide Cards ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
         <div className="p-6 rounded-[24px] bg-white border border-[#E5E0D8] space-y-2">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-orange-600 font-semibold block">
+          <span className="text-xs font-mono uppercase tracking-wider text-orange-600 font-semibold block">
             Step 01 • Copy Master Prompt
           </span>
           <h4 className="text-base font-semibold text-stone-900 font-sans">
@@ -433,7 +433,7 @@ Whenever asked to write for ${strategy.brandName}:
         </div>
 
         <div className="p-6 rounded-[24px] bg-white border border-[#E5E0D8] space-y-2">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-orange-600 font-semibold block">
+          <span className="text-xs font-mono uppercase tracking-wider text-orange-600 font-semibold block">
             Step 02 • Open AI Builder
           </span>
           <h4 className="text-base font-semibold text-stone-900 font-sans">
@@ -445,7 +445,7 @@ Whenever asked to write for ${strategy.brandName}:
         </div>
 
         <div className="p-6 rounded-[24px] bg-white border border-[#E5E0D8] space-y-2">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-orange-600 font-semibold block">
+          <span className="text-xs font-mono uppercase tracking-wider text-orange-600 font-semibold block">
             Step 03 • Zero Design Drift
           </span>
           <h4 className="text-base font-semibold text-stone-900 font-sans">

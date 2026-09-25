@@ -49,7 +49,7 @@ export default function MethodologyModal({ isOpen, onClose }) {
         {/* Sticky Header Bar */}
         <div className="sticky top-0 z-10 flex items-start justify-between p-6 sm:p-8 pb-4 bg-[#FAF9F6]/95 backdrop-blur-sm border-b border-[#E5E0D8]/80">
           <div className="pr-4">
-            <span className="inline-block px-2.5 py-1 text-[11px] font-mono font-semibold tracking-[0.18em] uppercase rounded-full bg-amber-500/10 text-amber-900 border border-amber-500/20 mb-2.5">
+            <span className="inline-block px-2.5 py-1 text-xs font-mono font-semibold tracking-[0.18em] uppercase rounded-full bg-amber-500/10 text-amber-900 border border-amber-500/20 mb-2.5">
               EDITORIAL ARCHITECTURE
             </span>
             <h2 
@@ -80,7 +80,7 @@ export default function MethodologyModal({ isOpen, onClose }) {
           {/* Stage 01 */}
           <section className="space-y-4 pt-1 first:pt-0">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[11px] font-semibold text-orange-600 tracking-wider">
+              <span className="font-mono text-xs font-semibold text-orange-600 tracking-wider">
                 STAGE 01
               </span>
               <span className="text-stone-300">•</span>
@@ -91,21 +91,21 @@ export default function MethodologyModal({ isOpen, onClose }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
               <div className="p-4 sm:p-5 rounded-2xl bg-stone-100/70 border border-[#E5E0D8] space-y-1.5">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-rose-800 font-semibold flex items-center gap-1.5">
+                <span className="text-xs font-mono uppercase tracking-wider text-rose-800 font-semibold flex items-center gap-1.5">
                   <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />
                   The Problem (The One-Prompt Trap)
                 </span>
-                <p className="text-xs sm:text-[13px] text-zinc-700 leading-relaxed">
+                <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed">
                   Raw founder ideas are often either too broad or hyper-literal, leaving generic AI models to hallucinate clichéd buzzwords and forgettable identities.
                 </p>
               </div>
 
               <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E5E0D8] shadow-2xs space-y-1.5">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-800 font-semibold flex items-center gap-1.5">
+                <span className="text-xs font-mono uppercase tracking-wider text-emerald-800 font-semibold flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                   The System (BrandLoom Wedge)
                 </span>
-                <p className="text-xs sm:text-[13px] text-zinc-800 leading-relaxed">
+                <p className="text-xs sm:text-sm text-zinc-800 leading-relaxed">
                   Instead of hallucinating, our engine extracts the underlying commercial wedge and formulates two distinct, non-cringe strategic directions anchored in physical rituals, ingredients, or workflow realities.
                 </p>
               </div>
@@ -115,7 +115,7 @@ export default function MethodologyModal({ isOpen, onClose }) {
           {/* Stage 02 */}
           <section className="space-y-4 pt-6">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[11px] font-semibold text-orange-600 tracking-wider">
+              <span className="font-mono text-xs font-semibold text-orange-600 tracking-wider">
                 STAGE 02
               </span>
               <span className="text-stone-300">•</span>
@@ -126,21 +126,21 @@ export default function MethodologyModal({ isOpen, onClose }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
               <div className="p-4 sm:p-5 rounded-2xl bg-stone-100/70 border border-[#E5E0D8] space-y-1.5">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-rose-800 font-semibold flex items-center gap-1.5">
+                <span className="text-xs font-mono uppercase tracking-wider text-rose-800 font-semibold flex items-center gap-1.5">
                   <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />
                   The Problem (Static Forms)
                 </span>
-                <p className="text-xs sm:text-[13px] text-zinc-700 leading-relaxed">
+                <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed">
                   Static forms and template drop-downs force pre-baked assumptions that strip away what makes your proposition uniquely defensible.
                 </p>
               </div>
 
               <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E5E0D8] shadow-2xs space-y-1.5">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-800 font-semibold flex items-center gap-1.5">
+                <span className="text-xs font-mono uppercase tracking-wider text-emerald-800 font-semibold flex items-center gap-1.5">
                   <Compass className="w-3.5 h-3.5 text-emerald-600" />
                   The System (Category Trade-Offs)
                 </span>
-                <p className="text-xs sm:text-[13px] text-zinc-800 leading-relaxed">
+                <p className="text-xs sm:text-sm text-zinc-800 leading-relaxed">
                   The engine dynamically authors 7 trade-off probes specific to your category (e.g., table pacing and cellar philosophy for hospitality; latency and zero-GC friction for developer tools). It isolates the <strong className="font-semibold text-zinc-950">“Sacred Cow”</strong>—the legacy industry compromise your brand refuses to make.
                 </p>
               </div>
@@ -150,7 +150,7 @@ export default function MethodologyModal({ isOpen, onClose }) {
           {/* Stage 03 */}
           <section className="space-y-4 pt-6">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[11px] font-semibold text-orange-600 tracking-wider">
+              <span className="font-mono text-xs font-semibold text-orange-600 tracking-wider">
                 STAGE 03
               </span>
               <span className="text-stone-300">•</span>
@@ -161,21 +161,21 @@ export default function MethodologyModal({ isOpen, onClose }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
               <div className="p-4 sm:p-5 rounded-2xl bg-stone-100/70 border border-[#E5E0D8] space-y-1.5">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-rose-800 font-semibold flex items-center gap-1.5">
+                <span className="text-xs font-mono uppercase tracking-wider text-rose-800 font-semibold flex items-center gap-1.5">
                   <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />
                   The Problem (Superficial Aesthetics)
                 </span>
-                <p className="text-xs sm:text-[13px] text-zinc-700 leading-relaxed">
+                <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed">
                   Standard AI tools output generic random hex codes and boilerplate copy that feel disconnected from actual customer touchpoints.
                 </p>
               </div>
 
               <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E5E0D8] shadow-2xs space-y-1.5">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-800 font-semibold flex items-center gap-1.5">
+                <span className="text-xs font-mono uppercase tracking-wider text-emerald-800 font-semibold flex items-center gap-1.5">
                   <Cpu className="w-3.5 h-3.5 text-emerald-600" />
                   The System (Living Monograph)
                 </span>
-                <p className="text-xs sm:text-[13px] text-zinc-800 leading-relaxed">
+                <p className="text-xs sm:text-sm text-zinc-800 leading-relaxed">
                   Pulls exact vocabulary directly from the interview transcript to compile a living monograph: WCAG-tested color tokens, authentic Google Font pairings, voice boundaries (Dos & Don'ts), and an adaptive website preview.
                 </p>
               </div>
@@ -185,7 +185,7 @@ export default function MethodologyModal({ isOpen, onClose }) {
           {/* Stage 04 */}
           <section className="space-y-4 pt-6">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[11px] font-semibold text-orange-600 tracking-wider">
+              <span className="font-mono text-xs font-semibold text-orange-600 tracking-wider">
                 STAGE 04
               </span>
               <span className="text-stone-300">•</span>
@@ -195,12 +195,12 @@ export default function MethodologyModal({ isOpen, onClose }) {
             </div>
 
             <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#E5E0D8] shadow-2xs space-y-2">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-orange-800 font-semibold flex items-center gap-1.5">
+              <span className="text-xs font-mono uppercase tracking-wider text-orange-800 font-semibold flex items-center gap-1.5">
                 <Terminal className="w-3.5 h-3.5 text-orange-600" />
                 The System (Eliminate Design-to-Dev Lag)
               </span>
-              <p className="text-xs sm:text-[13px] text-zinc-800 leading-relaxed">
-                Instant export to <code className="font-mono bg-stone-100 text-stone-900 px-1.5 py-0.5 rounded text-[11px] border border-stone-200">tokens.json</code>, <code className="font-mono bg-stone-100 text-stone-900 px-1.5 py-0.5 rounded text-[11px] border border-stone-200">tokens.css</code>, printable executive PDF briefs, and tailored AI master prompts (for Bolt.new, v0, Lovable, Claude) to eliminate design-to-development lag.
+              <p className="text-xs sm:text-sm text-zinc-800 leading-relaxed">
+                Instant export to <code className="font-mono bg-stone-100 text-stone-900 px-1.5 py-0.5 rounded text-xs border border-stone-200">tokens.json</code>, <code className="font-mono bg-stone-100 text-stone-900 px-1.5 py-0.5 rounded text-xs border border-stone-200">tokens.css</code>, printable executive PDF briefs, and tailored AI master prompts (for Bolt.new, v0, Lovable, Claude) to eliminate design-to-development lag.
               </p>
             </div>
           </section>
@@ -210,7 +210,7 @@ export default function MethodologyModal({ isOpen, onClose }) {
         {/* Footer Bar */}
         <div className="p-4 sm:p-6 bg-[#FAF9F6] border-t border-[#E5E0D8] flex items-center justify-between gap-3">
           <span className="text-xs font-mono text-zinc-500 hidden sm:inline">
-            Press <kbd className="px-1.5 py-0.5 rounded bg-stone-200/80 text-zinc-700 text-[11px] font-mono border border-stone-300">Esc</kbd> to dismiss
+            Press <kbd className="px-1.5 py-0.5 rounded bg-stone-200/80 text-zinc-700 text-xs font-mono border border-stone-300">Esc</kbd> to dismiss
           </span>
           <button
             type="button"

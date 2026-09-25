@@ -27,7 +27,7 @@ export default function ProgressStepper({
       {/* Dynamic Stage Indicator Header */}
       <div className="flex items-center justify-between mb-2.5">
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-mono uppercase tracking-widest text-stone-500 font-semibold truncate max-w-[260px] sm:max-w-none">
+          <span className="text-xs font-mono uppercase tracking-widest text-stone-500 font-semibold truncate max-w-[260px] sm:max-w-none">
             {displayLabel}
           </span>
           <span className="text-stone-300">•</span>
@@ -65,7 +65,7 @@ export default function ProgressStepper({
               {/* Step label (visible on tablet+) */}
               <div className="hidden sm:flex items-center justify-between overflow-hidden">
                 <span
-                  className={`text-[11px] uppercase tracking-wider font-mono truncate transition-colors ${
+                  className={`text-xs uppercase tracking-wider font-mono truncate transition-colors ${
                     isActive
                       ? 'text-black font-semibold'
                       : isDone
@@ -83,7 +83,7 @@ export default function ProgressStepper({
       </div>
 
       {/* Mobile Active Stage Indicator */}
-      <div className="sm:hidden flex items-center justify-between text-[11px] text-stone-500 font-mono pt-1">
+      <div className="sm:hidden flex items-center justify-between text-xs text-stone-500 font-mono pt-1">
         <span>Question {currentStep} of {count}</span>
         <span className="text-black font-medium uppercase tracking-wider truncate max-w-[180px]">
           {displayLabel}

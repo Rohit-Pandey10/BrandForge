@@ -30,27 +30,27 @@ export default function App() {
     saveGuestKitLocally,
     openAuthModal,
     savedBrands = [],
-    saveBrandToLibrary
+    saveBrandToLibrary,
+    deleteBrandSession
   } = useAuth();
 
-  const [isSaved, setIsSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Single Source of Truth: Determine isSaved dynamically from savedBrands or local isSaved state
-  const isKitSaved = React.useMemo(() => {
-    if (isSaved) return true;
-    if (!brandKit) return false;
-    const activeName = (brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
-    if (!activeName) return false;
-    return (savedBrands || []).some(session => {
+  // Single Source of Truth: Determine isKitSaved dynamically from savedBrands
+  const activeBrandName = (brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
+  const savedMatch = React.useMemo(() => {
+    if (!brandKit) return null;
+    return (savedBrands || []).find(session => {
       const savedName = (session.brandName || session.brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
       const savedId = session._id || session.id;
-      return (brandKit._id && savedId === brandKit._id) || (savedName && savedName === activeName);
-    });
-  }, [isSaved, brandKit, savedBrands]);
+      return (brandKit._id && savedId === brandKit._id) || (activeBrandName && savedName === activeBrandName);
+    }) || null;
+  }, [brandKit, activeBrandName, savedBrands]);
 
-  const handleSaveToLibrary = async () => {
-    if (isKitSaved || isSaving) return;
+  const isKitSaved = Boolean(savedMatch);
+
+  const handleToggleSaveToLibrary = async () => {
+    if (isSaving) return;
 
     if (!isAuthenticated) {
       openAuthModal('save_gate');
@@ -61,22 +61,29 @@ export default function App() {
 
     setIsSaving(true);
     try {
-      const res = await saveBrandToLibrary(brandKit, {
-        brandName: brandKit?.brandStrategy?.brandName,
-        tagline: brandKit?.brandStrategy?.tagline,
-        domain: brandKit?.brandStrategy?.archetype || 'general',
-        initialPitch: initialPitch || rawPitch || ''
-      });
-
-      if (res && res.success) {
-        setIsSaved(true);
+      if (isKitSaved) {
+        // Unsave / Remove
+        const targetId = savedMatch?._id || savedMatch?.id || brandKit?._id;
+        if (targetId) {
+          await deleteBrandSession(targetId);
+        }
+      } else {
+        // Save to Library
+        await saveBrandToLibrary(brandKit, {
+          brandName: brandKit?.brandStrategy?.brandName,
+          tagline: brandKit?.brandStrategy?.tagline,
+          domain: brandKit?.brandStrategy?.archetype || 'general',
+          initialPitch: initialPitch || rawPitch || ''
+        });
       }
     } catch (err) {
-      console.error('[App] Save to library error:', err);
+      console.error('[App] Toggle save error:', err);
     } finally {
       setIsSaving(false);
     }
   };
+
+  const handleSaveToLibrary = handleToggleSaveToLibrary;
 
   /**
    * Helper to call backend API with fallback
@@ -218,7 +225,6 @@ export default function App() {
     }
 
     setIsCompiling(false);
-    setIsSaved(false);
     setStage('dashboard');
   };
 
@@ -234,7 +240,6 @@ export default function App() {
     setIntakeError('');
     setBrandKit(null);
     setInterviewAnswers([]);
-    setIsSaved(false);
     setIsSaving(false);
   };
 
@@ -249,7 +254,6 @@ export default function App() {
 
     const mockKit = getDomainMockBrandKit(initialPitch || rawPitch || '');
     setBrandKit(mockKit);
-    setIsSaved(false);
 
     if (!isAuthenticated) {
       incrementGuestRun();
@@ -269,11 +273,14 @@ export default function App() {
    */
   const handleRehydrateBrand = (rehydratedKit, sessionMeta) => {
     if (!rehydratedKit) return;
-    setBrandKit(rehydratedKit);
+    const kitWithMeta = {
+      ...rehydratedKit,
+      _id: sessionMeta?._id || sessionMeta?.id || rehydratedKit._id
+    };
+    setBrandKit(kitWithMeta);
     if (sessionMeta?.initialPitch) {
       setInitialPitch(sessionMeta.initialPitch);
     }
-    setIsSaved(true);
     setStage('dashboard');
   };
 

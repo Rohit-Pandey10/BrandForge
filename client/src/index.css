@@ -11,6 +11,19 @@
   --color-ash-gray: #999999;
 }
 
+/* Elevate baseline typography scale (~12.5% increase across all rem units) */
+html {
+  font-size: 18px; /* Standard browser default is 16px; this bumps every rem unit cleanly */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 16.5px; /* Proportional comfort for mobile screens */
+  }
+}
+
 /* Liquid glass background canvas */
 body {
   background-color: #f4f1ea;

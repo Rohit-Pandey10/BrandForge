@@ -77,7 +77,7 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
                 Brand Library
               </h2>
               {isAuthenticated && (
-                <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-stone-200/80 text-stone-700">
+                <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-stone-200/80 text-stone-700">
                   {savedBrands.length}
                 </span>
               )}
@@ -111,7 +111,7 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
           {isAuthenticated ? (
             <>
               <div className="px-1 py-1 flex items-center justify-between">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-stone-500">
+                <span className="text-xs font-mono uppercase tracking-wider text-stone-500">
                   Saved Sessions ({savedBrands.length})
                 </span>
               </div>
@@ -125,7 +125,7 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
                 <div className="py-12 px-4 text-center rounded-2xl border border-dashed border-[#dbd7cd] bg-white/40">
                   <FolderArchive className="w-7 h-7 mx-auto text-stone-400 mb-2 stroke-[1.2]" />
                   <p className="text-xs font-serif text-stone-700 font-medium">No saved brands yet</p>
-                  <p className="text-[11px] text-stone-500 mt-1 max-w-[200px] mx-auto">
+                  <p className="text-xs text-stone-500 mt-1 max-w-[200px] mx-auto">
                     Synthesize any brand kit and click "Save to Library" to archive it here.
                   </p>
                 </div>
@@ -149,7 +149,7 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
                               {session.brandName || strategy.brandName || 'Untitled Brand'}
                             </h3>
                             {session.tagline && (
-                              <p className="text-[11px] text-stone-500 truncate mt-0.5">
+                              <p className="text-xs text-stone-500 truncate mt-0.5">
                                 "{session.tagline}"
                               </p>
                             )}
@@ -179,7 +179,7 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
                             ))}
                           </div>
 
-                          <span className="text-[11px] font-mono text-stone-400">
+                          <span className="text-xs font-mono text-stone-400">
                             {session.createdAt ? new Date(session.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'Saved'}
                           </span>
                         </div>
@@ -195,7 +195,7 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
               {/* Guest Usage Card */}
               <div className="p-4 rounded-2xl bg-white border border-[#dbd7cd] shadow-xs">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] uppercase tracking-wider text-stone-500 font-mono">
+                  <span className="text-xs uppercase tracking-wider text-stone-500 font-mono">
                     Guest Pass Usage
                   </span>
                   <span className="text-xs font-mono font-medium text-black">
@@ -213,13 +213,13 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
                   />
                 </div>
 
-                <p className="mt-3 text-[11px] text-stone-500 leading-relaxed">
+                <p className="mt-3 text-xs text-stone-500 leading-relaxed">
                   Guests can author up to 2 full brand identities. Sign in to unlock unlimited creations and cloud persistence.
                 </p>
 
                 <button
                   onClick={() => openAuthModal('manual')}
-                  className="mt-3 w-full py-2 px-3 rounded-full border border-black text-black hover:bg-black hover:text-white text-[11px] uppercase tracking-wider font-medium transition-colors"
+                  className="mt-3 w-full py-2 px-3 rounded-full border border-black text-black hover:bg-black hover:text-white text-xs uppercase tracking-wider font-medium transition-colors"
                 >
                   Sign In with @gmail.com
                 </button>
@@ -229,10 +229,10 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
               {guestKits.length > 0 && (
                 <div>
                   <div className="px-1 py-1 flex items-center justify-between mb-1">
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-stone-500">
+                    <span className="text-xs font-mono uppercase tracking-wider text-stone-500">
                       Recent Guest Creations ({guestKits.length})
                     </span>
-                    <span className="text-[11px] text-amber-700 font-mono font-medium">Unsynced</span>
+                    <span className="text-xs text-amber-700 font-mono font-medium">Unsynced</span>
                   </div>
 
                   <div className="space-y-2">
@@ -249,11 +249,11 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
                           <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-black transition-transform group-hover:translate-x-0.5" />
                         </div>
                         {item.tagline && (
-                          <p className="text-[11px] text-stone-500 truncate mt-0.5">
+                          <p className="text-xs text-stone-500 truncate mt-0.5">
                             "{item.tagline}"
                           </p>
                         )}
-                        <p className="mt-2 text-[11px] text-stone-400 font-mono">
+                        <p className="mt-2 text-xs text-stone-400 font-mono">
                           Sign in to save this kit permanently &rarr;
                         </p>
                       </div>
@@ -277,7 +277,7 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
                   <p className="text-xs font-medium text-black truncate">
                     {user.displayName || user.email.split('@')[0]}
                   </p>
-                  <p className="text-[11px] font-mono text-stone-400 truncate">
+                  <p className="text-xs font-mono text-stone-400 truncate">
                     {user.email}
                   </p>
                 </div>

@@ -434,12 +434,6 @@ export function getDomainSwot(kit = {}) {
         analysis: `Value proposition grounded in ${valProp.toLowerCase().slice(0, 100)}, commanding premium price inelasticity over mass-produced alternatives.`,
         description: `Value proposition grounded in ${valProp.toLowerCase().slice(0, 100)}, commanding premium price inelasticity over mass-produced alternatives.`,
         transcriptAnchor: valProp.slice(0, 45)
-      },
-      {
-        title: "Targeted Audience Resonance",
-        analysis: `Direct focus on ${audience.toLowerCase().slice(0, 100)}, driving organic word-of-mouth adoption without wasted broad-reach ad spend.`,
-        description: `Direct focus on ${audience.toLowerCase().slice(0, 100)}, driving organic word-of-mouth adoption without wasted broad-reach ad spend.`,
-        transcriptAnchor: audience.slice(0, 40)
       }
     ],
     weaknesses: [
@@ -460,12 +454,6 @@ export function getDomainSwot(kit = {}) {
         analysis: "High-conviction aesthetic posture risks appearing intimidating or exclusionary to broader adjacent segments.",
         description: "High-conviction aesthetic posture risks appearing intimidating or exclusionary to broader adjacent segments.",
         mitigation: "Maintain welcoming, grounded service touchpoints and clear introductory product tiers."
-      },
-      {
-        title: "Longer Replenishment & Purchase Cycles",
-        analysis: "Durable design or deep fulfillment rituals reduce short-term transactional churn and repeat re-order velocity.",
-        description: "Durable design or deep fulfillment rituals reduce short-term transactional churn and repeat re-order velocity.",
-        mitigation: "Develop recurring companion consumables, refills, or seasonal archive collaborations."
       }
     ],
     opportunities: [
@@ -489,13 +477,6 @@ export function getDomainSwot(kit = {}) {
         description: "Partner with independent specialty boutiques, boutique hotels, and design galleries over indiscriminate retail distribution.",
         vector: "Selective global placement in top-tier design destination stockists.",
         growthVector: "Selective global placement in top-tier design destination stockists."
-      },
-      {
-        title: "Direct-to-Consumer Customization Programs",
-        analysis: "Offer tailored calibrations, custom packaging monograms, or bespoke formulation choices at checkout.",
-        description: "Offer tailored calibrations, custom packaging monograms, or bespoke formulation choices at checkout.",
-        vector: "High-AOV concierge customization tier for devoted brand patrons.",
-        growthVector: "High-AOV concierge customization tier for devoted brand patrons."
       }
     ],
     threats: [
@@ -519,13 +500,6 @@ export function getDomainSwot(kit = {}) {
         description: "Aggressive copycats deploying cheap synthetic replicas and subsidized digital ad spend.",
         defense: "Deepen trademark protections and anchor brand value in tangible physical rituals that cannot be dropshipped.",
         defensivePlay: "Deepen trademark protections and anchor brand value in tangible physical rituals that cannot be dropshipped."
-      },
-      {
-        title: "Counterfeit & Grey Market Resale Leakage",
-        analysis: "Unauthorized third-party sellers diluting the unboxing experience and customer service guarantees.",
-        description: "Unauthorized third-party sellers diluting the unboxing experience and customer service guarantees.",
-        defense: "Enforce direct-only fulfillment and register verified serial numbers with lifetime warranties.",
-        defensivePlay: "Enforce direct-only fulfillment and register verified serial numbers with lifetime warranties."
       }
     ]
   };

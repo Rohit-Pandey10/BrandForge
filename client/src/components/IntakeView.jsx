@@ -72,7 +72,7 @@ export default function IntakeView({ onStartInterview, onPreviewMock, isExpandin
 
       {/* ── Editorial Header ── */}
       <div className="text-center mb-8 sm:mb-12">
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-zinc-900 tracking-tight leading-[1.05] mb-4">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-normal text-zinc-900 tracking-tight leading-[1.08] mb-4">
           Turn an unformed thought into an <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-rose-600">enduring identity.</span>
         </h1>
         <p className="text-zinc-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
@@ -126,7 +126,7 @@ export default function IntakeView({ onStartInterview, onPreviewMock, isExpandin
             <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 text-xs sm:text-sm font-medium flex items-start gap-3 animate-fade-in shadow-2xs">
               <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
               <div className="space-y-1">
-                <span className="font-semibold text-amber-950 block uppercase tracking-wider text-[11px] font-mono">
+                <span className="font-semibold text-amber-950 block uppercase tracking-wider text-xs font-mono">
                   Input Clarification Required
                 </span>
                 <p className="leading-relaxed text-amber-900">

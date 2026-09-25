@@ -35,30 +35,31 @@ export default function Header({
     savedBrands = [],
     toggleSidebar,
     openAuthModal,
-    saveBrandToLibrary
+    saveBrandToLibrary,
+    deleteBrandSession
   } = useAuth();
 
-  const [internalIsSaving, setInternalIsSaving] = useState(false);
-  const [internalIsSaved, setInternalIsSaved] = useState(false);
+  const savedSessions = savedBrands;
+  const activeKit = brandKit;
 
-  // Check if active kit is already saved in user's library sessions
-  const activeBrandName = (brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
-  const existsInSavedSessions = (savedBrands || []).some(b => {
-    const name = (b.brandName || b.brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
-    const id = b._id || b.id;
-    return (brandKit?._id && id === brandKit?._id) || (name && name === activeBrandName);
-  });
+  // Derive isSaved dynamically
+  const savedMatch = savedSessions?.find(s => 
+    (activeKit?._id && (s._id === activeKit._id || s.id === activeKit._id)) || 
+    (s.brandName && activeKit?.brandStrategy?.brandName && s.brandName.toLowerCase() === activeKit.brandStrategy.brandName.toLowerCase()) ||
+    (s.brandKit?.brandStrategy?.brandName && activeKit?.brandStrategy?.brandName && s.brandKit.brandStrategy.brandName.toLowerCase() === activeKit.brandStrategy.brandName.toLowerCase())
+  );
 
   const isSaved = externalIsSaved !== undefined
     ? externalIsSaved
-    : (internalIsSaved || existsInSavedSessions);
+    : Boolean(savedMatch);
 
+  const [isTogglingSave, setIsTogglingSave] = useState(false);
   const isSaving = externalIsSaving !== undefined
     ? externalIsSaving
-    : internalIsSaving;
+    : isTogglingSave;
 
-  const handleSaveClick = async () => {
-    if (isSaved || isSaving) return;
+  const handleToggleSave = async () => {
+    if (isTogglingSave) return;
 
     if (externalOnSave) {
       await externalOnSave();
@@ -70,23 +71,28 @@ export default function Header({
       return;
     }
 
-    if (!brandKit) return;
+    if (!activeKit) return;
 
-    setInternalIsSaving(true);
+    setIsTogglingSave(true);
     try {
-      const res = await saveBrandToLibrary(brandKit, {
-        brandName: brandKit?.brandStrategy?.brandName,
-        tagline: brandKit?.brandStrategy?.tagline,
-        domain: brandKit?.brandStrategy?.archetype
-      });
-
-      if (res && res.success) {
-        setInternalIsSaved(true);
+      if (isSaved) {
+        // Unsave / Remove
+        const targetId = savedMatch?._id || savedMatch?.id || activeKit?._id;
+        if (targetId) {
+          await deleteBrandSession(targetId);
+        }
+      } else {
+        // Save to Library
+        await saveBrandToLibrary(activeKit, {
+          brandName: activeKit?.brandStrategy?.brandName,
+          tagline: activeKit?.brandStrategy?.tagline,
+          domain: activeKit?.brandStrategy?.archetype || 'general'
+        });
       }
     } catch (err) {
       console.error('Save error:', err);
     } finally {
-      setInternalIsSaving(false);
+      setIsTogglingSave(false);
     }
   };
 
@@ -129,7 +135,7 @@ export default function Header({
             </span>
           </button>
 
-          <span className="hidden xl:inline-flex items-center font-mono text-[11px] text-zinc-500 border border-zinc-200 rounded-full px-2.5 py-0.5 bg-white/70 tracking-wide font-medium">
+          <span className="hidden xl:inline-flex items-center font-mono text-xs text-zinc-500 border border-zinc-200 rounded-full px-2.5 py-0.5 bg-white/70 tracking-wide font-medium">
             Socratic Studio
           </span>
         </div>
@@ -143,7 +149,7 @@ export default function Header({
               className="text-xs font-medium text-zinc-600 hover:text-zinc-900 border border-zinc-200 rounded-xl px-3.5 py-1.5 bg-white/80 hover:bg-white transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer"
             >
               <span>Preview Sample</span>
-              <span className="text-[11px] text-zinc-400">&rarr;</span>
+              <span className="text-xs text-zinc-400">&rarr;</span>
             </button>
           )}
 
@@ -173,40 +179,25 @@ export default function Header({
 
               {/* PERSISTENCE GATING: Prominent "Save to Library" */}
               {isSaved ? (
-                <button
+                <button 
                   id="saveToLibraryBtn"
-                  disabled
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 cursor-default whitespace-nowrap"
-                  title="Saved to Library"
+                  type="button" 
+                  onClick={handleToggleSave}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-medium rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100 hover:border-emerald-400 transition-all cursor-pointer whitespace-nowrap"
+                  title="Click to remove from library"
                 >
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <Check className="w-4 h-4 text-emerald-600 shrink-0"/>
                   <span>Saved to Library</span>
                 </button>
               ) : (
-                <button
+                <button 
                   id="saveToLibraryBtn"
-                  onClick={handleSaveClick}
-                  disabled={isSaving}
-                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all shadow-xs whitespace-nowrap cursor-pointer ${
-                    isAuthenticated
-                      ? 'bg-[#1a1a1a] hover:bg-zinc-800 text-white'
-                      : 'bg-[#1a1a1a] hover:bg-zinc-800 text-white ring-2 ring-orange-500/20'
-                  }`}
-                  title={isAuthenticated ? 'Save this kit to your account library' : 'Sign in to save this kit permanently'}
+                  type="button" 
+                  onClick={handleToggleSave}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-medium rounded-md bg-white text-stone-700 border border-stone-300 hover:bg-stone-50 hover:border-stone-400 transition-all cursor-pointer whitespace-nowrap"
                 >
-                  {isSaving ? (
-                    <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  ) : (
-                    <>
-                      <Bookmark className="w-3.5 h-3.5 stroke-[1.8]" />
-                      <span>Save to Library</span>
-                      {!isAuthenticated && (
-                        <span className="text-[11px] bg-white/20 px-1.5 py-0.2 rounded-full font-mono">
-                          Free
-                        </span>
-                      )}
-                    </>
-                  )}
+                  <Bookmark className="w-4 h-4 text-stone-500 shrink-0"/>
+                  <span>Save to Library</span>
                 </button>
               )}
 
@@ -248,7 +239,7 @@ export default function Header({
                 className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-zinc-200 bg-white/80 hover:bg-white hover:border-zinc-300 transition-all text-left cursor-pointer"
                 title="Open Account & Library"
               >
-                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-orange-500 to-red-500 text-white flex items-center justify-center font-bold text-[11px]">
+                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-orange-500 to-red-500 text-white flex items-center justify-center font-bold text-xs">
                   {user.displayName?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || 'U'}
                 </div>
                 <span className="hidden md:inline text-xs font-semibold text-zinc-800 max-w-[100px] truncate">
@@ -258,7 +249,7 @@ export default function Header({
             ) : (
               <div className="flex items-center gap-2">
                 <span 
-                  className={`hidden sm:inline-flex items-center text-[11px] font-mono px-2.5 py-0.5 rounded-full border ${
+                  className={`hidden sm:inline-flex items-center text-xs font-mono px-2.5 py-0.5 rounded-full border ${
                     guestRunsCount >= MAX_GUEST_RUNS
                       ? 'border-amber-300 bg-amber-50 text-amber-800'
                       : 'border-zinc-200 bg-zinc-100 text-zinc-600'

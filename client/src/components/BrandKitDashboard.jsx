@@ -48,32 +48,27 @@ export default function BrandKitDashboard({
   onSave: externalOnSave
 }) {
   const [activeTab, setActiveTab] = useState('preview');
-  const [internalIsSaving, setInternalIsSaving] = useState(false);
-  const [internalIsSaved, setInternalIsSaved] = useState(false);
+  const [isTogglingSave, setIsTogglingSave] = useState(false);
   const [aiDrawerOpen, setAiDrawerOpen] = useState(false);
   const [aiTab, setAiTab] = useState('lovable');
   const [copiedPrompt, setCopiedPrompt] = useState(null);
   const [toastMessage, setToastMessage] = useState('');
-  const { isAuthenticated, saveBrandToLibrary, openAuthModal, savedBrands = [] } = useAuth();
+  const { isAuthenticated, saveBrandToLibrary, deleteBrandSession, openAuthModal, savedBrands = [] } = useAuth();
 
-  // Check if active kit is already saved in user's library sessions
-  const activeBrandName = (brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
-  const existsInSavedSessions = (savedBrands || []).some(b => {
-    const name = (b.brandName || b.brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
-    const id = b._id || b.id;
-    return (brandKit?._id && id === brandKit?._id) || (name && name === activeBrandName);
-  });
+  const savedSessions = savedBrands;
+  const activeKit = brandKit;
 
-  const isSaved = externalIsSaved !== undefined
-    ? externalIsSaved
-    : (internalIsSaved || existsInSavedSessions);
+  // Derive isSaved dynamically
+  const savedMatch = savedSessions?.find(s => 
+    (activeKit?._id && (s._id === activeKit._id || s.id === activeKit._id)) || 
+    (s.brandName && activeKit?.brandStrategy?.brandName && s.brandName.toLowerCase() === activeKit.brandStrategy.brandName.toLowerCase()) ||
+    (s.brandKit?.brandStrategy?.brandName && activeKit?.brandStrategy?.brandName && s.brandKit.brandStrategy.brandName.toLowerCase() === activeKit.brandStrategy.brandName.toLowerCase())
+  );
+  const isSaved = externalIsSaved !== undefined ? externalIsSaved : Boolean(savedMatch);
+  const isSaving = externalIsSaving !== undefined ? externalIsSaving : isTogglingSave;
 
-  const isSaving = externalIsSaving !== undefined
-    ? externalIsSaving
-    : internalIsSaving;
-
-  const handleSave = async () => {
-    if (isSaved || isSaving) return;
+  const handleToggleSave = async () => {
+    if (isTogglingSave) return;
     if (externalOnSave) {
       await externalOnSave();
       return;
@@ -82,16 +77,26 @@ export default function BrandKitDashboard({
       openAuthModal('save_gate');
       return;
     }
-    setInternalIsSaving(true);
+    setIsTogglingSave(true);
     try {
-      const res = await saveBrandToLibrary(brandKit);
-      if (res?.success) {
-        setInternalIsSaved(true);
+      if (isSaved) {
+        // Unsave / Remove
+        const targetId = savedMatch?._id || savedMatch?.id || activeKit?._id;
+        if (targetId) {
+          await deleteBrandSession(targetId);
+        }
+      } else {
+        // Save to Library
+        await saveBrandToLibrary(activeKit, {
+          brandName: activeKit?.brandStrategy?.brandName,
+          tagline: activeKit?.brandStrategy?.tagline,
+          domain: activeKit?.brandStrategy?.archetype || 'general'
+        });
       }
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error('Failed to toggle save state:', err);
     } finally {
-      setInternalIsSaving(false);
+      setIsTogglingSave(false);
     }
   };
 
@@ -191,7 +196,7 @@ export default function BrandKitDashboard({
             SYNTHESIZED BRAND MONOGRAPH • SPECIFICATION 01
           </span>
           <h1
-            className="text-4xl sm:text-6xl font-light text-zinc-900 tracking-[-0.03em] leading-tight mb-2"
+            className="text-4xl sm:text-5xl md:text-6xl font-normal text-zinc-900 tracking-tight leading-tight mb-2"
             style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
           >
             {brandName}
@@ -207,28 +212,23 @@ export default function BrandKitDashboard({
         {/* Actions: Save to Library & Start New */}
         <div className="no-print shrink-0 flex items-center gap-2.5">
           {isSaved ? (
-            <button
-              disabled
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 cursor-default"
+            <button 
+              type="button" 
+              onClick={handleToggleSave}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-medium rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100 hover:border-emerald-400 transition-all cursor-pointer"
+              title="Click to remove from library"
             >
-              <Check className="w-3.5 h-3.5 text-emerald-600" />
+              <Check className="w-4 h-4 text-emerald-600 shrink-0"/>
               <span>Saved to Library</span>
             </button>
           ) : (
-            <button
-              onClick={handleSave}
-              disabled={isSaving}
-              className="inline-flex items-center gap-1.5 text-xs px-4 py-2.5 rounded-xl border transition-all cursor-pointer font-semibold shadow-2xs bg-white border-zinc-200 hover:border-zinc-400 text-zinc-800"
-              title="Save this brand kit to your library"
+            <button 
+              type="button" 
+              onClick={handleToggleSave}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-medium rounded-md bg-white text-stone-700 border border-stone-300 hover:bg-stone-50 hover:border-stone-400 transition-all cursor-pointer"
             >
-              {isSaving ? (
-                <span className="w-3.5 h-3.5 border-2 border-zinc-300 border-t-zinc-900 rounded-full animate-spin" />
-              ) : (
-                <>
-                  <Bookmark className="w-3.5 h-3.5 stroke-[1.8]" />
-                  <span>Save to Library</span>
-                </>
-              )}
+              <Bookmark className="w-4 h-4 text-stone-500 shrink-0"/>
+              <span>Save to Library</span>
             </button>
           )}
 
@@ -446,7 +446,7 @@ export default function BrandKitDashboard({
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xs font-bold text-zinc-900">{t.label}</h3>
-                  <p className="text-[11px] text-zinc-500">{t.description}</p>
+                  <p className="text-xs text-zinc-500">{t.description}</p>
                 </div>
                 <button
                   onClick={() => handleCopyPrompt(t)}
@@ -469,7 +469,7 @@ export default function BrandKitDashboard({
                 </pre>
               </div>
 
-              <p className="text-[11px] text-zinc-500 font-mono leading-relaxed bg-zinc-100/70 p-2.5 rounded-xl border border-zinc-200/60">
+              <p className="text-xs text-zinc-500 font-mono leading-relaxed bg-zinc-100/70 p-2.5 rounded-xl border border-zinc-200/60">
                 Ready to paste directly into <span className="font-semibold text-zinc-800">{t.platform}</span>.
               </p>
             </div>

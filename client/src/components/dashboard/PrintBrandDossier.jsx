@@ -371,10 +371,10 @@ export default function PrintBrandDossier({ kit }) {
                 <span style={{ ...cardLabel, color: '#065f46', fontWeight: 700, marginBottom: 0 }}>
                   [S] CORE STRENGTHS & WEDGES
                 </span>
-                <span style={{ ...mono, fontSize: '7.5pt', color: '#059669' }}>{swotStrengths.length} WEDGES</span>
+                <span style={{ ...mono, fontSize: '7.5pt', color: '#059669' }}>{Math.min(swotStrengths.length, 3)} WEDGES</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {(swotStrengths.slice(0, 4)).map((s, idx) => (
+                {(swotStrengths.slice(0, 3)).map((s, idx) => (
                   <div key={idx} style={{ padding: '6px 8px', background: '#f6fbf8', borderRadius: '6px', border: '1px solid #e2ece6' }}>
                     <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{s.title}</div>
                     <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{s.analysis || s.description}</div>
@@ -394,10 +394,10 @@ export default function PrintBrandDossier({ kit }) {
                 <span style={{ ...cardLabel, color: '#92400e', fontWeight: 700, marginBottom: 0 }}>
                   [W] COMMERCIAL VULNERABILITIES
                 </span>
-                <span style={{ ...mono, fontSize: '7.5pt', color: '#d97706' }}>{Math.min(swotWeaknesses.length, 4)} RISKS</span>
+                <span style={{ ...mono, fontSize: '7.5pt', color: '#d97706' }}>{Math.min(swotWeaknesses.length, 3)} RISKS</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {(swotWeaknesses.slice(0, 4)).map((w, idx) => (
+                {(swotWeaknesses.slice(0, 3)).map((w, idx) => (
                   <div key={idx} style={{ padding: '6px 8px', background: '#fdfaf5', borderRadius: '6px', border: '1px solid #f2e9dc' }}>
                     <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{w.title}</div>
                     <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{w.analysis || w.description}</div>
@@ -417,10 +417,10 @@ export default function PrintBrandDossier({ kit }) {
                 <span style={{ ...cardLabel, color: '#3730a3', fontWeight: 700, marginBottom: 0 }}>
                   [O] EXPANSION VECTORS
                 </span>
-                <span style={{ ...mono, fontSize: '7.5pt', color: '#4f46e5' }}>{Math.min(swotOpportunities.length, 4)} CHANNELS</span>
+                <span style={{ ...mono, fontSize: '7.5pt', color: '#4f46e5' }}>{Math.min(swotOpportunities.length, 3)} CHANNELS</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {(swotOpportunities.slice(0, 4)).map((o, idx) => (
+                {(swotOpportunities.slice(0, 3)).map((o, idx) => (
                   <div key={idx} style={{ padding: '6px 8px', background: '#f7f7fd', borderRadius: '6px', border: '1px solid #e5e5f7' }}>
                     <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{o.title}</div>
                     <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{o.analysis || o.description}</div>
@@ -440,10 +440,10 @@ export default function PrintBrandDossier({ kit }) {
                 <span style={{ ...cardLabel, color: '#9f1239', fontWeight: 700, marginBottom: 0 }}>
                   [T] INCUMBENT THREATS & COUNTER-MOVES
                 </span>
-                <span style={{ ...mono, fontSize: '7.5pt', color: '#e11d48' }}>{Math.min(swotThreats.length, 4)} THREATS</span>
+                <span style={{ ...mono, fontSize: '7.5pt', color: '#e11d48' }}>{Math.min(swotThreats.length, 3)} THREATS</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {(swotThreats.slice(0, 4)).map((t, idx) => (
+                {(swotThreats.slice(0, 3)).map((t, idx) => (
                   <div key={idx} style={{ padding: '6px 8px', background: '#fdf6f7', borderRadius: '6px', border: '1px solid #fae4e7' }}>
                     <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{t.title}</div>
                     <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{t.analysis || t.description}</div>

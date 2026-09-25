@@ -27,7 +27,7 @@ export default function ConceptSelector({
     <div className="w-full max-w-4xl mx-auto px-4 py-6 sm:py-10 animate-fade-in text-black font-sans">
       {/* Top Editorial Breadcrumb & Status */}
       <div className="text-center mb-8 sm:mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono tracking-wide uppercase bg-stone-100 text-stone-600 border border-[#dbd7cd] mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono tracking-wide uppercase bg-stone-100 text-stone-600 border border-[#dbd7cd] mb-3">
           <Compass className="w-3.5 h-3.5 text-stone-800" />
           <span>Strategic Refinement Gate</span>
         </div>
@@ -42,7 +42,7 @@ export default function ConceptSelector({
 
         {rawPitch && (
           <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 border border-[#dbd7cd] text-xs text-stone-500">
-            <span className="font-mono text-[11px] uppercase text-stone-400">Raw Premise:</span>
+            <span className="font-mono text-xs uppercase text-stone-400">Raw Premise:</span>
             <span className="italic text-stone-700 max-w-[320px] sm:max-w-md truncate">"{rawPitch}"</span>
           </div>
         )}
@@ -67,7 +67,7 @@ export default function ConceptSelector({
               <div>
                 {/* Header Tag & Selection Indicator */}
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-stone-500">
+                  <span className="text-xs font-mono uppercase tracking-wider text-stone-500">
                     {directionNumber}
                   </span>
 
@@ -97,7 +97,7 @@ export default function ConceptSelector({
                 {/* Strategic Angle Pill */}
                 {concept.strategicAngle && (
                   <div className="pt-3 border-t border-[#f2f1ed] mb-4">
-                    <span className="block text-[11px] font-mono uppercase tracking-wider text-stone-400 mb-1">
+                    <span className="block text-xs font-mono uppercase tracking-wider text-stone-400 mb-1">
                       Strategic Moat
                     </span>
                     <p className="text-xs text-stone-600 leading-snug">
@@ -135,7 +135,7 @@ export default function ConceptSelector({
             <Edit3 className="w-3.5 h-3.5 text-stone-400" />
             <span>Refine Selected Concept (Optional)</span>
           </label>
-          <span className="text-[11px] text-stone-400 font-mono">
+          <span className="text-xs text-stone-400 font-mono">
             {customPitch.length} characters
           </span>
         </div>

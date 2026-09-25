@@ -72,7 +72,7 @@ export default function VisualTokensTab({ visualTokens }) {
       <section className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-[#dbd7cd]">
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium block mb-1">PALETTE SPECIFICATION</span>
+            <span className="text-xs font-mono font-medium uppercase tracking-wider text-stone-400 block mb-1">PALETTE SPECIFICATION</span>
             <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em]">Color System — Synthesized Palette</h3>
           </div>
           <span className="text-xs text-stone-500">Click any swatch to copy HEX · WCAG contrast vs. white</span>
@@ -97,21 +97,21 @@ export default function VisualTokensTab({ visualTokens }) {
               >
                 {/* Color block */}
                 <div className="h-24 w-full relative flex items-center justify-center" style={{ backgroundColor: color.hex }}>
-                  <span className={`text-[11px] font-mono px-2 py-0.5 rounded-full bg-white/95 text-black border border-black/10 transition-opacity ${isCopied ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                  <span className={`text-xs font-mono font-medium px-2 py-0.5 rounded-full bg-white/95 text-black border border-black/10 transition-opacity ${isCopied ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                     {isCopied ? 'Copied' : 'Copy'}
                   </span>
                 </div>
                 {/* Metadata */}
                 <div className="p-3 bg-white flex flex-col gap-1 border-t border-[#dbd7cd]/40">
-                  <span className="font-sans text-[11px] font-medium text-black truncate">{color.name}</span>
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400">{color.role}</span>
+                  <span className="font-sans text-xs font-medium text-black truncate">{color.name}</span>
+                  <span className="text-xs font-mono uppercase tracking-wider text-stone-400">{color.role}</span>
                   <div className="flex items-center justify-between mt-1">
                     <span className="font-mono text-xs text-stone-700">{color.hex}</span>
                     {isCopied ? <Check className="w-3 h-3 text-black" /> : <Copy className="w-3 h-3 text-stone-400 group-hover:text-black transition-colors" />}
                   </div>
                   {/* WCAG badge */}
                   {contrast && (
-                    <span className={`text-[11px] font-mono px-1.5 py-0.5 rounded border mt-1 w-fit ${levelColor}`}>
+                    <span className={`text-xs font-mono px-1.5 py-0.5 rounded border mt-1 w-fit ${levelColor}`}>
                       WCAG {level} · {contrast}
                     </span>
                   )}
@@ -128,7 +128,7 @@ export default function VisualTokensTab({ visualTokens }) {
         <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5">
           <div>
             <div className="flex items-center justify-between mb-3 pb-3 border-b border-[#dbd7cd]">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium">DISPLAY TYPOGRAPHY</span>
+              <span className="text-xs font-mono font-medium uppercase tracking-wider text-stone-400">DISPLAY TYPOGRAPHY</span>
               <span className="text-xs font-mono text-stone-500">{typography.headingFont || 'Cormorant Garamond'}</span>
             </div>
 
@@ -164,7 +164,7 @@ export default function VisualTokensTab({ visualTokens }) {
         <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5">
           <div>
             <div className="flex items-center justify-between mb-3 pb-3 border-b border-[#dbd7cd]">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium">BODY & UI TYPOGRAPHY</span>
+              <span className="text-xs font-mono font-medium uppercase tracking-wider text-stone-400">BODY & UI TYPOGRAPHY</span>
               <span className="text-xs font-mono text-stone-500">{typography.bodyFont || 'Inter'}</span>
             </div>
             <p className="text-sm text-stone-700 leading-relaxed mb-4" style={{ fontFamily: typography.bodyFont ? `'${typography.bodyFont}', sans-serif` : 'inherit' }}>
@@ -185,7 +185,7 @@ export default function VisualTokensTab({ visualTokens }) {
       {/* ── Style Philosophy & Border Curvature ── */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 transition-all duration-200 hover:-translate-y-0.5">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium block mb-2">AESTHETIC FOUNDATION</span>
+          <span className="text-xs font-mono font-medium uppercase tracking-wider text-stone-400 block mb-2">AESTHETIC FOUNDATION</span>
           <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-3">Style Philosophy</h3>
           <p className="text-sm text-stone-700 leading-relaxed bg-[#fcfbf9] p-4 rounded-xl border border-[#dbd7cd]">
             {stylePhilosophy || 'Refined monochrome typography with disciplined whitespace, hairline boundaries, and high-contrast editorial clarity.'}
@@ -194,10 +194,10 @@ export default function VisualTokensTab({ visualTokens }) {
 
         <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5">
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium block mb-2">GEOMETRY RULES</span>
+            <span className="text-xs font-mono font-medium uppercase tracking-wider text-stone-400 block mb-2">GEOMETRY RULES</span>
             <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em] mb-3">Border Curvature Spec</h3>
             <div className="flex items-center gap-4 bg-[#fcfbf9] p-4 rounded-xl border border-[#dbd7cd]">
-              <div className={`w-14 h-14 bg-stone-900 border border-stone-800 flex items-center justify-center text-white text-[11px] font-mono ${borderCurvature || 'rounded-xl'}`}>
+              <div className={`w-14 h-14 bg-stone-900 border border-stone-800 flex items-center justify-center text-white text-xs font-mono ${borderCurvature || 'rounded-xl'}`}>
                 Shape
               </div>
               <div>
@@ -213,7 +213,7 @@ export default function VisualTokensTab({ visualTokens }) {
       <section className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
         <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#dbd7cd]">
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium block mb-1">COMPILED CODE SPECIFICATION</span>
+            <span className="text-xs font-mono font-medium uppercase tracking-wider text-stone-400 block mb-1">COMPILED CODE SPECIFICATION</span>
             <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em]">CSS Custom Properties (:root)</h3>
           </div>
           <button

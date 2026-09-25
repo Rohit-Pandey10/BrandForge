@@ -128,7 +128,7 @@ export default function AuthModal() {
 
         {/* Reason Banner */}
         <div className="mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono tracking-wide uppercase bg-stone-100 text-stone-600 border border-[#dbd7cd]/80 mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium tracking-wide uppercase bg-stone-100 text-stone-600 border border-[#dbd7cd]/80 mb-3">
             {authModalReason === 'save_gate' && (
               <>
                 <Sparkles className="w-3 h-3 text-black" />
@@ -212,7 +212,7 @@ export default function AuthModal() {
 
           <div className="w-full flex items-center gap-3 my-4">
             <div className="flex-1 h-[1px] bg-[#dbd7cd]" />
-            <span className="text-[11px] uppercase tracking-wider text-stone-400 font-mono">or email</span>
+            <span className="text-xs uppercase tracking-wider text-stone-400 font-mono">or email</span>
             <div className="flex-1 h-[1px] bg-[#dbd7cd]" />
           </div>
         </div>
@@ -222,7 +222,7 @@ export default function AuthModal() {
           {/* Display Name (Only in Register mode) */}
           {mode === 'register' && (
             <div>
-              <label className="block text-[11px] uppercase tracking-wider text-stone-500 mb-1">
+              <label className="block text-xs font-mono font-medium uppercase tracking-wider text-stone-500 mb-1">
                 Display Name
               </label>
               <div className="relative">
@@ -241,11 +241,11 @@ export default function AuthModal() {
           {/* Email with Strict @gmail.com feedback */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="block text-[11px] uppercase tracking-wider text-stone-500">
+              <label className="block text-xs font-mono font-medium uppercase tracking-wider text-stone-500">
                 Email Address <span className="text-black font-semibold">(@gmail.com only)</span>
               </label>
               {isEmailValidGmail && (
-                <span className="text-[11px] text-emerald-600 flex items-center gap-1 font-mono">
+                <span className="text-xs text-emerald-600 flex items-center gap-1 font-mono font-medium">
                   <CheckCircle2 className="w-3 h-3" /> Valid
                 </span>
               )}
@@ -270,7 +270,7 @@ export default function AuthModal() {
             </div>
 
             {showEmailDomainWarning && (
-              <p className="mt-1 text-[11px] text-amber-700 flex items-center gap-1">
+              <p className="mt-1 text-xs text-amber-700 flex items-center gap-1">
                 <AlertCircle className="w-3 h-3 shrink-0" />
                 Only @gmail.com email addresses are allowed.
               </p>
@@ -279,7 +279,7 @@ export default function AuthModal() {
 
           {/* Password */}
           <div>
-            <label className="block text-[11px] uppercase tracking-wider text-stone-500 mb-1">
+            <label className="block text-xs font-mono font-medium uppercase tracking-wider text-stone-500 mb-1">
               Password {mode === 'register' && <span className="text-stone-400">(min 6 characters)</span>}
             </label>
             <div className="relative">
@@ -299,12 +299,12 @@ export default function AuthModal() {
           {mode === 'register' && (
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-[11px] uppercase tracking-wider text-stone-500">
+                <label className="block text-xs font-mono font-medium uppercase tracking-wider text-stone-500">
                   Confirm Password
                 </label>
                 {confirmPassword && (
                   <span
-                    className={`text-[11px] font-mono flex items-center gap-1 ${
+                    className={`text-xs font-mono font-medium flex items-center gap-1 ${
                       doPasswordsMatch ? 'text-emerald-600' : 'text-rose-600'
                     }`}
                   >
@@ -359,7 +359,7 @@ export default function AuthModal() {
         </form>
 
         {/* Footer info note */}
-        <p className="mt-4 text-center text-[11px] text-stone-400 font-mono">
+        <p className="mt-4 text-center text-xs text-stone-400 font-mono">
           Security: Salted bcrypt passwords &bull; MongoDB session archive
         </p>
       </div>

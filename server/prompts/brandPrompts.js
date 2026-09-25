@@ -209,12 +209,12 @@ PERSONALIZED SWOT ANALYSIS DIRECTIVE (CRITICAL - NO GENERIC FILLER):
 Synthesize a razor-sharp, authentic SWOT analysis grounded strictly in the founder's 
 actual interview choices (their chosen trade-offs, aesthetic boundaries, price point, and rejected sacred cows).
 
-- STRENGTHS (EXACTLY 4 items): Focus on the deliberate trade-offs the founder chose (e.g. lifetime repairs, hyper-dense denim, refusing seasonal trends). Anchor each item to a specific word or choice from their answers in 'transcriptAnchor'. Provide in-depth 'analysis'.
-- WEAKNESSES (EXACTLY 4 items): Real, honest commercial vulnerabilities caused by those choices (e.g. higher production unit costs, slower customer replenishment cycles, niche adoption barrier). Include an actionable 'mitigation' hedge for each with in-depth 'analysis'.
-- OPPORTUNITIES (EXACTLY 4 items): High-conviction cultural, retail, or product expansion channels that fit their exact archetype (e.g. archive repair workshops, limited deadstock runs, premium specialty boutique stockists). Include a specific 'vector' and in-depth 'analysis'.
-- THREATS (EXACTLY 4 items): Actual market threats (e.g. fast-fashion dupes, fluctuating raw selvedge cotton pricing, incumbent greenwashing). Include a tactical 'defense' and in-depth 'analysis'.
+SWOT SELECTION DIRECTIVE: Output strictly 2 to 3 critical, high-impact items per quadrant. Never provide 4+ padded items. Every single item must be anchored to the user's specific answers and domain. BANNED: generic filler like 'High competition', 'Marketing costs', or 'Social media'.
 
-STRICT SWOT CONSTRAINT: Under NO circumstances leave any quadrant empty or provide fewer than 4 items. Every single item must be anchored to the user's domain and trade-offs. BANNED: generic fluff like 'competition is high' or 'marketing is expensive'.
+- STRENGTHS (2 to 3 items): Focus on the deliberate trade-offs the founder chose (e.g. lifetime repairs, hyper-dense denim, refusing seasonal trends). Anchor each item to a specific word or choice from their answers in 'transcriptAnchor'. Provide in-depth 'analysis'.
+- WEAKNESSES (2 to 3 items): Real, honest commercial vulnerabilities caused by those choices (e.g. higher production unit costs, slower customer replenishment cycles, niche adoption barrier). Include an actionable 'mitigation' hedge for each with in-depth 'analysis'.
+- OPPORTUNITIES (2 to 3 items): High-conviction cultural, retail, or product expansion channels that fit their exact archetype (e.g. archive repair workshops, limited deadstock runs, premium specialty boutique stockists). Include a specific 'vector' and in-depth 'analysis'.
+- THREATS (2 to 3 items): Actual market threats (e.g. fast-fashion dupes, fluctuating raw selvedge cotton pricing, incumbent greenwashing). Include a tactical 'defense' and in-depth 'analysis'.
 `;
 
 export const swotAnalysisSchema = {
@@ -223,8 +223,8 @@ export const swotAnalysisSchema = {
     summary: { type: "string", description: "Crisp 1-2 sentence commercial defensibility verdict." },
     strengths: {
       type: "array",
-      minItems: 4,
-      maxItems: 4,
+      minItems: 2,
+      maxItems: 3,
       items: {
         type: "object",
         properties: {
@@ -237,8 +237,8 @@ export const swotAnalysisSchema = {
     },
     weaknesses: {
       type: "array",
-      minItems: 4,
-      maxItems: 4,
+      minItems: 2,
+      maxItems: 3,
       items: {
         type: "object",
         properties: {
@@ -251,8 +251,8 @@ export const swotAnalysisSchema = {
     },
     opportunities: {
       type: "array",
-      minItems: 4,
-      maxItems: 4,
+      minItems: 2,
+      maxItems: 3,
       items: {
         type: "object",
         properties: {
@@ -265,8 +265,8 @@ export const swotAnalysisSchema = {
     },
     threats: {
       type: "array",
-      minItems: 4,
-      maxItems: 4,
+      minItems: 2,
+      maxItems: 3,
       items: {
         type: "object",
         properties: {
