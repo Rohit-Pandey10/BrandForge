@@ -1,11 +1,19 @@
 import express from 'express';
 import {
+  handleExpandPitch,
   handleStartInterview,
   handleNextQuestion,
   handleCompileBrandKit
 } from '../controllers/interviewerController.js';
 
 const router = express.Router();
+
+/**
+ * @route   POST /api/interview/expand-pitch
+ * @desc    Background Strategic Intelligence (BGM) expands raw pitch into 2 sharp concepts
+ * @access  Public
+ */
+router.post('/expand-pitch', handleExpandPitch);
 
 /**
  * @route   POST /api/interview/start

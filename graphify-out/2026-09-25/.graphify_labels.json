@@ -3,7 +3,7 @@
   "1": "mockEngine.js",
   "2": "client/package.json",
   "3": "brand.ts",
-  "4": "llmClient.js",
+  "4": "geminiClient.js",
   "5": "dependencies",
   "6": "Brand Builder ⚡",
   "7": "resilientStore.js",
@@ -13,9 +13,10 @@
   "11": "tailwind.config.js",
   "12": "postcss.config.js",
   "13": "test-restaurant-flow.js",
+  "14": "A. Authentication API (`/api/auth`)",
   "15": "test-jeans-flow.js",
   "16": "server/package.json",
   "17": "package.json",
-  "18": "devDependencies",
+  "18": "scripts",
   "19": "vite.config.js"
 }

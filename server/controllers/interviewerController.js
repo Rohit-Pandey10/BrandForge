@@ -9,15 +9,35 @@
  *   compilerService   → Brand kit synthesis
  */
 
-import { generateNextQuestion, generateInterviewBatch } from '../services/interviewService.js';
+import { generateNextQuestion, generateInterviewBatch, expandRawPitch } from '../services/interviewService.js';
 import { compileBrandKit } from '../services/compilerService.js';
 
 // Re-export schemas for backwards compatibility with existing tests
-export { questionSchema, batchQuestionSchema } from '../services/interviewService.js';
+export { questionSchema, batchQuestionSchema, pitchEnhancerSchema } from '../services/interviewService.js';
 export { brandKitSchema } from '../services/compilerService.js';
 
 // Re-export domain helpers so existing imports from old controller still work
 export { classifyDomain as extractDomain, isFamilyIntent } from '../data/domainConfig.js';
+
+/**
+ * POST /api/interview/expand-pitch
+ * Evaluates raw/vague/broken user input and returns 2 distinct, high-conviction concepts.
+ */
+export async function handleExpandPitch(req, res) {
+  try {
+    const rawPitch = req.body.rawPitch || req.body.pitch || req.body.initialPitch || '';
+
+    if (!rawPitch || typeof rawPitch !== 'string' || !rawPitch.trim()) {
+      return res.status(400).json({ error: 'Invalid request', details: 'rawPitch must be a non-empty string' });
+    }
+
+    const concepts = await expandRawPitch(rawPitch.trim());
+    return res.status(200).json({ concepts });
+  } catch (error) {
+    console.error('[interviewerController] Error in handleExpandPitch:', error);
+    return res.status(500).json({ error: 'Failed to expand pitch', details: error.message });
+  }
+}
 
 /**
  * Validates that the history payload is a well-formed array of chat messages.

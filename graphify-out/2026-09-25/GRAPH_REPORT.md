@@ -1,17 +1,17 @@
 # Graph Report - brand-builder  (2026-09-25)
 
 ## Corpus Check
-- 54 files · ~34,988 words
+- 54 files · ~35,024 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 4 file(s) not represented in the graph (top: .example 2, (none) 1, .css 1)
 
 ## Summary
-- 387 nodes · 604 edges · 19 communities (14 shown, 5 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 26 edges (avg confidence: 0.88)
+- 397 nodes · 612 edges · 20 communities (15 shown, 5 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 24 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4b29e392`
+- Built from commit: `b90c767f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -20,16 +20,17 @@
 - mockEngine.js
 - client/package.json
 - brand.ts
-- llmClient.js
+- geminiClient.js
 - dependencies
 - Brand Builder ⚡
 - resilientStore.js
 - DESIGN.md — Handhold Editorial Design System
 - mockBrandData.js
 - shared/domainConfig.js
+- A. Authentication API (`/api/auth`)
 - server/package.json
 - package.json
-- devDependencies
+- scripts
 - vite.config.js
 
 ## God Nodes (most connected - your core abstractions)
@@ -45,41 +46,41 @@
 10. `generateInterviewBatch()` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Frontend Developer Agent:` --references--> `BrandKitDashboard()`  [INFERRED]
-  DEVSTATE.md → client/src/components/BrandKitDashboard.jsx
-- `Frontend Developer Agent:` --references--> `IntakeView()`  [INFERRED]
-  DEVSTATE.md → client/src/components/IntakeView.jsx
-- `Frontend Developer Agent:` --references--> `InterviewChat()`  [INFERRED]
-  DEVSTATE.md → client/src/components/InterviewChat.jsx
-- `Frontend Developer Agent:` --references--> `ProgressStepper()`  [INFERRED]
-  DEVSTATE.md → client/src/components/ProgressStepper.jsx
-- `2. Active Pipeline State Machine` --references--> `BrandKit`  [INFERRED]
+- `2. Active Pipeline State Machine` --references--> `AuthModal()`  [INFERRED]
+  DEVSTATE.md → client/src/components/AuthModal.jsx
+- `2. Synthesize Brand Kit (`POST /api/interview/compile`)` --references--> `BrandKit`  [INFERRED]
   DEVSTATE.md → client/src/types/brand.ts
+- `2. Component-to-API Dependency Matrix` --references--> `BrandKit`  [INFERRED]
+  graphify/architecture.graph.md → client/src/types/brand.ts
+- `2. Component-to-API Dependency Matrix` --references--> `QuestionResponse`  [INFERRED]
+  graphify/architecture.graph.md → client/src/types/brand.ts
+- `Backend Engineering:` --references--> `requireAuth()`  [INFERRED]
+  DEVSTATE.md → server/middleware/authMiddleware.js
 
 ## Import Cycles
 - None detected.
 
-## Communities (19 total, 5 thin omitted)
+## Communities (20 total, 5 thin omitted)
 
 ### Community 0 - "App.jsx"
 Cohesion: 0.10
-Nodes (34): App(), AuthModal(), BrandKitDashboard(), TABS, BrandStrategyTab(), LaunchCopyTab(), getContrastVsWhite(), VIEWPORT_SIZES (+26 more)
+Nodes (33): App(), AuthModal(), BrandKitDashboard(), TABS, BrandStrategyTab(), LaunchCopyTab(), getContrastVsWhite(), VIEWPORT_SIZES (+25 more)
 
 ### Community 1 - "mockEngine.js"
-Cohesion: 0.10
-Nodes (43): brandNamesWithAmpersand, testQueries, server_controllers_interviewercontroller_extractdomain, handleCompileBrandKit(), handleNextQuestion(), handleStartInterview(), validateHistory(), classifyDomain() (+35 more)
+Cohesion: 0.09
+Nodes (46): ref_groq_sdk, brandNamesWithAmpersand, testQueries, server_controllers_interviewercontroller_extractdomain, handleCompileBrandKit(), handleNextQuestion(), handleStartInterview(), validateHistory() (+38 more)
 
 ### Community 2 - "client/package.json"
 Cohesion: 0.06
 Nodes (32): dependencies, lucide-react, react, react-dom, @react-oauth/google, devDependencies, autoprefixer, postcss (+24 more)
 
 ### Community 3 - "brand.ts"
-Cohesion: 0.07
-Nodes (25): BrandKit, BrandStrategy, ChatMessage, ColorRole, ColorToken, LaunchContent, QuestionResponse, TypographyTokens (+17 more)
+Cohesion: 0.11
+Nodes (17): BrandKit, BrandStrategy, ChatMessage, ColorRole, ColorToken, LaunchContent, QuestionResponse, TypographyTokens (+9 more)
 
-### Community 4 - "llmClient.js"
-Cohesion: 0.23
-Nodes (10): ref_google_genai, ref_groq_sdk, CANDIDATE_MODELS, cleanJsonString(), generateStructuredJson(), getGeminiClient(), isTransientError(), sleep() (+2 more)
+### Community 4 - "geminiClient.js"
+Cohesion: 0.39
+Nodes (7): ref_google_genai, CANDIDATE_MODELS, cleanJsonString(), generateStructuredJson(), getGeminiClient(), isTransientError(), sleep()
 
 ### Community 5 - "dependencies"
 Cohesion: 0.14
@@ -90,8 +91,8 @@ Cohesion: 0.20
 Nodes (9): 1. Clone & Install Dependencies, 2. Configure Environment (Optional for Live Gemini API), 3. Run Development Servers, Brand Builder ⚡, 🎨 Interactive Features, 👥 Multi-Agent & Teammate Tooling, 🚀 Overview, ⚡ Quickstart (+1 more)
 
 ### Community 7 - "resilientStore.js"
-Cohesion: 0.06
-Nodes (44): ref_bcryptjs, ref_child_process, ref_cors, ref_dotenv, ref_express, ref_fs, ref_google_auth_library, ref_jsonwebtoken (+36 more)
+Cohesion: 0.05
+Nodes (47): 4. Completed Sprint Checklists, Backend Engineering:, Frontend Engineering & UI/UX:, ref_bcryptjs, ref_child_process, ref_cors, ref_dotenv, ref_express (+39 more)
 
 ### Community 8 - "DESIGN.md — Handhold Editorial Design System"
 Cohesion: 0.22
@@ -105,37 +106,41 @@ Nodes (17): LivePreviewTab(), classifyDomain(), DOMAINS, extractClientDomain, is
 Cohesion: 0.33
 Nodes (3): DOMAINS, extractClientDomain, isClientFamilyIntent
 
+### Community 14 - "A. Authentication API (`/api/auth`)"
+Cohesion: 0.12
+Nodes (16): 1. Fetch Saved Sessions (`GET /api/brands`), 1. Project Overview & Sprint Status, 1. Register (`POST /api/auth/register`), 1. Start Interview (`POST /api/interview/start`), 2. Active Pipeline State Machine, 2. Login (`POST /api/auth/login`), 2. Save Active Brand (`POST /api/brands`), 3. Auto-Migrate Guest Kits (`POST /api/brands/sync-guest`) (+8 more)
+
 ### Community 16 - "server/package.json"
 Cohesion: 0.06
 Nodes (30): dependencies, bcryptjs, cors, dotenv, express, google-auth-library, @google/genai, groq-sdk (+22 more)
 
 ### Community 17 - "package.json"
 Cohesion: 0.05
-Nodes (39): author, description, autoprefixer, bcryptjs, cors, dotenv, express, google-auth-library (+31 more)
+Nodes (39): author, description, devDependencies, autoprefixer, concurrently, nodemon, postcss, tailwindcss (+31 more)
 
-### Community 18 - "devDependencies"
+### Community 18 - "scripts"
 Cohesion: 0.20
-Nodes (10): devDependencies, autoprefixer, concurrently, nodemon, postcss, tailwindcss, @types/react, @types/react-dom (+2 more)
+Nodes (10): scripts, build:client, dev, dev:client, dev:server, install:all, test, test:health (+2 more)
 
 ## Knowledge Gaps
-- **178 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+173 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 212 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **184 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+179 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 218 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Frontend Developer Agent:` connect `App.jsx` to `brand.ts`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
-- **Why does `4. Known Blockers & Next Actions for AI Agents` connect `brand.ts` to `App.jsx`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+- **Why does `DEVSTATE.md — AI Agent Runtime & Architecture State` connect `A. Authentication API (`/api/auth`)` to `resilientStore.js`?**
+  _High betweenness centrality (0.206) - this node is a cross-community bridge._
+- **Why does `4. Completed Sprint Checklists` connect `resilientStore.js` to `A. Authentication API (`/api/auth`)`?**
+  _High betweenness centrality (0.174) - this node is a cross-community bridge._
 - **What connects `name`, `private`, `version` to the rest of the system?**
-  _178 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _184 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `App.jsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.09877551020408164 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09948979591836735 - nodes in this community are weakly interconnected._
 - **Should `mockEngine.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.10105580693815988 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09155844155844156 - nodes in this community are weakly interconnected._
 - **Should `client/package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.06060606060606061 - nodes in this community are weakly interconnected._
 - **Should `brand.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._

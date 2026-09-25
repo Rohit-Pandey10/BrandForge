@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import IntakeView from './components/IntakeView';
+import ConceptSelector from './components/ConceptSelector';
 import InterviewChat from './components/InterviewChat';
 import BrandKitDashboard from './components/BrandKitDashboard';
 import Sidebar from './components/Sidebar';
@@ -9,7 +10,10 @@ import { useAuth, MAX_GUEST_RUNS } from './context/AuthContext';
 import { mockBrandKit, getDomainMockBrandKit, getDomainMockBatch, getDomainMockQuestion } from './data/mockBrandData';
 
 export default function App() {
-  const [stage, setStage] = useState('intake'); // 'intake' | 'interview' | 'dashboard'
+  const [stage, setStage] = useState('intake'); // 'intake' | 'refinement' | 'interview' | 'dashboard'
+  const [rawPitch, setRawPitch] = useState('');
+  const [expandedConcepts, setExpandedConcepts] = useState([]);
+  const [isExpanding, setIsExpanding] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [initialPitch, setInitialPitch] = useState('');
   const [brandKit, setBrandKit] = useState(mockBrandKit);
@@ -48,21 +52,56 @@ export default function App() {
   };
 
   /**
-   * Step 1: Start interview from IntakeView (Batch Call 1: Upfront 7 Questions)
-   * Gated: Guests can run at most 2 tests before requiring authentication
+   * Step 1: Submit raw pitch from IntakeView
+   * Evaluated by BGM Prompt Enhancer to produce 2 distinct strategic directions
    */
-  const handleStartInterview = async (pitch) => {
+  const handleRawPitchSubmit = async (pitch) => {
     if (!isAuthenticated && guestRunsCount >= MAX_GUEST_RUNS) {
       openAuthModal('run_limit');
       return;
     }
 
     const cleanPitch = String(pitch || '').trim();
+    setRawPitch(cleanPitch);
+    setIsExpanding(true);
+
+    const data = await callApi('/api/interview/expand-pitch', { rawPitch: cleanPitch });
+
+    if (data && Array.isArray(data.concepts) && data.concepts.length >= 2) {
+      setExpandedConcepts(data.concepts);
+    } else {
+      // Local domain-adaptive fallback concepts
+      setExpandedConcepts([
+        {
+          id: 'concept_a',
+          title: 'Specialty Minimalist Studio',
+          expandedPitch: cleanPitch.length > 5 ? cleanPitch : 'A focused modern solution built for discerning professionals.',
+          strategicAngle: 'Direct-to-consumer craftsmanship without legacy distributor markups.'
+        },
+        {
+          id: 'concept_b',
+          title: 'Community Craft Collective',
+          expandedPitch: 'A communal alternative designed around sustainable materials and transparent customer trust.',
+          strategicAngle: 'High-touch artisanal experience centered on human connection.'
+        }
+      ]);
+    }
+
+    setIsExpanding(false);
+    setStage('refinement');
+  };
+
+  /**
+   * Step 2: Select or refine concept from ConceptSelector
+   * Generates the 7 discovery questions based on the chosen high-conviction concept
+   */
+  const handleSelectConcept = async (refinedPitch) => {
+    const cleanPitch = String(refinedPitch || '').trim();
     setIsLoading(true);
     setInitialPitch(cleanPitch);
     setStage('interview');
 
-    // Call 1: POST /api/interview/start generates all 7 questions upfront
+    // Call 1: POST /api/interview/start generates all 7 questions upfront based on refined pitch
     const data = await callApi('/api/interview/start', { initialPitch: cleanPitch });
 
     if (data && Array.isArray(data.questions) && data.questions.length > 0) {
@@ -76,7 +115,7 @@ export default function App() {
   };
 
   /**
-   * Step 2: Final Synthesis (Batch Call 2: Single Compilation from 7 Answers)
+   * Step 3: Final Synthesis (Batch Call 2: Single Compilation from 7 Answers)
    */
   const handleCompileBrandKit = async (qaData = {}) => {
     setIsCompiling(true);
@@ -121,6 +160,8 @@ export default function App() {
     setStage('intake');
     setQuestions([]);
     setInitialPitch('');
+    setRawPitch('');
+    setExpandedConcepts([]);
   };
 
   /**
@@ -132,7 +173,7 @@ export default function App() {
       return;
     }
 
-    const mockKit = getDomainMockBrandKit(initialPitch || '');
+    const mockKit = getDomainMockBrandKit(initialPitch || rawPitch || '');
     setBrandKit(mockKit);
 
     if (!isAuthenticated) {
@@ -140,7 +181,7 @@ export default function App() {
       saveGuestKitLocally(mockKit, {
         brandName: mockKit?.brandStrategy?.brandName,
         tagline: mockKit?.brandStrategy?.tagline,
-        initialPitch: initialPitch || 'Sample Brand',
+        initialPitch: initialPitch || rawPitch || 'Sample Brand',
         domain: 'general'
       });
     }
@@ -290,8 +331,19 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
       <main className="flex-1 flex flex-col justify-center py-4 sm:py-8">
         {stage === 'intake' && (
           <IntakeView
-            onStartInterview={handleStartInterview}
+            onStartInterview={handleRawPitchSubmit}
             onPreviewMock={handlePreviewMock}
+            isExpanding={isExpanding}
+          />
+        )}
+
+        {stage === 'refinement' && (
+          <ConceptSelector
+            rawPitch={rawPitch}
+            concepts={expandedConcepts}
+            onSelectConcept={handleSelectConcept}
+            onBackToIntake={() => setStage('intake')}
+            isLoadingDiscovery={isLoading}
           />
         )}
 

@@ -8,8 +8,145 @@
 
 import { generateStructuredJson, isLlmConfigured } from '../utils/llmClient.js';
 import { classifyDomain, isFamilyIntent } from '../data/domainConfig.js';
-import { buildQuestionSystemInstruction, buildBatchQuestionSystemInstruction } from '../prompts/brandPrompts.js';
+import { 
+  buildQuestionSystemInstruction, 
+  buildBatchQuestionSystemInstruction,
+  pitchEnhancerPrompt 
+} from '../prompts/brandPrompts.js';
 import { getMockQuestion, getMockBatch } from './mockEngine.js';
+
+/**
+ * JSON schema for Pitch Expansion & Concept Refinement Gate
+ */
+export const pitchEnhancerSchema = {
+  type: 'object',
+  properties: {
+    concepts: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'string' },
+          title: { type: 'string' },
+          expandedPitch: { type: 'string' },
+          strategicAngle: { type: 'string' }
+        },
+        required: ['id', 'title', 'expandedPitch', 'strategicAngle']
+      }
+    }
+  },
+  required: ['concepts']
+};
+
+/**
+ * Evaluates raw or fragmented user input and expands it into 2 distinct strategic concepts.
+ * @param {string} rawInput
+ * @returns {Promise<Array<Object>>} Exactly 2 concepts: [{ id, title, expandedPitch, strategicAngle }]
+ */
+export async function expandRawPitch(rawInput = '') {
+  const cleanInput = String(rawInput || '').trim();
+  const domain = classifyDomain(cleanInput);
+
+  if (isLlmConfigured()) {
+    try {
+      const prompt = `Raw User Concept Input:
+"${cleanInput}"
+
+Detected General Domain: ${domain.toUpperCase()}
+
+Transform this input into exactly 2 distinct, highly ambitious brand concepts matching the schema.`;
+
+      const result = await generateStructuredJson({
+        systemInstruction: pitchEnhancerPrompt,
+        prompt,
+        schema: pitchEnhancerSchema
+      });
+
+      if (result && Array.isArray(result.concepts) && result.concepts.length >= 2) {
+        return result.concepts.slice(0, 2);
+      }
+    } catch (err) {
+      console.warn('[interviewService] LLM Pitch expansion failed, using smart fallback:', err.message);
+    }
+  }
+
+  return getFallbackConcepts(cleanInput, domain);
+}
+
+function getFallbackConcepts(input, domain) {
+  const lower = (input || '').toLowerCase();
+
+  // If broken / casual / meta query
+  if (!input || lower.includes('work') || lower.includes('idk') || lower.includes('test') || lower.length < 8) {
+    return [
+      {
+        id: 'concept_a',
+        title: 'IncidentZero AI Debugger',
+        expandedPitch: 'An autonomous runtime debugging agent that pinpoints flaky microservices and halting state errors before customers notice.',
+        strategicAngle: 'Zero-downtime reliability for distributed high-velocity engineering teams.'
+      },
+      {
+        id: 'concept_b',
+        title: 'BareMetal Observability',
+        expandedPitch: 'A deterministic telemetry and log tracing suite engineered for low-overhead kernel and Rust backend architectures.',
+        strategicAngle: 'Raw sub-millisecond performance without proprietary SaaS tracing tax.'
+      }
+    ];
+  }
+
+  // If culinary / dining / pizza
+  if (domain === 'hospitality' || lower.includes('pizza') || lower.includes('food') || lower.includes('eat') || lower.includes('restaurant')) {
+    return [
+      {
+        id: 'concept_a',
+        title: 'Ferment & Hearth Slice Bar',
+        expandedPitch: 'A fast-casual counter serving 72-hour naturally fermented sourdough pizza slices paired with organic botanical sodas.',
+        strategicAngle: 'High-speed artisan street dining for urban lunch crowds and late-night purists.'
+      },
+      {
+        id: 'concept_b',
+        title: 'Lucca Family Woodfire Hearth',
+        expandedPitch: 'A warm, rustic neighborhood trattoria centered around oak-fired ovens, generous communal sharing tables, and honest regional ingredients.',
+        strategicAngle: 'Wholesome, unpretentious family dining with zero fussy culinary pretension.'
+      }
+    ];
+  }
+
+  // If fashion / apparel / denim
+  if (domain === 'fashion' || lower.includes('denim') || lower.includes('jeans') || lower.includes('clothes') || lower.includes('wear')) {
+    return [
+      {
+        id: 'concept_a',
+        title: 'Kuro Raw Selvedge Studio',
+        expandedPitch: 'Unwashed 14oz Japanese shuttle-loom denim built with copper hardware for creators and architects seeking timeless silhouettes.',
+        strategicAngle: 'Radical durability and anti-fast-fashion craft with authentic indigo fades.'
+      },
+      {
+        id: 'concept_b',
+        title: 'Modular Indigo Workshop',
+        expandedPitch: 'Upcycled circular streetwear designed with reinforced knee articulation, modular utility pockets, and free lifetime repairs.',
+        strategicAngle: 'Tactical zero-waste uniform engineered for everyday city life.'
+      }
+    ];
+  }
+
+  // General default fallback
+  const label = input.length > 25 ? input.slice(0, 22) + '...' : input;
+  return [
+    {
+      id: 'concept_a',
+      title: `${label} Studio`,
+      expandedPitch: `A streamlined, high-signal modern solution designed to strip away legacy friction for discerning modern professionals.`,
+      strategicAngle: 'Extreme clarity and precision tailored for immediate daily utility.'
+    },
+    {
+      id: 'concept_b',
+      title: `${label} Collective`,
+      expandedPitch: `An artisanal, high-touch craft alternative built around sustainable materials and transparent customer trust.`,
+      strategicAngle: 'Premium uncompromising execution over commoditized mass market competition.'
+    }
+  ];
+}
 
 /**
  * JSON schema for upfront 7-question batch discovery

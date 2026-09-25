@@ -2,18 +2,14 @@ import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { samplePitches } from '../data/mockBrandData';
 
-export default function IntakeView({ onStartInterview, onPreviewMock }) {
+export default function IntakeView({ onStartInterview, onPreviewMock, isExpanding = false }) {
   const [pitch, setPitch] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!pitch.trim()) {
-      setError('Please share a sentence about what you are building.');
-      return;
-    }
-    if (pitch.trim().length < 8) {
-      setError('A few more words will help ground the first question.');
+      setError('Please share what you are building or exploring.');
       return;
     }
     setError('');
@@ -78,10 +74,20 @@ export default function IntakeView({ onStartInterview, onPreviewMock }) {
             {/* Handhold Signature CTA: Black Pill */}
             <button
               type="submit"
-              className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-black text-white hover:bg-neutral-800 text-sm font-normal transition-all flex items-center justify-center gap-2 order-1 sm:order-2"
+              disabled={isExpanding}
+              className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-black text-white hover:bg-neutral-800 disabled:bg-stone-300 text-sm font-normal transition-all flex items-center justify-center gap-2 order-1 sm:order-2"
             >
-              <span>Begin Dialogue</span>
-              <ArrowRight className="w-3.5 h-3.5 stroke-[1.5]" />
+              {isExpanding ? (
+                <>
+                  <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span>Sharpening Concept...</span>
+                </>
+              ) : (
+                <>
+                  <span>Begin Dialogue</span>
+                  <ArrowRight className="w-3.5 h-3.5 stroke-[1.5]" />
+                </>
+              )}
             </button>
           </div>
         </form>
