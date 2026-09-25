@@ -28,8 +28,10 @@ const corsOptions = {
   origin: (origin, callback) => {
     // Allow requests with no Origin header (curl, mobile apps, server-to-server)
     if (!origin) return callback(null, true);
-    // Allow explicitly whitelisted origins
-    if (allowedOrigins.includes(origin)) return callback(null, true);
+    // Allow explicitly whitelisted origins or any local development port
+    if (allowedOrigins.includes(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+      return callback(null, true);
+    }
     // Allow known deployment platform subdomains
     if (
       origin.endsWith('.vercel.app') ||
