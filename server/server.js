@@ -14,7 +14,9 @@ const CLIENT_ORIGIN = process.env.CLIENT_URL || process.env.CLIENT_ORIGIN || 'ht
 const allowedOrigins = [
   CLIENT_ORIGIN,
   'http://localhost:5173',
+  'http://localhost:5174',
   'http://127.0.0.1:5173',
+  'http://127.0.0.1:5174',
   'http://localhost:3000'
 ].filter(Boolean);
 
@@ -24,6 +26,10 @@ const corsOptions = {
     if (!origin) return callback(null, true);
     // Allow explicitly whitelisted origins
     if (allowedOrigins.includes(origin)) return callback(null, true);
+    // Allow any localhost origin (e.g. http://localhost:5174, http://localhost:5175, etc.)
+    if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+      return callback(null, true);
+    }
     // Allow known deployment platform subdomains
     if (
       origin.endsWith('.vercel.app') ||

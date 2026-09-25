@@ -9,7 +9,7 @@
  *   compilerService   → Brand kit synthesis
  */
 
-import { generateNextQuestion, generateInterviewBatch } from '../services/interviewService.js';
+import { generateNextQuestion, generateInterviewBatch, routeInitialInput } from '../services/interviewService.js';
 import { compileBrandKit } from '../services/compilerService.js';
 
 // Re-export schemas for backwards compatibility with existing tests
@@ -37,21 +37,23 @@ function validateHistory(history) {
 
 /**
  * POST /api/interview/start
- * Generates the full 7-question discovery batch upfront from initial pitch.
+ * Routes initial input through Intent Classifier:
+ * - If CHAT: returns { type: "chat", message: "..." }
+ * - If PITCH: returns { type: "discovery", questions: [ ... ] }
  */
 export async function handleStartInterview(req, res) {
   try {
-    const initialPitch = req.body.initialPitch || req.body.pitch || (Array.isArray(req.body.history) && req.body.history[0]?.content) || '';
+    const initialPitch = req.body.initialPitch || req.body.pitch || req.body.message || (Array.isArray(req.body.history) && req.body.history[0]?.content) || '';
 
     if (!initialPitch || typeof initialPitch !== 'string' || !initialPitch.trim()) {
       return res.status(400).json({ error: 'Invalid request', details: 'initialPitch must be a non-empty string' });
     }
 
-    const questions = await generateInterviewBatch(initialPitch.trim());
-    return res.status(200).json({ questions });
+    const result = await routeInitialInput(initialPitch.trim());
+    return res.status(200).json(result);
   } catch (error) {
     console.error('[interviewerController] Error in handleStartInterview:', error);
-    return res.status(500).json({ error: 'Failed to generate interview batch', details: error.message });
+    return res.status(500).json({ error: 'Failed to process initial input', details: error.message });
   }
 }
 

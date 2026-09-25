@@ -8,8 +8,90 @@
 
 import { generateStructuredJson, isLlmConfigured } from '../utils/llmClient.js';
 import { classifyDomain, isFamilyIntent } from '../data/domainConfig.js';
-import { buildQuestionSystemInstruction, buildBatchQuestionSystemInstruction } from '../prompts/brandPrompts.js';
+import {
+  buildQuestionSystemInstruction,
+  buildBatchQuestionSystemInstruction,
+  buildIntentRouterSystemInstruction,
+  intentRouterSchema
+} from '../prompts/brandPrompts.js';
 import { getMockQuestion, getMockBatch } from './mockEngine.js';
+
+/**
+ * Heuristic fallback classifier for offline / error cases
+ */
+function fallbackClassifyIntent(text = '') {
+  const clean = String(text || '').toLowerCase().trim();
+  const chatPatterns = [
+    /^(hi|hello|hey|yo|sup|howdy|greetings|hola|namaste)(\s+.*)?$/i,
+    /^(who\s+are\s+you|what\s+is\s+this|what\s+do\s+you\s+do|how\s+does\s+this\s+work)/i,
+    /^(why\s+isn'?t\s+this\s+working|is\s+this\s+on|is\s+this\s+working|test|help|asdf|qwerty)/i,
+    /^(good\s+morning|good\s+afternoon|good\s+evening)/i,
+    /^(thanks|thank\s+you|ok|okay|cool|nice|bye|goodbye)$/i
+  ];
+
+  if (clean.length < 8 || chatPatterns.some(p => p.test(clean))) {
+    return {
+      intent: 'CHAT',
+      chatReply: "Hello! I'm your Socratic Brand Studio partner. Share a quick sentence about what product, company, or store you're dreaming of building, and we'll craft its identity together."
+    };
+  }
+
+  return { intent: 'PITCH', chatReply: '' };
+}
+
+/**
+ * Routes initial user input: classifies as CHAT or PITCH.
+ * - If CHAT: returns { type: 'chat', message: chatReply }
+ * - If PITCH: generates the 7-question discovery batch and returns { type: 'discovery', questions }
+ * 
+ * @param {string} initialPitch
+ * @returns {Promise<{ type: 'chat' | 'discovery', message?: string, questions?: Array<Object> }>}
+ */
+export async function routeInitialInput(initialPitch = '') {
+  const cleanText = String(initialPitch || '').trim();
+
+  let classification = null;
+
+  if (isLlmConfigured()) {
+    try {
+      const systemInstruction = buildIntentRouterSystemInstruction();
+      const prompt = `User Input Message:\n"${cleanText}"\n\nClassify intent and generate chat reply if CHAT matching schema.`;
+
+      const result = await generateStructuredJson({
+        systemInstruction,
+        prompt,
+        schema: intentRouterSchema
+      });
+
+      if (result && (result.intent === 'CHAT' || result.intent === 'PITCH')) {
+        classification = result;
+      }
+    } catch (llmError) {
+      console.warn('[interviewService] Intent router LLM failed, using heuristic fallback:', llmError.message);
+    }
+  }
+
+  if (!classification) {
+    classification = fallbackClassifyIntent(cleanText);
+  }
+
+  // 1. If classified as CHAT, respond conversationally
+  if (classification.intent === 'CHAT') {
+    const message = classification.chatReply?.trim() ||
+      "Hello! I'm your Socratic Brand Studio partner. Tell me what product, store, or company you want to build, and we'll craft its brand identity together.";
+    return {
+      type: 'chat',
+      message
+    };
+  }
+
+  // 2. If classified as PITCH, generate the full 7-stage discovery questions
+  const questions = await generateInterviewBatch(cleanText);
+  return {
+    type: 'discovery',
+    questions
+  };
+}
 
 /**
  * JSON schema for upfront 7-question batch discovery

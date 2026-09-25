@@ -1,0 +1,388 @@
+================================================================================
+                    BRAND BUILDER — SERVER DIRECTORY REPORT
+================================================================================
+Generated for: Brand Builder Backend (server/)
+Date: September 25, 2026
+Project: Adaptive Socratic Brand Interviewer & Design Token Synthesizer
+================================================================================
+
+1. EXECUTIVE OVERVIEW
+--------------------------------------------------------------------------------
+The `server/` directory contains the Node.js/Express backend that powers the
+Brand Builder platform. Its primary mission is to conduct adaptive, Socratic-
+style brand discovery interviews with startup founders and synthesize the
+resulting dialogue into a production-grade Brand Kit (including strategy,
+archetypes, voice/tone rules, CSS design tokens, typography pairings, and
+launch copy/manifestos).
+
+The backend features:
+- Dual-Provider LLM Engine: Groq (Llama 3.3 70B Versatile) as primary provider
+  with seamless automatic failover to Google Gemini 2.5/3.x Flash models.
+- Domain-Adaptive Intelligence: Dynamic classification of founder pitches into
+  domains (Hospitality/Dining, Fashion/Apparel, Developer Tools/SaaS, Wellness,
+  Career/HR, Creative Agencies) with strict anti-cliche/anti-jargon enforcement.
+- Deterministic Mock Safety Net: Comprehensive, offline mock generation engine
+  that guarantees 100% operational uptime and immediate local testing even if
+  network connectivity or API quotas fail.
+- Layered Architecture: Strict separation of concerns (Routes -> Controllers
+  -> Services -> Prompts & Data -> LLM/SDK Clients).
+
+
+2. DIRECTORY STRUCTURE & FILE TREE
+--------------------------------------------------------------------------------
+server/
+├── .env                         (Active local environment configuration & API keys)
+├── .env.example                 (Template for environment configuration)
+├── package.json                 (Node.js project manifest & dependencies)
+├── package-lock.json            (Deterministic dependency lockfile)
+├── server.js                    (Express server entry point & HTTP pipeline)
+│
+├── controllers/
+│   └── interviewerController.js (HTTP route handlers, payload validation & orchestration)
+│
+├── routes/
+│   └── brandRoutes.js           (Express router declaring public API endpoints)
+│
+├── services/
+│   ├── interviewService.js      (Socratic discovery & question generation logic)
+│   ├── compilerService.js       (Brand Kit synthesis & token compilation engine)
+│   └── mockEngine.js            (Multi-domain offline deterministic mock generators)
+│
+├── prompts/
+│   └── brandPrompts.js          (Centralized LLM prompt templates & domain guidance)
+│
+├── data/
+│   └── domainConfig.js          (Single source of truth for domain classification & regexes)
+│
+└── utils/
+    ├── llmClient.js             (Unified LLM dispatcher: Groq primary + Gemini fallback)
+    └── geminiClient.js          (Google GenAI SDK wrapper with retry & exponential backoff)
+
+
+3. IN-DEPTH FILE-BY-FILE DOCUMENTATION
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+FILE: server.js
+Location: server/server.js
+Role: Application Entry Point & Web Server Configuration
+--------------------------------------------------------------------------------
+Description:
+  Initializes and starts the Express application. Configures essential HTTP
+  middleware, security boundaries, and routes.
+Key Responsibilities:
+  1. Environment Loading: Invokes `dotenv.config()` to parse server/.env.
+  2. CORS Policy Whitelisting: Configures strict Cross-Origin Resource Sharing
+     allowing requests from Vite clients (`http://localhost:5173`,
+     `http://localhost:5174`, `http://localhost:3000`), custom `CLIENT_URL`,
+     and production hosting platforms (Vercel, Netlify, Railway, Render).
+  3. Body Parsing: Sets `express.json({ limit: '10mb' })` to safely process
+     multi-turn interview transcripts and extensive design token payloads.
+  4. Observability & Logging: Installs request logging middleware tracking HTTP
+     method, path, status code, and latency in milliseconds.
+  5. Health Check Endpoint: Exposes `GET /health` providing runtime metrics,
+     active LLM provider (Groq vs Gemini), model name, key status, and uptime.
+  6. Routing: Mounts `/api/interview` to `brandRoutes.js`.
+  7. Error Handling: Global fallback error middleware catching uncaught
+     exceptions and returning formatted JSON with 500 status.
+  8. Server Listener: Binds to `process.env.PORT || 5001`.
+
+--------------------------------------------------------------------------------
+FILE: package.json
+Location: server/package.json
+Role: Node.js Package Manifest & Scripts
+--------------------------------------------------------------------------------
+Description:
+  Declares the package metadata, runtime configuration, dependencies, and npm
+  scripts for the server module.
+Key Configurations:
+  - "type": "module" (Enables native ECMAScript Modules / ES imports).
+  - Scripts:
+    * `npm run dev`: Runs `nodemon server.js` for automatic restart on file edits.
+    * `npm start`: Runs `node server.js` in production mode.
+  - Dependencies:
+    * `@google/genai` (^2.24.0): Official Google GenAI SDK for Gemini 2.5/3.x.
+    * `groq-sdk` (^1.6.0): Official Groq SDK for ultra-fast LLaMA 3.3 inference.
+    * `express` (^4.21.2): Fast, unopinionated web framework for Node.js.
+    * `cors` (^2.8.5): Cross-Origin Resource Sharing middleware.
+    * `dotenv` (^16.4.7): Zero-dependency module loading environment variables.
+  - DevDependencies:
+    * `nodemon` (^3.1.9): File watcher for hot-reloading development server.
+
+--------------------------------------------------------------------------------
+FILE: .env & .env.example
+Location: server/.env & server/.env.example
+Role: Environment Configuration & Secret Management
+--------------------------------------------------------------------------------
+Description:
+  `.env.example` provides the template documentation for required environment
+  variables, while `.env` contains the active runtime values and API secrets.
+Key Variables:
+  - `PORT`: HTTP port for Express (default: `5001`).
+  - `LLM_PROVIDER`: Selected primary LLM service (`groq` or `gemini`).
+  - `GROQ_API_KEY`: Authentication secret for the Groq Cloud API.
+  - `GEMINI_API_KEY`: Authentication secret for Google Gemini API.
+  - `GEMINI_MODEL`: Target Gemini model identifier (e.g. `gemini-2.5-flash`).
+  - `CLIENT_URL`: URL of the frontend application for CORS authorization.
+
+--------------------------------------------------------------------------------
+FILE: routes/brandRoutes.js
+Location: server/routes/brandRoutes.js
+Role: Express Router / API Contract Definition
+--------------------------------------------------------------------------------
+Description:
+  Declares the HTTP endpoints for the brand creation pipeline and maps each
+  route to its dedicated controller function.
+Exposed Endpoints:
+  1. `POST /api/interview/start` -> Maps to `handleStartInterview`
+     Generates a 7-stage upfront Socratic question batch based on initial pitch.
+  2. `POST /api/interview/next` -> Maps to `handleNextQuestion`
+     Dynamically inspects conversational history to generate the next probing
+     question with 3 clickable suggested answer options and rationale.
+  3. `POST /api/interview/compile` -> Maps to `handleCompileBrandKit`
+     Compiles user answers and interview transcript into a structured Brand Kit.
+
+--------------------------------------------------------------------------------
+FILE: controllers/interviewerController.js
+Location: server/controllers/interviewerController.js
+Role: HTTP Request Validation & Service Orchestration
+--------------------------------------------------------------------------------
+Description:
+  Acts as the thin controller layer between HTTP requests and the business logic
+  services. Contains zero inline prompts and zero mock data.
+Key Responsibilities:
+  1. Input Validation:
+     - `validateHistory(history)`: Ensures message histories are valid arrays
+       with maximum 50 turns and proper `{ role, content }` objects.
+     - Validates that `initialPitch` is a non-empty string.
+  2. Request Handlers:
+     - `handleStartInterview(req, res)`: Extracts initial pitch, invokes
+       `interviewService.generateInterviewBatch()`, and returns `{ questions }`.
+     - `handleNextQuestion(req, res)`: Validates history payload, delegates to
+       `interviewService.generateNextQuestion()`, and returns Socratic question.
+     - `handleCompileBrandKit(req, res)`: Handles both modern `{ qaPairs, initialPitch }`
+       payloads and legacy `{ history }` arrays, delegates to
+       `compilerService.compileBrandKit()`, and returns complete Brand Kit.
+  3. Re-exports:
+     - Re-exports validation schemas (`questionSchema`, `batchQuestionSchema`,
+       `brandKitSchema`) and domain helpers (`classifyDomain`, `isFamilyIntent`)
+       for backward compatibility with integration tests.
+
+--------------------------------------------------------------------------------
+FILE: services/interviewService.js
+Location: server/services/interviewService.js
+Role: Socratic Question Generation & Schema Enforcement
+--------------------------------------------------------------------------------
+Description:
+  Core business service responsible for formulating probing, high-signal
+  Socratic questions that force founders to articulate their brand identity.
+Key Features & Functions:
+  1. `batchQuestionSchema`: JSON Schema enforcing the structure of upfront
+     batch questions (id, stageLabel, question, suggestedAnswers, reasoning).
+  2. `questionSchema`: JSON Schema enforcing single-round question outputs
+     (currentRound, question <25 words, suggestedAnswers <6 words each,
+     reasoning, stageLabel, isComplete flag).
+  3. `generateInterviewBatch(initialPitch)`:
+     - Detects business domain using `classifyDomain()`.
+     - Checks for family dining intent via `isFamilyIntent()`.
+     - If LLM is configured, generates 7 targeted discovery questions upfront
+       using `llmClient.generateStructuredJson()`.
+     - Automatically falls back to `mockEngine.getMockBatch()` on any LLM or
+       network failure.
+  4. `generateNextQuestion(history)`:
+     - Determines current interview round and user context from transcript.
+     - If round >= 3, sets `isComplete: true` allowing instant synthesis.
+     - Calls LLM or falls back to `mockEngine.getMockQuestion()`.
+
+--------------------------------------------------------------------------------
+FILE: services/compilerService.js
+Location: server/services/compilerService.js
+Role: Brand Kit Synthesis & Design Token Engine
+--------------------------------------------------------------------------------
+Description:
+  Takes founder interview responses and synthesizes a complete, mathematically
+  and aesthetically cohesive Brand Kit.
+Key Features & Functions:
+  1. `brandKitSchema`: Comprehensive JSON schema defining the required brand kit:
+     - `brandStrategy`: brandName, tagline, mission, targetAudience,
+       coreValueProposition, antiHero, differentiator.
+     - `voiceSystem`: archetype, tone list, dos, donts, vocabularyWords.
+     - `visualTokens`:
+       * `palette`: Array of 5 tokens (primary, secondary, accent, surface, text)
+         with valid hex codes and functional names.
+       * `typography`: headingFont, bodyFont, googleFontsUrl, rationale.
+       * `stylePhilosophy`: Visual language description.
+       * `borderCurvature`: Border radius specifications.
+     - `launchContent`: heroHeadline, heroSubheadline, callToAction,
+       manifesto (full-length prose), elevatorPitch, socialHooks.
+  2. `compileBrandKit(payload)`:
+     - Normalizes incoming payloads (extracts Q&A pairs, initial pitch, answers).
+     - Formulates synthesis prompts with domain anti-jargon instructions.
+     - Dispatches request via `llmClient.generateStructuredJson()`.
+     - Gracefully falls back to `mockEngine.getMockBrandKit()` on failure.
+
+--------------------------------------------------------------------------------
+FILE: services/mockEngine.js
+Location: server/services/mockEngine.js
+Role: Deterministic Multi-Domain Mock Safety Net
+--------------------------------------------------------------------------------
+Description:
+  A massive (730+ lines), zero-dependency deterministic generation engine.
+  Guarantees that the application functions seamlessly in offline environments,
+  during hackathon demos, or under strict LLM API rate limits.
+Key Generators:
+  1. `getMockQuestion(round, userContext)` & `getMockBatch(userContext)`:
+     Produces rich Socratic questions tailored to detected domain:
+     - Fashion/Denim: Probes fabric weight, raw selvedge, shuttle looms, cuts.
+     - Hospitality/Dining: Probes neighborhood vibe, kitchen philosophy, table sizes.
+     - Family Dining: Probes kid-friendliness, sharing tables, non-alcoholic focus.
+     - Developer Tools: Probes latency, terminal UI, developer ergonomics.
+     - Career/Wellness/General: Probes target user, core friction, positioning.
+  2. `getMockBrandKit(userContext)`:
+     Generates authentic, high-quality Brand Kits:
+     - Restaurant Mode: Produces "Oakhaven Table" with Terracotta/Olive palette,
+       Fraunces + Inter typography, and authentic gastronomic manifesto.
+     - Denim/Fashion Mode: Produces "Kuroki Standard" with Raw Indigo, Ecru,
+       Selvedge Redline colors, Space Grotesk typography, anti-fast-fashion copy.
+     - Developer Mode: Produces "Vortex Engine" with Cyberpunk/Terminal tokens.
+     - Family Dining: Produces warm, sunlit colors avoiding bar/alcohol tropes.
+
+--------------------------------------------------------------------------------
+FILE: prompts/brandPrompts.js
+Location: server/prompts/brandPrompts.js
+Role: Centralized LLM Prompts & Domain Anti-Jargon Rules
+--------------------------------------------------------------------------------
+Description:
+  Contains all system prompts, behavioral guidelines, constraints, and domain-
+  specific rules injected into Groq/Gemini calls.
+Key Highlights:
+  1. `getDomainGuidance(domain, isFamily)`:
+     - Strictly forbids tech buzzwords ("SaaS", "latency", "APIs") in culinary
+       and fashion domains.
+     - Strictly forbids alcohol/date-night tropes ("wine", "bar", "cocktails",
+       "lounge") for family-oriented dining.
+     - Enforces concrete physical terms (e.g. "copper rivets", "wood-fired hearth")
+       rather than abstract corporate marketing fluff.
+  2. `buildBatchQuestionSystemInstruction(domain, isFamily)`:
+     Instructs the LLM to generate exactly 7 progressive discovery questions
+     covering: The Beachhead ICP, The Anti-Hero, The Core Friction, The Unfair
+     Advantage, The Visual World, The Voice Boundary, and The Price/Commitment.
+  3. `buildCompileSystemInstruction(domain, isFamily)`:
+     Defines the master brand strategist role, requiring harmonious 5-color
+     hex palettes, curated Google Fonts combinations, and punchy launch copy.
+
+--------------------------------------------------------------------------------
+FILE: data/domainConfig.js
+Location: server/data/domainConfig.js
+Role: Single Source of Truth for Domain Classification
+--------------------------------------------------------------------------------
+Description:
+  Maintains the regex matchers and classification rules used across both the
+  server and client.
+Key Exports:
+  1. `DOMAINS` Constant:
+     Enumerates supported domains: `FASHION`, `HOSPITALITY`, `WELLNESS`,
+     `CAREER`, `DEVELOPER`, `CREATIVE`, `GENERAL`.
+  2. `classifyDomain(text)`:
+     Prioritizes apparel keywords (jeans, denim, selvedge, apparel, garment)
+     before hospitality to prevent category bleeding, followed by developer,
+     wellness, career, and creative checks.
+  3. `isFamilyIntent(text)`:
+     Identifies family dining contexts (requires both culinary keywords AND
+     family/kid keywords) to suppress adult/bar branding tropes.
+
+--------------------------------------------------------------------------------
+FILE: utils/llmClient.js
+Location: server/utils/llmClient.js
+Role: Unified Multi-Provider LLM Client
+--------------------------------------------------------------------------------
+Description:
+  Abstracts LLM provider interactions, giving priority to Groq for sub-second
+  inference while seamlessly falling back to Google Gemini.
+Key Functions & Logic:
+  1. `isLlmConfigured()`:
+     Checks whether active keys exist for Groq or Gemini.
+  2. `generateStructuredJson({ systemInstruction, prompt, schema })`:
+     - Primary Route (Groq): Calls Groq Chat Completions with JSON mode enabled.
+       Includes candidate model cycling (`llama-3.3-70b-versatile`,
+       `openai/gpt-oss-120b`, `qwen/qwen3.8-27b`) if a model is deprecated.
+     - Fallback Route (Gemini): Uses `@google/genai` with `responseSchema` and
+       `responseMimeType: 'application/json'` to guarantee schema compliance.
+     - Throws clean error if neither provider is reachable or configured.
+
+--------------------------------------------------------------------------------
+FILE: utils/geminiClient.js
+Location: server/utils/geminiClient.js
+Role: Google GenAI SDK Client with Resilient Retries
+--------------------------------------------------------------------------------
+Description:
+  Dedicated singleton manager for `@google/genai` with automatic retry logic
+  and model cycling.
+Key Features:
+  1. Singleton pattern via `getGeminiClient()`.
+  2. Transient error detection (`isTransientError`): Identifies HTTP 429
+     (rate limits), HTTP 503 (service overloaded), and quota exhaustion.
+  3. Exponential backoff retry loop with jitter.
+  4. Candidate model cycling across `gemini-3.6-flash`, `gemini-3-flash-preview`,
+     `gemini-flash-lite-latest`, and `gemini-3.8-flash`.
+  5. `cleanJsonString()`: Strips Markdown code blocks (` ```json `) to prevent
+     JSON parse errors.
+
+
+4. INTERACTION WORKFLOW & DATA FLOW
+--------------------------------------------------------------------------------
+
++------------------------------------------------------------------------+
+| 1. Client sends POST /api/interview/start { initialPitch }             |
++------------------------------------------------------------------------+
+                                    |
+                                    v
++------------------------------------------------------------------------+
+| 2. routes/brandRoutes.js -> controllers/interviewerController.js        |
++------------------------------------------------------------------------+
+                                    |
+                                    v
++------------------------------------------------------------------------+
+| 3. services/interviewService.js                                        |
+|    - data/domainConfig.js classifies domain (e.g. Hospitality/Fashion)  |
+|    - prompts/brandPrompts.js injects anti-jargon domain instructions   |
+|    - utils/llmClient.js queries Groq (Llama 3.3) -> Gemini fallback    |
+|    - If offline/error: services/mockEngine.js provides mock batch      |
++------------------------------------------------------------------------+
+                                    |
+                                    v
++------------------------------------------------------------------------+
+| 4. Client renders 7 Socratic Cards with clickable answer options        |
++------------------------------------------------------------------------+
+                                    |
+                                    v
++------------------------------------------------------------------------+
+| 5. Client sends POST /api/interview/compile { qaPairs, initialPitch }  |
++------------------------------------------------------------------------+
+                                    |
+                                    v
++------------------------------------------------------------------------+
+| 6. services/compilerService.js synthesizes complete BrandKit JSON      |
+|    (Strategy, Voice, Visual Color Tokens, Google Fonts, Manifesto)     |
++------------------------------------------------------------------------+
+
+
+5. HOW TO RUN & VERIFY
+--------------------------------------------------------------------------------
+From project root (`d:/Shaurya/code/WCC/project_par/brandbuilder`):
+
+1. Start both server and client concurrently:
+   node scripts/run-dev.js
+
+2. Verify server health:
+   curl http://localhost:5001/health
+
+3. Endpoints documentation:
+   - Health check:     GET  http://localhost:5001/health
+   - Start discovery:  POST http://localhost:5001/api/interview/start
+   - Next question:    POST http://localhost:5001/api/interview/next
+   - Compile BrandKit: POST http://localhost:5001/api/interview/compile
+
+================================================================================
+                              END OF REPORT
+================================================================================

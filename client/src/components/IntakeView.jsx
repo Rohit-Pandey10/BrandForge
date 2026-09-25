@@ -1,135 +1,206 @@
-import React, { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
-import { samplePitches } from '../data/mockBrandData';
+/**
+ * IntakeView.jsx — Neo-Brutalist Pop-Art Hero Section for BrandForge
+ * Location: client/src/components/IntakeView.jsx
+ *
+ * Design System (Neo-Brutalism):
+ * - Background: Full-screen vibrant orange (bg-orange-500).
+ * - Abstract Background Shapes:
+ *     * Large maroon curve clipping top-left corner.
+ *     * Massive maroon semi-circle clipping the middle-right.
+ *     * Subtle lighter orange circles floating in the background.
+ * - Center Content:
+ *     * Title: "BrandForge" in massive, bold black typography (text-7xl to text-9xl+ font-black text-black).
+ *     * Subtitle: "Description" (text-xl text-black font-bold text-center).
+ * - The Input Area:
+ *     * Wide pill-shaped text input (rounded-full, bg-white, border-4 border-black) with placeholder "Enter text".
+ *     * Perfect circular submit button (rounded-full, w-14 h-14, bg-white, border-4 border-black) positioned right next to it.
+ * - Decorative Graphics (Bottom-Left):
+ *     * Tilted green square with black wavy line inside (border-4 border-black).
+ *     * Red square inside a white rounded frame (border-4 border-black).
+ * - Functional:
+ *     * Captures initialPitch and triggers onStartInterview / onStartDiscovery into Socratic discovery.
+ *     * Displays conversational chatbot feedback if the user inputs greetings like "Hello".
+ */
 
-export default function IntakeView({ onStartInterview, onPreviewMock }) {
-  const [pitch, setPitch] = useState('');
+import React, { useState } from 'react';
+import { ArrowRight, Bot, Loader2 } from 'lucide-react';
+
+export default function IntakeView({
+  pitch: externalPitch,
+  onPitchChange,
+  onStartInterview,
+  onStartDiscovery,
+  chatMessages = [],
+  isLoading = false,
+  subtitle = "Description"
+}) {
+  const [internalPitch, setInternalPitch] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!pitch.trim()) {
-      setError('Please share a sentence about what you are building.');
-      return;
-    }
-    if (pitch.trim().length < 8) {
-      setError('A few more words will help ground the first question.');
-      return;
-    }
-    setError('');
-    onStartInterview(pitch.trim());
+  // Support controlled or uncontrolled pitch state
+  const currentPitch = externalPitch !== undefined ? externalPitch : internalPitch;
+
+  const handleTextChange = (e) => {
+    const val = e.target.value;
+    if (onPitchChange) onPitchChange(val);
+    else setInternalPitch(val);
+    if (error) setError('');
   };
 
-  const handleSelectSample = (sampleText) => {
-    setPitch(sampleText);
+  const submitHandler = onStartInterview || onStartDiscovery;
+
+  const handleSubmit = (e) => {
+    e?.preventDefault();
+    const clean = String(currentPitch || '').trim();
+    if (!clean) {
+      setError('Please enter your idea or message.');
+      return;
+    }
     setError('');
+    if (submitHandler) {
+      submitHandler(clean);
+    }
   };
+
+  // If the conversational intent router sent back a chat message, find the latest assistant reply
+  const latestChatMessage = chatMessages && chatMessages.length > 0
+    ? [...chatMessages].reverse().find(m => m.role === 'assistant')
+    : null;
 
   return (
-    <div className="w-full max-w-[720px] mx-auto px-4 py-6 sm:py-12 animate-fade-in">
-      {/* Editorial Header */}
-      <div className="text-center mb-10 sm:mb-14">
-        <span className="block text-[11px] uppercase tracking-[0.08em] text-[#737373] mb-4">
-          Brand Architecture &bull; Monograph 01
-        </span>
-        <h1 className="font-serif text-4xl sm:text-6xl md:text-[68px] font-light text-black tracking-[-0.03em] leading-[1.0] mb-5">
-          Turn an unformed thought into an enduring identity.
+    <div className="relative w-full min-h-screen bg-orange-500 overflow-hidden flex flex-col justify-center items-center px-4 py-16 select-none font-sans">
+      
+      {/* ========================================================================= */}
+      {/* ── ABSTRACT OVERSIZED BACKGROUND SHAPES ──                              */}
+      {/* ========================================================================= */}
+
+      {/* 1. Large Maroon Curve (Clipping Top-Left) */}
+      <div
+        className="absolute -top-32 -left-32 sm:-top-44 sm:-left-44 md:-top-56 md:-left-56 w-[380px] h-[380px] sm:w-[520px] sm:h-[520px] md:w-[680px] md:h-[680px] bg-[#610316] rounded-full pointer-events-none z-0"
+        aria-hidden="true"
+      />
+
+      {/* 2. Massive Maroon Semi-Circle (Clipping Middle-Right) */}
+      <div
+        className="absolute -right-32 sm:-right-48 md:-right-64 top-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[580px] sm:h-[580px] md:w-[740px] md:h-[740px] bg-[#610316] rounded-full pointer-events-none z-0"
+        aria-hidden="true"
+      />
+
+      {/* 3. Subtle Lighter Orange Decorative Circles in Background */}
+      <div
+        className="absolute top-[18%] left-[28%] w-64 h-64 sm:w-96 sm:h-96 bg-orange-400/40 rounded-full pointer-events-none z-0"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute bottom-[16%] left-[42%] w-52 h-52 sm:w-72 sm:h-72 bg-orange-400/35 rounded-full pointer-events-none z-0"
+        aria-hidden="true"
+      />
+
+      {/* ========================================================================= */}
+      {/* ── CENTER CONTENT: TITLE, SUBTITLE & PILL INPUT ──                      */}
+      {/* ========================================================================= */}
+      <div className="relative z-10 w-full max-w-3xl mx-auto flex flex-col items-center text-center mt-6 sm:mt-0">
+        
+        {/* Main Title: "BrandForge" (Massive, Bold, Black Sans-Serif) */}
+        <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-black text-black tracking-tight leading-[0.95] drop-shadow-sm select-none">
+          BrandForge
         </h1>
-        <p className="text-[#737373] text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-          A focused Socratic dialogue to isolate your customer, challenge conventional compromises, and author a distinct visual and verbal system.
+
+        {/* Subtitle: "Description" */}
+        <p className="text-xl sm:text-2xl font-bold text-black tracking-wide mt-4 mb-8 select-none">
+          {subtitle}
         </p>
-      </div>
 
-      {/* Input Surface: Clean White Card Floating on Paper Canvas */}
-      <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 mb-8">
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label htmlFor="pitchInput" className="block text-xs uppercase tracking-[0.05em] text-[#737373] mb-2">
-              What are you building in one sentence?
-            </label>
-            <textarea
-              id="pitchInput"
-              rows={3}
-              value={pitch}
-              onChange={(e) => {
-                setPitch(e.target.value);
-                if (error) setError('');
-              }}
-              placeholder="e.g. A minimalist resume builder designed for the 6-second glance of hiring managers..."
-              className="w-full p-4 rounded-xl bg-[#f2f1ed]/50 border border-[#dbd7cd] text-black placeholder-[#999999] focus:outline-none focus:border-black text-sm sm:text-base leading-relaxed resize-none transition-colors"
-            />
-            {error && (
-              <p className="mt-2 text-xs text-[#000000] border-l-2 border-black pl-2">
-                {error}
+        {/* Conversational Assistant Response Bubble (If user chatted e.g. "Hello") */}
+        {latestChatMessage && (
+          <div className="mb-6 w-full max-w-lg p-4 bg-white border-4 border-black rounded-2xl shadow-[4px_4px_0px_0px_#000000] text-left animate-fade-in flex items-start gap-3">
+            <div className="w-8 h-8 rounded-full bg-[#ef4444] border-2 border-black text-white flex items-center justify-center shrink-0 font-black text-xs">
+              <Bot className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-wider text-neutral-500 block mb-0.5">
+                BrandForge AI Partner
+              </span>
+              <p className="text-sm font-bold text-black leading-snug">
+                {latestChatMessage.content}
               </p>
-            )}
+            </div>
           </div>
+        )}
 
-          {/* Action Row */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-            <button
-              type="button"
-              onClick={onPreviewMock}
-              className="text-xs text-[#737373] hover:text-black transition-colors order-2 sm:order-1"
-            >
-              Skip to sample brand monograph &rarr;
-            </button>
+        {/* The Input Area: Pill Input + Circular Submit Button */}
+        <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto">
+          <div className="flex items-center justify-center gap-3 w-full">
+            
+            {/* The Text Input: Wide, Pill-Shaped, White with Thick Black Border */}
+            <div className="relative flex-1">
+              <input
+                type="text"
+                value={currentPitch}
+                onChange={handleTextChange}
+                placeholder="Enter text"
+                disabled={isLoading}
+                className="w-full px-7 py-4 text-base sm:text-lg font-bold text-black placeholder:text-neutral-500 placeholder:font-bold bg-white border-4 border-black rounded-full shadow-[4px_4px_0px_0px_#000000] focus:outline-none focus:ring-0 active:translate-x-0.5 active:translate-y-0.5 transition-all"
+              />
+            </div>
 
-            {/* Handhold Signature CTA: Black Pill */}
+            {/* The Submit Button: Perfect Circle, White with Thick Black Border */}
             <button
               type="submit"
-              className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-black text-white hover:bg-neutral-800 text-sm font-normal transition-all flex items-center justify-center gap-2 order-1 sm:order-2"
+              disabled={isLoading}
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white border-4 border-black shadow-[4px_4px_0px_0px_#000000] flex items-center justify-center shrink-0 hover:bg-neutral-100 hover:translate-x-0.5 hover:translate-y-0.5 active:translate-x-1 active:translate-y-1 transition-all cursor-pointer group disabled:opacity-70 disabled:cursor-not-allowed"
+              title="Submit to BrandForge"
             >
-              <span>Begin Dialogue</span>
-              <ArrowRight className="w-3.5 h-3.5 stroke-[1.5]" />
+              {isLoading ? (
+                <Loader2 className="w-6 h-6 text-black animate-spin" />
+              ) : (
+                <ArrowRight className="w-6 h-6 text-black stroke-[3.5] group-hover:translate-x-0.5 transition-transform" />
+              )}
             </button>
+
           </div>
+
+          {error && (
+            <div className="mt-3 px-4 py-1.5 bg-white border-2 border-black rounded-full inline-block shadow-[2px_2px_0px_0px_#000000]">
+              <span className="text-xs font-black text-black">⚠️ {error}</span>
+            </div>
+          )}
         </form>
 
-        {/* Quick Inspiration Pills */}
-        <div className="mt-8 pt-6 border-t border-[#dbd7cd]">
-          <span className="block text-[11px] uppercase tracking-[0.05em] text-[#737373] mb-3">
-            Inspiration examples
-          </span>
-          <div className="flex flex-wrap gap-2">
-            {samplePitches.map((sample, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => handleSelectSample(sample)}
-                className="rounded-full border border-[#dbd7cd] bg-transparent text-[#737373] text-xs px-3.5 py-1.5 hover:border-black hover:text-black transition text-left"
-              >
-                {sample}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
-      {/* Quiet Three-Stage Editorial Footnote */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 text-center sm:text-left border-t border-[#dbd7cd]">
-        <div>
-          <span className="text-[11px] uppercase tracking-[0.05em] text-[#999999] block mb-1">Step 01</span>
-          <h4 className="font-serif text-lg text-black font-light leading-snug">Target User</h4>
-          <p className="text-xs text-[#737373] mt-1 leading-relaxed">
-            Isolating the core audience and defining their primary expectation.
-          </p>
+      {/* ========================================================================= */}
+      {/* ── DECORATIVE GRAPHICS (BOTTOM LEFT) ──                                  */}
+      {/* ========================================================================= */}
+      <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 flex items-end gap-3.5 z-20 pointer-events-none">
+        
+        {/* 1. Tilted Green Square with Wavy Line Inside */}
+        <div
+          className="w-14 h-14 sm:w-16 sm:h-16 bg-[#22c55e] border-4 border-black rounded-lg -rotate-12 flex items-center justify-center shadow-[4px_4px_0px_0px_#000000] transition-transform"
+          aria-hidden="true"
+        >
+          <svg
+            className="w-8 h-8 text-black"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinecap="round"
+          >
+            <path d="M2 12c3-4 6-4 9 0s6 4 9 0" />
+          </svg>
         </div>
-        <div>
-          <span className="text-[11px] uppercase tracking-[0.05em] text-[#999999] block mb-1">Step 02</span>
-          <h4 className="font-serif text-lg text-black font-light leading-snug">Differentiation</h4>
-          <p className="text-xs text-[#737373] mt-1 leading-relaxed">
-            Rejecting conventional incumbent compromises to reveal your distinct angle.
-          </p>
+
+        {/* 2. Red Square Inside White Rounded Frame */}
+        <div
+          className="p-2.5 sm:p-3 bg-white border-4 border-black rounded-2xl flex items-center justify-center shadow-[4px_4px_0px_0px_#000000] rotate-6 transition-transform"
+          aria-hidden="true"
+        >
+          <div className="w-7 h-7 sm:w-9 sm:h-9 bg-[#ef4444] border-4 border-black rounded-sm" />
         </div>
-        <div>
-          <span className="text-[11px] uppercase tracking-[0.05em] text-[#999999] block mb-1">Step 03</span>
-          <h4 className="font-serif text-lg text-black font-light leading-snug">Brand Edge</h4>
-          <p className="text-xs text-[#737373] mt-1 leading-relaxed">
-            Setting attitude boundaries and generating production visual & voice tokens.
-          </p>
-        </div>
+
       </div>
+
     </div>
   );
 }

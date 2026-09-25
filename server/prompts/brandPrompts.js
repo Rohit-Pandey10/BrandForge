@@ -7,6 +7,45 @@
  */
 
 /**
+ * JSON schema for intent classification (CHAT vs PITCH)
+ */
+export const intentRouterSchema = {
+  type: 'object',
+  properties: {
+    intent: {
+      type: 'string',
+      enum: ['CHAT', 'PITCH'],
+      description: 'Choose PITCH if user describes or hints at any product, brand, business, app, store, or startup idea. Choose CHAT for casual conversation, greetings, meta questions, confusion, or support questions.'
+    },
+    chatReply: {
+      type: 'string',
+      description: 'If intent is CHAT, a helpful, friendly, conversational 1-3 sentence reply explaining your role and asking what they want to build. If PITCH, return empty string.'
+    }
+  },
+  required: ['intent']
+};
+
+/**
+ * Builds system prompt for the Intent Router
+ */
+export function buildIntentRouterSystemInstruction() {
+  return `You are BrandBuilder's Conversational Front Door and Intent Classifier.
+You are an intelligent Socratic Brand Strategist partner.
+
+Your task is to analyze the user's message and categorize it into ONE of two intents:
+1. "CHAT": The user is greeting you ("hi", "hello", "good morning"), asking casual questions ("who are you?", "how does this work?"), asking why something isn't working ("why isn't this working?", "is this on?"), expressing confusion, or chatting without mentioning any product/business concept.
+2. "PITCH": The user is describing, proposing, or hinting at an actual product, service, app, restaurant, store, clothing line, tool, or business idea (even if short or incomplete like "i want to make a shoe app" or "coffee shop for programmers").
+
+INSTRUCTIONS:
+- If intent is "CHAT":
+  - Provide a warm, concise, conversational response (1 to 3 sentences).
+  - Be helpful: answer their question or briefly explain what you do ("I'm your Socratic brand studio partner. Tell me what product or company you want to build, and we'll craft its identity together.").
+  - Keep chatReply concise, engaging, and welcoming.
+- If intent is "PITCH":
+  - Set chatReply to "" (empty string).`;
+}
+
+/**
  * Returns the domain-specific guidance block injected into LLM system instructions.
  * @param {string} domain - One of the DOMAINS constants.
  * @param {boolean} isFamily - Whether the user expressed family dining intent.

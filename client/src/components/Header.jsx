@@ -1,113 +1,174 @@
-import React from 'react';
-import { Download, Code, Palette, Printer, Sparkles, ArrowLeft } from 'lucide-react';
+import React, { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
+/**
+ * Header Component
+ * Design System: Warm off-white background, clean modern SaaS nav
+ * - Logo: Rounded orange square with a 4-point star inside. "Brand" in black, "Forge" in orange.
+ * - Center Links: Features, Pricing, Docs
+ * - Right Actions: "Log in" (ghost) and "Sign up free" (solid dark button #1a1a1a)
+ */
 export default function Header({
   stage,
   onReset,
-  onSkipToSynthesis,
-  onPreviewMock,
-  onExportJson,
-  onExportCss,
-  onExportSvg,
-  onPrintPdf
+  onLogin,
+  onSignUp
 }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-    <header className="no-print sticky top-0 z-50 bg-[#f2f1ed]/95 backdrop-blur-md px-6 sm:px-12 py-3.5 border-b border-[#dbd7cd]/60 transition-all">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Brand Identity: Lowercase serif wordmark + status pill */}
+    <header className="sticky top-0 z-50 w-full bg-[#fbfaf9]/80 backdrop-blur-md border-b border-zinc-200/50 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+        {/* ── Brand Logo ── */}
         <div className="flex items-center gap-3">
-          <button
-            onClick={onReset}
-            className="text-left group transition-opacity hover:opacity-80 flex items-center gap-2"
-            title="Brand Builder Home"
+          <a
+            href="#"
+            onClick={(e) => {
+              if (onReset) {
+                e.preventDefault();
+                onReset();
+              }
+            }}
+            className="flex items-center gap-2.5 group cursor-pointer"
           >
-            <span className="font-serif font-light text-2xl tracking-[-0.03em] text-black">
-              brand builder.
-            </span>
-          </button>
-
-          <span className="hidden sm:inline-flex items-center font-sans text-[11px] text-stone-500 border border-[#dbd7cd] rounded-full px-2.5 py-0.5 bg-white/50 tracking-wide font-normal">
-            Socratic Brand Studio
-          </span>
-        </div>
-
-        {/* Top Action Cluster */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
-          {/* Intake View Action */}
-          {stage === 'intake' && (
-            <button
-              onClick={onPreviewMock}
-              className="font-sans text-[13px] text-stone-600 hover:text-black border border-[#dbd7cd] rounded-full px-4 py-1.5 bg-white/70 hover:bg-white transition-all flex items-center gap-1.5 shadow-none"
-            >
-              <span>Preview Sample Kit</span>
-              <span className="text-[11px] text-stone-400">&rarr;</span>
-            </button>
-          )}
-
-          {/* Interview View: Skip / Preview Utility */}
-          {stage === 'interview' && (
-            <button
-              onClick={onSkipToSynthesis}
-              className="font-sans text-[13px] text-stone-600 hover:text-black border border-[#dbd7cd] rounded-full px-4 py-1.5 bg-white/70 hover:bg-white transition-all flex items-center gap-1.5 shadow-none group"
-              title="Fast-forward to synthesized brand monograph"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-stone-400 group-hover:text-black transition-colors" />
-              <span>Skip to Synthesis</span>
-            </button>
-          )}
-
-          {/* Brand Kit Dashboard View: Action Toolbar */}
-          {stage === 'dashboard' && (
-            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-1">
-              <button
-                onClick={onReset}
-                className="hidden md:inline-flex items-center gap-1 text-xs text-stone-500 hover:text-black px-3 py-1.5 rounded-full border border-transparent hover:border-[#dbd7cd] transition-all mr-1"
-                title="Start a new brand interview"
+            {/* Rounded orange square icon with a 4-point star */}
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-sm shadow-orange-500/25 group-hover:scale-105 transition-transform">
+              <svg
+                className="w-5 h-5 text-white fill-current"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <ArrowLeft className="w-3.5 h-3.5 stroke-[1.5]" />
-                <span>New</span>
-              </button>
-
-              <button
-                onClick={onExportJson}
-                className="inline-flex items-center gap-1.5 border border-[#dbd7cd] bg-white text-stone-800 text-xs px-3.5 py-1.5 rounded-full hover:border-black transition-all shadow-none whitespace-nowrap"
-                title="Export complete tokens as JSON"
-              >
-                <Download className="w-3.5 h-3.5 text-stone-500" />
-                <span>Export JSON</span>
-              </button>
-
-              <button
-                onClick={onExportCss}
-                className="inline-flex items-center gap-1.5 border border-[#dbd7cd] bg-white text-stone-800 text-xs px-3.5 py-1.5 rounded-full hover:border-black transition-all shadow-none whitespace-nowrap"
-                title="Export CSS Custom Properties (:root variables)"
-              >
-                <Code className="w-3.5 h-3.5 text-stone-500" />
-                <span>Export CSS Tokens</span>
-              </button>
-
-              <button
-                onClick={onExportSvg}
-                className="hidden sm:inline-flex items-center gap-1.5 border border-[#dbd7cd] bg-white text-stone-800 text-xs px-3.5 py-1.5 rounded-full hover:border-black transition-all shadow-none whitespace-nowrap"
-                title="Download 5-color palette as SVG"
-              >
-                <Palette className="w-3.5 h-3.5 text-stone-500" />
-                <span>Download SVG</span>
-              </button>
-
-              <button
-                onClick={onPrintPdf}
-                className="inline-flex items-center gap-1.5 border border-[#dbd7cd] bg-black text-white text-xs px-3.5 py-1.5 rounded-full hover:bg-neutral-800 transition-all shadow-none whitespace-nowrap"
-                title="Print or save Brand Book as PDF"
-              >
-                <Printer className="w-3.5 h-3.5 stroke-[1.5]" />
-                <span className="hidden xs:inline">Print / PDF</span>
-                <span className="xs:hidden">PDF</span>
-              </button>
+                {/* Precise 4-point geometric star */}
+                <path d="M12 2L14.6 9.4L22 12L14.6 14.6L12 22L9.4 14.6L2 12L9.4 9.4L12 2Z" />
+              </svg>
             </div>
-          )}
+            
+            {/* Wordmark: "Brand" in black, "Forge" in orange */}
+            <span className="text-xl font-bold tracking-tight text-zinc-900">
+              Brand<span className="text-orange-500">Forge</span>
+            </span>
+          </a>
         </div>
+
+        {/* ── Centered Navigation Links (Desktop) ── */}
+        <nav className="hidden md:flex items-center gap-8">
+          <a
+            href="#features"
+            className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+          >
+            Features
+          </a>
+          <a
+            href="#how-it-works"
+            className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+          >
+            How It Works
+          </a>
+          <a
+            href="#pricing"
+            className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+          >
+            Pricing
+          </a>
+          <a
+            href="#docs"
+            className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+          >
+            Docs
+          </a>
+        </nav>
+
+        {/* ── Right Action Buttons (Desktop) ── */}
+        <div className="hidden md:flex items-center gap-3">
+          {stage === 'dashboard' && onReset && (
+            <button
+              type="button"
+              onClick={onReset}
+              className="text-xs font-semibold text-zinc-700 bg-stone-100 hover:bg-stone-200 px-3 py-2 rounded-lg transition-colors cursor-pointer mr-2"
+            >
+              + New Brand
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={onLogin}
+            className="text-sm font-medium text-zinc-600 hover:text-zinc-900 px-4 py-2 rounded-lg transition-colors cursor-pointer"
+          >
+            Log in
+          </button>
+          <button
+            type="button"
+            onClick={onSignUp}
+            className="bg-[#1a1a1a] hover:bg-zinc-800 text-white text-sm font-medium px-4 py-2.5 rounded-lg transition-all shadow-sm active:scale-95 cursor-pointer"
+          >
+            Sign up free
+          </button>
+        </div>
+
+        {/* ── Mobile Menu Hamburger ── */}
+        <div className="flex md:hidden items-center">
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-lg text-zinc-600 hover:text-zinc-900 hover:bg-stone-200/50 transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
       </div>
+
+      {/* ── Mobile Dropdown Menu ── */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-b border-zinc-200 bg-[#fbfaf9] px-4 pt-3 pb-6 space-y-3">
+          <a
+            href="#features"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-md text-base font-medium text-zinc-700 hover:bg-stone-100"
+          >
+            Features
+          </a>
+          <a
+            href="#how-it-works"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-md text-base font-medium text-zinc-700 hover:bg-stone-100"
+          >
+            How It Works
+          </a>
+          <a
+            href="#pricing"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-md text-base font-medium text-zinc-700 hover:bg-stone-100"
+          >
+            Pricing
+          </a>
+          <a
+            href="#docs"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-md text-base font-medium text-zinc-700 hover:bg-stone-100"
+          >
+            Docs
+          </a>
+          <div className="pt-4 border-t border-zinc-200 flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={onLogin}
+              className="w-full text-center py-2.5 text-sm font-medium text-zinc-700 hover:bg-stone-100 rounded-lg"
+            >
+              Log in
+            </button>
+            <button
+              type="button"
+              onClick={onSignUp}
+              className="w-full py-2.5 bg-[#1a1a1a] text-white rounded-lg text-sm font-medium shadow-sm"
+            >
+              Sign up free
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
