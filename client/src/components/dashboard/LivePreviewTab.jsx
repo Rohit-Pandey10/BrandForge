@@ -66,16 +66,21 @@ export function resolveArchetype(kit = {}) {
     return 'digital_saas';
   }
 
-  // 3. Physical CPG & Retail
+  // 3. Physical CPG, Retail & Wellness — broad corpus, catches supplements/food/fashion
   if (
     domain.includes('cpg') || domain.includes('snack') || domain.includes('bottle') ||
     domain.includes('apparel') || domain.includes('fashion') || domain.includes('beverage') ||
-    domain.includes('retail') || /\b(wear|denim|chips|snack|drink|beverage|bottle|selvedge|jeans|tea|coffee|crunch|sip|hydration)\b/i.test(text)
+    domain.includes('retail') || domain.includes('supplement') || domain.includes('wellness') ||
+    domain.includes('protein') || domain.includes('nutrition') || domain.includes('fitness') ||
+    domain.includes('skincare') || domain.includes('beauty') || domain.includes('cosmetic') ||
+    /\b(wear|denim|chips|snack|drink|beverage|bottle|selvedge|jeans|tea|coffee|crunch|sip|hydration|whey|protein|powder|smoothie|latte|collagen|probiotic|supplement|vitamin|shake|capsule|serum|lotion|moisturiser|moisturizer|cleanser|sunscreen|gummies|bar|granola|oat|grain|flour|sauce|condiment|jam|honey|olive|oil|vinegar|spice|seasoning|baking|pouch|can|tin|jar|pet food|pet|bag|tote|hoodie|sneaker|shoe|boot|hat|cap|shirt|jacket|coat|dress|skirt|pant|legging|sock|underwear|swimsuit|bikini|activewear|sportswear|gym|workout)\b/i.test(text)
   ) {
     return 'retail_cpg';
   }
 
-  return 'digital_saas';
+  // Final fallback: if nothing specific matched, default to retail/CPG
+  // (avoids consumer products landing in the developer terminal layout)
+  return 'retail_cpg';
 }
 
 /**
