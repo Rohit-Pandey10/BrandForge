@@ -186,5 +186,6 @@
 ### Feature Sprint: Keyboard Navigation & Multi-Select (`feature/multi-select-and-keyboard-nav`):
 - [x] Added Enter-key submission and Shift+Enter multi-line support to IntakeView
 - [x] Implemented multi-select checkbox mode for compatible Socratic questions in InterviewChat
-- [x] Maintained prompt stability in brandPrompts.js
+- [x] Overhauled brandPrompts.js with product-grounded naming rules and anti-demographic caricature constraints.
+
 

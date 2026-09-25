@@ -504,7 +504,7 @@
       "file_type": "code",
       "norm_label": "buildbatchquestionsysteminstruction()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L114"
+      "source_location": "L116"
     },
     {
       "id": "server_prompts_brandprompts_buildcompilesysteminstruction",
@@ -516,7 +516,7 @@
       "file_type": "code",
       "norm_label": "buildcompilesysteminstruction()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L119"
+      "source_location": "L121"
     },
     {
       "id": "server_prompts_brandprompts_buildquestionsysteminstruction",
@@ -528,7 +528,7 @@
       "file_type": "code",
       "norm_label": "buildquestionsysteminstruction()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L124"
+      "source_location": "L126"
     },
     {
       "id": "server_prompts_brandprompts_getdomainguidance",
@@ -540,7 +540,7 @@
       "file_type": "code",
       "norm_label": "getdomainguidance()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L128"
+      "source_location": "L130"
     },
     {
       "id": "server_services_compilerservice_compilebrandkit",
@@ -1776,7 +1776,7 @@
       "file_type": "code",
       "norm_label": "compilersysteminstruction",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L82"
+      "source_location": "L92"
     },
     {
       "id": "server_prompts_brandprompts_pitchenhancerprompt",
@@ -1787,7 +1787,7 @@
       "file_type": "code",
       "norm_label": "pitchenhancerprompt",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L16"
+      "source_location": "L17"
     },
     {
       "id": "server_prompts_brandprompts_socraticbatchprompt",
@@ -1798,7 +1798,7 @@
       "file_type": "code",
       "norm_label": "socraticbatchprompt",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L47"
+      "source_location": "L57"
     },
     {
       "id": "server_routes_brandroutes",
@@ -11185,7 +11185,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -11196,7 +11196,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L47",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -11218,7 +11218,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L82",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -12027,7 +12027,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L137",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -12039,7 +12039,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L138",
+      "source_location": "L140",
       "weight": 1.0
     },
     {
@@ -12051,7 +12051,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L139",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -12063,7 +12063,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L140",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -12188,5 +12188,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "bfae01e8157e4435b4c1aeaaa34eaba6bad979d9"
+  "built_at_commit": "bcd7704343c6a11f7a88712b786ff4c510ade331"
 }
