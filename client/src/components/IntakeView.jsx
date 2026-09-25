@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Sparkles, Utensils, Scissors, Database, FileText, Bot } from 'lucide-react';
+import { ArrowRight, Sparkles, Utensils, Scissors, Database, FileText, Bot, AlertCircle } from 'lucide-react';
 import { samplePitches } from '../data/mockBrandData';
 
 const PRESET_PITCHES = [
@@ -29,7 +29,7 @@ const PRESET_PITCHES = [
   }
 ];
 
-export default function IntakeView({ onStartInterview, onPreviewMock, isExpanding = false }) {
+export default function IntakeView({ onStartInterview, onPreviewMock, isExpanding = false, serverError = '' }) {
   const [pitch, setPitch] = useState('');
   const [error, setError] = useState('');
 
@@ -122,6 +122,21 @@ export default function IntakeView({ onStartInterview, onPreviewMock, isExpandin
               </p>
             </div>
           </div>
+
+          {/* Gibberish / Fragmented Input Rejection Gate Banner */}
+          {serverError && (
+            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 text-xs sm:text-sm font-medium flex items-start gap-3 animate-fade-in shadow-2xs">
+              <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <span className="font-semibold text-amber-950 block uppercase tracking-wider text-[11px] font-mono">
+                  Input Clarification Required
+                </span>
+                <p className="leading-relaxed text-amber-900">
+                  {serverError}
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Action Row */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">

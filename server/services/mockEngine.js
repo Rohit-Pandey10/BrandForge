@@ -479,8 +479,8 @@ export function getMockBrandKit(founderPitch = '', fullHistory = []) {
 function _fashionKit() {
   return {
     brandStrategy: {
-      brandName: 'Kuro Selvedge Co.',
-      tagline: 'Heavyweight Japanese Raw Denim',
+      brandName: 'Atelier Selvaggio',
+      tagline: 'Heirloom Shuttle-Loom Denim & Garments',
       mission: 'To liberate denim from disposable fast-fashion and synthetic stretch through 14oz shuttle-loom raw selvedge built to fade over decades.',
       targetAudience: 'Discerning creatives, denim purists, architects, and makers seeking a timeless, durable daily uniform that molds to their body.',
       coreValueProposition: 'Unwashed 14oz narrow-loom Japanese raw selvedge, custom solid copper hardware, and free lifetime repairs.',
@@ -516,7 +516,7 @@ function _fashionKit() {
       heroSubheadline: '14oz narrow-loom Japanese raw selvedge cut for daily creative work. Zero synthetic stretch, unwashed authenticity, and lifetime repairs.',
       callToAction: 'Shop Collection',
       manifesto: 'Denim was never meant to be disposable. Somewhere along the line, the industry replaced durable 14-ounce cotton with plastic stretch blends and washed away character with chemical distressing before you even touched it. We reject artificial aging. We weave on slow, vintage shuttle looms where every imperfection tells a story. Put them on stiff. Wear them hard. Earn your fades.',
-      elevatorPitch: 'Kuro Selvedge Co. crafts heirloom 14oz Japanese raw selvedge denim for creatives and purists who value uncompromised textile craft and lifetime durability.',
+      elevatorPitch: 'Atelier Selvaggio crafts heirloom 14oz shuttle-loom raw selvedge denim for creatives and purists who value uncompromised textile craft and lifetime durability.',
       socialHooks: [
         'No synthetic stretch. No fake laser fades. Just 14oz raw Japanese selvedge.',
         'Denim that molds to your life, not a mall mannequin. Earn your fades.',

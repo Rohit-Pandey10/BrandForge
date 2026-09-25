@@ -233,6 +233,25 @@
 - [x] **Liquid Glass Applied to App Shell:**
   - Applied `liquid-glass-card rounded-[32px]` to central input card (`IntakeView.jsx`) and question studio card (`InterviewChat.jsx`).
   - Applied `liquid-glass-card rounded-[32px]` to brand monograph header card, `liquid-glass-card rounded-full p-1.5` to tab bar, `liquid-glass-card rounded-[36px]` to live preview container, and `liquid-glass-card` to floating export bar (`BrandKitDashboard.jsx`).
-- [x] **Zero Server & Prompt Regression:** `server/` and `server/prompts/brandPrompts.js` maintained at 0 diff.
 
-
+### Four Coordinated System & UI Fixes Sprint (`feature/final-team-assembly`):
+- [x] **Gibberish / Vague Input Rejection Gate:**
+  - Upgraded `pitchEnhancerPrompt` in `server/prompts/brandPrompts.js` with `VALIDATION CHECK (CRITICAL FIRST PASS)` returning `isValidPremise: false` and `retryMessage` when encountering nonsense, spam, or fragmented input (e.g. "school make", "make do thing").
+  - Updated `pitchEnhancerSchema` and `expandRawPitch` in `server/services/interviewService.js` with programmatic `isGibberishInput` heuristics and structured validation response.
+  - Updated `handleExpandPitch` in `server/controllers/interviewerController.js` to return validation payloads.
+  - Updated `App.jsx` to intercept `isValidPremise: false` and render error banner instead of advancing to concept selection.
+  - Added encouraging clarification banner with `AlertCircle` in `IntakeView.jsx`.
+- [x] **Eradicate Residual Mock / "Kuro Selvedge" Leaks:**
+  - Changed initial `brandKit` state in `App.jsx` to `null` and ensured `handleReset` clears `brandKit` so new runs start completely fresh.
+  - Updated `client/src/data/mockBrandData.js` default fallback from `fashionBrandKit` to `beverageBrandKit` (clean CPG wellness: Kura Botanicals).
+  - Renamed residual "Kuro Selvedge Co." references to "Atelier Selvaggio" in `mockBrandData.js`, `mockEngine.js`, and `interviewService.js`.
+- [x] **True Interactive Mobile Device Simulator:**
+  - Locked mobile preview chassis in `LivePreviewTab.jsx` to `max-w-[390px] mx-auto h-[780px] rounded-[48px] border-[6px] border-[#222222] shadow-2xl overflow-hidden my-4 flex flex-col relative`.
+  - Added top camera notch / dynamic island pill with camera lens and bottom home indicator bar.
+  - Implemented internal smooth scrolling (`flex-1 overflow-y-auto overflow-x-hidden relative`) so the phone chassis remains locked while content scrolls realistically inside.
+- [x] **Stacked Header Layout (Zero Clipping):**
+  - Re-architected headers across `RetailCpgPreview`, `HospitalityPreview`, and `DigitalSaasPreview`:
+    - Row 1: Brand Name (prominent display, full width, block truncate).
+    - Row 2: Sub-Nav Links (`Products`/`Craft`/`Stockists` or `Daily Menu`/`Private Dining`/`Hours` or `Features`/`Docs`/`Changelog`) on left & Action CTA button (`Bag (0)` / `Reserve` / `Get Started`) on right.
+    - Row 3: Announcement ribbon / badges and hero content.
+  - Eliminated any risk of text clipping, awkward wrapping, or button overlap across all viewports.

@@ -31,8 +31,18 @@ export async function handleExpandPitch(req, res) {
       return res.status(400).json({ error: 'Invalid request', details: 'rawPitch must be a non-empty string' });
     }
 
-    const concepts = await expandRawPitch(rawPitch.trim());
-    return res.status(200).json({ concepts });
+    const result = await expandRawPitch(rawPitch.trim());
+    if (result && result.isValidPremise === false) {
+      return res.status(200).json({
+        isValidPremise: false,
+        retryMessage: result.retryMessage || "That premise is a bit too fragmented to extract a defensible market angle. Try describing your product or business in a short phrase (e.g., 'An artisanal sourdough bakery' or 'A low-latency database for fintech').",
+        concepts: []
+      });
+    }
+    return res.status(200).json({
+      isValidPremise: true,
+      concepts: (result && result.concepts) ? result.concepts : (Array.isArray(result) ? result : [])
+    });
   } catch (error) {
     console.error('[interviewerController] Error in handleExpandPitch:', error);
     return res.status(500).json({ error: 'Failed to expand pitch', details: error.message });

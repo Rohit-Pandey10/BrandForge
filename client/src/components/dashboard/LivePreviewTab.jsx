@@ -191,7 +191,7 @@ export default function LivePreviewTab(props) {
       <div
         className={`w-full bg-white transition-all duration-300 ${
           isMobile
-            ? 'max-w-[390px] mx-auto min-h-[720px] rounded-[48px] border-[6px] border-[#222222] shadow-2xl overflow-hidden my-4'
+            ? 'max-w-[390px] mx-auto h-[780px] rounded-[48px] border-[6px] border-[#222222] shadow-2xl overflow-hidden my-4 flex flex-col relative'
             : 'border border-[#dbd7cd] overflow-hidden shadow-sm rounded-[28px]'
         }`}
         style={{
@@ -224,14 +224,28 @@ export default function LivePreviewTab(props) {
           </div>
         )}
 
-        {/* Mobile Camera Notch / Dynamic Island */}
+        {/* Mobile Camera Notch / Dynamic Island Chassis */}
         {isMobile && (
-          <div className="w-24 h-4 bg-[#222222] rounded-full mx-auto my-2.5 shrink-0 animate-fade-in" />
+          <div className="pt-2.5 pb-2 bg-[#222222] flex items-center justify-center shrink-0 z-20">
+            <div className="w-24 h-4 bg-[#111111] rounded-full mx-auto shadow-inner flex items-center justify-end px-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#1e293b]/70 inline-block" />
+            </div>
+          </div>
         )}
 
-        {archetype === 'retail_cpg'   && <RetailCpgPreview   {...sharedProps} />}
-        {archetype === 'hospitality'  && <HospitalityPreview  {...sharedProps} />}
-        {archetype === 'digital_saas' && <DigitalSaasPreview  {...sharedProps} />}
+        {/* Inner Scrollable Viewport */}
+        <div className={isMobile ? 'flex-1 overflow-y-auto overflow-x-hidden relative' : ''}>
+          {archetype === 'retail_cpg'   && <RetailCpgPreview   {...sharedProps} />}
+          {archetype === 'hospitality'  && <HospitalityPreview  {...sharedProps} />}
+          {archetype === 'digital_saas' && <DigitalSaasPreview  {...sharedProps} />}
+        </div>
+
+        {/* Mobile Home Indicator Bar */}
+        {isMobile && (
+          <div className="py-2 bg-[#222222] flex items-center justify-center shrink-0 z-20">
+            <div className="w-32 h-1 bg-[#444444] rounded-full mx-auto" />
+          </div>
+        )}
       </div>
 
       <PaletteTokenBar palette={palette} fontStyle={fontStyle} />
@@ -768,28 +782,27 @@ function RetailCpgPreview({
       }`}
       style={{ backgroundColor: surfaceColor }}
     >
-      {/* Nav */}
-      <div
-        className="flex items-center justify-between pb-4 mb-6 border-b gap-2"
-        style={{ borderColor: cardBorderColor }}
-      >
-        <span
-          className="text-xl sm:text-2xl md:text-3xl font-medium tracking-tight truncate"
-          style={{ color: headingTextColor, fontFamily: fontStyle.display }}
-        >
-          {brandName}
-        </span>
-        <div className="flex items-center gap-2">
-          {/* Hide text links on mobile, keep clean icon/cart */}
-          {!isMobile && (
-            <div className="hidden sm:flex items-center gap-4 text-xs font-medium" style={{ color: bodyTextColor }}>
-              <span className="cursor-pointer hover:opacity-80 transition-opacity">Products</span>
-              <span className="cursor-pointer hover:opacity-80 transition-opacity">Craft</span>
-              <span className="cursor-pointer hover:opacity-80 transition-opacity hidden md:inline">Stockists</span>
-            </div>
-          )}
+      {/* Stacked Header Layout (Zero Clipping) */}
+      <div className="pb-4 mb-6 border-b space-y-3" style={{ borderColor: cardBorderColor }}>
+        {/* Row 1: Brand Name (Prominent Display, Full Width) */}
+        <div className="w-full">
+          <span
+            className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight block truncate"
+            style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+          >
+            {brandName}
+          </span>
+        </div>
+
+        {/* Row 2: Sub-Nav Links & Action CTA */}
+        <div className="flex items-center justify-between gap-3 pt-1">
+          <div className="flex items-center gap-3 sm:gap-5 text-xs font-medium" style={{ color: bodyTextColor }}>
+            <span className="cursor-pointer hover:opacity-80 transition-opacity">Products</span>
+            <span className="cursor-pointer hover:opacity-80 transition-opacity">Craft</span>
+            <span className="cursor-pointer hover:opacity-80 transition-opacity hidden sm:inline">Stockists</span>
+          </div>
           <button
-            className="px-3.5 py-1.5 text-xs font-medium flex items-center gap-1.5 shrink-0 rounded-full transition-opacity hover:opacity-90"
+            className="px-3.5 py-1.5 text-xs font-medium flex items-center gap-1.5 shrink-0 rounded-full transition-opacity hover:opacity-90 shadow-2xs"
             style={{ backgroundColor: primaryColor, color: primaryContrast }}
           >
             <ShoppingBag className="w-3.5 h-3.5" />
@@ -1089,32 +1102,31 @@ function HospitalityPreview({
       }`}
       style={{ backgroundColor: surfaceColor }}
     >
-      {/* Nav */}
-      <div
-        className="flex items-center justify-between pb-4 mb-6 border-b gap-2"
-        style={{ borderColor: cardBorderColor }}
-      >
-        <span
-          className="text-xl sm:text-2xl md:text-3xl font-light tracking-tight truncate"
-          style={{ color: headingTextColor, fontFamily: fontStyle.display }}
-        >
-          {brandName}
-        </span>
-        <div className="flex items-center gap-2">
-          {/* Hide text links on mobile, keep clean reserve button */}
-          {!isMobile && (
-            <div className="hidden sm:flex items-center gap-4 text-xs font-medium" style={{ color: bodyTextColor }}>
-              <span className="cursor-pointer hover:opacity-80 transition-opacity">Daily Menu</span>
-              <span className="cursor-pointer hover:opacity-80 transition-opacity">Private Dining</span>
-              <span className="cursor-pointer hover:opacity-80 transition-opacity hidden md:inline">Hours</span>
-            </div>
-          )}
+      {/* Stacked Header Layout (Zero Clipping) */}
+      <div className="pb-4 mb-6 border-b space-y-3" style={{ borderColor: cardBorderColor }}>
+        {/* Row 1: Brand Name (Prominent Display, Full Width) */}
+        <div className="w-full">
+          <span
+            className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight block truncate"
+            style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+          >
+            {brandName}
+          </span>
+        </div>
+
+        {/* Row 2: Sub-Nav Links & Action CTA */}
+        <div className="flex items-center justify-between gap-3 pt-1">
+          <div className="flex items-center gap-3 sm:gap-5 text-xs font-medium" style={{ color: bodyTextColor }}>
+            <span className="cursor-pointer hover:opacity-80 transition-opacity">Daily Menu</span>
+            <span className="cursor-pointer hover:opacity-80 transition-opacity">Private Dining</span>
+            <span className="cursor-pointer hover:opacity-80 transition-opacity hidden sm:inline">Hours</span>
+          </div>
           <button
-            className="px-3.5 py-1.5 text-xs font-medium flex items-center gap-1.5 shrink-0 rounded-full transition-opacity hover:opacity-90"
+            className="px-3.5 py-1.5 text-xs font-medium flex items-center gap-1.5 shrink-0 rounded-full transition-opacity hover:opacity-90 shadow-2xs"
             style={{ backgroundColor: primaryColor, color: primaryContrast }}
           >
             <Clock className="w-3.5 h-3.5" />
-            <span className="text-xs">Reserve</span>
+            <span className="text-xs">{primaryCta || 'Reserve'}</span>
           </button>
         </div>
       </div>
@@ -1385,20 +1397,27 @@ function DigitalSaasPreview({
         isMobile ? 'p-4 sm:p-6' : 'p-6 sm:p-14'
       }`}
     >
-      <div className="flex items-center justify-between pb-4 mb-6 border-b border-stone-800 gap-2">
-        <div className="flex items-center gap-2 truncate">
-          <span className="font-mono text-lg sm:text-xl font-bold tracking-tight text-white truncate">{brandName}</span>
-          <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40 shrink-0">{badge}</span>
+      {/* Stacked Header Layout (Zero Clipping) */}
+      <div className="pb-4 mb-6 border-b border-stone-800 space-y-3">
+        {/* Row 1: Brand Name & Badge (Prominent Display, Full Width) */}
+        <div className="flex items-center justify-between gap-3 w-full">
+          <span className="font-mono text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white block truncate">
+            {brandName}
+          </span>
+          <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40 shrink-0">
+            {badge}
+          </span>
         </div>
-        <div className="flex items-center gap-2">
-          {!isMobile && (
-            <div className="hidden sm:flex items-center gap-4 text-xs text-stone-400 font-mono">
-              <span className="hover:text-white cursor-pointer">Features</span>
-              <span className="hover:text-white cursor-pointer">Docs</span>
-            </div>
-          )}
+
+        {/* Row 2: Sub-Nav Links & Action CTA */}
+        <div className="flex items-center justify-between gap-3 pt-1">
+          <div className="flex items-center gap-4 text-xs text-stone-400 font-mono">
+            <span className="hover:text-white cursor-pointer transition-colors">Features</span>
+            <span className="hover:text-white cursor-pointer transition-colors">Docs</span>
+            <span className="hover:text-white cursor-pointer transition-colors hidden sm:inline">Changelog</span>
+          </div>
           <button
-            className="px-3.5 py-1.5 text-xs font-mono font-medium rounded-md transition-all hover:opacity-90 shrink-0"
+            className="px-3.5 py-1.5 text-xs font-mono font-medium rounded-md transition-all hover:opacity-90 shrink-0 shadow-2xs"
             style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}
           >
             {primaryCta}
