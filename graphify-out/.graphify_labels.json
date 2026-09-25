@@ -3,7 +3,7 @@
   "1": "interviewService.js",
   "2": "client/package.json",
   "3": "brand.ts",
-  "4": "geminiClient.js",
+  "4": "scripts",
   "5": "dependencies",
   "6": "Brand Builder ⚡",
   "7": "server.js",
@@ -19,6 +19,5 @@
   "17": "package.json",
   "18": "mockEngine.js",
   "19": "vite.config.js",
-  "20": "resilientStore.js",
-  "21": "devDependencies"
+  "20": "resilientStore.js"
 }

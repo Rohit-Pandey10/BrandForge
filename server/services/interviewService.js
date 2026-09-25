@@ -188,7 +188,7 @@ export async function generateInterviewBatch(initialPitch = '') {
 
   if (isLlmConfigured()) {
     try {
-      const systemInstruction = buildBatchQuestionSystemInstruction(domain, isFamily);
+      const systemInstruction = buildBatchQuestionSystemInstruction(domain, isFamily, { rawPitch: pitchText });
       const prompt = `Founder's Initial Concept Pitch:\n"${pitchText}"\n\nDetected Domain: ${domain.toUpperCase()}${isFamily ? ' (FAMILY DINING INTENT)' : ''}.\nGenerate the complete 7-question discovery batch now matching schema.`;
 
       const result = await generateStructuredJson({
@@ -266,9 +266,10 @@ export async function generateNextQuestion(history = []) {
   const domain = classifyDomain(transcriptText);
   const isFamily = isFamilyIntent(transcriptText);
 
+  const firstPitch = userMessages[0]?.content || '';
   if (isLlmConfigured()) {
     try {
-      const systemInstruction = buildQuestionSystemInstruction(domain, isFamily, currentRound);
+      const systemInstruction = buildQuestionSystemInstruction(domain, isFamily, currentRound, { rawPitch: firstPitch });
       const prompt = `Conversation Transcript:\n${transcriptText}\n\nDetected Domain: ${domain.toUpperCase()}${isFamily ? ' (FAMILY DINING INTENT)' : ''}.\nFormulate the next question for Round ${currentRound}. Return structured JSON matching schema.`;
 
       const result = await generateStructuredJson({ systemInstruction, prompt, schema: questionSchema });

@@ -188,6 +188,8 @@
 - [x] Implemented multi-select checkbox mode for compatible Socratic questions in InterviewChat
 - [x] Overhauled brandPrompts.js with product-grounded naming rules and anti-demographic caricature constraints.
 - [x] Added CPG physical utility grounding rules to socraticBatchPrompt to eliminate corporate B2B bias.
+- [x] Wired personalization anchor blocks (rawPitch, answers) into interviewService and compilerService for v2.1 prompt suite.
+
 
 
 

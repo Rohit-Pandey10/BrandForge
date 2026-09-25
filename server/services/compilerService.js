@@ -136,9 +136,25 @@ export async function compileBrandKit(payload = []) {
   const domain = classifyDomain(transcriptText || firstPitch);
   const isFamily = isFamilyIntent(transcriptText || firstPitch);
 
+  // Extract structured answers for the personalization anchor block
+  let answersArray = [];
+  if (payload && Array.isArray(payload.qaPairs)) {
+    answersArray = payload.qaPairs.map(p => ({ question: p.question, answer: p.answer }));
+  } else if (payload && Array.isArray(payload.answers)) {
+    answersArray = payload.answers;
+  } else if (payload && payload.answers && typeof payload.answers === 'object') {
+    answersArray = Object.entries(payload.answers).map(([q, a]) => ({ question: q, answer: a }));
+  } else {
+    for (let i = 0; i < history.length - 1; i++) {
+      if (history[i].role === 'assistant' && history[i + 1]?.role === 'user') {
+        answersArray.push({ question: history[i].content, answer: history[i + 1].content });
+      }
+    }
+  }
+
   if (isLlmConfigured()) {
     try {
-      const systemInstruction = buildCompileSystemInstruction(domain, isFamily);
+      const systemInstruction = buildCompileSystemInstruction(domain, isFamily, { rawPitch: firstPitch, answers: answersArray });
       const prompt = `Full Socratic Interview Transcript:\n${transcriptText}\n\nDetected Domain: ${domain.toUpperCase()}${isFamily ? ' (FAMILY DINING INTENT)' : ''}.\nCompile the complete Brand Kit now.`;
 
       const result = await generateStructuredJson({ systemInstruction, prompt, schema: brandKitSchema });
