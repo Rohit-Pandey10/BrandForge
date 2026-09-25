@@ -95,13 +95,15 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
-  console.log('----------------------------------------------------');
-  console.log(`⚡ BrandLoom Backend running on http://localhost:${PORT}`);
-  console.log(`🤖 Primary LLM Provider: ${provider.toUpperCase()} (${provider === 'groq' ? 'llama-3.3-70b-versatile' : (process.env.GEMINI_MODEL || 'gemini-2.5-flash')})`);
-  console.log(`🔄 Fallback Engine: ${process.env.GEMINI_API_KEY ? 'Gemini API' : 'Domain-Adaptive Mock Engine'}`);
-  console.log('----------------------------------------------------');
-});
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
+    console.log('----------------------------------------------------');
+    console.log(`⚡ BrandLoom Backend running on http://localhost:${PORT}`);
+    console.log(`🤖 Primary LLM Provider: ${provider.toUpperCase()} (${provider === 'groq' ? 'llama-3.3-70b-versatile' : (process.env.GEMINI_MODEL || 'gemini-2.5-flash')})`);
+    console.log(`🔄 Fallback Engine: ${process.env.GEMINI_API_KEY ? 'Gemini API' : 'Domain-Adaptive Mock Engine'}`);
+    console.log('----------------------------------------------------');
+  });
+}
 
 export default app;

@@ -11,6 +11,8 @@
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
     "install:all": "npm install && (cd server && npm install) && (cd client && npm install)",
+    "build": "cd client && npm run build",
+    "vercel-build": "cd client && npm run build",
     "build:client": "cd client && npm run build",
     "test:health": "curl -s http://localhost:5001/health | jq .",
     "test:restaurant": "node scripts/test-restaurant-flow.js",
