@@ -7,7 +7,7 @@ import { isDbConnected } from '../config/db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DATA_DIR = path.resolve(__dirname, '../.data');
+const DATA_DIR = process.env.VERCEL ? '/tmp/.data' : path.resolve(__dirname, '../.data');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const SESSIONS_FILE = path.join(DATA_DIR, 'brand_sessions.json');
 
