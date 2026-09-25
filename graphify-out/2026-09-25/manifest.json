@@ -84,9 +84,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790314953.4010553,
-    "seen": 1790314968.995523,
-    "ast_hash": "45b17d73b2622949980f78431a83120d",
+    "mtime": 1790315403.2584798,
+    "seen": 1790315810.850425,
+    "ast_hash": "a3b8d7ce7a033cec2afeb148aebdd452",
     "semantic_hash": ""
   },
   "scripts/run-dev.js": {

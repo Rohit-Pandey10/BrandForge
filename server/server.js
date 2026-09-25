@@ -2,9 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import brandRoutes from './routes/brandRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import brandHistoryRoutes from './routes/brandHistoryRoutes.js';
+import { connectDB, isDbConnected } from './config/db.js';
 import { isLlmConfigured } from './utils/llmClient.js';
 
 dotenv.config();
+
+// Connect to MongoDB Atlas (or graceful resilient fallback)
+connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -63,6 +69,7 @@ app.get('/health', (req, res) => {
     status: 'ok',
     service: 'brand-builder-server',
     provider,
+    dbConnected: isDbConnected(),
     groqConfigured: Boolean(process.env.GROQ_API_KEY),
     geminiConfigured: Boolean(process.env.GEMINI_API_KEY),
     model: provider === 'groq' ? 'llama-3.3-70b-versatile' : (process.env.GEMINI_MODEL || 'gemini-2.5-flash'),
@@ -72,6 +79,12 @@ app.get('/health', (req, res) => {
 
 // Mount Brand Interview API routes
 app.use('/api/interview', brandRoutes);
+
+// Mount Authentication & User Management routes
+app.use('/api/auth', authRoutes);
+
+// Mount Brand History & Library routes
+app.use('/api/brands', brandHistoryRoutes);
 
 // Global Error Handler
 app.use((err, req, res, next) => {

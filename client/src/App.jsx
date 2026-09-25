@@ -3,6 +3,9 @@ import Header from './components/Header';
 import IntakeView from './components/IntakeView';
 import InterviewChat from './components/InterviewChat';
 import BrandKitDashboard from './components/BrandKitDashboard';
+import Sidebar from './components/Sidebar';
+import AuthModal from './components/AuthModal';
+import { useAuth, MAX_GUEST_RUNS } from './context/AuthContext';
 import { mockBrandKit, getDomainMockBrandKit, getDomainMockBatch, getDomainMockQuestion } from './data/mockBrandData';
 
 export default function App() {
@@ -12,6 +15,14 @@ export default function App() {
   const [brandKit, setBrandKit] = useState(mockBrandKit);
   const [isLoading, setIsLoading] = useState(false);
   const [isCompiling, setIsCompiling] = useState(false);
+
+  const {
+    isAuthenticated,
+    guestRunsCount,
+    incrementGuestRun,
+    saveGuestKitLocally,
+    openAuthModal
+  } = useAuth();
 
   const API_BASE = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '';
 
@@ -38,8 +49,14 @@ export default function App() {
 
   /**
    * Step 1: Start interview from IntakeView (Batch Call 1: Upfront 7 Questions)
+   * Gated: Guests can run at most 2 tests before requiring authentication
    */
   const handleStartInterview = async (pitch) => {
+    if (!isAuthenticated && guestRunsCount >= MAX_GUEST_RUNS) {
+      openAuthModal('run_limit');
+      return;
+    }
+
     const cleanPitch = String(pitch || '').trim();
     setIsLoading(true);
     setInitialPitch(cleanPitch);
@@ -72,11 +89,25 @@ export default function App() {
       ...payload
     });
 
+    let compiledKit = null;
     if (data && data.brandStrategy) {
-      setBrandKit(data);
+      compiledKit = data;
     } else {
       // Domain-adaptive fallback mock hydration
-      setBrandKit(getDomainMockBrandKit(pitch));
+      compiledKit = getDomainMockBrandKit(pitch);
+    }
+
+    setBrandKit(compiledKit);
+
+    // If unauthenticated guest, record run usage and buffer in memory/local storage
+    if (!isAuthenticated) {
+      incrementGuestRun();
+      saveGuestKitLocally(compiledKit, {
+        brandName: compiledKit?.brandStrategy?.brandName,
+        tagline: compiledKit?.brandStrategy?.tagline,
+        initialPitch: pitch,
+        domain: compiledKit?.brandStrategy?.archetype || 'general'
+      });
     }
 
     setIsCompiling(false);
@@ -96,7 +127,36 @@ export default function App() {
    * Jump straight to dashboard with hydrated mock state
    */
   const handlePreviewMock = () => {
-    setBrandKit(getDomainMockBrandKit(initialPitch || ''));
+    if (!isAuthenticated && guestRunsCount >= MAX_GUEST_RUNS) {
+      openAuthModal('run_limit');
+      return;
+    }
+
+    const mockKit = getDomainMockBrandKit(initialPitch || '');
+    setBrandKit(mockKit);
+
+    if (!isAuthenticated) {
+      incrementGuestRun();
+      saveGuestKitLocally(mockKit, {
+        brandName: mockKit?.brandStrategy?.brandName,
+        tagline: mockKit?.brandStrategy?.tagline,
+        initialPitch: initialPitch || 'Sample Brand',
+        domain: 'general'
+      });
+    }
+
+    setStage('dashboard');
+  };
+
+  /**
+   * Single-click rehydration from Sidebar
+   */
+  const handleRehydrateBrand = (rehydratedKit, sessionMeta) => {
+    if (!rehydratedKit) return;
+    setBrandKit(rehydratedKit);
+    if (sessionMeta?.initialPitch) {
+      setInitialPitch(sessionMeta.initialPitch);
+    }
     setStage('dashboard');
   };
 
@@ -204,9 +264,19 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
 
   return (
     <div className="min-h-screen bg-[#f2f1ed] text-[#000000] flex flex-col justify-between selection:bg-black selection:text-white font-sans">
+      {/* Expandable / Collapsible Left Sidebar */}
+      <Sidebar
+        onRehydrateBrand={handleRehydrateBrand}
+        onStartNew={handleReset}
+      />
+
+      {/* Global Authentication Modal */}
+      <AuthModal />
+
       {/* Editorial Navigation Header */}
       <Header
         stage={stage}
+        brandKit={brandKit}
         onReset={handleReset}
         onSkipToSynthesis={handleSkipToSynthesis}
         onPreviewMock={handlePreviewMock}

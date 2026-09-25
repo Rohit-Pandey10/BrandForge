@@ -3,8 +3,8 @@
   "1": "interviewService.js",
   "2": "client/package.json",
   "3": "brand.ts",
-  "4": "server/package.json",
-  "5": "package.json",
+  "4": "server.js",
+  "5": "scripts",
   "6": "Brand Builder ⚡",
   "7": "run-dev.js",
   "8": "DESIGN.md — Handhold Editorial Design System",
@@ -15,5 +15,8 @@
   "13": "test-restaurant-flow.js",
   "14": "mockEngine.js",
   "15": "test-jeans-flow.js",
-  "16": "dependencies"
+  "16": "server/package.json",
+  "17": "package.json",
+  "18": "devDependencies",
+  "19": "vite.config.js"
 }

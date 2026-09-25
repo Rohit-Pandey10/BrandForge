@@ -31,3 +31,6 @@ Thumbs.db
 .vscode/
 .idea/
 .antigravity/
+
+# Local data cache
+server/.data/
