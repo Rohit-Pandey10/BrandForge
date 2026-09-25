@@ -7,7 +7,7 @@
 ## 1. Project Overview & Sprint Status
 - **Project Name:** Brand Builder (Socratic Brand Studio, Strategic BGM & Token Synthesizer)
 - **Current Sprint Phase:** Phase 7 (Strategic Prompt Overhaul, Anti-Cliché Bans, Lexicon/Collins Naming Typologies, and Dynamic Socratic Discovery)
-- **Active Branch:** `feature/multi-select-and-keyboard-nav` (Isolated Frontend Keyboard Nav & Multi-Select Socratic Interaction)
+- **Active Branch:** `rohit` (Default working branch; all future commits push here unless explicitly instructed for `main`)
 - **Design System:** Handhold Editorial (`DESIGN.md`) — Warm paper cream (`#f2f1ed`), pure white surfaces (`#ffffff`), ink black (`#000000`), hairline dividers (`#dbd7cd`), Cormorant Garamond 300 display typography, Inter 400 interface typography, flat zero-shadow elevation.
 - **Strategic Prompt Architecture (`server/prompts/brandPrompts.js`):**
   - **Banned Clichés List (`BANNED_TECH_CLICHES`):** Strict prohibition of `pulse`, `forge`, `nexus`, `vortex`, `sync`, `flow`, `aura`, `hyper`, `seamless`, `revolutionize`, `cutting-edge`, `game-changer`, `supercharge`, `disrupt`, `all-in-one`, `bleeding-edge`, `paradigm`, `synergy`, and `radical craftsman`.
