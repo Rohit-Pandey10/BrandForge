@@ -82,9 +82,69 @@ export const brandKitSchema = {
         socialHooks: { type: 'array', items: { type: 'string' } }
       },
       required: ['heroHeadline', 'heroSubheadline', 'callToAction', 'manifesto', 'elevatorPitch', 'socialHooks']
+    },
+    websiteBlueprint: {
+      type: 'object',
+      properties: {
+        badge: {
+          type: 'string',
+          description: 'Precise micro-label, e.g. "Single-Origin Alpine Whey" or "Naturally Fermented Micro-Batch"'
+        },
+        heroLayout: {
+          type: 'string',
+          enum: ['centered_minimal', 'split_editorial', 'bold_monograph'],
+          description: 'Visual rhythm best suited to this brand — centered_minimal=editorial, split_editorial=product-first, bold_monograph=expressive'
+        },
+        announcementBar: {
+          type: 'string',
+          description: 'Top ribbon copy, e.g. "Complimentary refrigerated shipping on trial pouches" or "Free standard shipping over $60"'
+        },
+        primaryCta: {
+          type: 'string',
+          description: 'Primary call-to-action button label'
+        },
+        secondaryCta: {
+          type: 'string',
+          description: 'Secondary exploration link text'
+        },
+        sections: {
+          type: 'array',
+          minItems: 2,
+          maxItems: 3,
+          items: {
+            type: 'object',
+            properties: {
+              type: {
+                type: 'string',
+                enum: ['catalog_grid', 'flavor_profile', 'ritual_steps', 'comparative_ledger', 'press_quotes'],
+                description: 'catalog_grid=SKU cards, ritual_steps=numbered steps, flavor_profile=taste panels, comparative_ledger=brand vs antiHero, press_quotes=media quotes'
+              },
+              title: { type: 'string' },
+              subtitle: { type: 'string' },
+              items: {
+                type: 'array',
+                minItems: 2,
+                maxItems: 4,
+                items: {
+                  type: 'object',
+                  properties: {
+                    label: { type: 'string', description: 'Brand-specific product/step name — never a generic placeholder' },
+                    description: { type: 'string', description: 'Concrete, sensory-specific copy for this item' },
+                    metricOrPrice: { type: 'string', description: 'Price, size, or metric (e.g., "$32", "250g pouch", "Step 01")' },
+                    tag: { type: 'string', description: 'Small badge label (e.g., "BESTSELLER", "NEW BATCH", "SIGNATURE")' }
+                  },
+                  required: ['label', 'description']
+                }
+              }
+            },
+            required: ['type', 'title', 'items']
+          }
+        }
+      },
+      required: ['badge', 'heroLayout', 'primaryCta', 'sections']
     }
   },
-  required: ['brandStrategy', 'voiceSystem', 'visualTokens', 'launchContent']
+  required: ['brandStrategy', 'voiceSystem', 'visualTokens', 'launchContent', 'websiteBlueprint']
 };
 
 /**

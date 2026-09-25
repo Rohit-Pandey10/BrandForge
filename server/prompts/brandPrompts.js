@@ -165,6 +165,27 @@ VISUAL DESIGN SYSTEM:
 
 LAUNCH CONTENT:
 - socialHooks and heroHeadline should reference the founder's specific unfair edge or differentiator rather than generic category excitement language.
+
+DYNAMIC WEBSITE BLUEPRINT GENERATION (MANDATORY — do NOT skip):
+Generate a complete, domain-specific landing page blueprint that reflects this exact brand's commercial reality.
+NEVER use placeholder product names ("The Signature Edition", "Small-Batch Reserve", "Sub-1ms Latency").
+Invent realistic, highly specific product/edition names, pricing tiers, descriptions, and section titles
+that are grounded in the founder's stated differentiator, ingredient, pricing tier, and aesthetic answer.
+
+Rules:
+- badge: A precise micro-label, e.g. "Single-Origin Alpine Whey" or "Naturally Fermented Micro-Batch".
+- heroLayout: Choose based on brand weight and whitespace preference:
+    "centered_minimal" → editorial whitespace brands (premium, minimalist)
+    "split_editorial"  → product-first brands with a differentiator card alongside the copy
+    "bold_monograph"   → high-contrast, large typography brands (bold, expressive)
+- sections: 2–3 sections. Choose types that match the actual product category:
+    "catalog_grid"      → use for any product with discrete SKUs (pouches, editions, bundles)
+    "ritual_steps"      → use for products with a consumption ritual (dissolve, brew, mix, apply)
+    "flavor_profile"    → use for beverages, foods, or taste-forward products
+    "comparative_ledger"→ use when the brand's antiHero is a direct market foil worth naming
+    "press_quotes"      → use for validated, credibility-first brands
+- For every item in sections[].items, invent a REAL commercial name and description specific to this brand.
+  (e.g., for a whey protein: "Meadow Blend — Unflavored", "Morning Latte Mix", "Trial Duo Pack" — not "Signature Edition").
 `;
 
 /**
