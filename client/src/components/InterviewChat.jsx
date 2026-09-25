@@ -163,6 +163,8 @@ export default function InterviewChat({
           currentStep={currentRound}
           totalSteps={totalQuestions}
           activeLabel={stageLabel}
+          questions={questions}
+          currentQuestion={currentQ}
           onStepClick={(targetIdx) => {
             if (targetIdx < totalQuestions && !isLoading && !isCompiling) {
               const answerToCommit = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');

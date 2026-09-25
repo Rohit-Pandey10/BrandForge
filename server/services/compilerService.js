@@ -171,7 +171,8 @@ export async function compileBrandKit(payload = []) {
         history.push({ role: 'user', content: firstPitch });
       }
       for (const pair of payload.qaPairs) {
-        if (pair.question) history.push({ role: 'assistant', content: pair.question });
+        const stagePrefix = pair.stageLabel ? `[${pair.stageLabel}] ` : '';
+        if (pair.question) history.push({ role: 'assistant', content: `${stagePrefix}${pair.question}` });
         if (pair.answer) history.push({ role: 'user', content: pair.answer });
       }
     } else if (payload.answers && typeof payload.answers === 'object') {
@@ -199,9 +200,17 @@ export async function compileBrandKit(payload = []) {
   // Extract structured answers for the personalization anchor block
   let answersArray = [];
   if (payload && Array.isArray(payload.qaPairs)) {
-    answersArray = payload.qaPairs.map(p => ({ question: p.question, answer: p.answer }));
+    answersArray = payload.qaPairs.map(p => ({
+      question: p.question,
+      answer: p.answer,
+      stageLabel: p.stageLabel || ''
+    }));
   } else if (payload && Array.isArray(payload.answers)) {
-    answersArray = payload.answers;
+    answersArray = payload.answers.map(p => ({
+      question: p.question || '',
+      answer: p.answer || '',
+      stageLabel: p.stageLabel || ''
+    }));
   } else if (payload && payload.answers && typeof payload.answers === 'object') {
     answersArray = Object.entries(payload.answers).map(([q, a]) => ({ question: q, answer: a }));
   } else {
@@ -215,7 +224,7 @@ export async function compileBrandKit(payload = []) {
   if (isLlmConfigured()) {
     try {
       const systemInstruction = buildCompileSystemInstruction(domain, isFamily, { rawPitch: firstPitch, answers: answersArray });
-      const prompt = `Full Socratic Interview Transcript:\n${transcriptText}\n\nDetected Domain: ${domain.toUpperCase()}${isFamily ? ' (FAMILY DINING INTENT)' : ''}.\nCompile the complete Brand Kit now.`;
+      const prompt = `Full Socratic Interview Transcript:\n${transcriptText}\n\nDetected Domain: ${domain.toUpperCase()}${isFamily ? ' (FAMILY DINING INTENT)' : ''}.\nSynthesize the founder's dynamic discovery responses directly into the complete Brand Kit now.`;
 
       const result = await generateStructuredJson({ systemInstruction, prompt, schema: brandKitSchema });
       return result;

@@ -18,13 +18,13 @@ export function isLlmConfigured() {
 
 export const getLlmClient = isLlmConfigured;
 
-// Priority list for Groq models with graceful fallback for decommissioned model IDs
+// Priority list for Groq models with graceful fallback for decommissioned or rate-limited model IDs
 const GROQ_CANDIDATE_MODELS = [
   process.env.GROQ_MODEL,
-  'llama-3.3-70b-versatile',
-  'openai/gpt-oss-120b',
   'qwen/qwen3.8-27b',
-  'openai/gpt-oss-20b'
+  'openai/gpt-oss-20b',
+  'openai/gpt-oss-120b',
+  'llama-3.3-70b-versatile'
 ].filter(Boolean);
 
 /**
@@ -41,11 +41,10 @@ export async function generateStructuredJson({ systemInstruction, prompt, schema
 
   // Primary: Try Groq if selected and configured
   if (provider === 'groq' && groq) {
-    console.log('[LLM Client] Dispatching request to Groq (llama-3.3-70b-versatile)...');
-
     for (let i = 0; i < GROQ_CANDIDATE_MODELS.length; i++) {
       const groqModel = GROQ_CANDIDATE_MODELS[i];
       try {
+        console.log(`[LLM Client] Dispatching request to Groq (${groqModel})...`);
         const response = await groq.chat.completions.create({
           model: groqModel,
           messages: [
@@ -62,13 +61,12 @@ export async function generateStructuredJson({ systemInstruction, prompt, schema
         const raw = response.choices[0]?.message?.content || '{}';
         return JSON.parse(raw);
       } catch (err) {
-        const msg = (err.message || '').toLowerCase();
-        const isModelUnavailable = err.status === 404 || err.status === 400 || msg.includes('does not exist') || msg.includes('decommissioned');
-        if (isModelUnavailable && i < GROQ_CANDIDATE_MODELS.length - 1) {
-          // Model decommissioned or unavailable on current Groq tier — failover to active Groq model
+        console.warn(`[LLM Client] Groq model ${groqModel} failed:`, err?.message || err);
+        if (i < GROQ_CANDIDATE_MODELS.length - 1) {
+          // Failover to next candidate model
           continue;
         }
-        console.warn('[LLM Client] Groq call failed or rate-limited. Falling back to Gemini...', err.message);
+        console.warn('[LLM Client] All Groq candidate models exhausted. Falling back to Gemini...');
         break;
       }
     }

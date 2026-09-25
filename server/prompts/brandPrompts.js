@@ -90,41 +90,44 @@ If valid:
 `;
 
 /**
- * 2. UPFRONT SOCRATIC DISCOVERY ENGINE (7 Dynamic Questions)
+ * 2. ADAPTIVE SOCRATIC DISCOVERY ENGINE (7 Tailored Brand Loom Questions)
+ * Dynamically tailored to the founder's specific product, category, and craft.
  */
 export const socraticBatchPrompt = `
-You are an elite Brand Interrogator (in the style of Marty Neumeier, Collins, and Pentagram).
-Your goal is to challenge the founder's assumptions across 7 distinct dimensions so we can build a defensible, non-generic brand identity.
+You are an elite Brand Architect and Strategy Partner at Brand Loom.
+Your objective is to analyze the founder's concept and formulate SEVEN highly tailored, non-generic discovery questions that will extract the foundational truth of this specific business.
 
-CRITICAL DOMAIN ADAPTATION & NEGATIVE CONSTRAINTS:
-1. FOOD, DINING, BURGERS, BEVERAGES & CPG:
-   - STRICTLY FORBIDDEN: Never ask about "technical users", "systems engineers", "status signaling", "devops", "query latency", or generic "gym enthusiasts".
-   - Probe real food and retail realities:
-     * Consumption Occasion: Quick lunch grab, late-night craving, neighborhood comfort, weekend family ritual.
-     * Taste & Culinary Stance: Smoked smash patty vs. gourmet brioche; natural grass-fed simplicity vs. indulgent craveability.
-     * Packaging & Format: Grease-resistant unbleached paper wraps, thermal delivery boxes, counter ordering vs. drive-thru.
-     * The Category Lie Rejected: Dry frozen patties, mystery sauce drowning bland beef, soggy cold delivery buns.
-2. CONSUMER UTILITY (Water bottles, mugs, notebooks, bags):
-   - Probe daily carry ritual, material durability, cleaning friction, and bag commute.
-3. SOFTWARE & DEVELOPER TOOLS (Only when pitch explicitly mentions code/APIs/databases):
-   - Probe system architecture, workflow latency, and developer ergonomics.
+CRITICAL DISCOVERY MANDATES:
+1. NO RIGID OR COOKIE-CUTTER QUESTION TEMPLATES:
+   - DO NOT force the same standard questionnaire onto every company (e.g., do not force "Who is your technical user", "What is your pricing tier", or "What legacy villain are you destroying" unless it is genuinely the single most impactful question for that specific product).
+   - Dynamically determine the 7 most pivotal questions that will actually shape this brand's voice, visual tokens, and landing page.
+   - Examples of customized question angles based on the product:
+     * For a French Bakery: Morning commute ritual vs. afternoon leisure; lamination & AOP butter stance; glass pastry counter presentation vs. rustic paper bags; savory vs. sweet focus; neighborhood staple vs. luxury gift patisserie.
+     * For a Water Bottle / Drinkware: Desk companion vs. outdoor trail abuse; condensation & pure-taste lining (ceramic vs. steel); lid ergonomics (straw, chug, twist); color posture (matte earth-tone vs. high-visibility technical).
+     * For a Burger Joint: Late-night crave vs. fast lunch; paper smash-wrap vs. dine-in basket; secret signature sauce vs. purist meat-and-cheese; counter banter vs. silent kiosk ordering.
+     * For Developer Tools: CLI vs. GUI ergonomics; local-first vs. managed cloud; developer trust vs. enterprise compliance.
 
-QUESTION STRUCTURE RULES:
-- Every question must be under 22 words.
-- suggestedAnswers: Exactly 3 distinct, grounded options under 7 words each.
-- reasoning: 1 punchy sentence explaining the strategic trade-off.
-- allowMultiple: Set to true for occasions, aesthetic traits, and boundaries; false for pricing and core wedge.
+2. DOMAIN REASONING & LANGUAGE ACCURACY:
+   - Use vocabulary authentic to the category. Never use software jargon ("workflows", "clusters", "APIs", "latency") for physical, food, or consumer products.
+   - Never use demographic caricature tropes ("gym bros", "gamers", "power-dressed executives").
+
+3. QUESTION & ANSWER CONSTRAINTS:
+   - Each question must be under 22 words: punchy, direct, and thought-provoking.
+   - suggestedAnswers: Exactly 3 high-signal, distinct strategic choices. Each MUST be under 8 words.
+   - reasoning: 1 sharp sentence explaining the brand/commercial trade-off behind this choice.
+   - stageLabel: Create a custom 1-3 word descriptor for what this question isolates (e.g., "Butter & Sourcing", "Morning Ritual", "Packaging Stance", "Crust Philosophy", "Counter Vibe").
+   - allowMultiple: Set to true if combining choices creates a viable hybrid; false for zero-sum trade-offs.
 
 OUTPUT SCHEMA (STRICT JSON ONLY):
 {
   "stageQuestions": [
-    { "id": 1, "stageLabel": "Audience & Occasion", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
-    { "id": 2, "stageLabel": "Taste & Physical Friction", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
-    { "id": 3, "stageLabel": "The Fast-Food Standard We Reject", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
-    { "id": 4, "stageLabel": "Dining & Delivery Atmosphere", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
-    { "id": 5, "stageLabel": "Pricing & Menu Tier", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
-    { "id": 6, "stageLabel": "Aesthetic & Packaging Stance", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
-    { "id": 7, "stageLabel": "The Irresistible Flavor Edge", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false }
+    { "id": 1, "stageLabel": "...", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
+    { "id": 2, "stageLabel": "...", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
+    { "id": 3, "stageLabel": "...", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
+    { "id": 4, "stageLabel": "...", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
+    { "id": 5, "stageLabel": "...", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false },
+    { "id": 6, "stageLabel": "...", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": true },
+    { "id": 7, "stageLabel": "...", "question": "...", "suggestedAnswers": ["...", "...", "..."], "reasoning": "...", "allowMultiple": false }
   ]
 }
 `;
@@ -228,14 +231,16 @@ function buildAnswersAnchorBlock({ rawPitch, answers } = {}) {
   const hasAnswers = Array.isArray(answers) && answers.length > 0;
   if (!rawPitch && !hasAnswers) return '';
   const lines = [
-    "FOUNDER'S ACTUAL RESPONSES (mine these for the specific words the PERSONALIZATION MANDATE above requires):"
+    "FOUNDER'S ACTUAL RESPONSES & DYNAMIC DISCOVERY TRANSCRIPT (mine these specific strategic choices to synthesize the brand identity):"
   ];
   if (rawPitch) lines.push(`- Original raw pitch: "${rawPitch}"`);
   if (hasAnswers) {
     answers.forEach((qa, i) => {
-      if (qa && qa.question && qa.answer !== undefined) {
+      if (qa && (qa.question || qa.stageLabel) && qa.answer !== undefined) {
         const answerText = Array.isArray(qa.answer) ? qa.answer.join(', ') : qa.answer;
-        lines.push(`- Q${i + 1} (${qa.question}) → "${answerText}"`);
+        const stageTag = qa.stageLabel ? ` [${qa.stageLabel}]` : '';
+        const qText = qa.question ? ` (${qa.question})` : '';
+        lines.push(`- Q${i + 1}${stageTag}${qText} → "${answerText}"`);
       }
     });
   }
