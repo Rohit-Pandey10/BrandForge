@@ -6,8 +6,8 @@
 
 ## 1. Project Overview & Sprint Status
 - **Project Name:** Brand Builder (Socratic Brand Studio, Strategic BGM & Token Synthesizer)
-- **Current Sprint Phase:** Phase 7 (Strategic Prompt Overhaul, Anti-Cliché Bans, Lexicon/Collins Naming Typologies, and Dynamic Socratic Discovery)
-- **Active Branch:** `feature/practical-deliverables` (Streamlined Deliverables & Dashboard Consolidation)
+- **Current Sprint Phase:** Phase 7 (Strategic Prompt Overhaul, Anti-Cliché Bans, Lexicon/Collins Naming Typologies, and Dynamic Socratic Discovery) — Complete
+- **Active Branch:** `main` (Production Ready, Consolidated & Deployed)
 - **Design System:** Handhold Editorial (`DESIGN.md`) — Warm paper cream (`#f2f1ed`), pure white surfaces (`#ffffff`), ink black (`#000000`), hairline dividers (`#dbd7cd`), Cormorant Garamond 300 display typography, Inter 400 interface typography, flat zero-shadow elevation.
 - **Strategic Prompt Architecture (`server/prompts/brandPrompts.js`):**
   - **Banned Clichés List (`BANNED_TECH_CLICHES`):** Strict prohibition of `pulse`, `forge`, `nexus`, `vortex`, `sync`, `flow`, `aura`, `hyper`, `seamless`, `revolutionize`, `cutting-edge`, `game-changer`, `supercharge`, `disrupt`, `all-in-one`, `bleeding-edge`, `paradigm`, `synergy`, and `radical craftsman`.
@@ -65,7 +65,7 @@
 | **Intake Refinement Gate** | **Verified** | Evaluates raw/vague/broken inputs and expands them into 2 distinct commercial angles via `POST /api/interview/expand-pitch`. |
 | **Concept Selector UI** | **Verified** | Interactive selection card (`ConceptSelector.jsx`) letting founders choose between Direction 01 & 02 or edit the concept before discovery. |
 | **Targeted 7-Question Discovery** | **Verified** | Generates 7 sequential discovery questions keyed specifically to the chosen refined concept. |
-| **Guest-First Flow** | **Verified** | Allows unauthenticated visitors up to 2 full brand creation tests. 3rd attempt is hard-gated by `AuthModal`. |
+| **Guest-First Flow** | **Verified** | Allows unauthenticated visitors up to 2 full brand creation tests. 3rd attempt is hard-gated by `AuthModal`. Hardcoded static sample monograph ("Blister & Beam") is 100% exempt from quota and never decrements guest runs. |
 | **Persistence Gating** | **Verified** | Prominent `"Save to Library"` button in Header and Dashboard. Prompts guest to sign in or saves directly for authenticated users. |
 | **Strict @gmail.com Auth** | **Verified** | Custom credentials reject non-`@gmail.com` addresses on client & server (`GMAIL_REGEX`). Bcrypt hash + 14d JWT tokens. |
 | **Confirm Password Match** | **Verified** | Registration view provides real-time matching indicator and locks submission until passwords match. |

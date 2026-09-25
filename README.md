@@ -9,16 +9,17 @@
 
 Founders often struggle to articulate their brand identity, settling for generic copy, safe aesthetics, and cookie-cutter templates. **BrandLoom** breaks this paradigm using an un-templated **Socratic Brand Interviewer**:
 
-1. **Strategic Refinement Gate:** Evaluates raw founder inputs, rejects gibberish/spam, and formulates 2 contrasting commercial directions tailored to that exact business premise.
-2. **Adaptive 7-Question Socratic Discovery Engine:** Formulates seven highly customized, non-generic strategic questions (e.g. *Cast-Iron Ritual*, *Sourdough Stance*, *Cap Ergonomics*, *Usage Context*) with dynamic stage labels, grounding choices in category-specific realities with zero software jargon or demographic caricatures.
-3. **Brand Kit & Monograph Synthesis:** Distills the dynamic discovery transcript into structured design tokens:
+1. **Instant Static Sample Preview:** Jump straight into an editorial brand monograph for **"Blister & Beam"** (Wood-Fired Sourdough) with 1 click. Zero backend API calls, zero LLM tokens, and 100% exempt from the 2-run guest limit.
+2. **Strategic Refinement Gate:** Evaluates raw founder inputs, rejects gibberish/spam, and formulates 2 contrasting commercial directions tailored to that exact business premise.
+3. **Adaptive 7-Question Socratic Discovery Engine:** Formulates seven highly customized, non-generic strategic questions (e.g. *Cast-Iron Ritual*, *Sourdough Stance*, *Cap Ergonomics*, *Usage Context*) with dynamic stage labels, grounding choices in category-specific realities with zero software jargon or demographic caricatures.
+4. **Brand Kit & Monograph Synthesis:** Distills the dynamic discovery transcript into structured design tokens:
    - **Brand Strategy:** Mission, Anti-Hero Villain, Core Value Proposition, Differentiator ("Onlyness Test").
    - **Voice System:** Archetype, Tone Adjectives, Dos & Don'ts, Signature Lexicon.
    - **Visual Tokens:** Contrast-checked HSL/HEX palettes (warm cream & parchment canvases for food/CPG; dark mode reserved for nocturnal developer tooling), dynamic Google Fonts pairing, curvature, and style philosophy.
    - **Website Blueprint:** Sections, SKU grids, comparative ledgers, and hero CTAs.
    - **Launch Content:** Manifesto, Hero Headlines, Elevator Pitch, Viral Social Hooks.
-4. **Interactive Website Simulator:** Real-time mobile & desktop viewports with zero horizontal scroll overflow.
-5. **MVP "AI Prompts" Suite:** Export 1-click production-ready master prompts containing all Q&A context, design tokens, and component blueprints directly into **Lovable**, **Bolt.new**, **Google Antigravity**, **v0**, or **ChatGPT/Claude**.
+5. **Interactive Website Simulator:** Real-time mobile & desktop viewports with zero horizontal scroll overflow.
+6. **MVP "AI Prompts" Suite:** Export 1-click production-ready master prompts containing all Q&A context, design tokens, and component blueprints directly into **Lovable**, **Bolt.new**, **Google Antigravity**, **v0**, or **ChatGPT/Claude**.
 
 ---
 
@@ -119,6 +120,7 @@ Verifies restaurant and denim brand synthesis pipelines, ensuring 100% category 
 
 ## 🎨 Interactive Features
 
+- **Free Static Sample Preview:** Instant 1-click access to the comprehensive "Blister & Beam" wood-fired sourdough monograph (0 LLM tokens, 100% free, decoupled from guest quotas).
 - **Strategic Intake:** Raw input expansion into 2 commercial angles with anti-spam validation gate.
 - **Adaptive Socratic Discovery:** 7 dynamically generated question dimensions with 3 high-signal choices.
 - **Brand Kit Monograph:** Interactive typography rationale, color swatches, manifesto, and copy guidelines.
