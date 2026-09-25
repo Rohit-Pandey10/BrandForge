@@ -28,8 +28,55 @@ export default function App() {
     guestRunsCount,
     incrementGuestRun,
     saveGuestKitLocally,
-    openAuthModal
+    openAuthModal,
+    savedBrands = [],
+    saveBrandToLibrary
   } = useAuth();
+
+  const [isSaved, setIsSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Single Source of Truth: Determine isSaved dynamically from savedBrands or local isSaved state
+  const isKitSaved = React.useMemo(() => {
+    if (isSaved) return true;
+    if (!brandKit) return false;
+    const activeName = (brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
+    if (!activeName) return false;
+    return (savedBrands || []).some(session => {
+      const savedName = (session.brandName || session.brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
+      const savedId = session._id || session.id;
+      return (brandKit._id && savedId === brandKit._id) || (savedName && savedName === activeName);
+    });
+  }, [isSaved, brandKit, savedBrands]);
+
+  const handleSaveToLibrary = async () => {
+    if (isKitSaved || isSaving) return;
+
+    if (!isAuthenticated) {
+      openAuthModal('save_gate');
+      return;
+    }
+
+    if (!brandKit) return;
+
+    setIsSaving(true);
+    try {
+      const res = await saveBrandToLibrary(brandKit, {
+        brandName: brandKit?.brandStrategy?.brandName,
+        tagline: brandKit?.brandStrategy?.tagline,
+        domain: brandKit?.brandStrategy?.archetype || 'general',
+        initialPitch: initialPitch || rawPitch || ''
+      });
+
+      if (res && res.success) {
+        setIsSaved(true);
+      }
+    } catch (err) {
+      console.error('[App] Save to library error:', err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   /**
    * Helper to call backend API with fallback
@@ -171,6 +218,7 @@ export default function App() {
     }
 
     setIsCompiling(false);
+    setIsSaved(false);
     setStage('dashboard');
   };
 
@@ -186,6 +234,8 @@ export default function App() {
     setIntakeError('');
     setBrandKit(null);
     setInterviewAnswers([]);
+    setIsSaved(false);
+    setIsSaving(false);
   };
 
   /**
@@ -199,6 +249,7 @@ export default function App() {
 
     const mockKit = getDomainMockBrandKit(initialPitch || rawPitch || '');
     setBrandKit(mockKit);
+    setIsSaved(false);
 
     if (!isAuthenticated) {
       incrementGuestRun();
@@ -222,6 +273,7 @@ export default function App() {
     if (sessionMeta?.initialPitch) {
       setInitialPitch(sessionMeta.initialPitch);
     }
+    setIsSaved(true);
     setStage('dashboard');
   };
 
@@ -342,6 +394,9 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
       <Header
         stage={stage}
         brandKit={brandKit}
+        isSaved={isKitSaved}
+        isSaving={isSaving}
+        onSave={handleSaveToLibrary}
         onReset={handleReset}
         onSkipToSynthesis={handleSkipToSynthesis}
         onPreviewMock={handlePreviewMock}
@@ -387,6 +442,9 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
           <BrandKitDashboard
             brandKit={brandKit}
             answers={interviewAnswers}
+            isSaved={isKitSaved}
+            isSaving={isSaving}
+            onSave={handleSaveToLibrary}
             onStartNew={handleReset}
           />
         )}

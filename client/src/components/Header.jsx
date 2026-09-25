@@ -23,22 +23,48 @@ export default function Header({
   onExportJson,
   onExportCss,
   onExportSvg,
-  onPrintPdf
+  onPrintPdf,
+  isSaved: externalIsSaved,
+  isSaving: externalIsSaving,
+  onSave: externalOnSave
 }) {
   const {
     user,
     isAuthenticated,
     guestRunsCount,
-    savedBrands,
+    savedBrands = [],
     toggleSidebar,
     openAuthModal,
     saveBrandToLibrary
   } = useAuth();
 
-  const [isSaving, setIsSaving] = useState(false);
-  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [internalIsSaving, setInternalIsSaving] = useState(false);
+  const [internalIsSaved, setInternalIsSaved] = useState(false);
+
+  // Check if active kit is already saved in user's library sessions
+  const activeBrandName = (brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
+  const existsInSavedSessions = (savedBrands || []).some(b => {
+    const name = (b.brandName || b.brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
+    const id = b._id || b.id;
+    return (brandKit?._id && id === brandKit?._id) || (name && name === activeBrandName);
+  });
+
+  const isSaved = externalIsSaved !== undefined
+    ? externalIsSaved
+    : (internalIsSaved || existsInSavedSessions);
+
+  const isSaving = externalIsSaving !== undefined
+    ? externalIsSaving
+    : internalIsSaving;
 
   const handleSaveClick = async () => {
+    if (isSaved || isSaving) return;
+
+    if (externalOnSave) {
+      await externalOnSave();
+      return;
+    }
+
     if (!isAuthenticated) {
       openAuthModal('save_gate');
       return;
@@ -46,8 +72,7 @@ export default function Header({
 
     if (!brandKit) return;
 
-    setIsSaving(true);
-    setSaveSuccess(false);
+    setInternalIsSaving(true);
     try {
       const res = await saveBrandToLibrary(brandKit, {
         brandName: brandKit?.brandStrategy?.brandName,
@@ -56,13 +81,12 @@ export default function Header({
       });
 
       if (res && res.success) {
-        setSaveSuccess(true);
-        setTimeout(() => setSaveSuccess(false), 3500);
+        setInternalIsSaved(true);
       }
     } catch (err) {
       console.error('Save error:', err);
     } finally {
-      setIsSaving(false);
+      setInternalIsSaving(false);
     }
   };
 
@@ -148,38 +172,43 @@ export default function Header({
               </button>
 
               {/* PERSISTENCE GATING: Prominent "Save to Library" */}
-              <button
-                id="saveToLibraryBtn"
-                onClick={handleSaveClick}
-                disabled={isSaving}
-                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all shadow-xs whitespace-nowrap cursor-pointer ${
-                  saveSuccess
-                    ? 'bg-emerald-600 text-white border border-emerald-700'
-                    : isAuthenticated
-                    ? 'bg-[#1a1a1a] hover:bg-zinc-800 text-white'
-                    : 'bg-[#1a1a1a] hover:bg-zinc-800 text-white ring-2 ring-orange-500/20'
-                }`}
-                title={isAuthenticated ? 'Save this kit to your account library' : 'Sign in to save this kit permanently'}
-              >
-                {isSaving ? (
-                  <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : saveSuccess ? (
-                  <>
-                    <Check className="w-3.5 h-3.5" />
-                    <span>Saved to Library</span>
-                  </>
-                ) : (
-                  <>
-                    <Bookmark className="w-3.5 h-3.5 stroke-[1.8]" />
-                    <span>Save to Library</span>
-                    {!isAuthenticated && (
-                      <span className="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-full font-mono">
-                        Free
-                      </span>
-                    )}
-                  </>
-                )}
-              </button>
+              {isSaved ? (
+                <button
+                  id="saveToLibraryBtn"
+                  disabled
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 cursor-default whitespace-nowrap"
+                  title="Saved to Library"
+                >
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Saved to Library</span>
+                </button>
+              ) : (
+                <button
+                  id="saveToLibraryBtn"
+                  onClick={handleSaveClick}
+                  disabled={isSaving}
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all shadow-xs whitespace-nowrap cursor-pointer ${
+                    isAuthenticated
+                      ? 'bg-[#1a1a1a] hover:bg-zinc-800 text-white'
+                      : 'bg-[#1a1a1a] hover:bg-zinc-800 text-white ring-2 ring-orange-500/20'
+                  }`}
+                  title={isAuthenticated ? 'Save this kit to your account library' : 'Sign in to save this kit permanently'}
+                >
+                  {isSaving ? (
+                    <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <Bookmark className="w-3.5 h-3.5 stroke-[1.8]" />
+                      <span>Save to Library</span>
+                      {!isAuthenticated && (
+                        <span className="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-full font-mono">
+                          Free
+                        </span>
+                      )}
+                    </>
+                  )}
+                </button>
+              )}
 
               <button
                 onClick={onExportJson}

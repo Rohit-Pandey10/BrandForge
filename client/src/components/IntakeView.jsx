@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Sparkles, Utensils, Scissors, Database, FileText, Bot, AlertCircle } from 'lucide-react';
 import { samplePitches } from '../data/mockBrandData';
+import MethodologyModal from './MethodologyModal';
 
 const PRESET_PITCHES = [
   {
@@ -32,6 +33,7 @@ const PRESET_PITCHES = [
 export default function IntakeView({ onStartInterview, onPreviewMock, isExpanding = false, serverError = '' }) {
   const [pitch, setPitch] = useState('');
   const [error, setError] = useState('');
+  const [showMethodology, setShowMethodology] = useState(false);
 
   const handleSubmit = (e) => {
     e?.preventDefault();
@@ -86,9 +88,14 @@ export default function IntakeView({ onStartInterview, onPreviewMock, isExpandin
               <label htmlFor="pitchInput" className="text-xs sm:text-sm font-semibold tracking-wider text-stone-700 uppercase">
                 What are you building in one sentence?
               </label>
-              <span className="text-xs text-stone-600 font-mono hidden sm:inline">
-                Enter ↵ to launch
-              </span>
+              <button
+                type="button"
+                onClick={() => setShowMethodology(true)}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-medium rounded-full bg-amber-500/10 text-amber-900 border border-amber-500/20 hover:bg-amber-500/20 transition-all cursor-pointer"
+              >
+                <span>✦ How it works</span>
+                <span className="text-stone-400">→</span>
+              </button>
             </div>
             <textarea
               id="pitchInput"
@@ -234,6 +241,12 @@ export default function IntakeView({ onStartInterview, onPreviewMock, isExpandin
           </p>
         </div>
       </div>
+
+      {/* ── Editorial Methodology Guide Modal ── */}
+      <MethodologyModal
+        isOpen={showMethodology}
+        onClose={() => setShowMethodology(false)}
+      />
     </div>
   );
 }

@@ -35,15 +35,61 @@ const TABS = [
   { id: 'manifesto', label: 'Launch Manifesto & Copy',      Icon: FileText }
 ];
 
-export default function BrandKitDashboard({ brandKit, answers = [], onStartNew }) {
+export default function BrandKitDashboard({
+  brandKit,
+  answers = [],
+  onStartNew,
+  isSaved: externalIsSaved,
+  isSaving: externalIsSaving,
+  onSave: externalOnSave
+}) {
   const [activeTab, setActiveTab] = useState('preview');
-  const [isSaving, setIsSaving] = useState(false);
-  const [savedSuccess, setSavedSuccess] = useState(false);
+  const [internalIsSaving, setInternalIsSaving] = useState(false);
+  const [internalIsSaved, setInternalIsSaved] = useState(false);
   const [aiDrawerOpen, setAiDrawerOpen] = useState(false);
   const [aiTab, setAiTab] = useState('lovable');
   const [copiedPrompt, setCopiedPrompt] = useState(null);
   const [toastMessage, setToastMessage] = useState('');
-  const { isAuthenticated, saveBrandToLibrary, openAuthModal } = useAuth();
+  const { isAuthenticated, saveBrandToLibrary, openAuthModal, savedBrands = [] } = useAuth();
+
+  // Check if active kit is already saved in user's library sessions
+  const activeBrandName = (brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
+  const existsInSavedSessions = (savedBrands || []).some(b => {
+    const name = (b.brandName || b.brandKit?.brandStrategy?.brandName || '').trim().toLowerCase();
+    const id = b._id || b.id;
+    return (brandKit?._id && id === brandKit?._id) || (name && name === activeBrandName);
+  });
+
+  const isSaved = externalIsSaved !== undefined
+    ? externalIsSaved
+    : (internalIsSaved || existsInSavedSessions);
+
+  const isSaving = externalIsSaving !== undefined
+    ? externalIsSaving
+    : internalIsSaving;
+
+  const handleSave = async () => {
+    if (isSaved || isSaving) return;
+    if (externalOnSave) {
+      await externalOnSave();
+      return;
+    }
+    if (!isAuthenticated) {
+      openAuthModal('save_gate');
+      return;
+    }
+    setInternalIsSaving(true);
+    try {
+      const res = await saveBrandToLibrary(brandKit);
+      if (res?.success) {
+        setInternalIsSaved(true);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setInternalIsSaving(false);
+    }
+  };
 
   const { brandStrategy = {}, voiceSystem = {}, visualTokens = {}, launchContent = {} } = brandKit || {};
   const brandName = brandStrategy.brandName || 'Brand Monograph';
@@ -156,47 +202,31 @@ export default function BrandKitDashboard({ brandKit, answers = [], onStartNew }
 
         {/* Actions: Save to Library & Start New */}
         <div className="no-print shrink-0 flex items-center gap-2.5">
-          <button
-            onClick={async () => {
-              if (!isAuthenticated) {
-                openAuthModal('save_gate');
-                return;
-              }
-              setIsSaving(true);
-              try {
-                const res = await saveBrandToLibrary(brandKit);
-                if (res?.success) {
-                  setSavedSuccess(true);
-                  setTimeout(() => setSavedSuccess(false), 3500);
-                }
-              } catch (e) {
-                console.error(e);
-              } finally {
-                setIsSaving(false);
-              }
-            }}
-            disabled={isSaving}
-            className={`inline-flex items-center gap-1.5 text-xs px-4 py-2.5 rounded-xl border transition-all cursor-pointer font-semibold shadow-2xs ${
-              savedSuccess
-                ? 'bg-emerald-600 text-white border-emerald-700'
-                : 'bg-white border-zinc-200 hover:border-zinc-400 text-zinc-800'
-            }`}
-            title="Save this brand kit to your library"
-          >
-            {isSaving ? (
-              <span className="w-3.5 h-3.5 border-2 border-zinc-300 border-t-zinc-900 rounded-full animate-spin" />
-            ) : savedSuccess ? (
-              <>
-                <Check className="w-3.5 h-3.5" />
-                <span>Saved</span>
-              </>
-            ) : (
-              <>
-                <Bookmark className="w-3.5 h-3.5 stroke-[1.8]" />
-                <span>Save to Library</span>
-              </>
-            )}
-          </button>
+          {isSaved ? (
+            <button
+              disabled
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-emerald-50 text-emerald-800 border border-emerald-300 cursor-default"
+            >
+              <Check className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Saved to Library</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleSave}
+              disabled={isSaving}
+              className="inline-flex items-center gap-1.5 text-xs px-4 py-2.5 rounded-xl border transition-all cursor-pointer font-semibold shadow-2xs bg-white border-zinc-200 hover:border-zinc-400 text-zinc-800"
+              title="Save this brand kit to your library"
+            >
+              {isSaving ? (
+                <span className="w-3.5 h-3.5 border-2 border-zinc-300 border-t-zinc-900 rounded-full animate-spin" />
+              ) : (
+                <>
+                  <Bookmark className="w-3.5 h-3.5 stroke-[1.8]" />
+                  <span>Save to Library</span>
+                </>
+              )}
+            </button>
+          )}
 
           <button
             onClick={onStartNew}
@@ -244,7 +274,7 @@ export default function BrandKitDashboard({ brandKit, answers = [], onStartNew }
       {activeTab === 'manifesto' && <LaunchCopyTab    {...tabProps} />}
 
       {/* ── Floating Glassmorphism Export Toolbar ── */}
-      <div className="no-print fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+      <div className="no-print fixed bottom-6 left-1/2 -translate-x-1/2 z-30">
         <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl liquid-glass-card shadow-xl transition-all">
           <span className="text-xs uppercase font-mono tracking-widest text-zinc-500 font-semibold pr-2 border-r border-zinc-300 mr-1">
             Export

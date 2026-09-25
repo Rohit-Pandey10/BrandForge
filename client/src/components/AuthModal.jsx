@@ -111,7 +111,7 @@ export default function AuthModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
       {/* Modal Surface */}
       <div 
         className="relative w-full max-w-md bg-[#fcfbf9] border border-[#dbd7cd] rounded-[28px] shadow-2xl p-6 sm:p-8 overflow-hidden text-black transition-all"
