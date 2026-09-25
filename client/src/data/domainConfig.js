@@ -8,6 +8,7 @@
 export const DOMAINS = {
   FASHION: 'fashion',
   HOSPITALITY: 'hospitality',
+  BEVERAGE: 'beverage',
   WELLNESS: 'wellness',
   CAREER: 'career',
   DEVELOPER: 'developer',
@@ -28,27 +29,32 @@ export function classifyDomain(text = '') {
     return DOMAINS.FASHION;
   }
 
-  // 2. HOSPITALITY & CULINARY (Require explicit dining/food terms; do NOT match bare "table")
+  // 2. BEVERAGE & FUNCTIONAL DRINKS
+  if (/(drink|drinks|beverage|beverages|energy drink|clean caffeine|caffeine|adaptogen|adaptogens|kombucha|seltzer|soda|tonic|botanicals?|elixir|nootropics?|hydration|smoothie|juice|cold brew|sparkling water)/i.test(lower)) {
+    return DOMAINS.BEVERAGE;
+  }
+
+  // 3. HOSPITALITY & CULINARY (Require explicit dining/food terms; do NOT match bare "table")
   if (/(restaurant|food|dining|cuisine|culinary|chef|bistro|cafe|bakery|coffee|eatery|pizza|pizzeria|burger|pasta|taco|hospitality|kitchen|menu|dish|dishes|brewery|bar(?!code|chart)|cocktail|wine|diner|breakfast|lunch|dinner|tasting menu|dining table)/i.test(lower)) {
     return DOMAINS.HOSPITALITY;
   }
 
-  // 3. DEVELOPER TOOLS & SAAS
+  // 4. DEVELOPER TOOLS & SAAS
   if (/(sql|database|rust|in-memory|backend|api|infrastructure|dev|developer|compiler|cloud|devops|kubernetes|linux|saas|terminal|cli|software|b2b saas|sdk|platform)/i.test(lower)) {
     return DOMAINS.DEVELOPER;
   }
 
-  // 4. WELLNESS & HEALTH
+  // 5. WELLNESS & HEALTH
   if (/(fitness|wellness|health|gym|workout|yoga|longevity|nutrition|mental health|therapy|meditation|supplement|skincare)/i.test(lower)) {
     return DOMAINS.WELLNESS;
   }
 
-  // 5. CAREER & PROFESSIONAL
+  // 6. CAREER & PROFESSIONAL
   if (/(resume|cv|career|job|hiring|recruiting|portfolio|interview|candidate|ats)/i.test(lower)) {
     return DOMAINS.CAREER;
   }
 
-  // 6. CREATIVE & AGENCY
+  // 7. CREATIVE & AGENCY
   if (/(creative|agency|design studio|animation|film|music|video|branding agency|photography)/i.test(lower)) {
     return DOMAINS.CREATIVE;
   }

@@ -18,6 +18,7 @@ export function getMockQuestion(round, userContext = '') {
   const isFamily = isFamilyIntent(userContext);
 
   if (domain === DOMAINS.FASHION) return _fashionQuestion(round);
+  if (domain === DOMAINS.BEVERAGE) return _beverageQuestion(round);
   if (domain === DOMAINS.HOSPITALITY) {
     if (isFamily) return _familyQuestion(round);
     return _hospitalityQuestion(round);
@@ -36,6 +37,7 @@ export function getMockBatch(userContext = '') {
   const isFamily = isFamilyIntent(userContext);
 
   if (domain === DOMAINS.FASHION) return _fashionBatch();
+  if (domain === DOMAINS.BEVERAGE) return _beverageBatch();
   if (domain === DOMAINS.HOSPITALITY) {
     return isFamily ? _familyBatch() : _hospitalityBatch();
   }
@@ -466,6 +468,7 @@ export function getMockBrandKit(founderPitch = '', fullHistory = []) {
   const isFamily = isFamilyIntent(combined);
 
   if (domain === DOMAINS.FASHION) return _fashionKit();
+  if (domain === DOMAINS.BEVERAGE) return _beverageKit();
   if (domain === DOMAINS.HOSPITALITY) {
     return isFamily ? _familyHospitalityKit() : _hospitalityKit();
   }
@@ -485,7 +488,7 @@ function _fashionKit() {
       differentiator: 'Woven on restored vintage Toyoda shuttle looms in Kojima, Japan; zero synthetic fibers, and a lifelong repair guarantee.'
     },
     voiceSystem: {
-      archetype: 'The Radical Craftsman',
+      archetype: 'The Heritage Purist',
       tone: ['Tactile', 'Restrained', 'Uncompromising', 'Enduring'],
       dos: ['Talk about weave tension, fabric weight, copper rivets, and honest patina.', 'Celebrate the slow break-in ritual and natural indigo fades.', 'Emphasize durability, repairs, and timeless silhouette over seasonal hype.'],
       donts: ['Never mention food, dining, kitchen, or culinary terms.', 'Never use tech buzzwords like SaaS, algorithms, or APIs.', 'No fake marketing hype or disposable trend chasing.'],
@@ -520,6 +523,81 @@ function _fashionKit() {
         'Woven on vintage low-tension shuttle looms. Built to outlive the hype.'
       ]
     }
+  };
+}
+
+function _beverageKit() {
+  return {
+    brandStrategy: {
+      brandName: 'Kura Botanicals',
+      tagline: 'Clean Plant Energy & Adaptogenic Clarity',
+      mission: 'To liberate daily energy from synthetic caffeine crashes, jittery taurine, and neon dyes through wild-harvested adaptogens and cold-pressed botanical infusions.',
+      targetAudience: 'High-focus founders, creatives, and athletes who demand sustained clean mental clarity without palpitations, sugar crashes, or artificial sweeteners.',
+      coreValueProposition: '120mg slow-release green tea caffeine paired with organic Lion\'s Mane, L-Theanine, and sparkling spring water.',
+      antiHero: 'Neon-colored gas station energy cans pumped with synthetic caffeine, sucralose, and artificial taurine.',
+      differentiator: 'Single-origin cold-brewed botanicals with clinical doses of adaptogens and zero stevia aftertaste.'
+    },
+    voiceSystem: {
+      archetype: 'The Botanical Purist',
+      tone: ['Crisp', 'Grounded', 'Invigorating', 'Restrained'],
+      dos: ['Focus on crisp rituals, clean energy curves, and wild botanical provenance.', 'Celebrate mental clarity and zero-crash focus.', 'Highlight real organic ingredients and gentle carbonation.'],
+      donts: ['Never use extreme sports tropes or neon monster energy cliches.', 'No synthetic stimulant jargon or jittery hype.', 'Avoid clinical sterile pharma phrasing.'],
+      vocabularyWords: ['Botanical', 'Clarity', 'Adaptogen', 'Crisp', 'Infusion', 'Sustained']
+    },
+    visualTokens: {
+      palette: [
+        { name: 'Forest Moss', hex: '#2D4739', role: 'primary' },
+        { name: 'Citrus Zest', hex: '#E89D38', role: 'accent' },
+        { name: 'Pure Linen', hex: '#F7F5F0', role: 'surface' },
+        { name: 'Deep Charcoal', hex: '#1C2421', role: 'text' },
+        { name: 'Wild Juniper', hex: '#5C7668', role: 'secondary' }
+      ],
+      typography: {
+        headingFont: 'Plus Jakarta Sans',
+        bodyFont: 'Inter',
+        googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&family=Inter:wght@400;500&display=swap',
+        rationale: 'A modern, crisp sans-serif with natural balance, evoking organic purity and contemporary wellness culture.'
+      },
+      stylePhilosophy: 'Clean botanical minimalism with warm linen surfaces, deep forest green contrast, and vibrant citrus accents.',
+      borderCurvature: 'rounded-2xl'
+    },
+    launchContent: {
+      heroHeadline: 'Clean Fire. Zero Crash. Pure Botanical Energy.',
+      heroSubheadline: 'Naturally brewed green tea caffeine and organic Lion\'s Mane in sparkling mountain spring water. No taurine, no neon dye, no jitters.',
+      callToAction: 'Taste the Ritual',
+      manifesto: 'Energy drinks were built on an outdated lie: that high performance requires flooding your nervous system with synthetic taurine, chemical dyes, and cheap sugar spikes. We reject the crash cycle. We believe real vitality comes from clean soil, wild adaptogens, and slow-release botanicals that sharpen your mind while respecting your body. Drink clean. Stay lucid.',
+      elevatorPitch: 'Kura Botanicals crafts clean sparkling adaptogenic energy elixirs formulated with organic botanicals and slow-burn caffeine for sustained mental focus without the crash.',
+      socialHooks: [
+        'No neon cans. No synthetic taurine. Just wild adaptogens and clean caffeine.',
+        'Your brain deserves better than gas-station chemical sludge. Upgrade your daily ritual.',
+        'Sustained mental clarity from 9 AM to 6 PM. Zero palpitations, zero 3 PM crash.'
+      ]
+    }
+  };
+}
+
+function _beverageBatch() {
+  return [
+    { id: 1, stageLabel: 'Audience Wedge', question: 'Which consumer group feels most underserved by current energy drinks?', suggestedAnswers: ['Health-conscious professionals', 'Endurance athletes & movers', 'Mindful creators & builders'], reasoning: 'Focusing on a specific ritual wedge builds defensibility.' },
+    { id: 2, stageLabel: 'The Tension / Friction', question: 'What frustrating side effect of commercial energy drinks will you eradicate?', suggestedAnswers: ['Jittery palpitations and anxiety', 'The brutal 3 PM sugar crash', 'Chemical aftertaste from sucralose'], reasoning: 'Addressing real physical friction drives organic word of mouth.' },
+    { id: 3, stageLabel: 'The Sacred Cow', question: 'Which sacred assumption of the beverage industry do you openly challenge?', suggestedAnswers: ['More caffeine equals better energy', 'Energy drinks must taste like candy', 'Neon cans with aggressive graphics'], reasoning: 'Challenging an industry dogma establishes clear brand positioning.' },
+    { id: 4, stageLabel: 'Atmosphere & Setting', question: 'In what exact ritual should this drink become indispensable?', suggestedAnswers: ['Morning deep-work focus block', 'Mid-day post-lunch reset', 'Pre-workout movement ritual'], reasoning: 'Grounding the drink in daily rituals creates habitual repeat purchases.' },
+    { id: 5, stageLabel: 'Pricing Stance', question: 'How should your price point signal your formulation standard?', suggestedAnswers: ['Premium single-can craft tier', 'Everyday accessible wellness tier', 'Direct-to-consumer case subscriptions'], reasoning: 'Price communicates ingredient integrity and target market tier.' },
+    { id: 6, stageLabel: 'Aesthetic Boundary', question: 'What visual direction immediately sets your can apart on the shelf?', suggestedAnswers: ['Botanical elegance with linen textures', 'Muted earth tones and warm minimalism', 'Vibrant citrus blocks with crisp typography'], reasoning: 'Shelf visual contrast stops scrolling and commands attention.' },
+    { id: 7, stageLabel: 'Unfair Moat', question: 'What core ingredient or formulation truth cannot be easily cloned?', suggestedAnswers: ['Clinically dosed wild adaptogens', 'Direct-farm botanical extracts', 'Zero artificial sweeteners or gums'], reasoning: 'A defensible product truth builds enduring brand equity.' }
+  ];
+}
+
+function _beverageQuestion(round) {
+  const batch = _beverageBatch();
+  const q = batch[Math.min(round - 1, batch.length - 1)];
+  return {
+    currentRound: round,
+    stageLabel: q.stageLabel,
+    question: q.question,
+    suggestedAnswers: q.suggestedAnswers,
+    reasoning: q.reasoning,
+    readyForSynthesis: round >= 3
   };
 }
 
@@ -688,7 +766,7 @@ function _careerKit() {
 function _developerKit() {
   return {
     brandStrategy: {
-      brandName: 'Vortex Labs',
+      brandName: 'Lattice Systems',
       tagline: 'High-Velocity Brand Architecture for Relentless Builders',
       mission: 'To liberate ambitious founders from corporate design mediocrity through algorithmic, unapologetic brand identity synthesis.',
       targetAudience: 'Technical founders, indie hackers, and zero-to-one product leaders who value speed, craft, and distinct edge.',
@@ -697,11 +775,11 @@ function _developerKit() {
       differentiator: 'Algorithmic Socratic interrogation combined with instant design token compilation (HEX, typography, and launch manifesto).'
     },
     voiceSystem: {
-      archetype: 'The Radical Craftsman',
+      archetype: 'The Systems Architect',
       tone: ['Hyper-Direct', 'Unapologetic', 'Punchy', 'Technically Astute'],
       dos: ['Call out industry vanity metrics directly.', 'Use active verbs and short, muscular sentences.', 'Emphasize tangible output over abstract theories.'],
       donts: ['Never use enterprise buzzwords like "synergize" or "paradigm".', 'Do not hedge statements with "maybe" or "we try to".', 'Never apologize for having a strong aesthetic opinion.'],
-      vocabularyWords: ['Velocity', 'Signal', 'Frictionless', 'Uncompromising', 'Raw', 'Synthesis']
+      vocabularyWords: ['Velocity', 'Signal', 'Frictionless', 'Uncompromising', 'Architecture', 'Synthesis']
     },
     visualTokens: {
       palette: [
@@ -721,10 +799,10 @@ function _developerKit() {
     },
     launchContent: {
       heroHeadline: 'Stop Sounding Like a Corporate Brochure.',
-      heroSubheadline: 'Autonomous brand architecture that gives ambitious founders the voice and visual venom of a category leader.',
-      callToAction: 'Forge Your Identity',
+      heroSubheadline: 'Autonomous brand architecture that gives ambitious founders the voice and visual edge of a category leader.',
+      callToAction: 'Deploy Your Identity',
       manifesto: 'The software world is drowning in polite consensus. Every landing page looks like the same pastel template created by the same committee. We believe true category leaders don\'t blend in—they plant a flag, declare an enemy, and build with relentless conviction. Your code is exceptional. Your brand should hit just as hard.',
-      elevatorPitch: 'Vortex Labs is an AI-powered brand architecture engine that transforms raw technical pitches into complete visual identities, voice systems, and launch copy in minutes.',
+      elevatorPitch: 'Lattice Systems is an AI-powered brand architecture engine that transforms raw technical pitches into complete visual identities, voice systems, and launch copy in minutes.',
       socialHooks: ['90% of SaaS landing pages look identical because founders design by consensus. Break the cycle.', 'Your product solves a hard technical problem. Why does your marketing sound like a 2012 B2B slide deck?', 'Real brand strategy isn\'t colors and logos. It\'s declaring who you\'re willing to alienate.']
     }
   };

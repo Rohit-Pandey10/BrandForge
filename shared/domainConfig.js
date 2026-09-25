@@ -6,8 +6,9 @@
  */
 
 export const DOMAINS = {
-  HOSPITALITY: 'hospitality',
   FASHION: 'fashion',
+  HOSPITALITY: 'hospitality',
+  BEVERAGE: 'beverage',
   WELLNESS: 'wellness',
   CAREER: 'career',
   DEVELOPER: 'developer',
@@ -23,25 +24,42 @@ export const DOMAINS = {
 export function classifyDomain(text = '') {
   const lower = String(text).toLowerCase();
 
+  // 1. APPAREL & FASHION
+  if (/(fashion|clothing|apparel|wear|luxury|garment|streetwear|shoe|jewelry|bag|textile|tailor|collection|jeans?|denim|selvedge)/i.test(lower)) {
+    return DOMAINS.FASHION;
+  }
+
+  // 2. BEVERAGE & FUNCTIONAL DRINKS
+  if (/(drink|drinks|beverage|beverages|energy drink|clean caffeine|caffeine|adaptogen|adaptogens|kombucha|seltzer|soda|tonic|botanicals?|elixir|nootropics?|hydration|smoothie|juice|cold brew|sparkling water)/i.test(lower)) {
+    return DOMAINS.BEVERAGE;
+  }
+
+  // 3. HOSPITALITY & CULINARY
   if (/(restaurant|food|dining|cuisine|culinary|chef|bistro|cafe|bakery|coffee|eatery|pizza|burger|pasta|taco|hospitality|kitchen|table|menu|dish|bar(?!code|chart)|cocktail|wine)/i.test(lower)) {
     return DOMAINS.HOSPITALITY;
   }
-  if (/(fashion|clothing|apparel|wear|luxury|garment|streetwear|shoe|jewelry|bag|textile|tailor|collection)/i.test(lower)) {
-    return DOMAINS.FASHION;
-  }
-  if (/(fitness|wellness|health|gym|workout|yoga|longevity|nutrition|mental health|therapy|meditation|supplement)/i.test(lower)) {
-    return DOMAINS.WELLNESS;
-  }
-  if (/(resume|cv|career|job|hiring|recruiting|portfolio|interview|candidate|ats)/i.test(lower)) {
-    return DOMAINS.CAREER;
-  }
+
+  // 4. DEVELOPER TOOLS & SAAS
   if (/(sql|database|rust|in-memory|backend|api|infrastructure|dev|developer|compiler|cloud|devops|kubernetes|linux|saas|terminal|cli|software)/i.test(lower)) {
     return DOMAINS.DEVELOPER;
   }
+
+  // 5. WELLNESS & HEALTH
+  if (/(fitness|wellness|health|gym|workout|yoga|longevity|nutrition|mental health|therapy|meditation|supplement|skincare)/i.test(lower)) {
+    return DOMAINS.WELLNESS;
+  }
+
+  // 6. CAREER & PROFESSIONAL
+  if (/(resume|cv|career|job|hiring|recruiting|portfolio|interview|candidate|ats)/i.test(lower)) {
+    return DOMAINS.CAREER;
+  }
+
+  // 7. CREATIVE & AGENCY
   if (/(creative|agency|design studio|animation|film|music|video|branding agency|photography)/i.test(lower)) {
     return DOMAINS.CREATIVE;
   }
-  return DOMAINS.HOSPITALITY;
+
+  return DOMAINS.GENERAL;
 }
 
 /**

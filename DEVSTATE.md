@@ -6,8 +6,15 @@
 
 ## 1. Project Overview & Sprint Status
 - **Project Name:** Brand Builder (Socratic Brand Studio, Strategic BGM & Token Synthesizer)
-- **Current Sprint Phase:** Phase 6 (Intake Expansion & Refinement Gate, BGM Prompt Enhancer, and Concept Selection)
+- **Current Sprint Phase:** Phase 7 (Strategic Prompt Overhaul, Anti-Cliché Bans, Lexicon/Collins Naming Typologies, and Dynamic Socratic Discovery)
 - **Design System:** Handhold Editorial (`DESIGN.md`) — Warm paper cream (`#f2f1ed`), pure white surfaces (`#ffffff`), ink black (`#000000`), hairline dividers (`#dbd7cd`), Cormorant Garamond 300 display typography, Inter 400 interface typography, flat zero-shadow elevation.
+- **Strategic Prompt Architecture (`server/prompts/brandPrompts.js`):**
+  - **Banned Clichés List (`BANNED_TECH_CLICHES`):** Strict prohibition of `pulse`, `forge`, `nexus`, `vortex`, `sync`, `flow`, `aura`, `hyper`, `seamless`, `revolutionize`, `cutting-edge`, `game-changer`, `supercharge`, `disrupt`, `all-in-one`, `bleeding-edge`, `paradigm`, `synergy`, and `radical craftsman`.
+  - **4 Classic Naming Typologies (Lexicon / Collins / Neumeier):** Evocative Real-Words (*Apple*, *Slack*, *Oatly*), Compound Constructs (*Sweetgreen*, *DoorDash*, *Root & Rise*), Coined / Neologisms (*Sonos*, *Spotify*, *Figma*), and Provenance / Editorial Names (*Aesop*, *St. Frank*).
+  - **Dynamic Socratic Discovery (`socraticBatchPrompt`):** Questions adapt phrasing dynamically (tension-testing, contrarian trade-offs, sensory probes, sacred cows) rather than repeating rigid sentence frames ("What feeling should...", "What style must...").
+  - **Category-Anchored Synthesis (`compilerSystemInstruction`):** Ensures tone, typography, and palettes match the physical/digital domain (e.g. clean botanical tones and crisp fonts for drinks; raw indigo and workwear serifs for denim; deep slates for systems tech).
+  - **Domain Expansion:** Added `DOMAINS.BEVERAGE` across server, client, and shared configs (`classifyDomain`) to detect functional drinks, adaptogens, teas, and seltzers.
+  - **Mock Engine Sanitization:** Purged hardcoded references to "The Radical Craftsman" and "Vortex Labs" from `mockEngine.js` and `mockBrandData.js`, replacing with authentic fallbacks (`Kura Botanicals`, `Lattice Systems`, `The Heritage Purist`, `The Botanical Purist`, and `The Systems Architect`).
 - **Frontend Architecture:**
   - `Header.jsx`: Lowercase serif wordmark `brand builder.`, Socratic Studio badge, Left Sidebar trigger (`Library`), context-aware persistence gating action (`Save to Library`), guest usage counter (`X/2 Free`), user profile pill, and export actions (`JSON`, `CSS`, `Download SVG`, `Print / PDF`).
   - `IntakeView.jsx`: High-aesthetic input card with inspiration chips and single-word / phrase input support with real-time sharpening spinner.
@@ -164,13 +171,13 @@
 - [x] Implement Brand History Controller (`list`, `save`, `syncGuest`, `delete`)
 - [x] Connect backend to live MongoDB Atlas cluster (`ac-9qpotsl-shard-00-02.wrf7nno.mongodb.net`)
 
-### Frontend Engineering & UI/UX:
-- [x] Implement `ConceptSelector.jsx` following Handhold Editorial design system
-- [x] Integrate BGM prompt enhancer and concept selection into `App.jsx` state machine
-- [x] Implement `AuthContext.jsx` with guest run tracker (`MAX_GUEST_RUNS = 2`)
-- [x] Build editorial `AuthModal.jsx` with Google Sign-In, strict `@gmail.com` warning, and password match validation
-- [x] Build expandable/collapsible `Sidebar.jsx` with 1-click brand rehydration, swatch dots, and session deletion
-- [x] Add `"Save to Library"` persistence gating button to sticky `Header.jsx` and `BrandKitDashboard.jsx`
-- [x] Implement automatic post-login migration of buffered guest creations (`syncGuestSessions`)
-- [x] Verify complete workflow in browser: garbage input expansion, single-word expansion, concept choice, and targeted 7-question discovery
+### Phase 7: Strategic Prompt Overhaul & Anti-Cliché Architecture:
+- [x] Standardize `server/prompts/brandPrompts.js` on Lexicon Branding, Collins, and Marty Neumeier frameworks
+- [x] Enforce `BANNED_TECH_CLICHES` ban list across all prompts and mock layers
+- [x] Implement the 4 classic naming typologies (Real-Words, Evocative Metaphors, Compound Constructs, Coined Neologisms)
+- [x] Build dynamic Socratic batch prompt with domain-specific tension probing and banned sentence templates
+- [x] Add `DOMAINS.BEVERAGE` and regex keyword matching to server, client, and shared domain configs
+- [x] Sanitize mock fallbacks in `mockEngine.js` and `mockBrandData.js` (removed "The Radical Craftsman" and "Vortex Labs")
+- [x] Add high-fidelity `_beverageKit()` / `beverageBrandKit` and beverage batch questions for offline/fallback resilience
+- [x] Verify end-to-end with `"functional natural energy drink with clean caffeine and adaptogens"` (synthesizes `Root & Rise`, Sage archetype, botanical/citrus palette, and tailored beverage copy)
 - [x] Keep all Git commits local on `main` (no unapproved remote pushes)
