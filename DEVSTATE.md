@@ -255,3 +255,23 @@
     - Row 2: Sub-Nav Links (`Products`/`Craft`/`Stockists` or `Daily Menu`/`Private Dining`/`Hours` or `Features`/`Docs`/`Changelog`) on left & Action CTA button (`Bag (0)` / `Reserve` / `Get Started`) on right.
     - Row 3: Announcement ribbon / badges and hero content.
   - Eliminated any risk of text clipping, awkward wrapping, or button overlap across all viewports.
+
+### Default Sample Monograph Replacement: Blister & Beam Sourdough (`feature/replace-sample-with-blister-and-beam`):
+- [x] **Sample Dataset (`SAMPLE_BRAND_KIT`):**
+  - Created `client/src/data/sampleBrandKit.js` exporting `SAMPLE_BRAND_KIT` with high-craft editorial monograph for "Blister & Beam" (Wood-Fired Sourdough).
+  - Configured Warm Cream design system: Charred Brick (`#8D3B2F`), Toasted Sourdough (`#E8D5B5`), Iced Tea Amber (`#D4A373`), Reclaimed Wood Cream (`#F5F2EB`), Blackened Crust (`#28211A`).
+  - Cormorant Garamond + Inter typography pairing with dynamic Google Fonts stylesheet injection.
+  - Structured 2x2 SWOT analysis with 2 curated high-conviction points per quadrant (transcript anchors, operational mitigations, growth vectors, defensive plays).
+  - 3 rotating wedges catalog grid (*The Founders' Wedge*, *Brick & Basil*, *The Gathering Box*) with prices and `+ Add` pills.
+  - Comparative ledger (*BLISTER & BEAM* vs *THE INDUSTRY DEFAULT*).
+- [x] **Sample Action Wiring:**
+  - In `IntakeView.jsx`: Wired `Skip to sample brand monograph →` to invoke `handleLoadSample(SAMPLE_BRAND_KIT)`.
+  - In `Header.jsx`: Wired `Preview Sample →` to invoke `handleLoadSample(SAMPLE_BRAND_KIT)`.
+  - In `App.jsx`: Defined `handleLoadSample(sampleKit = SAMPLE_BRAND_KIT)` and updated `handlePreviewMock` to default strictly to `SAMPLE_BRAND_KIT`.
+  - In `mockBrandData.js`: Updated default export `mockBrandKit = SAMPLE_BRAND_KIT` and `getDomainMockBrandKit` default fallback to `SAMPLE_BRAND_KIT`.
+  - In `mockEngine.js`: Updated `_hospitalityKit()` to return Blister & Beam monograph.
+- [x] **Live Preview Tab Verification:**
+  - Confirmed domain detection resolves to `hospitality`.
+  - Faux browser URL displays `https://blister-beam.dining`.
+  - Hero title displays `"Big Wedges. Big Tables. Zero Intimidation."` in Cormorant Garamond.
+  - Catalog grid and comparative ledger render cleanly on both desktop and mobile viewports with zero horizontal clipping.

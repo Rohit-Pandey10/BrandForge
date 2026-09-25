@@ -13,6 +13,7 @@ import {
   Lock 
 } from 'lucide-react';
 import { useAuth, MAX_GUEST_RUNS } from '../context/AuthContext';
+import { SAMPLE_BRAND_KIT } from '../data/sampleBrandKit';
 
 export default function Header({
   stage,
@@ -20,6 +21,7 @@ export default function Header({
   onReset,
   onSkipToSynthesis,
   onPreviewMock,
+  handleLoadSample,
   onExportJson,
   onExportCss,
   onExportSvg,
@@ -145,7 +147,13 @@ export default function Header({
           {/* Intake View Action */}
           {stage === 'intake' && (
             <button
-              onClick={onPreviewMock}
+              onClick={() => {
+                if (typeof handleLoadSample === 'function') {
+                  handleLoadSample(SAMPLE_BRAND_KIT);
+                } else if (typeof onPreviewMock === 'function') {
+                  onPreviewMock(SAMPLE_BRAND_KIT);
+                }
+              }}
               className="text-xs font-medium text-zinc-600 hover:text-zinc-900 border border-zinc-200 rounded-xl px-3.5 py-1.5 bg-white/80 hover:bg-white transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer"
             >
               <span>Preview Sample</span>

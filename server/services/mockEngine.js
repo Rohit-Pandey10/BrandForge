@@ -868,73 +868,160 @@ function _familyHospitalityKit() {
 
 function _hospitalityKit() {
   return {
+    _id: "sample_blister_and_beam_01",
+    domain: "food_hospitality",
     brandStrategy: {
-      brandName: 'Campiña Hearth & Table',
-      tagline: 'Wood-Fired Dining & Neighborhood Hospitality',
-      mission: 'To make neighborhood dining unpretentious, delicious, and centered around an open fire table.',
-      targetAudience: 'Neighborhood regulars, hungry friends, and lively dinner parties who want blistering sourdough pizza, delicious hospitality, and zero stiff service.',
-      coreValueProposition: '72-hour naturally fermented dough fired at 900 degrees over seasoned oak, served at neighborhood prices in a warm, communal room.',
-      antiHero: 'Stiff, overpriced dining rooms with whispering servers, tiny portions, and pretentious tasting lecture scripts.',
-      differentiator: 'Blistering live-fire oven right in the center of a loud, energetic, communal dining room where you can always hear your friends.'
+      brandName: "Blister & Beam",
+      tagline: "Wood-fired sourdough. Zero pretense.",
+      mission: "To strip away the sterile white-tablecloth snobbery of fine dining and serve uncompromised, naturally leavened wood-fired pies at communal tables where everyone has a seat.",
+      targetAudience: "Discerning urban food lovers and neighborhood regulars who crave exceptional fermented crusts without reservation waitlists or sterile dining rooms.",
+      coreValueProposition: "Oversized triangular sourdough wedges blistered over seasoned oak, served at broad communal tables with chilled house tea and radical hospitality.",
+      antiHero: "The Snobby Slice: square-cut $40 tasting-menu pizza served on cold porcelain by aloof waiters where you eat in silence.",
+      differentiator: "The only wood-fired pizza house pairing 72-hour wild fermentation with generous communal bench seating, affordable pricing, and zero reservations."
     },
     voiceSystem: {
-      archetype: 'The Warm Host',
-      tone: ['Warm', 'Direct', 'Generous', 'Lively'],
-      dos: ['Talk passionately about sizzling crusts, melted cheeses, and cold pours.', 'Keep the dining room casual, energetic, and welcoming to everyone.', 'Welcome guests warmly with zero pretension or stiff lectures.'],
-      donts: ['Never use pretentious buzzwords like terroir, provenance, or quiet luxury.', 'No stiff white tablecloth etiquette or whisper-only rules.', 'Never rush guests off their tables with artificial time limits.'],
-      vocabularyWords: ['Oak', 'Crust', 'Table', 'Sizzle', 'Hearth', 'Lively']
+      archetype: "The Warm Iconoclast",
+      tone: ["Grounded", "Sensory", "Unhurried", "Direct"],
+      dos: [
+        "Describe physical baking craft: blistered crusts, oak embers, tangy fermentation",
+        "Invite conversation: speak like a welcoming host at the end of a long wooden bench",
+        "Celebrate generous portions and accessible neighborhood dining"
+      ],
+      donts: [
+        "Never use culinary elitism (BANNED: 'artisanal curation', 'bespoke gastronomy', 'epicurean')",
+        "Never sound clinical, corporate, or overly polished",
+        "Never apologize for flour on the table or charred crust bubbles"
+      ],
+      vocabularyWords: ["Blistered", "Hearth", "Oak-fired", "Leaven", "Tangy", "Communal", "Wedges"]
     },
     visualTokens: {
-      palette: [
-        { name: 'Warm Cream', hex: '#FAF8F5', role: 'surface' },
-        { name: 'Deep Terracotta', hex: '#C25E3E', role: 'primary' },
-        { name: 'Toasted Fennel', hex: '#556B2F', role: 'secondary' },
-        { name: 'Aged Brass', hex: '#C49A45', role: 'accent' },
-        { name: 'Cast Iron Charcoal', hex: '#1C1917', role: 'text' }
-      ],
+      borderCurvature: "rounded-2xl",
+      stylePhilosophy: "Handhold Editorial Warm Craft",
       typography: {
-        headingFont: 'Fraunces',
-        bodyFont: 'Inter',
-        googleFontsUrl: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=Inter:wght@400;500&display=swap',
-        rationale: 'A classic, high-contrast serif for printed daily menus and signage paired with a modern neutral sans-serif for responsive reservations and digital ordering.'
+        headingFont: "Cormorant Garamond",
+        bodyFont: "Inter",
+        googleFontsUrl: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       },
-      stylePhilosophy: 'Warm, tactile hospitality design with cast-iron contrast, deep terracotta accents, and unpretentious editorial typography.',
-      borderCurvature: 'rounded-xl'
+      palette: [
+        { name: "Charred Brick", hex: "#8D3B2F", role: "primary" },
+        { name: "Toasted Sourdough", hex: "#E8D5B5", role: "secondary" },
+        { name: "Iced Tea Amber", hex: "#D4A373", role: "accent" },
+        { name: "Reclaimed Wood Cream", hex: "#F5F2EB", role: "surface" },
+        { name: "Blackened Crust", hex: "#28211A", role: "text" }
+      ]
     },
-    launchContent: {
-      heroHeadline: 'Open Fire. Honest Slices. No Stiff Collars.',
-      heroSubheadline: 'A lively neighborhood dining room with wood-fired sourdough pizzas and unpretentious neighborhood service.',
-      callToAction: 'Grab a Table',
-      manifesto: 'Dining out should be loud, joyful, and deeply satisfying. We are tired of stiff restaurants where you can\'t hear your friends and the bill feels like a down payment. We build around what matters: seasoned oak, blistering heat, fermented dough, and honest food served freely. Pull up a chair, order a pie, and stay as long as you want.',
-      elevatorPitch: 'Campiña Hearth & Table is a vibrant wood-fired pizza and neighborhood dining room dedicated to sourdough craft, lively tables, and zero dining pretension.',
-      socialHooks: ['Life is too short for stiff dining rooms and quiet whispers. Pass the pizza.', '72-hour fermented dough. 900-degree oak fire. 0 pretension.', 'Great hospitality doesn\'t need a lecture. Just pull up a chair.']
+    swotAnalysis: {
+      summary: "Blister & Beam captures high customer velocity by rejecting fine-dining pretension in favor of high-turnover communal dining, maintaining defensibility through proprietary 72-hour wild fermentation.",
+      strengths: [
+        {
+          title: "Distinct Fermentation Moat",
+          analysis: "Proprietary 72-hour cold sourdough fermentation yields signature charred blistering that commercial gas ovens cannot replicate.",
+          transcriptAnchor: "Wood-fired sourdough. Zero pretense."
+        },
+        {
+          title: "High-Density Table Turnover",
+          analysis: "Broad communal benches maximize seating capacity and eliminate empty reservation slots during peak hours.",
+          transcriptAnchor: "Big Wedges. Big Tables. Zero Intimidation."
+        }
+      ],
+      weaknesses: [
+        {
+          title: "Wood & Temperature Volatility",
+          analysis: "True hardwood oak ovens require manual heat calibration and skilled pizzaiolos, leading to higher initial kitchen training overhead.",
+          mitigation: "Establish dedicated apprentice rotation and standardized hardwood moisture testing protocols."
+        },
+        {
+          title: "No-Reservation Waiting Friction",
+          analysis: "Walk-in only policies can lead to bottleneck crowding at the door during weekend peak hours.",
+          mitigation: "Offer complimentary iced tea and outdoor bench seating to turn waiting into a communal social ritual."
+        }
+      ],
+      opportunities: [
+        {
+          title: "Late-Night Wedge Window",
+          analysis: "Repurpose leftover daily dough batches for post-10 PM walk-up slices at a premium single-cut margin.",
+          growthVector: "Walk-up sidewalk hatch for evening neighborhood foot traffic."
+        },
+        {
+          title: "Take-Home Sourdough Starter & Flour Packs",
+          analysis: "Monetize brand fandom by retailing branded dry flour blends and wild yeast crocks.",
+          growthVector: "Direct-to-consumer retail merchandise shelf at the host stand."
+        }
+      ],
+      threats: [
+        {
+          title: "Fast-Casual Neapolitan Clones",
+          analysis: "Aggressive regional conveyor-belt pizza chains attempting to imitate wood-fired aesthetic with gas ovens.",
+          defense: "Display raw stacked seasoned oak cordwood openly in the dining room and publish live oven temperature logs."
+        },
+        {
+          title: "Local Hardwood Price Spikes",
+          analysis: "Supply fluctuations in seasoned fruitwood and dense oak cords threatening baking margin consistency.",
+          defense: "Lock annual multi-year supply contracts directly with regional timber management collectives."
+        }
+      ]
     },
     websiteBlueprint: {
-      badge: 'Naturally Fermented · Wood-Fired at 900°',
-      heroLayout: 'centered_minimal',
-      announcementBar: 'Naturally fermented sourdough pies baked over seasoned oak.',
-      primaryCta: 'Reserve a Table',
-      secondaryCta: 'View Evening Menu',
+      badge: "HOSPITALITY PREVIEW",
+      heroLayout: "centered_minimal",
+      announcementBar: "Now serving: The 'Brick & Tart' Seasonal Wedge · Open Daily from 5pm",
+      primaryCta: "View Menu",
+      secondaryCta: "Private Dining",
       sections: [
         {
-          type: 'catalog_grid',
-          title: 'Daily Hearth Specials',
-          subtitle: '72-hour sourdough crusts fired with local ingredients.',
+          type: "catalog_grid",
+          title: "THE ROTATING WEDGES",
+          subtitle: "10-15 core pies, always charred, always tangy.",
           items: [
-            { label: 'Charred Margherita Reserve', description: 'Crushed San Marzano tomatoes, buffalo mozzarella, fresh basil, cold-pressed olive oil.', metricOrPrice: '$21', tag: 'CLASSIC' },
-            { label: 'Spicy Soppressata & Hot Honey', description: 'Aged provolone, artisanal dry-cured soppressata, chili-infused wildflower honey.', metricOrPrice: '$24', tag: 'FAVORITE' },
-            { label: 'Wild Foraged Mushroom & Taleggio', description: 'Roasted maitake and chanterelles, creamy taleggio, fresh thyme, garlic cream.', metricOrPrice: '$26', tag: 'SEASONAL' }
+            {
+              label: "The Founders' Wedge",
+              description: "Our signature. San Marzano tomatoes, fresh mozzarella, and a crust blistered to a deep mahogany. The tang of the sourdough cuts through the richness.",
+              metricOrPrice: "$9.50",
+              tag: "SIGNATURE"
+            },
+            {
+              label: "Brick & Basil",
+              description: "Garlic-infused olive oil, fresh basil, and a light drizzle of chili oil. Served with a side of high-quality iced tea on the house for first-timers.",
+              metricOrPrice: "$10.00",
+              tag: "NEW BATCH"
+            },
+            {
+              label: "The Gathering Box",
+              description: "A curated selection of 6 wedges from the current rotating menu. Designed for tables of 4+, includes 4 cups of house-brewed iced tea.",
+              metricOrPrice: "$42.00",
+              tag: "GROUP FAVORITE"
+            }
           ]
         },
         {
-          type: 'comparative_ledger',
-          title: 'The Table Standard',
-          subtitle: 'Why honest hearth dining outclasses stiff dining rooms.',
+          type: "comparative_ledger",
+          title: "WHY BLISTER & BEAM?",
+          subtitle: "We reject the 'Snobby Slice' standard.",
           items: [
-            { label: 'Dough Fermentation', description: 'Campiña: 72-hour wild sourdough ferment. Conventional: 2-hour commercial yeast with dough relaxers.' },
-            { label: 'Dining Hospitality', description: 'Campiña: Generous, loud, communal sharing tables. Conventional: Stiff whispering rooms with rushed seat turn limits.' }
+            {
+              label: "BLISTER & BEAM",
+              description: "The Blister & Beam Experience: Oversized triangular wedges, reclaimed wood tables, accessible pricing, and brief, friendly check-ins. You're eating together, on your own terms.",
+              tag: "The Blister & Beam Experience"
+            },
+            {
+              label: "THE INDUSTRY DEFAULT",
+              description: "The Snobby Slice: Square cuts, white porcelain, $40 wine list, and a waiter who won't leave you alone. You're eating alone, even if you're with friends.",
+              tag: "The Snobby Slice"
+            }
           ]
         }
+      ]
+    },
+    launchContent: {
+      heroHeadline: "Big Wedges. Big Tables. Zero Intimidation.",
+      heroSubheadline: "Charred, blistered sourdough slices at accessible prices. Come for the tang, stay for the gathering.",
+      callToAction: "View Menu",
+      manifesto: "We believe good bread should bring people together, not keep them quiet. That pizza shouldn't require a white tablecloth, a sommelier, or a month-long waiting list.\n\nAt Blister & Beam, we feed people on our terms: giant slices, charred and blistered over seasoned oak, served at long wooden benches where you might bump elbows with a stranger. It's hot, it's messy, and it's real.",
+      elevatorPitch: "Blister & Beam is a neighborhood wood-fired sourdough pizza house serving oversized charred wedges and house iced tea at communal reclaimed wood tables.",
+      socialHooks: [
+        "No tweezers. No tablecloths. Just 72-hour sourdough blistered over hardwood oak. Big tables open at 5.",
+        "The crust has blisters because the oven is 900 degrees. The tables are long because pizza is meant to be shared.",
+        "If your pizza isn't a little charred and tangy, you're just eating warm cheese toast."
       ]
     }
   };

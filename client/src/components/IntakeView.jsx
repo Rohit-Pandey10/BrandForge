@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Sparkles, Utensils, Scissors, Database, FileText, Bot, AlertCircle } from 'lucide-react';
 import { samplePitches } from '../data/mockBrandData';
+import { SAMPLE_BRAND_KIT } from '../data/sampleBrandKit';
 import MethodologyModal from './MethodologyModal';
 
 const PRESET_PITCHES = [
@@ -30,7 +31,7 @@ const PRESET_PITCHES = [
   }
 ];
 
-export default function IntakeView({ onStartInterview, onPreviewMock, isExpanding = false, serverError = '' }) {
+export default function IntakeView({ onStartInterview, onPreviewMock, handleLoadSample, isExpanding = false, serverError = '' }) {
   const [pitch, setPitch] = useState('');
   const [error, setError] = useState('');
   const [showMethodology, setShowMethodology] = useState(false);
@@ -140,7 +141,13 @@ export default function IntakeView({ onStartInterview, onPreviewMock, isExpandin
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
             <button
               type="button"
-              onClick={onPreviewMock}
+              onClick={() => {
+                if (typeof handleLoadSample === 'function') {
+                  handleLoadSample(SAMPLE_BRAND_KIT);
+                } else if (typeof onPreviewMock === 'function') {
+                  onPreviewMock(SAMPLE_BRAND_KIT);
+                }
+              }}
               className="text-xs sm:text-sm font-medium text-stone-600 hover:text-black transition-colors order-2 sm:order-1 cursor-pointer"
             >
               Skip to sample brand monograph &rarr;

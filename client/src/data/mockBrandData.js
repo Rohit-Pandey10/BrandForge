@@ -3,6 +3,8 @@
  * Ensures the client NEVER presents tech/SaaS tropes when the founder is building
  * a restaurant, hospitality space, fashion label, or consumer experience.
  */
+import { SAMPLE_BRAND_KIT } from './sampleBrandKit.js';
+export { SAMPLE_BRAND_KIT };
 
 export const familyHospitalityBrandKit = {
   brandStrategy: {
@@ -399,9 +401,9 @@ export const beverageBrandKit = {
 };
 
 /**
- * Default mock brand kit export (editorial CPG)
+ * Default mock brand kit export (editorial wood-fired sourdough monograph)
  */
-export const mockBrandKit = beverageBrandKit;
+export const mockBrandKit = SAMPLE_BRAND_KIT;
 
 import { DOMAINS, classifyDomain, isFamilyIntent, extractClientDomain, isClientFamilyIntent } from './domainConfig';
 
@@ -509,16 +511,19 @@ export function getDomainSwot(kit = {}) {
  * Returns a domain-adaptive brand kit based on user pitch or history
  */
 export function getDomainMockBrandKit(contextText = '') {
+  if (!contextText || !contextText.trim()) {
+    return SAMPLE_BRAND_KIT;
+  }
   const domain = extractClientDomain(contextText);
   let kit;
   if (domain === 'fashion') kit = fashionBrandKit;
   else if (domain === 'beverage') kit = beverageBrandKit;
   else if (domain === 'hospitality') {
-    kit = isClientFamilyIntent(contextText) ? familyHospitalityBrandKit : hospitalityBrandKit;
+    kit = isClientFamilyIntent(contextText) ? familyHospitalityBrandKit : SAMPLE_BRAND_KIT;
   }
   else if (domain === 'career') kit = careerBrandKit;
   else if (domain === 'developer') kit = developerBrandKit;
-  else kit = beverageBrandKit;
+  else kit = SAMPLE_BRAND_KIT;
 
   if (kit && !kit.swotAnalysis) {
     kit.swotAnalysis = getDomainSwot(kit);

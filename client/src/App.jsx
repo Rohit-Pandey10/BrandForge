@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar';
 import AuthModal from './components/AuthModal';
 import { useAuth, MAX_GUEST_RUNS } from './context/AuthContext';
 import { mockBrandKit, getDomainMockBrandKit, getDomainMockBatch, getDomainMockQuestion } from './data/mockBrandData';
+import { SAMPLE_BRAND_KIT } from './data/sampleBrandKit';
 import { API_BASE } from './utils/apiConfig';
 
 export default function App() {
@@ -244,28 +245,42 @@ export default function App() {
   };
 
   /**
-   * Jump straight to dashboard with hydrated mock state
+   * Jump straight to dashboard with hydrated sample monograph (Blister & Beam)
    */
-  const handlePreviewMock = () => {
+  const handleLoadSample = (sampleKit = SAMPLE_BRAND_KIT) => {
     if (!isAuthenticated && guestRunsCount >= MAX_GUEST_RUNS) {
       openAuthModal('run_limit');
       return;
     }
 
-    const mockKit = getDomainMockBrandKit(initialPitch || rawPitch || '');
-    setBrandKit(mockKit);
+    const targetKit = (sampleKit && sampleKit.brandStrategy) ? sampleKit : SAMPLE_BRAND_KIT;
+    setBrandKit(targetKit);
 
     if (!isAuthenticated) {
       incrementGuestRun();
-      saveGuestKitLocally(mockKit, {
-        brandName: mockKit?.brandStrategy?.brandName,
-        tagline: mockKit?.brandStrategy?.tagline,
+      saveGuestKitLocally(targetKit, {
+        brandName: targetKit?.brandStrategy?.brandName,
+        tagline: targetKit?.brandStrategy?.tagline,
         initialPitch: initialPitch || rawPitch || 'Sample Brand',
-        domain: 'general'
+        domain: targetKit?.domain || 'food_hospitality'
       });
     }
 
     setStage('dashboard');
+  };
+
+  /**
+   * Jump straight to dashboard with hydrated mock state
+   */
+  const handlePreviewMock = (overrideKit = null) => {
+    if (overrideKit && overrideKit.brandStrategy) {
+      handleLoadSample(overrideKit);
+      return;
+    }
+    const mockKit = (initialPitch || rawPitch)
+      ? getDomainMockBrandKit(initialPitch || rawPitch)
+      : SAMPLE_BRAND_KIT;
+    handleLoadSample(mockKit);
   };
 
   /**
@@ -406,7 +421,8 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
         onSave={handleSaveToLibrary}
         onReset={handleReset}
         onSkipToSynthesis={handleSkipToSynthesis}
-        onPreviewMock={handlePreviewMock}
+        onPreviewMock={() => handleLoadSample(SAMPLE_BRAND_KIT)}
+        handleLoadSample={handleLoadSample}
         onExportJson={handleExportJson}
         onExportCss={handleExportCss}
         onExportSvg={handleExportSvg}
@@ -418,7 +434,8 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
         {stage === 'intake' && (
           <IntakeView
             onStartInterview={handleRawPitchSubmit}
-            onPreviewMock={handlePreviewMock}
+            onPreviewMock={() => handleLoadSample(SAMPLE_BRAND_KIT)}
+            handleLoadSample={handleLoadSample}
             isExpanding={isExpanding}
             serverError={intakeError}
           />
