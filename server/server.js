@@ -64,7 +64,7 @@ app.use((req, res, next) => {
 
 // Health check endpoint
 app.get(['/health', '/api/health'], (req, res) => {
-  const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
+  const provider = (process.env.LLM_PROVIDER || 'groq').split('#')[0].replace(/['"]/g, '').trim().toLowerCase();
   res.json({
     status: 'ok',
     service: 'brand-builder-server',
@@ -97,7 +97,7 @@ app.use((err, req, res, next) => {
 
 if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
   app.listen(PORT, () => {
-    const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
+    const provider = (process.env.LLM_PROVIDER || 'groq').split('#')[0].replace(/['"]/g, '').trim().toLowerCase();
     console.log('----------------------------------------------------');
     console.log(`⚡ BrandLoom Backend running on http://localhost:${PORT}`);
     console.log(`🤖 Primary LLM Provider: ${provider.toUpperCase()} (${provider === 'groq' ? 'llama-3.3-70b-versatile' : (process.env.GEMINI_MODEL || 'gemini-2.5-flash')})`);
