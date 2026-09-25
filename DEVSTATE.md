@@ -7,6 +7,7 @@
 ## 1. Project Overview & Sprint Status
 - **Project Name:** Brand Builder (Socratic Brand Studio, Strategic BGM & Token Synthesizer)
 - **Current Sprint Phase:** Phase 7 (Strategic Prompt Overhaul, Anti-Cliché Bans, Lexicon/Collins Naming Typologies, and Dynamic Socratic Discovery)
+- **Active Branch:** `feature/multi-select-and-keyboard-nav` (Isolated Frontend Keyboard Nav & Multi-Select Socratic Interaction)
 - **Design System:** Handhold Editorial (`DESIGN.md`) — Warm paper cream (`#f2f1ed`), pure white surfaces (`#ffffff`), ink black (`#000000`), hairline dividers (`#dbd7cd`), Cormorant Garamond 300 display typography, Inter 400 interface typography, flat zero-shadow elevation.
 - **Strategic Prompt Architecture (`server/prompts/brandPrompts.js`):**
   - **Banned Clichés List (`BANNED_TECH_CLICHES`):** Strict prohibition of `pulse`, `forge`, `nexus`, `vortex`, `sync`, `flow`, `aura`, `hyper`, `seamless`, `revolutionize`, `cutting-edge`, `game-changer`, `supercharge`, `disrupt`, `all-in-one`, `bleeding-edge`, `paradigm`, `synergy`, and `radical craftsman`.
@@ -181,3 +182,9 @@
 - [x] Add high-fidelity `_beverageKit()` / `beverageBrandKit` and beverage batch questions for offline/fallback resilience
 - [x] Verify end-to-end with `"functional natural energy drink with clean caffeine and adaptogens"` (synthesizes `Root & Rise`, Sage archetype, botanical/citrus palette, and tailored beverage copy)
 - [x] Keep all Git commits local on `main` (no unapproved remote pushes)
+
+### Feature Sprint: Keyboard Navigation & Multi-Select (`feature/multi-select-and-keyboard-nav`):
+- [x] Added Enter-key submission and Shift+Enter multi-line support to IntakeView
+- [x] Implemented multi-select checkbox mode for compatible Socratic questions in InterviewChat
+- [x] Maintained prompt stability in brandPrompts.js
+

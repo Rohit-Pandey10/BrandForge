@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, ArrowLeft, ChevronDown, ChevronUp, Sparkles, RotateCcw, Settings, FastForward } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ChevronDown, ChevronUp, Sparkles, RotateCcw, Settings, FastForward, Check } from 'lucide-react';
 import ProgressStepper from './ProgressStepper';
 
 export default function InterviewChat({
@@ -13,11 +13,13 @@ export default function InterviewChat({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [inputText, setInputText] = useState('');
   const [showRationale, setShowRationale] = useState(false);
 
   const totalQuestions = questions.length || 7;
   const currentQ = questions[currentIndex] || {};
+  const allowMultiple = Boolean(currentQ.allowMultiple);
   const currentRound = currentIndex + 1;
   const stageLabel = currentQ.stageLabel || `Stage ${currentRound}`;
   const suggestedAnswers = currentQ.suggestedAnswers || [];
@@ -29,14 +31,43 @@ export default function InterviewChat({
   useEffect(() => {
     const existingAnswer = userAnswers[currentIndex] || '';
     setInputText(existingAnswer);
-    const optionIndex = suggestedAnswers.findIndex(a => a === existingAnswer);
-    setSelectedOption(optionIndex !== -1 ? optionIndex : null);
+    if (allowMultiple) {
+      const existingParts = existingAnswer ? existingAnswer.split(', ').map(s => s.trim()) : [];
+      const matched = suggestedAnswers.filter(a => existingParts.includes(a));
+      setSelectedAnswers(matched);
+      setSelectedOption(null);
+    } else {
+      const optionIndex = suggestedAnswers.findIndex(a => a === existingAnswer);
+      setSelectedOption(optionIndex !== -1 ? optionIndex : null);
+      setSelectedAnswers(optionIndex !== -1 ? [suggestedAnswers[optionIndex]] : []);
+    }
     setShowRationale(false);
-  }, [currentIndex, questions]);
+  }, [currentIndex, questions, allowMultiple]);
 
   const handleSelectOption = (answer, index) => {
-    setSelectedOption(index);
-    setInputText(answer);
+    if (allowMultiple) {
+      let nextSelected;
+      if (selectedAnswers.includes(answer)) {
+        nextSelected = selectedAnswers.filter(a => a !== answer);
+      } else {
+        nextSelected = [...selectedAnswers, answer];
+      }
+      setSelectedAnswers(nextSelected);
+      setInputText(nextSelected.join(', '));
+    } else {
+      setSelectedOption(index);
+      setSelectedAnswers([answer]);
+      setInputText(answer);
+    }
+  };
+
+  const getAnswerToCommit = () => {
+    if (inputText.trim()) return inputText.trim();
+    if (allowMultiple) return selectedAnswers.join(', ');
+    if (selectedOption !== null && suggestedAnswers[selectedOption]) {
+      return suggestedAnswers[selectedOption];
+    }
+    return '';
   };
 
   /**
@@ -45,7 +76,7 @@ export default function InterviewChat({
   const buildQaPayload = (additionalCurrentAnswer) => {
     const activeAnswer = additionalCurrentAnswer !== undefined
       ? additionalCurrentAnswer
-      : (inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : ''));
+      : getAnswerToCommit();
 
     const mergedAnswers = {
       ...userAnswers,
@@ -73,7 +104,7 @@ export default function InterviewChat({
     e?.preventDefault();
     if (isLoading || isCompiling) return;
 
-    const answerToCommit = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');
+    const answerToCommit = getAnswerToCommit();
     const updatedAnswers = {
       ...userAnswers,
       [currentIndex]: answerToCommit
@@ -96,7 +127,7 @@ export default function InterviewChat({
     e?.preventDefault();
     if (currentIndex <= 0 || isLoading || isCompiling) return;
 
-    const answerToCommit = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');
+    const answerToCommit = getAnswerToCommit();
     if (answerToCommit) {
       setUserAnswers(prev => ({ ...prev, [currentIndex]: answerToCommit }));
     }
@@ -109,11 +140,11 @@ export default function InterviewChat({
   const handleSynthesizeEarly = (e) => {
     e?.preventDefault();
     if (isLoading || isCompiling) return;
-    const answerToCommit = inputText.trim() || (selectedOption !== null ? suggestedAnswers[selectedOption] : '');
+    const answerToCommit = getAnswerToCommit();
     onCompileBrandKit(buildQaPayload(answerToCommit));
   };
 
-  const hasCurrentAnswer = Boolean(inputText.trim() || selectedOption !== null);
+  const hasCurrentAnswer = Boolean(inputText.trim() || selectedOption !== null || selectedAnswers.length > 0);
 
   return (
     <div className="w-full max-w-3xl mx-auto px-4 py-4 sm:py-8 flex flex-col justify-center animate-fade-in font-sans">
@@ -195,6 +226,11 @@ export default function InterviewChat({
               <span className="font-sans text-[10px] tracking-widest uppercase text-stone-400 font-medium">
                 DIMENSION {currentRound} OF {totalQuestions} &bull; {stageLabel.toUpperCase()}
               </span>
+              {allowMultiple && (
+                <span className="font-sans text-[10px] uppercase tracking-wider text-stone-400">
+                  [Select all that apply]
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-3">
               {/* Early Synthesis Button */}
@@ -255,12 +291,17 @@ export default function InterviewChat({
           {suggestedAnswers.length > 0 && (
             <div className="mb-6">
               <span className="font-sans text-[11px] text-stone-400 mb-2.5 block">
-                Select one of {suggestedAnswers.length} strategic directions, or craft your own answer below:
+                {allowMultiple
+                  ? `Select all that apply from the ${suggestedAnswers.length} strategic directions, or craft your own answer below:`
+                  : `Select one of ${suggestedAnswers.length} strategic directions, or craft your own answer below:`}
               </span>
 
               <div className="space-y-2.5">
                 {suggestedAnswers.map((answer, index) => {
-                  const isSelected = selectedOption === index || userAnswers[currentIndex] === answer;
+                  const isSelected = allowMultiple
+                    ? selectedAnswers.includes(answer)
+                    : (selectedOption === index || userAnswers[currentIndex] === answer);
+
                   return (
                     <button
                       key={index}
@@ -272,13 +313,25 @@ export default function InterviewChat({
                           : 'border-[#dbd7cd] bg-white hover:bg-[#faf9f6] hover:border-black/50'
                       }`}
                     >
-                      <div
-                        className={`w-4 h-4 rounded-full border mt-0.5 flex items-center justify-center shrink-0 transition-colors ${
-                          isSelected ? 'border-black' : 'border-stone-300 group-hover:border-stone-400'
-                        }`}
-                      >
-                        {isSelected && <div className="w-2 h-2 rounded-full bg-black" />}
-                      </div>
+                      {allowMultiple ? (
+                        <div
+                          className={`w-4 h-4 rounded-md border mt-0.5 flex items-center justify-center shrink-0 transition-colors ${
+                            isSelected
+                              ? 'bg-black border-black text-white'
+                              : 'border-[#dbd7cd] bg-white group-hover:border-stone-400'
+                          }`}
+                        >
+                          {isSelected && <Check className="w-[11px] h-[11px] text-white stroke-[2.5]" />}
+                        </div>
+                      ) : (
+                        <div
+                          className={`w-4 h-4 rounded-full border mt-0.5 flex items-center justify-center shrink-0 transition-colors ${
+                            isSelected ? 'border-black' : 'border-stone-300 group-hover:border-stone-400'
+                          }`}
+                        >
+                          {isSelected && <div className="w-2 h-2 rounded-full bg-black" />}
+                        </div>
+                      )}
 
                       <div className="flex-1 font-sans text-[13px] text-stone-800 leading-snug">
                         {answer}
@@ -304,9 +357,12 @@ export default function InterviewChat({
                 rows={2}
                 value={inputText}
                 onChange={(e) => {
-                  setInputText(e.target.value);
-                  if (selectedOption !== null && e.target.value !== suggestedAnswers[selectedOption]) {
-                    setSelectedOption(null);
+                  const val = e.target.value;
+                  setInputText(val);
+                  if (!allowMultiple) {
+                    if (selectedOption !== null && val !== suggestedAnswers[selectedOption]) {
+                      setSelectedOption(null);
+                    }
                   }
                 }}
                 placeholder="Refine the selected response or type your exact conviction..."

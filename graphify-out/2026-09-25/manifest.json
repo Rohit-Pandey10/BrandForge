@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "client/src/data/mockBrandData.js": {
-    "mtime": 1790276243.9222336,
-    "seen": 1790276476.938685,
-    "ast_hash": "c03e501fb0d8b6e5f0aced64f168d560",
+    "mtime": 1790322488.2715533,
+    "seen": 1790322991.942513,
+    "ast_hash": "a85e3718baf296881c27403e4ecaac10",
     "semantic_hash": ""
   },
   "client/src/main.jsx": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "DEVSTATE.md": {
-    "mtime": 1790321562.2884147,
-    "seen": 1790321576.8494642,
-    "ast_hash": "a468aa7a4ee5bae725c6ba05ec12263f",
+    "mtime": 1790322980.944824,
+    "seen": 1790322991.942544,
+    "ast_hash": "df29346ed938522d18c9e6dec64087c7",
     "semantic_hash": ""
   },
   "README.md": {
@@ -198,9 +198,9 @@
     "semantic_hash": ""
   },
   "client/src/data/domainConfig.js": {
-    "mtime": 1790276093.5015717,
-    "seen": 1790276476.938685,
-    "ast_hash": "f53bc76115e317c91f39a6413a495d95",
+    "mtime": 1790322228.0903058,
+    "seen": 1790322991.942512,
+    "ast_hash": "bc738a7987af214345bf4c75699c14b7",
     "semantic_hash": ""
   },
   "client/src/utils/exportUtils.js": {
@@ -210,15 +210,15 @@
     "semantic_hash": ""
   },
   "server/data/domainConfig.js": {
-    "mtime": 1790276084.3236194,
-    "seen": 1790276476.9386911,
-    "ast_hash": "749e3482e47888dc01849e919070ed79",
+    "mtime": 1790322219.2490642,
+    "seen": 1790322991.942528,
+    "ast_hash": "c6d10d581511f3865bf5e638c218fbda",
     "semantic_hash": ""
   },
   "server/prompts/brandPrompts.js": {
-    "mtime": 1790321143.498133,
-    "seen": 1790321576.849459,
-    "ast_hash": "1c919fbffe53f3ba945307af5da4ece2",
+    "mtime": 1790322030.2059689,
+    "seen": 1790322991.942533,
+    "ast_hash": "b2338a12fec60f460d9f14b1c6411ff3",
     "semantic_hash": ""
   },
   "server/services/compilerService.js": {
@@ -234,15 +234,15 @@
     "semantic_hash": ""
   },
   "server/services/mockEngine.js": {
-    "mtime": 1790276198.2319,
-    "seen": 1790276476.938694,
-    "ast_hash": "6f083a8e29a2d76b87c7717a72d36ddf",
+    "mtime": 1790322350.1742754,
+    "seen": 1790322991.94254,
+    "ast_hash": "90d394bdc865aeb409719ff96e36aad6",
     "semantic_hash": ""
   },
   "shared/domainConfig.js": {
-    "mtime": 1790271336.8692048,
-    "seen": 1790271529.73396,
-    "ast_hash": "44cffab5bc280c1db7b892ee802e6a65",
+    "mtime": 1790322241.1800482,
+    "seen": 1790322991.942542,
+    "ast_hash": "de84960784309209bf0113b8ef95e89e",
     "semantic_hash": ""
   },
   "server/utils/llmClient.js": {

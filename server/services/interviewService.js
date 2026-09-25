@@ -166,7 +166,8 @@ export const batchQuestionSchema = {
             type: 'array',
             items: { type: 'string' }
           },
-          reasoning: { type: 'string' }
+          reasoning: { type: 'string' },
+          allowMultiple: { type: 'boolean' }
         },
         required: ['id', 'stageLabel', 'question', 'suggestedAnswers', 'reasoning']
       }
@@ -240,6 +241,10 @@ export const questionSchema = {
     readyForSynthesis: {
       type: 'boolean',
       description: 'True if baseline context is sufficient for brand kit synthesis.'
+    },
+    allowMultiple: {
+      type: 'boolean',
+      description: 'Optional flag indicating if multiple choices can be selected.'
     }
   },
   required: ['currentRound', 'question', 'suggestedAnswers', 'reasoning', 'stageLabel', 'readyForSynthesis']

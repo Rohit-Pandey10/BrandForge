@@ -16,6 +16,15 @@ export default function IntakeView({ onStartInterview, onPreviewMock, isExpandin
     onStartInterview(pitch.trim());
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (pitch && pitch.trim().length > 0 && !isExpanding) {
+        onStartInterview(pitch.trim());
+      }
+    }
+  };
+
   const handleSelectSample = (sampleText) => {
     setPitch(sampleText);
     setError('');
@@ -51,14 +60,20 @@ export default function IntakeView({ onStartInterview, onPreviewMock, isExpandin
                 setPitch(e.target.value);
                 if (error) setError('');
               }}
+              onKeyDown={handleKeyDown}
               placeholder="e.g. A minimalist resume builder designed for the 6-second glance of hiring managers..."
               className="w-full p-4 rounded-xl bg-[#f2f1ed]/50 border border-[#dbd7cd] text-black placeholder-[#999999] focus:outline-none focus:border-black text-sm sm:text-base leading-relaxed resize-none transition-colors"
             />
-            {error && (
-              <p className="mt-2 text-xs text-[#000000] border-l-2 border-black pl-2">
-                {error}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mt-2">
+              {error ? (
+                <p className="text-xs text-[#000000] border-l-2 border-black pl-2">
+                  {error}
+                </p>
+              ) : <div />}
+              <p className="text-[11px] text-stone-400 font-normal">
+                Press Enter ↵ to launch, Shift + Enter for new line
               </p>
-            )}
+            </div>
           </div>
 
           {/* Action Row */}

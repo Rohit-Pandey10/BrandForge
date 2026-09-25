@@ -3,7 +3,7 @@
   "1": "mockEngine.js",
   "2": "client/package.json",
   "3": "brand.ts",
-  "4": "geminiClient.js",
+  "4": "llmClient.js",
   "5": "dependencies",
   "6": "Brand Builder ⚡",
   "7": "resilientStore.js",
@@ -17,6 +17,6 @@
   "15": "test-jeans-flow.js",
   "16": "server/package.json",
   "17": "package.json",
-  "18": "devDependencies",
+  "18": "scripts",
   "19": "vite.config.js"
 }
