@@ -210,7 +210,7 @@ export default function MethodologyModal({ isOpen, onClose }) {
         {/* Footer Bar */}
         <div className="p-4 sm:p-6 bg-[#FAF9F6] border-t border-[#E5E0D8] flex items-center justify-between gap-3">
           <span className="text-xs font-mono text-zinc-500 hidden sm:inline">
-            Press <kbd className="px-1.5 py-0.5 rounded bg-stone-200/80 text-zinc-700 text-[10px] font-mono border border-stone-300">Esc</kbd> to dismiss
+            Press <kbd className="px-1.5 py-0.5 rounded bg-stone-200/80 text-zinc-700 text-[11px] font-mono border border-stone-300">Esc</kbd> to dismiss
           </span>
           <button
             type="button"

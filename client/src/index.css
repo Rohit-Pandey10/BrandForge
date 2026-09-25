@@ -56,10 +56,15 @@ body {
 
 /* Luxury Editorial Serif Display Headings */
 h1, h2, h3, h4, .font-serif, .editorial-heading {
-  font-family: 'Cormorant Garamond', 'bureauSerif', Georgia, serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 300;
-  line-height: 1.0;
-  letter-spacing: -0.03em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* Strict JetBrains Mono for code and metadata accents */
+code, kbd, samp, pre, .font-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 /* Strict Inter Regular for body and UI elements */

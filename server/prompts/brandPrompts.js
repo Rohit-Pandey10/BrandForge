@@ -209,64 +209,72 @@ PERSONALIZED SWOT ANALYSIS DIRECTIVE (CRITICAL - NO GENERIC FILLER):
 Synthesize a razor-sharp, authentic SWOT analysis grounded strictly in the founder's 
 actual interview choices (their chosen trade-offs, aesthetic boundaries, price point, and rejected sacred cows).
 
-- STRENGTHS (5 items): Focus on the deliberate trade-offs the founder chose (e.g. lifetime repairs, hyper-dense denim, refusing seasonal trends). Anchor each item to a specific word or choice from their answers.
-- WEAKNESSES (5 items): Real, honest commercial vulnerabilities caused by those choices (e.g. higher production unit costs, slower customer replenishment cycles, niche adoption barrier). Include an actionable mitigation for each.
-- OPPORTUNITIES (5 items): High-conviction cultural, retail, or product expansion vectors that fit their exact archetype (e.g. archive repair workshops, limited deadstock runs, premium specialty boutique stockists).
-- THREATS (5 items): Actual market threats (e.g. fast-fashion dupes, fluctuating raw selvedge cotton pricing, incumbent greenwashing). Include a tactical defensive play.
+- STRENGTHS (EXACTLY 4 items): Focus on the deliberate trade-offs the founder chose (e.g. lifetime repairs, hyper-dense denim, refusing seasonal trends). Anchor each item to a specific word or choice from their answers in 'transcriptAnchor'. Provide in-depth 'analysis'.
+- WEAKNESSES (EXACTLY 4 items): Real, honest commercial vulnerabilities caused by those choices (e.g. higher production unit costs, slower customer replenishment cycles, niche adoption barrier). Include an actionable 'mitigation' hedge for each with in-depth 'analysis'.
+- OPPORTUNITIES (EXACTLY 4 items): High-conviction cultural, retail, or product expansion channels that fit their exact archetype (e.g. archive repair workshops, limited deadstock runs, premium specialty boutique stockists). Include a specific 'vector' and in-depth 'analysis'.
+- THREATS (EXACTLY 4 items): Actual market threats (e.g. fast-fashion dupes, fluctuating raw selvedge cotton pricing, incumbent greenwashing). Include a tactical 'defense' and in-depth 'analysis'.
 
-FORBIDDEN: Never write generic business school filler ("Competition is high", "Marketing is expensive", "Use social media for growth").
+STRICT SWOT CONSTRAINT: Under NO circumstances leave any quadrant empty or provide fewer than 4 items. Every single item must be anchored to the user's domain and trade-offs. BANNED: generic fluff like 'competition is high' or 'marketing is expensive'.
 `;
 
 export const swotAnalysisSchema = {
   type: "object",
   properties: {
-    summary: { type: "string", description: "High-conviction, 1-2 sentence executive verdict on the brand's commercial defensibility." },
+    summary: { type: "string", description: "Crisp 1-2 sentence commercial defensibility verdict." },
     strengths: {
       type: "array",
+      minItems: 4,
+      maxItems: 4,
       items: {
         type: "object",
         properties: {
           title: { type: "string" },
-          description: { type: "string" },
-          transcriptAnchor: { type: "string", description: "Direct quote or specific decision made by the founder in the interview." }
+          analysis: { type: "string" },
+          transcriptAnchor: { type: "string", description: "Specific decision or choice made by the founder in the interview." }
         },
-        required: ["title", "description", "transcriptAnchor"]
+        required: ["title", "analysis", "transcriptAnchor"]
       }
     },
     weaknesses: {
       type: "array",
+      minItems: 4,
+      maxItems: 4,
       items: {
         type: "object",
         properties: {
           title: { type: "string" },
-          description: { type: "string" },
-          mitigation: { type: "string", description: "Actionable strategic hedge against this vulnerability." }
+          analysis: { type: "string" },
+          mitigation: { type: "string", description: "Actionable hedge against this vulnerability." }
         },
-        required: ["title", "description", "mitigation"]
+        required: ["title", "analysis", "mitigation"]
       }
     },
     opportunities: {
       type: "array",
+      minItems: 4,
+      maxItems: 4,
       items: {
         type: "object",
         properties: {
           title: { type: "string" },
-          description: { type: "string" },
-          growthVector: { type: "string", description: "Specific retail, product expansion, or cultural wedge." }
+          analysis: { type: "string" },
+          vector: { type: "string", description: "Specific retail, product, or cultural expansion channel." }
         },
-        required: ["title", "description", "growthVector"]
+        required: ["title", "analysis", "vector"]
       }
     },
     threats: {
       type: "array",
+      minItems: 4,
+      maxItems: 4,
       items: {
         type: "object",
         properties: {
           title: { type: "string" },
-          description: { type: "string" },
-          defensivePlay: { type: "string", description: "Tactical defense against incumbent counter-measures." }
+          analysis: { type: "string" },
+          defense: { type: "string", description: "Tactical playbook counter-measure." }
         },
-        required: ["title", "description", "defensivePlay"]
+        required: ["title", "analysis", "defense"]
       }
     }
   },

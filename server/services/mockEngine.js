@@ -553,108 +553,112 @@ export function getDomainSwot(kit = {}) {
     strengths: [
       {
         title: "Distinct Operational Differentiator",
+        analysis: `Deliberate commitment to ${diff.toLowerCase().slice(0, 110)}, creating authentic commercial defensibility that generic competitors cannot easily replicate.`,
         description: `Deliberate commitment to ${diff.toLowerCase().slice(0, 110)}, creating authentic commercial defensibility that generic competitors cannot easily replicate.`,
         transcriptAnchor: diff.slice(0, 45)
       },
       {
         title: "Polarizing Anti-Hero Stance",
+        analysis: `Explicit rejection of ${antiHero.toLowerCase().slice(0, 95)}, forging immediate trust and emotional tribal alignment with core users.`,
         description: `Explicit rejection of ${antiHero.toLowerCase().slice(0, 95)}, forging immediate trust and emotional tribal alignment with core users.`,
         transcriptAnchor: antiHero.slice(0, 45)
       },
       {
         title: "High-Margin Core Proposition",
+        analysis: `Value proposition grounded in ${valProp.toLowerCase().slice(0, 100)}, commanding premium price inelasticity over mass-produced alternatives.`,
         description: `Value proposition grounded in ${valProp.toLowerCase().slice(0, 100)}, commanding premium price inelasticity over mass-produced alternatives.`,
         transcriptAnchor: valProp.slice(0, 45)
       },
       {
-        title: "Curated Brand Voice Boundaries",
-        description: "Strict tone and aesthetic boundaries eliminate cringe marketing tropes and foster long-term customer affinity.",
-        transcriptAnchor: kit?.voiceSystem?.archetype || "Brand Architecture"
-      },
-      {
         title: "Targeted Audience Resonance",
-        description: `Direct focus on ${audience.toLowerCase().slice(0, 100)}, driving word-of-mouth adoption without wasted broad-reach ad spend.`,
+        analysis: `Direct focus on ${audience.toLowerCase().slice(0, 100)}, driving organic word-of-mouth adoption without wasted broad-reach ad spend.`,
+        description: `Direct focus on ${audience.toLowerCase().slice(0, 100)}, driving organic word-of-mouth adoption without wasted broad-reach ad spend.`,
         transcriptAnchor: audience.slice(0, 40)
       }
     ],
     weaknesses: [
       {
         title: "Higher Unit Production & Operating Costs",
+        analysis: "Uncompromising ingredient/material selection and non-standard processes compress initial gross margins at lower volumes.",
         description: "Uncompromising ingredient/material selection and non-standard processes compress initial gross margins at lower volumes.",
         mitigation: "Establish numbered limited batch runs and pre-order deposit mechanics to lock in forward cash flow."
       },
       {
         title: "Customer Education Barrier",
+        analysis: "Refusal to adopt conventional shortcuts requires educating buyers on why the product feels, tastes, or operates differently.",
         description: "Refusal to adopt conventional shortcuts requires educating buyers on why the product feels, tastes, or operates differently.",
         mitigation: "Publish transparent sourcing breakdowns, process dossiers, and tactile unboxing guides."
       },
       {
         title: "Niche Subculture Friction",
+        analysis: "High-conviction aesthetic posture risks appearing intimidating or exclusionary to broader adjacent segments.",
         description: "High-conviction aesthetic posture risks appearing intimidating or exclusionary to broader adjacent segments.",
         mitigation: "Maintain welcoming, grounded service touchpoints and clear introductory product tiers."
       },
       {
         title: "Longer Replenishment & Purchase Cycles",
+        analysis: "Durable design or deep fulfillment rituals reduce short-term transactional churn and repeat re-order velocity.",
         description: "Durable design or deep fulfillment rituals reduce short-term transactional churn and repeat re-order velocity.",
         mitigation: "Develop recurring companion consumables, refills, or seasonal archive collaborations."
-      },
-      {
-        title: "Supply Chain & Sourcing Bottlenecks",
-        description: "Dependence on authentic single-origin suppliers or artisanal machinery limits rapid burst scalability.",
-        mitigation: "Partner with dual regional secondary suppliers vetted against the same rigorous quality criteria."
       }
     ],
     opportunities: [
       {
         title: "Bespoke Physical Studio & Tasting Spaces",
+        analysis: "Transform physical spaces into sensorial brand epicenters featuring live workshops, tastings, and community salons.",
         description: "Transform physical spaces into sensorial brand epicenters featuring live workshops, tastings, and community salons.",
+        vector: "Pop-up architectural flagships in culturally aligned cultural capitals.",
         growthVector: "Pop-up architectural flagships in culturally aligned cultural capitals."
       },
       {
         title: "Limited-Run Archive Capsule Editions",
+        analysis: "Release rare micro-batches and experimental formulas celebrating seasonal or technical craft breakthroughs.",
         description: "Release rare micro-batches and experimental formulas celebrating seasonal or technical craft breakthroughs.",
+        vector: "Numbered collectors' capsules with digital provenance certificates.",
         growthVector: "Numbered collectors' capsules with digital provenance certificates."
       },
       {
         title: "Curated Strategic Wholesale & Stockist Network",
+        analysis: "Partner with independent specialty boutiques, boutique hotels, and design galleries over indiscriminate retail distribution.",
         description: "Partner with independent specialty boutiques, boutique hotels, and design galleries over indiscriminate retail distribution.",
+        vector: "Selective global placement in top-tier design destination stockists.",
         growthVector: "Selective global placement in top-tier design destination stockists."
       },
       {
-        title: "Customer Ritual & Longevity Documentation",
-        description: "Celebrate customer patina, wear milestones, or daily workflow rituals through an editorial community gazette.",
-        growthVector: "User-generated storytelling flywheel validating authentic durability."
-      },
-      {
         title: "Direct-to-Consumer Customization Programs",
+        analysis: "Offer tailored calibrations, custom packaging monograms, or bespoke formulation choices at checkout.",
         description: "Offer tailored calibrations, custom packaging monograms, or bespoke formulation choices at checkout.",
+        vector: "High-AOV concierge customization tier for devoted brand patrons.",
         growthVector: "High-AOV concierge customization tier for devoted brand patrons."
       }
     ],
     threats: [
       {
         title: "Mass-Market Incumbent Greenwashing",
+        analysis: "Legacy conglomerate competitors launching superficial clone lines that mimic the aesthetic without the genuine craft.",
         description: "Legacy conglomerate competitors launching superficial clone lines that mimic the aesthetic without the genuine craft.",
+        defense: "Publish radical ingredient transparency, open-source lab tests, and mill/farm audit certificates.",
         defensivePlay: "Publish radical ingredient transparency, open-source lab tests, and mill/farm audit certificates."
       },
       {
         title: "Raw Material & Commodity Price Volatility",
+        analysis: "Fluctuating agricultural harvest yields or specialized material costs threatening unit economics.",
         description: "Fluctuating agricultural harvest yields or specialized material costs threatening unit economics.",
+        defense: "Secure multi-year fixed forward agreements and build strategic safety inventory reserves.",
         defensivePlay: "Secure multi-year fixed forward agreements and build strategic safety inventory reserves."
       },
       {
         title: "Fast-Follower Low-Cost Copycats",
+        analysis: "Aggressive copycats deploying cheap synthetic replicas and subsidized digital ad spend.",
         description: "Aggressive copycats deploying cheap synthetic replicas and subsidized digital ad spend.",
+        defense: "Deepen trademark protections and anchor brand value in tangible physical rituals that cannot be dropshipped.",
         defensivePlay: "Deepen trademark protections and anchor brand value in tangible physical rituals that cannot be dropshipped."
       },
       {
-        title: "Category Fatigue & Changing Consumer Rhythms",
-        description: "Broader cultural shifts altering consumer daily habits and discretionary spend thresholds.",
-        defensivePlay: "Position the brand as an essential, timeless daily staple rather than a transient lifestyle trend."
-      },
-      {
         title: "Counterfeit & Grey Market Resale Leakage",
+        analysis: "Unauthorized third-party sellers diluting the unboxing experience and customer service guarantees.",
         description: "Unauthorized third-party sellers diluting the unboxing experience and customer service guarantees.",
+        defense: "Enforce direct-only fulfillment and register verified serial numbers with lifetime warranties.",
         defensivePlay: "Enforce direct-only fulfillment and register verified serial numbers with lifetime warranties."
       }
     ]

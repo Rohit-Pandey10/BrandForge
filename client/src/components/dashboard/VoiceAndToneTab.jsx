@@ -13,7 +13,7 @@ export default function VoiceAndToneTab({ voiceSystem }) {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#dbd7cd]">
           <div>
-            <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-1">VERBAL IDENTITY</span>
+            <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium block mb-1">VERBAL IDENTITY</span>
             <h3 className="font-serif text-3xl font-light text-black tracking-[-0.03em]">
               Voice Archetype: {archetype || 'The Rebel'}
             </h3>

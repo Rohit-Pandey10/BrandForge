@@ -179,7 +179,7 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
                             ))}
                           </div>
 
-                          <span className="text-[10px] font-mono text-stone-400">
+                          <span className="text-[11px] font-mono text-stone-400">
                             {session.createdAt ? new Date(session.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'Saved'}
                           </span>
                         </div>
@@ -232,7 +232,7 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
                     <span className="text-[11px] font-mono uppercase tracking-wider text-stone-500">
                       Recent Guest Creations ({guestKits.length})
                     </span>
-                    <span className="text-[10px] text-amber-700 font-mono">Unsynced</span>
+                    <span className="text-[11px] text-amber-700 font-mono font-medium">Unsynced</span>
                   </div>
 
                   <div className="space-y-2">
@@ -253,7 +253,7 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
                             "{item.tagline}"
                           </p>
                         )}
-                        <p className="mt-2 text-[10px] text-stone-400 font-mono">
+                        <p className="mt-2 text-[11px] text-stone-400 font-mono">
                           Sign in to save this kit permanently &rarr;
                         </p>
                       </div>
@@ -277,7 +277,7 @@ export default function Sidebar({ onRehydrateBrand, onStartNew }) {
                   <p className="text-xs font-medium text-black truncate">
                     {user.displayName || user.email.split('@')[0]}
                   </p>
-                  <p className="text-[10px] font-mono text-stone-400 truncate">
+                  <p className="text-[11px] font-mono text-stone-400 truncate">
                     {user.email}
                   </p>
                 </div>

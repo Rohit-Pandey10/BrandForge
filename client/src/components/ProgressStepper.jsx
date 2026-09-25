@@ -65,7 +65,7 @@ export default function ProgressStepper({
               {/* Step label (visible on tablet+) */}
               <div className="hidden sm:flex items-center justify-between overflow-hidden">
                 <span
-                  className={`text-[9px] uppercase tracking-wider font-sans truncate transition-colors ${
+                  className={`text-[11px] uppercase tracking-wider font-mono truncate transition-colors ${
                     isActive
                       ? 'text-black font-semibold'
                       : isDone

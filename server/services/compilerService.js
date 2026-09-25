@@ -146,53 +146,61 @@ export const brandKitSchema = {
     swotAnalysis: {
       type: 'object',
       properties: {
-        summary: { type: 'string', description: "High-conviction, 1-2 sentence executive verdict on the brand's commercial defensibility." },
+        summary: { type: 'string', description: "Crisp 1-2 sentence commercial defensibility verdict." },
         strengths: {
           type: 'array',
+          minItems: 4,
+          maxItems: 4,
           items: {
             type: 'object',
             properties: {
               title: { type: 'string' },
-              description: { type: 'string' },
-              transcriptAnchor: { type: 'string', description: "Direct quote or specific decision made by the founder in the interview." }
+              analysis: { type: 'string' },
+              transcriptAnchor: { type: 'string', description: "Specific decision or choice made by the founder in the interview." }
             },
-            required: ['title', 'description', 'transcriptAnchor']
+            required: ['title', 'analysis', 'transcriptAnchor']
           }
         },
         weaknesses: {
           type: 'array',
+          minItems: 4,
+          maxItems: 4,
           items: {
             type: 'object',
             properties: {
               title: { type: 'string' },
-              description: { type: 'string' },
-              mitigation: { type: 'string', description: "Actionable strategic hedge against this vulnerability." }
+              analysis: { type: 'string' },
+              mitigation: { type: 'string', description: "Actionable hedge against this vulnerability." }
             },
-            required: ['title', 'description', 'mitigation']
+            required: ['title', 'analysis', 'mitigation']
           }
         },
         opportunities: {
           type: 'array',
+          minItems: 4,
+          maxItems: 4,
           items: {
             type: 'object',
             properties: {
               title: { type: 'string' },
-              description: { type: 'string' },
-              growthVector: { type: 'string', description: "Specific retail, product expansion, or cultural wedge." }
+              analysis: { type: 'string' },
+              vector: { type: 'string', description: "Specific retail, product, or cultural expansion channel." }
             },
-            required: ['title', 'description', 'growthVector']
+            required: ['title', 'analysis', 'vector']
           }
         },
         threats: {
           type: 'array',
+          minItems: 4,
+          maxItems: 4,
           items: {
             type: 'object',
             properties: {
               title: { type: 'string' },
-              description: { type: 'string' },
-              defensivePlay: { type: 'string', description: "Tactical defense against incumbent counter-measures." }
+              analysis: { type: 'string' },
+              defense: { type: 'string', description: "Tactical playbook counter-measure." }
             },
-            required: ['title', 'description', 'defensivePlay']
+            required: ['title', 'analysis', 'defense']
           }
         }
       },

@@ -21,6 +21,7 @@ import BrandStrategyTab   from './dashboard/BrandStrategyTab';
 import LaunchCopyTab      from './dashboard/LaunchCopyTab';
 import PrintBrandDossier  from './dashboard/PrintBrandDossier';
 import SwotAnalysisView   from './SwotAnalysisView';
+import AiMvpBuilderView   from './AiMvpBuilderView';
 import { 
   exportBrandKitJson, 
   exportCssTokens, 
@@ -31,10 +32,11 @@ import {
 } from '../utils/exportUtils';
 
 const TABS = [
-  { id: 'preview',   label: 'Live Website Preview',         Icon: Eye },
-  { id: 'strategy',  label: 'Brand Strategy & Positioning', Icon: Target },
-  { id: 'manifesto', label: 'Launch Manifesto & Copy',      Icon: FileText },
-  { id: 'swot',      label: 'Strategic SWOT Analysis',      Icon: Sparkles, isSwot: true }
+  { id: 'preview',    label: 'Live Website Preview',         Icon: Eye },
+  { id: 'strategy',   label: 'Brand Strategy & Positioning', Icon: Target },
+  { id: 'manifesto',  label: 'Launch Manifesto & Copy',      Icon: FileText },
+  { id: 'swot',       label: 'Strategic SWOT Analysis',      Icon: Sparkles, isSwot: true },
+  { id: 'ai-builder', label: '✦ MVP Website Builder',        Icon: Sparkles, isAiBuilder: true }
 ];
 
 export default function BrandKitDashboard({
@@ -244,7 +246,7 @@ export default function BrandKitDashboard({
       <div className="no-print mb-8">
         <div className="flex items-center justify-start sm:justify-center overflow-x-auto pb-2 gap-1.5 scrollbar-none">
           <div className="inline-flex p-1.5 liquid-glass-card rounded-full max-w-full gap-1">
-            {TABS.map(({ id, label, Icon, isSwot }) => {
+            {TABS.map(({ id, label, Icon, isSwot, isAiBuilder }) => {
               const isActive = activeTab === id;
               if (isSwot) {
                 return (
@@ -260,6 +262,24 @@ export default function BrandKitDashboard({
                     }`}
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                    {label}
+                  </button>
+                );
+              }
+              if (isAiBuilder) {
+                return (
+                  <button
+                    key={id}
+                    id={`tab-${id}`}
+                    type="button"
+                    onClick={() => setActiveTab(id)}
+                    className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2 text-xs font-mono uppercase tracking-wider rounded-full transition-all whitespace-nowrap cursor-pointer ${
+                      isActive
+                        ? 'bg-orange-600 text-white shadow-sm font-semibold'
+                        : 'bg-orange-50 text-orange-800 hover:bg-orange-100/80 border border-orange-200/80 font-medium'
+                    }`}
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-orange-400" />
                     {label}
                   </button>
                 );
@@ -290,11 +310,16 @@ export default function BrandKitDashboard({
           <LivePreviewTab {...tabProps} />
         </div>
       )}
-      {activeTab === 'strategy'  && <BrandStrategyTab {...tabProps} />}
-      {activeTab === 'manifesto' && <LaunchCopyTab    {...tabProps} />}
-      {activeTab === 'swot'      && (
+      {activeTab === 'strategy'   && <BrandStrategyTab {...tabProps} />}
+      {activeTab === 'manifesto'  && <LaunchCopyTab    {...tabProps} />}
+      {activeTab === 'swot'       && (
         <div className="liquid-glass-card rounded-[36px] p-4 sm:p-8">
           <SwotAnalysisView swotAnalysis={brandKit?.swotAnalysis} brandKit={brandKit} />
+        </div>
+      )}
+      {activeTab === 'ai-builder' && (
+        <div className="liquid-glass-card rounded-[36px] p-4 sm:p-8">
+          <AiMvpBuilderView brandKit={brandKit} answers={answers} />
         </div>
       )}
 

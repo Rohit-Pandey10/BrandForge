@@ -129,7 +129,7 @@ export default function Header({
             </span>
           </button>
 
-          <span className="hidden xl:inline-flex items-center font-mono text-[10px] text-zinc-500 border border-zinc-200 rounded-full px-2.5 py-0.5 bg-white/70 tracking-wide font-medium">
+          <span className="hidden xl:inline-flex items-center font-mono text-[11px] text-zinc-500 border border-zinc-200 rounded-full px-2.5 py-0.5 bg-white/70 tracking-wide font-medium">
             Socratic Studio
           </span>
         </div>
@@ -201,7 +201,7 @@ export default function Header({
                       <Bookmark className="w-3.5 h-3.5 stroke-[1.8]" />
                       <span>Save to Library</span>
                       {!isAuthenticated && (
-                        <span className="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-full font-mono">
+                        <span className="text-[11px] bg-white/20 px-1.5 py-0.2 rounded-full font-mono">
                           Free
                         </span>
                       )}
@@ -248,7 +248,7 @@ export default function Header({
                 className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-zinc-200 bg-white/80 hover:bg-white hover:border-zinc-300 transition-all text-left cursor-pointer"
                 title="Open Account & Library"
               >
-                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-orange-500 to-red-500 text-white flex items-center justify-center font-bold text-[10px]">
+                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-orange-500 to-red-500 text-white flex items-center justify-center font-bold text-[11px]">
                   {user.displayName?.[0]?.toUpperCase() || user.email?.[0]?.toUpperCase() || 'U'}
                 </div>
                 <span className="hidden md:inline text-xs font-semibold text-zinc-800 max-w-[100px] truncate">
@@ -258,7 +258,7 @@ export default function Header({
             ) : (
               <div className="flex items-center gap-2">
                 <span 
-                  className={`hidden sm:inline-flex items-center text-[10px] font-mono px-2.5 py-0.5 rounded-full border ${
+                  className={`hidden sm:inline-flex items-center text-[11px] font-mono px-2.5 py-0.5 rounded-full border ${
                     guestRunsCount >= MAX_GUEST_RUNS
                       ? 'border-amber-300 bg-amber-50 text-amber-800'
                       : 'border-zinc-200 bg-zinc-100 text-zinc-600'

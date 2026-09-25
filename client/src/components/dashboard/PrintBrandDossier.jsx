@@ -374,10 +374,10 @@ export default function PrintBrandDossier({ kit }) {
                 <span style={{ ...mono, fontSize: '7.5pt', color: '#059669' }}>{swotStrengths.length} WEDGES</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {(swotStrengths.slice(0, 5)).map((s, idx) => (
+                {(swotStrengths.slice(0, 4)).map((s, idx) => (
                   <div key={idx} style={{ padding: '6px 8px', background: '#f6fbf8', borderRadius: '6px', border: '1px solid #e2ece6' }}>
                     <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{s.title}</div>
-                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{s.description}</div>
+                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{s.analysis || s.description}</div>
                     {s.transcriptAnchor && (
                       <div style={{ ...mono, fontSize: '7.5pt', color: '#065f46', marginTop: '4px', fontStyle: 'italic' }}>
                         Anchor: "{s.transcriptAnchor}"
@@ -394,13 +394,13 @@ export default function PrintBrandDossier({ kit }) {
                 <span style={{ ...cardLabel, color: '#92400e', fontWeight: 700, marginBottom: 0 }}>
                   [W] COMMERCIAL VULNERABILITIES
                 </span>
-                <span style={{ ...mono, fontSize: '7.5pt', color: '#d97706' }}>{swotWeaknesses.length} RISKS</span>
+                <span style={{ ...mono, fontSize: '7.5pt', color: '#d97706' }}>{Math.min(swotWeaknesses.length, 4)} RISKS</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {(swotWeaknesses.slice(0, 5)).map((w, idx) => (
+                {(swotWeaknesses.slice(0, 4)).map((w, idx) => (
                   <div key={idx} style={{ padding: '6px 8px', background: '#fdfaf5', borderRadius: '6px', border: '1px solid #f2e9dc' }}>
                     <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{w.title}</div>
-                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{w.description}</div>
+                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{w.analysis || w.description}</div>
                     {w.mitigation && (
                       <div style={{ ...mono, fontSize: '7.5pt', color: '#78350f', marginTop: '4px' }}>
                         Hedge: {w.mitigation}
@@ -417,16 +417,16 @@ export default function PrintBrandDossier({ kit }) {
                 <span style={{ ...cardLabel, color: '#3730a3', fontWeight: 700, marginBottom: 0 }}>
                   [O] EXPANSION VECTORS
                 </span>
-                <span style={{ ...mono, fontSize: '7.5pt', color: '#4f46e5' }}>{swotOpportunities.length} CHANNELS</span>
+                <span style={{ ...mono, fontSize: '7.5pt', color: '#4f46e5' }}>{Math.min(swotOpportunities.length, 4)} CHANNELS</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {(swotOpportunities.slice(0, 5)).map((o, idx) => (
+                {(swotOpportunities.slice(0, 4)).map((o, idx) => (
                   <div key={idx} style={{ padding: '6px 8px', background: '#f7f7fd', borderRadius: '6px', border: '1px solid #e5e5f7' }}>
                     <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{o.title}</div>
-                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{o.description}</div>
-                    {o.growthVector && (
+                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{o.analysis || o.description}</div>
+                    {(o.vector || o.growthVector) && (
                       <div style={{ ...mono, fontSize: '7.5pt', color: '#3730a3', marginTop: '4px' }}>
-                        Vector: {o.growthVector}
+                        Vector: {o.vector || o.growthVector}
                       </div>
                     )}
                   </div>
@@ -440,16 +440,16 @@ export default function PrintBrandDossier({ kit }) {
                 <span style={{ ...cardLabel, color: '#9f1239', fontWeight: 700, marginBottom: 0 }}>
                   [T] INCUMBENT THREATS & COUNTER-MOVES
                 </span>
-                <span style={{ ...mono, fontSize: '7.5pt', color: '#e11d48' }}>{swotThreats.length} THREATS</span>
+                <span style={{ ...mono, fontSize: '7.5pt', color: '#e11d48' }}>{Math.min(swotThreats.length, 4)} THREATS</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {(swotThreats.slice(0, 5)).map((t, idx) => (
+                {(swotThreats.slice(0, 4)).map((t, idx) => (
                   <div key={idx} style={{ padding: '6px 8px', background: '#fdf6f7', borderRadius: '6px', border: '1px solid #fae4e7' }}>
                     <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{t.title}</div>
-                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{t.description}</div>
-                    {t.defensivePlay && (
+                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{t.analysis || t.description}</div>
+                    {(t.defense || t.defensivePlay) && (
                       <div style={{ ...mono, fontSize: '7.5pt', color: '#881337', marginTop: '4px' }}>
-                        Defense: {t.defensivePlay}
+                        Defense: {t.defense || t.defensivePlay}
                       </div>
                     )}
                   </div>

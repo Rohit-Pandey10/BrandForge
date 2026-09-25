@@ -22,7 +22,7 @@ export default function LaunchCopyTab({ brandStrategy, voiceSystem, visualTokens
       <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-10 transition-all duration-200 hover:-translate-y-0.5">
         <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#dbd7cd]">
           <div>
-            <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-1">CORE IDEOLOGY</span>
+            <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium block mb-1">CORE IDEOLOGY</span>
             <h3 className="font-serif text-2xl font-light text-black tracking-[-0.03em]">The Brand Manifesto</h3>
           </div>
           <button
@@ -43,7 +43,7 @@ export default function LaunchCopyTab({ brandStrategy, voiceSystem, visualTokens
 
       {/* Hero Copy Specimen */}
       <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8 transition-all duration-200 hover:-translate-y-0.5">
-        <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-3">LAUNCH HEADLINE & PITCH</span>
+        <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium block mb-3">LAUNCH HEADLINE & PITCH</span>
         <h4
           className="font-serif text-3xl sm:text-4xl font-light text-black mb-3 leading-snug tracking-[-0.03em]"
           style={{ fontFamily: typography.headingFont ? `'${typography.headingFont}', serif` : 'inherit' }}
@@ -59,7 +59,7 @@ export default function LaunchCopyTab({ brandStrategy, voiceSystem, visualTokens
 
       {/* Social Hooks Grid */}
       <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-8">
-        <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium block mb-4">LAUNCH SOCIAL HOOKS (30-DAY CAMPAIGN)</span>
+        <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400 font-medium block mb-4">LAUNCH SOCIAL HOOKS (30-DAY CAMPAIGN)</span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {socialHooks.map((hook, idx) => (
             <div

@@ -15,8 +15,9 @@ export default {
         'pure-white': '#ffffff',
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'bureauSerif', 'Georgia', 'serif'],
+        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         sans: ['Inter', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       animation: {
         'fade-in': 'fadeIn 0.25s ease-out',

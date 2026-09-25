@@ -42,7 +42,7 @@ export default function ConceptSelector({
 
         {rawPitch && (
           <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 border border-[#dbd7cd] text-xs text-stone-500">
-            <span className="font-mono text-[10px] uppercase text-stone-400">Raw Premise:</span>
+            <span className="font-mono text-[11px] uppercase text-stone-400">Raw Premise:</span>
             <span className="italic text-stone-700 max-w-[320px] sm:max-w-md truncate">"{rawPitch}"</span>
           </div>
         )}
@@ -97,7 +97,7 @@ export default function ConceptSelector({
                 {/* Strategic Angle Pill */}
                 {concept.strategicAngle && (
                   <div className="pt-3 border-t border-[#f2f1ed] mb-4">
-                    <span className="block text-[10px] font-mono uppercase tracking-wider text-stone-400 mb-1">
+                    <span className="block text-[11px] font-mono uppercase tracking-wider text-stone-400 mb-1">
                       Strategic Moat
                     </span>
                     <p className="text-xs text-stone-600 leading-snug">
