@@ -495,6 +495,18 @@
       "source_location": "L72"
     },
     {
+      "id": "server_prompts_brandprompts_buildanswersanchorblock",
+      "label": "buildAnswersAnchorBlock()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "interviewService.js",
+      "file_type": "code",
+      "norm_label": "buildanswersanchorblock()",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L192"
+    },
+    {
       "id": "server_prompts_brandprompts_buildbatchquestionsysteminstruction",
       "label": "buildBatchQuestionSystemInstruction()",
       "_callable": true,
@@ -504,7 +516,7 @@
       "file_type": "code",
       "norm_label": "buildbatchquestionsysteminstruction()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L122"
+      "source_location": "L210"
     },
     {
       "id": "server_prompts_brandprompts_buildcompilesysteminstruction",
@@ -516,7 +528,19 @@
       "file_type": "code",
       "norm_label": "buildcompilesysteminstruction()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L127"
+      "source_location": "L215"
+    },
+    {
+      "id": "server_prompts_brandprompts_buildfounderanchorblock",
+      "label": "buildFounderAnchorBlock()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "interviewService.js",
+      "file_type": "code",
+      "norm_label": "buildfounderanchorblock()",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L175"
     },
     {
       "id": "server_prompts_brandprompts_buildquestionsysteminstruction",
@@ -528,7 +552,7 @@
       "file_type": "code",
       "norm_label": "buildquestionsysteminstruction()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L132"
+      "source_location": "L220"
     },
     {
       "id": "server_prompts_brandprompts_getdomainguidance",
@@ -540,7 +564,7 @@
       "file_type": "code",
       "norm_label": "getdomainguidance()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L136"
+      "source_location": "L224"
     },
     {
       "id": "server_services_compilerservice_compilebrandkit",
@@ -564,7 +588,7 @@
       "file_type": "code",
       "norm_label": "_defaultstagelabel()",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L291"
+      "source_location": "L292"
     },
     {
       "id": "server_services_interviewservice_expandrawpitch",
@@ -999,66 +1023,6 @@
       "source_location": "L35"
     },
     {
-      "id": "server_utils_geminiclient_cleanjsonstring",
-      "label": "cleanJsonString()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "geminiClient.js",
-      "file_type": "code",
-      "norm_label": "cleanjsonstring()",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L27"
-    },
-    {
-      "id": "server_utils_geminiclient_generatestructuredjson",
-      "label": "generateStructuredJson()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "geminiClient.js",
-      "file_type": "code",
-      "norm_label": "generatestructuredjson()",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L77"
-    },
-    {
-      "id": "server_utils_geminiclient_getgeminiclient",
-      "label": "getGeminiClient()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "geminiClient.js",
-      "file_type": "code",
-      "norm_label": "getgeminiclient()",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L12"
-    },
-    {
-      "id": "server_utils_geminiclient_istransienterror",
-      "label": "isTransientError()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "geminiClient.js",
-      "file_type": "code",
-      "norm_label": "istransienterror()",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L49"
-    },
-    {
-      "id": "server_utils_geminiclient_sleep",
-      "label": "sleep()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "geminiClient.js",
-      "file_type": "code",
-      "norm_label": "sleep()",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L44"
-    },
-    {
       "id": "server_config_db_connectdb",
       "label": "connectDB()",
       "_callable": true,
@@ -1213,6 +1177,66 @@
       "norm_label": "requireauth()",
       "source_file": "server/middleware/authMiddleware.js",
       "source_location": "L8"
+    },
+    {
+      "id": "server_utils_geminiclient_cleanjsonstring",
+      "label": "cleanJsonString()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "server.js",
+      "file_type": "code",
+      "norm_label": "cleanjsonstring()",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L27"
+    },
+    {
+      "id": "server_utils_geminiclient_generatestructuredjson",
+      "label": "generateStructuredJson()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "server.js",
+      "file_type": "code",
+      "norm_label": "generatestructuredjson()",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L77"
+    },
+    {
+      "id": "server_utils_geminiclient_getgeminiclient",
+      "label": "getGeminiClient()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "server.js",
+      "file_type": "code",
+      "norm_label": "getgeminiclient()",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L12"
+    },
+    {
+      "id": "server_utils_geminiclient_istransienterror",
+      "label": "isTransientError()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "server.js",
+      "file_type": "code",
+      "norm_label": "istransienterror()",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L49"
+    },
+    {
+      "id": "server_utils_geminiclient_sleep",
+      "label": "sleep()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "server.js",
+      "file_type": "code",
+      "norm_label": "sleep()",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L44"
     },
     {
       "id": "client_src_components_brandkitdashboard_brandkitdashboard",
@@ -1735,17 +1759,6 @@
       "source_location": "L1"
     },
     {
-      "id": "server_data_domainconfig_domains",
-      "label": "DOMAINS",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "interviewService.js",
-      "file_type": "code",
-      "norm_label": "domains",
-      "source_file": "server/data/domainConfig.js",
-      "source_location": "L9"
-    },
-    {
       "id": "server_prompts_brandprompts",
       "label": "brandPrompts.js",
       "_origin": "ast",
@@ -1765,7 +1778,7 @@
       "file_type": "code",
       "norm_label": "banned_tech_cliches",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L6"
+      "source_location": "L25"
     },
     {
       "id": "server_prompts_brandprompts_compilersysteminstruction",
@@ -1776,7 +1789,7 @@
       "file_type": "code",
       "norm_label": "compilersysteminstruction",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L98"
+      "source_location": "L128"
     },
     {
       "id": "server_prompts_brandprompts_pitchenhancerprompt",
@@ -1787,7 +1800,7 @@
       "file_type": "code",
       "norm_label": "pitchenhancerprompt",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L17"
+      "source_location": "L37"
     },
     {
       "id": "server_prompts_brandprompts_socraticbatchprompt",
@@ -1798,7 +1811,7 @@
       "file_type": "code",
       "norm_label": "socraticbatchprompt",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L56"
+      "source_location": "L82"
     },
     {
       "id": "server_routes_brandroutes",
@@ -1878,37 +1891,16 @@
       "source_location": "L217"
     },
     {
-      "id": "server_utils_llmclient",
-      "label": "llmClient.js",
+      "id": "devstate_backend_engineering",
+      "label": "Backend Engineering:",
       "_origin": "ast",
       "community": 1,
       "community_name": "interviewService.js",
-      "file_type": "code",
-      "norm_label": "llmclient.js",
-      "source_file": "server/utils/llmClient.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_utils_llmclient_getllmclient",
-      "label": "getLlmClient",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "interviewService.js",
-      "file_type": "code",
-      "norm_label": "getllmclient",
-      "source_file": "server/utils/llmClient.js",
-      "source_location": "L19"
-    },
-    {
-      "id": "server_utils_llmclient_groq_candidate_models",
-      "label": "GROQ_CANDIDATE_MODELS",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "interviewService.js",
-      "file_type": "code",
-      "norm_label": "groq_candidate_models",
-      "source_file": "server/utils/llmClient.js",
-      "source_location": "L22"
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "backend engineering:",
+      "source_file": "DEVSTATE.md",
+      "source_location": "L161"
     },
     {
       "id": "shared_domainconfig",
@@ -2237,6 +2229,18 @@
       "norm_label": "feature sprint: keyboard navigation & multi-select (`feature/multi-select-and-keyboard-nav`):",
       "source_file": "DEVSTATE.md",
       "source_location": "L186"
+    },
+    {
+      "id": "devstate_phase_7_strategic_prompt_overhaul_anti_clich\u00e9_architecture",
+      "label": "Phase 7: Strategic Prompt Overhaul & Anti-Clich\u00e9 Architecture:",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "B. Authentication API (`/api/auth`)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 7: strategic prompt overhaul & anti-cliche architecture:",
+      "source_file": "DEVSTATE.md",
+      "source_location": "L175"
     },
     {
       "id": "scripts_test_jeans_flow",
@@ -2624,6 +2628,116 @@
       "source_location": "L4"
     },
     {
+      "id": "package_devdependencies",
+      "label": "devDependencies",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "devdependencies",
+      "source_file": "package.json",
+      "source_location": "L35"
+    },
+    {
+      "id": "package_devdependencies_autoprefixer",
+      "label": "autoprefixer",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "autoprefixer",
+      "source_file": "package.json",
+      "source_location": "L39"
+    },
+    {
+      "id": "package_devdependencies_concurrently",
+      "label": "concurrently",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "concurrently",
+      "source_file": "package.json",
+      "source_location": "L40"
+    },
+    {
+      "id": "package_devdependencies_nodemon",
+      "label": "nodemon",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "nodemon",
+      "source_file": "package.json",
+      "source_location": "L41"
+    },
+    {
+      "id": "package_devdependencies_postcss",
+      "label": "postcss",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "postcss",
+      "source_file": "package.json",
+      "source_location": "L42"
+    },
+    {
+      "id": "package_devdependencies_tailwindcss",
+      "label": "tailwindcss",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "tailwindcss",
+      "source_file": "package.json",
+      "source_location": "L43"
+    },
+    {
+      "id": "package_devdependencies_types_react",
+      "label": "@types/react",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@types/react",
+      "source_file": "package.json",
+      "source_location": "L36"
+    },
+    {
+      "id": "package_devdependencies_types_react_dom",
+      "label": "@types/react-dom",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@types/react-dom",
+      "source_file": "package.json",
+      "source_location": "L37"
+    },
+    {
+      "id": "package_devdependencies_vite",
+      "label": "vite",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "vite",
+      "source_file": "package.json",
+      "source_location": "L44"
+    },
+    {
+      "id": "package_devdependencies_vitejs_plugin_react",
+      "label": "@vitejs/plugin-react",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@vitejs/plugin-react",
+      "source_file": "package.json",
+      "source_location": "L38"
+    },
+    {
       "id": "package_keywords",
       "label": "keywords",
       "_origin": "ast",
@@ -2655,116 +2769,6 @@
       "norm_label": "name",
       "source_file": "package.json",
       "source_location": "L2"
-    },
-    {
-      "id": "package_scripts",
-      "label": "scripts",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "scripts",
-      "source_file": "package.json",
-      "source_location": "L9"
-    },
-    {
-      "id": "package_scripts_build_client",
-      "label": "build:client",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "build:client",
-      "source_file": "package.json",
-      "source_location": "L14"
-    },
-    {
-      "id": "package_scripts_dev",
-      "label": "dev",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "dev",
-      "source_file": "package.json",
-      "source_location": "L10"
-    },
-    {
-      "id": "package_scripts_dev_client",
-      "label": "dev:client",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "dev:client",
-      "source_file": "package.json",
-      "source_location": "L12"
-    },
-    {
-      "id": "package_scripts_dev_server",
-      "label": "dev:server",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "dev:server",
-      "source_file": "package.json",
-      "source_location": "L11"
-    },
-    {
-      "id": "package_scripts_install_all",
-      "label": "install:all",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "install:all",
-      "source_file": "package.json",
-      "source_location": "L13"
-    },
-    {
-      "id": "package_scripts_test",
-      "label": "test",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "test",
-      "source_file": "package.json",
-      "source_location": "L18"
-    },
-    {
-      "id": "package_scripts_test_health",
-      "label": "test:health",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "test:health",
-      "source_file": "package.json",
-      "source_location": "L15"
-    },
-    {
-      "id": "package_scripts_test_jeans",
-      "label": "test:jeans",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "test:jeans",
-      "source_file": "package.json",
-      "source_location": "L17"
-    },
-    {
-      "id": "package_scripts_test_restaurant",
-      "label": "test:restaurant",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "test:restaurant",
-      "source_file": "package.json",
-      "source_location": "L16"
     },
     {
       "id": "package_version",
@@ -3031,6 +3035,17 @@
       "source_location": "L40"
     },
     {
+      "id": "server_data_domainconfig_domains",
+      "label": "DOMAINS",
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "domains",
+      "source_file": "server/data/domainConfig.js",
+      "source_location": "L9"
+    },
+    {
       "id": "server_services_mockengine",
       "label": "mockEngine.js",
       "_origin": "ast",
@@ -3040,18 +3055,6 @@
       "norm_label": "mockengine.js",
       "source_file": "server/services/mockEngine.js",
       "source_location": "L1"
-    },
-    {
-      "id": "devstate_phase_7_strategic_prompt_overhaul_anti_clich\u00e9_architecture",
-      "label": "Phase 7: Strategic Prompt Overhaul & Anti-Clich\u00e9 Architecture:",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "mockEngine.js",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "phase 7: strategic prompt overhaul & anti-cliche architecture:",
-      "source_file": "DEVSTATE.md",
-      "source_location": "L175"
     },
     {
       "id": "client_vite_config",
@@ -3604,116 +3607,6 @@
       "source_location": "L3"
     },
     {
-      "id": "package_devdependencies",
-      "label": "devDependencies",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "devdependencies",
-      "source_file": "package.json",
-      "source_location": "L35"
-    },
-    {
-      "id": "package_devdependencies_autoprefixer",
-      "label": "autoprefixer",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "autoprefixer",
-      "source_file": "package.json",
-      "source_location": "L39"
-    },
-    {
-      "id": "package_devdependencies_concurrently",
-      "label": "concurrently",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "concurrently",
-      "source_file": "package.json",
-      "source_location": "L40"
-    },
-    {
-      "id": "package_devdependencies_nodemon",
-      "label": "nodemon",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "nodemon",
-      "source_file": "package.json",
-      "source_location": "L41"
-    },
-    {
-      "id": "package_devdependencies_postcss",
-      "label": "postcss",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "postcss",
-      "source_file": "package.json",
-      "source_location": "L42"
-    },
-    {
-      "id": "package_devdependencies_tailwindcss",
-      "label": "tailwindcss",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "tailwindcss",
-      "source_file": "package.json",
-      "source_location": "L43"
-    },
-    {
-      "id": "package_devdependencies_types_react",
-      "label": "@types/react",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "@types/react",
-      "source_file": "package.json",
-      "source_location": "L36"
-    },
-    {
-      "id": "package_devdependencies_types_react_dom",
-      "label": "@types/react-dom",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "@types/react-dom",
-      "source_file": "package.json",
-      "source_location": "L37"
-    },
-    {
-      "id": "package_devdependencies_vite",
-      "label": "vite",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "vite",
-      "source_file": "package.json",
-      "source_location": "L44"
-    },
-    {
-      "id": "package_devdependencies_vitejs_plugin_react",
-      "label": "@vitejs/plugin-react",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "@vitejs/plugin-react",
-      "source_file": "package.json",
-      "source_location": "L38"
-    },
-    {
       "id": "client_src_types_brand",
       "label": "brand.ts",
       "_origin": "ast",
@@ -3809,26 +3702,114 @@
       "source_location": "L1"
     },
     {
-      "id": "server_utils_geminiclient",
-      "label": "geminiClient.js",
+      "id": "package_scripts",
+      "label": "scripts",
       "_origin": "ast",
       "community": 4,
-      "community_name": "geminiClient.js",
+      "community_name": "scripts",
       "file_type": "code",
-      "norm_label": "geminiclient.js",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L1"
+      "norm_label": "scripts",
+      "source_file": "package.json",
+      "source_location": "L9"
     },
     {
-      "id": "server_utils_geminiclient_candidate_models",
-      "label": "CANDIDATE_MODELS",
+      "id": "package_scripts_build_client",
+      "label": "build:client",
       "_origin": "ast",
       "community": 4,
-      "community_name": "geminiClient.js",
+      "community_name": "scripts",
       "file_type": "code",
-      "norm_label": "candidate_models",
-      "source_file": "server/utils/geminiClient.js",
-      "source_location": "L36"
+      "norm_label": "build:client",
+      "source_file": "package.json",
+      "source_location": "L14"
+    },
+    {
+      "id": "package_scripts_dev",
+      "label": "dev",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "dev",
+      "source_file": "package.json",
+      "source_location": "L10"
+    },
+    {
+      "id": "package_scripts_dev_client",
+      "label": "dev:client",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "dev:client",
+      "source_file": "package.json",
+      "source_location": "L12"
+    },
+    {
+      "id": "package_scripts_dev_server",
+      "label": "dev:server",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "dev:server",
+      "source_file": "package.json",
+      "source_location": "L11"
+    },
+    {
+      "id": "package_scripts_install_all",
+      "label": "install:all",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "install:all",
+      "source_file": "package.json",
+      "source_location": "L13"
+    },
+    {
+      "id": "package_scripts_test",
+      "label": "test",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "test",
+      "source_file": "package.json",
+      "source_location": "L18"
+    },
+    {
+      "id": "package_scripts_test_health",
+      "label": "test:health",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "test:health",
+      "source_file": "package.json",
+      "source_location": "L15"
+    },
+    {
+      "id": "package_scripts_test_jeans",
+      "label": "test:jeans",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "test:jeans",
+      "source_file": "package.json",
+      "source_location": "L17"
+    },
+    {
+      "id": "package_scripts_test_restaurant",
+      "label": "test:restaurant",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "test:restaurant",
+      "source_file": "package.json",
+      "source_location": "L16"
     },
     {
       "id": "package_dependencies",
@@ -4270,16 +4251,59 @@
       "source_location": "L27"
     },
     {
-      "id": "devstate_backend_engineering",
-      "label": "Backend Engineering:",
+      "id": "server_utils_geminiclient",
+      "label": "geminiClient.js",
       "_origin": "ast",
       "community": 7,
       "community_name": "server.js",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "backend engineering:",
-      "source_file": "DEVSTATE.md",
-      "source_location": "L161"
+      "file_type": "code",
+      "norm_label": "geminiclient.js",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_utils_geminiclient_candidate_models",
+      "label": "CANDIDATE_MODELS",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "server.js",
+      "file_type": "code",
+      "norm_label": "candidate_models",
+      "source_file": "server/utils/geminiClient.js",
+      "source_location": "L36"
+    },
+    {
+      "id": "server_utils_llmclient",
+      "label": "llmClient.js",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "server.js",
+      "file_type": "code",
+      "norm_label": "llmclient.js",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_utils_llmclient_getllmclient",
+      "label": "getLlmClient",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "server.js",
+      "file_type": "code",
+      "norm_label": "getllmclient",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L19"
+    },
+    {
+      "id": "server_utils_llmclient_groq_candidate_models",
+      "label": "GROQ_CANDIDATE_MODELS",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "server.js",
+      "file_type": "code",
+      "norm_label": "groq_candidate_models",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L22"
     },
     {
       "id": "design",
@@ -4550,30 +4574,6 @@
       "type": "external"
     },
     {
-      "id": "ref_google_genai",
-      "label": "ref_google_genai",
-      "_origin": "semantic",
-      "community": 1,
-      "community_name": "interviewService.js",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_google_genai",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_groq_sdk",
-      "label": "ref_groq_sdk",
-      "_origin": "semantic",
-      "community": 1,
-      "community_name": "interviewService.js",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_groq_sdk",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "server_controllers_interviewercontroller_extractdomain",
       "label": "server_controllers_interviewercontroller_extractdomain",
       "_origin": "semantic",
@@ -4726,6 +4726,30 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_google_auth_library",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_google_genai",
+      "label": "ref_google_genai",
+      "_origin": "semantic",
+      "community": 7,
+      "community_name": "server.js",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_google_genai",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_groq_sdk",
+      "label": "ref_groq_sdk",
+      "_origin": "semantic",
+      "community": 7,
+      "community_name": "server.js",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_groq_sdk",
       "source_file": "",
       "type": "external"
     },
@@ -5200,6 +5224,42 @@
       "weight": 1.0
     },
     {
+      "source": "server_prompts_brandprompts_buildbatchquestionsysteminstruction",
+      "target": "server_prompts_brandprompts_buildfounderanchorblock",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L212",
+      "weight": 1.0
+    },
+    {
+      "source": "server_prompts_brandprompts_buildcompilesysteminstruction",
+      "target": "server_prompts_brandprompts_buildanswersanchorblock",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L217",
+      "weight": 1.0
+    },
+    {
+      "source": "server_prompts_brandprompts_buildquestionsysteminstruction",
+      "target": "server_prompts_brandprompts_buildfounderanchorblock",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
       "source": "server_services_compilerservice_compilebrandkit",
       "target": "server_data_domainconfig_classifydomain",
       "relation": "calls",
@@ -5232,7 +5292,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L139",
+      "source_location": "L155",
       "weight": 1.0
     },
     {
@@ -5244,7 +5304,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L141",
+      "source_location": "L157",
       "weight": 1.0
     },
     {
@@ -5256,7 +5316,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L144",
+      "source_location": "L160",
       "weight": 1.0
     },
     {
@@ -5268,7 +5328,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L151",
+      "source_location": "L167",
       "weight": 1.0
     },
     {
@@ -5424,7 +5484,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L269",
+      "source_location": "L270",
       "weight": 1.0
     },
     {
@@ -5436,7 +5496,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L271",
+      "source_location": "L272",
       "weight": 1.0
     },
     {
@@ -5448,7 +5508,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L274",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -5460,7 +5520,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L280",
+      "source_location": "L281",
       "weight": 1.0
     },
     {
@@ -5472,7 +5532,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L288",
+      "source_location": "L289",
       "weight": 1.0
     },
     {
@@ -11179,24 +11239,35 @@
     },
     {
       "source": "server_prompts_brandprompts",
-      "target": "server_prompts_brandprompts_pitchenhancerprompt",
+      "target": "server_prompts_brandprompts_compilersysteminstruction",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L17",
+      "source_location": "L128",
       "weight": 1.0
     },
     {
       "source": "server_prompts_brandprompts",
-      "target": "server_prompts_brandprompts_socraticbatchprompt",
+      "target": "server_prompts_brandprompts_buildfounderanchorblock",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L56",
+      "source_location": "L175",
+      "weight": 1.0
+    },
+    {
+      "source": "server_prompts_brandprompts",
+      "target": "server_prompts_brandprompts_buildanswersanchorblock",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L192",
       "weight": 1.0
     },
     {
@@ -11207,18 +11278,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L6",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
       "source": "server_prompts_brandprompts",
-      "target": "server_prompts_brandprompts_compilersysteminstruction",
+      "target": "server_prompts_brandprompts_pitchenhancerprompt",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L98",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "server_prompts_brandprompts",
+      "target": "server_prompts_brandprompts_socraticbatchprompt",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L82",
       "weight": 1.0
     },
     {
@@ -11372,7 +11454,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/interviewService.js",
-      "source_location": "L291",
+      "source_location": "L292",
       "weight": 1.0
     },
     {
@@ -12027,7 +12109,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L145",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -12039,7 +12121,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L146",
+      "source_location": "L234",
       "weight": 1.0
     },
     {
@@ -12051,7 +12133,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L147",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -12063,7 +12145,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L148",
+      "source_location": "L236",
       "weight": 1.0
     },
     {
@@ -12188,5 +12270,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "ace20f00aaba77d3d9a75c2d3c3331a9c660722a"
+  "built_at_commit": "913b4cc634a3af33b49e1dd34b32a5cbc45f4522"
 }
