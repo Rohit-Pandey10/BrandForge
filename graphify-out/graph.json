@@ -9,7 +9,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
+      "community": 14,
       "community_name": "brand.ts",
       "file_type": "code",
       "norm_label": "brandkit",
@@ -22,7 +22,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
+      "community": 14,
       "community_name": "brand.ts",
       "file_type": "code",
       "norm_label": "brandstrategy",
@@ -35,7 +35,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
+      "community": 14,
       "community_name": "brand.ts",
       "file_type": "code",
       "norm_label": "chatmessage",
@@ -48,7 +48,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
+      "community": 14,
       "community_name": "brand.ts",
       "file_type": "code",
       "norm_label": "colorrole",
@@ -61,7 +61,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
+      "community": 14,
       "community_name": "brand.ts",
       "file_type": "code",
       "norm_label": "colortoken",
@@ -74,7 +74,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
+      "community": 14,
       "community_name": "brand.ts",
       "file_type": "code",
       "norm_label": "launchcontent",
@@ -87,7 +87,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
+      "community": 14,
       "community_name": "brand.ts",
       "file_type": "code",
       "norm_label": "questionresponse",
@@ -100,7 +100,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
+      "community": 14,
       "community_name": "brand.ts",
       "file_type": "code",
       "norm_label": "typographytokens",
@@ -113,7 +113,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
+      "community": 14,
       "community_name": "brand.ts",
       "file_type": "code",
       "norm_label": "viewstage",
@@ -126,7 +126,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
+      "community": 14,
       "community_name": "brand.ts",
       "file_type": "code",
       "norm_label": "visualtokens",
@@ -139,7 +139,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 3,
+      "community": 14,
       "community_name": "brand.ts",
       "file_type": "code",
       "norm_label": "voicesystem",
@@ -183,64 +183,40 @@
       "source_location": "L4"
     },
     {
-      "id": "client_src_components_dashboard_livepreviewtab_apparelpreview",
-      "label": "ApparelPreview()",
+      "id": "client_src_components_dashboard_brandstrategytab_brandstrategytab",
+      "label": "BrandStrategyTab()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "App.jsx",
       "file_type": "code",
-      "norm_label": "apparelpreview()",
-      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L118"
+      "norm_label": "brandstrategytab()",
+      "source_file": "client/src/components/dashboard/BrandStrategyTab.jsx",
+      "source_location": "L7"
     },
     {
-      "id": "client_src_components_dashboard_livepreviewtab_developerpreview",
-      "label": "DeveloperPreview()",
+      "id": "client_src_components_dashboard_launchcopytab_launchcopytab",
+      "label": "LaunchCopyTab()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "App.jsx",
       "file_type": "code",
-      "norm_label": "developerpreview()",
-      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L382"
+      "norm_label": "launchcopytab()",
+      "source_file": "client/src/components/dashboard/LaunchCopyTab.jsx",
+      "source_location": "L8"
     },
     {
-      "id": "client_src_components_dashboard_livepreviewtab_editorialpreview",
-      "label": "EditorialPreview()",
+      "id": "client_src_components_dashboard_voiceandtonetab_voiceandtonetab",
+      "label": "VoiceAndToneTab()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "App.jsx",
       "file_type": "code",
-      "norm_label": "editorialpreview()",
-      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L456"
-    },
-    {
-      "id": "client_src_components_dashboard_livepreviewtab_hospitalitypreview",
-      "label": "HospitalityPreview()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "App.jsx",
-      "file_type": "code",
-      "norm_label": "hospitalitypreview()",
-      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L258"
-    },
-    {
-      "id": "client_src_components_dashboard_livepreviewtab_livepreviewtab",
-      "label": "LivePreviewTab()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "App.jsx",
-      "file_type": "code",
-      "norm_label": "livepreviewtab()",
-      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L13"
+      "norm_label": "voiceandtonetab()",
+      "source_file": "client/src/components/dashboard/VoiceAndToneTab.jsx",
+      "source_location": "L7"
     },
     {
       "id": "client_src_components_header_header",
@@ -404,7 +380,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "cleanxml()",
       "source_file": "scripts/verify-fixes.js",
@@ -416,7 +392,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "handlecompilebrandkit()",
       "source_file": "server/controllers/interviewerController.js",
@@ -428,7 +404,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "handleexpandpitch()",
       "source_file": "server/controllers/interviewerController.js",
@@ -440,7 +416,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "handlenextquestion()",
       "source_file": "server/controllers/interviewerController.js",
@@ -452,7 +428,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "handlestartinterview()",
       "source_file": "server/controllers/interviewerController.js",
@@ -464,7 +440,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "validatehistory()",
       "source_file": "server/controllers/interviewerController.js",
@@ -476,7 +452,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "classifydomain()",
       "source_file": "server/data/domainConfig.js",
@@ -488,11 +464,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "isfamilyintent()",
       "source_file": "server/data/domainConfig.js",
       "source_location": "L72"
+    },
+    {
+      "id": "server_prompts_brandprompts_buildanswersanchorblock",
+      "label": "buildAnswersAnchorBlock()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "interviewService.js",
+      "file_type": "code",
+      "norm_label": "buildanswersanchorblock()",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L192"
     },
     {
       "id": "server_prompts_brandprompts_buildbatchquestionsysteminstruction",
@@ -500,11 +488,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "buildbatchquestionsysteminstruction()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L114"
+      "source_location": "L210"
     },
     {
       "id": "server_prompts_brandprompts_buildcompilesysteminstruction",
@@ -512,11 +500,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "buildcompilesysteminstruction()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L119"
+      "source_location": "L215"
+    },
+    {
+      "id": "server_prompts_brandprompts_buildfounderanchorblock",
+      "label": "buildFounderAnchorBlock()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "interviewService.js",
+      "file_type": "code",
+      "norm_label": "buildfounderanchorblock()",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L175"
     },
     {
       "id": "server_prompts_brandprompts_buildquestionsysteminstruction",
@@ -524,11 +524,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "buildquestionsysteminstruction()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L124"
+      "source_location": "L220"
     },
     {
       "id": "server_prompts_brandprompts_getdomainguidance",
@@ -536,11 +536,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "getdomainguidance()",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L128"
+      "source_location": "L224"
     },
     {
       "id": "server_services_compilerservice_compilebrandkit",
@@ -548,7 +548,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "compilebrandkit()",
       "source_file": "server/services/compilerService.js",
@@ -560,11 +560,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "_defaultstagelabel()",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L286"
+      "source_location": "L292"
     },
     {
       "id": "server_services_interviewservice_expandrawpitch",
@@ -572,7 +572,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "expandrawpitch()",
       "source_file": "server/services/interviewService.js",
@@ -584,11 +584,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "generateinterviewbatch()",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L183"
+      "source_location": "L184"
     },
     {
       "id": "server_services_interviewservice_generatenextquestion",
@@ -596,11 +596,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "generatenextquestion()",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L255"
+      "source_location": "L260"
     },
     {
       "id": "server_services_interviewservice_getfallbackconcepts",
@@ -608,287 +608,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "getfallbackconcepts()",
       "source_file": "server/services/interviewService.js",
       "source_location": "L76"
-    },
-    {
-      "id": "server_services_mockengine_beveragebatch",
-      "label": "_beverageBatch()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_beveragebatch()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L579"
-    },
-    {
-      "id": "server_services_mockengine_beveragekit",
-      "label": "_beverageKit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_beveragekit()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L529"
-    },
-    {
-      "id": "server_services_mockengine_beveragequestion",
-      "label": "_beverageQuestion()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_beveragequestion()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L591"
-    },
-    {
-      "id": "server_services_mockengine_careerbatch",
-      "label": "_careerBatch()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_careerbatch()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L211"
-    },
-    {
-      "id": "server_services_mockengine_careerkit",
-      "label": "_careerKit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_careerkit()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L721"
-    },
-    {
-      "id": "server_services_mockengine_careerquestion",
-      "label": "_careerQuestion()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_careerquestion()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L385"
-    },
-    {
-      "id": "server_services_mockengine_developerbatch",
-      "label": "_developerBatch()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_developerbatch()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L157"
-    },
-    {
-      "id": "server_services_mockengine_developerkit",
-      "label": "_developerKit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_developerkit()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L766"
-    },
-    {
-      "id": "server_services_mockengine_developerquestion",
-      "label": "_developerQuestion()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_developerquestion()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L411"
-    },
-    {
-      "id": "server_services_mockengine_familybatch",
-      "label": "_familyBatch()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_familybatch()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L49"
-    },
-    {
-      "id": "server_services_mockengine_familyhospitalitykit",
-      "label": "_familyHospitalityKit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_familyhospitalitykit()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L629"
-    },
-    {
-      "id": "server_services_mockengine_familyquestion",
-      "label": "_familyQuestion()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_familyquestion()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L319"
-    },
-    {
-      "id": "server_services_mockengine_fashionbatch",
-      "label": "_fashionBatch()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_fashionbatch()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L604"
-    },
-    {
-      "id": "server_services_mockengine_fashionkit",
-      "label": "_fashionKit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_fashionkit()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L479"
-    },
-    {
-      "id": "server_services_mockengine_fashionquestion",
-      "label": "_fashionQuestion()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_fashionquestion()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L616"
-    },
-    {
-      "id": "server_services_mockengine_generalbatch",
-      "label": "_generalBatch()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_generalbatch()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L265"
-    },
-    {
-      "id": "server_services_mockengine_generalquestion",
-      "label": "_generalQuestion()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_generalquestion()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L437"
-    },
-    {
-      "id": "server_services_mockengine_getmockbatch",
-      "label": "getMockBatch()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "getmockbatch()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L35"
-    },
-    {
-      "id": "server_services_mockengine_getmockbrandkit",
-      "label": "getMockBrandKit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "getmockbrandkit()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L465"
-    },
-    {
-      "id": "server_services_mockengine_getmockquestion",
-      "label": "getMockQuestion()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "getmockquestion()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L16"
-    },
-    {
-      "id": "server_services_mockengine_hospitalitybatch",
-      "label": "_hospitalityBatch()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_hospitalitybatch()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L103"
-    },
-    {
-      "id": "server_services_mockengine_hospitalitykit",
-      "label": "_hospitalityKit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_hospitalitykit()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L675"
-    },
-    {
-      "id": "server_services_mockengine_hospitalityquestion",
-      "label": "_hospitalityQuestion()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "_hospitalityquestion()",
-      "source_file": "server/services/mockEngine.js",
-      "source_location": "L352"
     },
     {
       "id": "server_utils_llmclient_generatestructuredjson",
@@ -896,7 +620,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "generatestructuredjson()",
       "source_file": "server/utils/llmClient.js",
@@ -908,7 +632,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "isllmconfigured()",
       "source_file": "server/utils/llmClient.js",
@@ -963,12 +687,288 @@
       "source_location": "L4"
     },
     {
+      "id": "server_services_mockengine_beveragebatch",
+      "label": "_beverageBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_beveragebatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L579"
+    },
+    {
+      "id": "server_services_mockengine_beveragekit",
+      "label": "_beverageKit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_beveragekit()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L529"
+    },
+    {
+      "id": "server_services_mockengine_beveragequestion",
+      "label": "_beverageQuestion()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_beveragequestion()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L591"
+    },
+    {
+      "id": "server_services_mockengine_careerbatch",
+      "label": "_careerBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_careerbatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L211"
+    },
+    {
+      "id": "server_services_mockengine_careerkit",
+      "label": "_careerKit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_careerkit()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L722"
+    },
+    {
+      "id": "server_services_mockengine_careerquestion",
+      "label": "_careerQuestion()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_careerquestion()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L385"
+    },
+    {
+      "id": "server_services_mockengine_developerbatch",
+      "label": "_developerBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_developerbatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L157"
+    },
+    {
+      "id": "server_services_mockengine_developerkit",
+      "label": "_developerKit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_developerkit()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L767"
+    },
+    {
+      "id": "server_services_mockengine_developerquestion",
+      "label": "_developerQuestion()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_developerquestion()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L411"
+    },
+    {
+      "id": "server_services_mockengine_familybatch",
+      "label": "_familyBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_familybatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L49"
+    },
+    {
+      "id": "server_services_mockengine_familyhospitalitykit",
+      "label": "_familyHospitalityKit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_familyhospitalitykit()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L630"
+    },
+    {
+      "id": "server_services_mockengine_familyquestion",
+      "label": "_familyQuestion()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_familyquestion()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L319"
+    },
+    {
+      "id": "server_services_mockengine_fashionbatch",
+      "label": "_fashionBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_fashionbatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L605"
+    },
+    {
+      "id": "server_services_mockengine_fashionkit",
+      "label": "_fashionKit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_fashionkit()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L479"
+    },
+    {
+      "id": "server_services_mockengine_fashionquestion",
+      "label": "_fashionQuestion()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_fashionquestion()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L617"
+    },
+    {
+      "id": "server_services_mockengine_generalbatch",
+      "label": "_generalBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_generalbatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L265"
+    },
+    {
+      "id": "server_services_mockengine_generalquestion",
+      "label": "_generalQuestion()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_generalquestion()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L437"
+    },
+    {
+      "id": "server_services_mockengine_getmockbatch",
+      "label": "getMockBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "getmockbatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L35"
+    },
+    {
+      "id": "server_services_mockengine_getmockbrandkit",
+      "label": "getMockBrandKit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "getmockbrandkit()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L465"
+    },
+    {
+      "id": "server_services_mockengine_getmockquestion",
+      "label": "getMockQuestion()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "getmockquestion()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L16"
+    },
+    {
+      "id": "server_services_mockengine_hospitalitybatch",
+      "label": "_hospitalityBatch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_hospitalitybatch()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L103"
+    },
+    {
+      "id": "server_services_mockengine_hospitalitykit",
+      "label": "_hospitalityKit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_hospitalitykit()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L676"
+    },
+    {
+      "id": "server_services_mockengine_hospitalityquestion",
+      "label": "_hospitalityQuestion()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "mockEngine.js",
+      "file_type": "code",
+      "norm_label": "_hospitalityquestion()",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L352"
+    },
+    {
       "id": "server_utils_geminiclient_cleanjsonstring",
       "label": "cleanJsonString()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "llmClient.js",
+      "community": 20,
+      "community_name": "geminiClient.js",
       "file_type": "code",
       "norm_label": "cleanjsonstring()",
       "source_file": "server/utils/geminiClient.js",
@@ -979,8 +979,8 @@
       "label": "generateStructuredJson()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "llmClient.js",
+      "community": 20,
+      "community_name": "geminiClient.js",
       "file_type": "code",
       "norm_label": "generatestructuredjson()",
       "source_file": "server/utils/geminiClient.js",
@@ -991,8 +991,8 @@
       "label": "getGeminiClient()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "llmClient.js",
+      "community": 20,
+      "community_name": "geminiClient.js",
       "file_type": "code",
       "norm_label": "getgeminiclient()",
       "source_file": "server/utils/geminiClient.js",
@@ -1003,8 +1003,8 @@
       "label": "isTransientError()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "llmClient.js",
+      "community": 20,
+      "community_name": "geminiClient.js",
       "file_type": "code",
       "norm_label": "istransienterror()",
       "source_file": "server/utils/geminiClient.js",
@@ -1015,20 +1015,104 @@
       "label": "sleep()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "llmClient.js",
+      "community": 20,
+      "community_name": "geminiClient.js",
       "file_type": "code",
       "norm_label": "sleep()",
       "source_file": "server/utils/geminiClient.js",
       "source_location": "L44"
     },
     {
+      "id": "client_src_components_dashboard_livepreviewtab_digitalsaaspreview",
+      "label": "DigitalSaasPreview()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "LivePreviewTab.jsx",
+      "file_type": "code",
+      "norm_label": "digitalsaaspreview()",
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "source_location": "L554"
+    },
+    {
+      "id": "client_src_components_dashboard_livepreviewtab_getcontrastcolor",
+      "label": "getContrastColor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "LivePreviewTab.jsx",
+      "file_type": "code",
+      "norm_label": "getcontrastcolor()",
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "source_location": "L84"
+    },
+    {
+      "id": "client_src_components_dashboard_livepreviewtab_hospitalitypreview",
+      "label": "HospitalityPreview()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "LivePreviewTab.jsx",
+      "file_type": "code",
+      "norm_label": "hospitalitypreview()",
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "source_location": "L395"
+    },
+    {
+      "id": "client_src_components_dashboard_livepreviewtab_livepreviewtab",
+      "label": "LivePreviewTab()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "LivePreviewTab.jsx",
+      "file_type": "code",
+      "norm_label": "livepreviewtab()",
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "source_location": "L95"
+    },
+    {
+      "id": "client_src_components_dashboard_livepreviewtab_palettetokenbar",
+      "label": "PaletteTokenBar()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "LivePreviewTab.jsx",
+      "file_type": "code",
+      "norm_label": "palettetokenbar()",
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "source_location": "L685"
+    },
+    {
+      "id": "client_src_components_dashboard_livepreviewtab_resolvearchetype",
+      "label": "resolveArchetype()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "LivePreviewTab.jsx",
+      "file_type": "code",
+      "norm_label": "resolvearchetype()",
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "source_location": "L39"
+    },
+    {
+      "id": "client_src_components_dashboard_livepreviewtab_retailcpgpreview",
+      "label": "RetailCpgPreview()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "LivePreviewTab.jsx",
+      "file_type": "code",
+      "norm_label": "retailcpgpreview()",
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "source_location": "L206"
+    },
+    {
       "id": "scripts_run_dev_cleanup",
       "label": "cleanup()",
       "_callable": true,
       "_origin": "ast",
-      "community": 7,
-      "community_name": "resilientStore.js",
+      "community": 3,
+      "community_name": "run-dev.js",
       "file_type": "code",
       "norm_label": "cleanup()",
       "source_file": "scripts/run-dev.js",
@@ -1220,35 +1304,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "brandkitdashboard()",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L36"
-    },
-    {
-      "id": "client_src_components_dashboard_brandstrategytab_brandstrategytab",
-      "label": "BrandStrategyTab()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "brandstrategytab()",
-      "source_file": "client/src/components/dashboard/BrandStrategyTab.jsx",
-      "source_location": "L7"
-    },
-    {
-      "id": "client_src_components_dashboard_launchcopytab_launchcopytab",
-      "label": "LaunchCopyTab()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "launchcopytab()",
-      "source_file": "client/src/components/dashboard/LaunchCopyTab.jsx",
-      "source_location": "L8"
+      "source_location": "L30"
     },
     {
       "id": "client_src_components_dashboard_visualtokenstab_getcontrastvswhite",
@@ -1256,7 +1316,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "getcontrastvswhite()",
       "source_file": "client/src/components/dashboard/VisualTokensTab.jsx",
@@ -1268,7 +1328,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "visualtokenstab()",
       "source_file": "client/src/components/dashboard/VisualTokensTab.jsx",
@@ -1280,23 +1340,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "wcaglevel()",
       "source_file": "client/src/components/dashboard/VisualTokensTab.jsx",
       "source_location": "L28"
-    },
-    {
-      "id": "client_src_components_dashboard_voiceandtonetab_voiceandtonetab",
-      "label": "VoiceAndToneTab()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "voiceandtonetab()",
-      "source_file": "client/src/components/dashboard/VoiceAndToneTab.jsx",
-      "source_location": "L7"
     },
     {
       "id": "client_src_utils_exportutils_buildcsstokens",
@@ -1304,7 +1352,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "buildcsstokens()",
       "source_file": "client/src/utils/exportUtils.js",
@@ -1316,7 +1364,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "buildpalettesvg()",
       "source_file": "client/src/utils/exportUtils.js",
@@ -1328,7 +1376,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "cleanxml()",
       "source_file": "client/src/utils/exportUtils.js",
@@ -1340,7 +1388,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "downloadfile()",
       "source_file": "client/src/utils/exportUtils.js",
@@ -1352,7 +1400,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "exportbrandkitjson()",
       "source_file": "client/src/utils/exportUtils.js",
@@ -1364,7 +1412,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "exportcsstokens()",
       "source_file": "client/src/utils/exportUtils.js",
@@ -1376,7 +1424,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "exportpalettesvg()",
       "source_file": "client/src/utils/exportUtils.js",
@@ -1405,6 +1453,28 @@
       "source_location": "L1"
     },
     {
+      "id": "client_src_components_brandkitdashboard",
+      "label": "BrandKitDashboard.jsx",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "brandkitdashboard.jsx",
+      "source_file": "client/src/components/BrandKitDashboard.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_src_components_brandkitdashboard_tabs",
+      "label": "TABS",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "tabs",
+      "source_file": "client/src/components/BrandKitDashboard.jsx",
+      "source_location": "L24"
+    },
+    {
       "id": "client_src_components_conceptselector",
       "label": "ConceptSelector.jsx",
       "_origin": "ast",
@@ -1416,14 +1486,36 @@
       "source_location": "L1"
     },
     {
-      "id": "client_src_components_dashboard_livepreviewtab",
-      "label": "LivePreviewTab.jsx",
+      "id": "client_src_components_dashboard_brandstrategytab",
+      "label": "BrandStrategyTab.jsx",
       "_origin": "ast",
       "community": 0,
       "community_name": "App.jsx",
       "file_type": "code",
-      "norm_label": "livepreviewtab.jsx",
-      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "norm_label": "brandstrategytab.jsx",
+      "source_file": "client/src/components/dashboard/BrandStrategyTab.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_src_components_dashboard_launchcopytab",
+      "label": "LaunchCopyTab.jsx",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "launchcopytab.jsx",
+      "source_file": "client/src/components/dashboard/LaunchCopyTab.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_src_components_dashboard_voiceandtonetab",
+      "label": "VoiceAndToneTab.jsx",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "App.jsx",
+      "file_type": "code",
+      "norm_label": "voiceandtonetab.jsx",
+      "source_file": "client/src/components/dashboard/VoiceAndToneTab.jsx",
       "source_location": "L1"
     },
     {
@@ -1684,7 +1776,7 @@
       "label": "verify-fixes.js",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "verify-fixes.js",
       "source_file": "scripts/verify-fixes.js",
@@ -1695,7 +1787,7 @@
       "label": "brandNamesWithAmpersand",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "brandnameswithampersand",
       "source_file": "scripts/verify-fixes.js",
@@ -1706,7 +1798,7 @@
       "label": "testQueries",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "testqueries",
       "source_file": "scripts/verify-fixes.js",
@@ -1717,7 +1809,7 @@
       "label": "interviewerController.js",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "interviewercontroller.js",
       "source_file": "server/controllers/interviewerController.js",
@@ -1728,29 +1820,18 @@
       "label": "server/data/domainConfig.js",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "server/data/domainconfig.js",
       "source_file": "server/data/domainConfig.js",
       "source_location": "L1"
     },
     {
-      "id": "server_data_domainconfig_domains",
-      "label": "DOMAINS",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "code",
-      "norm_label": "domains",
-      "source_file": "server/data/domainConfig.js",
-      "source_location": "L9"
-    },
-    {
       "id": "server_prompts_brandprompts",
       "label": "brandPrompts.js",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "brandprompts.js",
       "source_file": "server/prompts/brandPrompts.js",
@@ -1761,51 +1842,51 @@
       "label": "BANNED_TECH_CLICHES",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "banned_tech_cliches",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L6"
+      "source_location": "L25"
     },
     {
       "id": "server_prompts_brandprompts_compilersysteminstruction",
       "label": "compilerSystemInstruction",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "compilersysteminstruction",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L82"
+      "source_location": "L128"
     },
     {
       "id": "server_prompts_brandprompts_pitchenhancerprompt",
       "label": "pitchEnhancerPrompt",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "pitchenhancerprompt",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L16"
+      "source_location": "L37"
     },
     {
       "id": "server_prompts_brandprompts_socraticbatchprompt",
       "label": "socraticBatchPrompt",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "socraticbatchprompt",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L47"
+      "source_location": "L82"
     },
     {
       "id": "server_routes_brandroutes",
       "label": "brandRoutes.js",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "brandroutes.js",
       "source_file": "server/routes/brandRoutes.js",
@@ -1816,7 +1897,7 @@
       "label": "compilerService.js",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "compilerservice.js",
       "source_file": "server/services/compilerService.js",
@@ -1827,7 +1908,7 @@
       "label": "brandKitSchema",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "brandkitschema",
       "source_file": "server/services/compilerService.js",
@@ -1838,7 +1919,7 @@
       "label": "interviewService.js",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "interviewservice.js",
       "source_file": "server/services/interviewService.js",
@@ -1849,7 +1930,7 @@
       "label": "batchQuestionSchema",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "batchquestionschema",
       "source_file": "server/services/interviewService.js",
@@ -1860,7 +1941,7 @@
       "label": "pitchEnhancerSchema",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "pitchenhancerschema",
       "source_file": "server/services/interviewService.js",
@@ -1871,58 +1952,56 @@
       "label": "questionSchema",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
       "norm_label": "questionschema",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L216"
+      "source_location": "L217"
     },
     {
-      "id": "server_services_mockengine",
-      "label": "mockEngine.js",
+      "id": "server_utils_llmclient",
+      "label": "llmClient.js",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "code",
-      "norm_label": "mockengine.js",
-      "source_file": "server/services/mockEngine.js",
+      "norm_label": "llmclient.js",
+      "source_file": "server/utils/llmClient.js",
       "source_location": "L1"
     },
     {
-      "id": "devstate_4_completed_sprint_checklists",
-      "label": "4. Completed Sprint Checklists",
+      "id": "server_utils_llmclient_getllmclient",
+      "label": "getLlmClient",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "4. completed sprint checklists",
-      "source_file": "DEVSTATE.md",
-      "source_location": "L158"
+      "community_name": "interviewService.js",
+      "file_type": "code",
+      "norm_label": "getllmclient",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L19"
+    },
+    {
+      "id": "server_utils_llmclient_groq_candidate_models",
+      "label": "GROQ_CANDIDATE_MODELS",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "interviewService.js",
+      "file_type": "code",
+      "norm_label": "groq_candidate_models",
+      "source_file": "server/utils/llmClient.js",
+      "source_location": "L22"
     },
     {
       "id": "devstate_backend_engineering",
       "label": "Backend Engineering:",
       "_origin": "ast",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "backend engineering:",
       "source_file": "DEVSTATE.md",
-      "source_location": "L160"
-    },
-    {
-      "id": "devstate_phase_7_strategic_prompt_overhaul_anti_clich\u00e9_architecture",
-      "label": "Phase 7: Strategic Prompt Overhaul & Anti-Clich\u00e9 Architecture:",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "mockEngine.js",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "phase 7: strategic prompt overhaul & anti-cliche architecture:",
-      "source_file": "DEVSTATE.md",
-      "source_location": "L174"
+      "source_location": "L161"
     },
     {
       "id": "shared_domainconfig",
@@ -2013,11 +2092,22 @@
       "source_location": "L1"
     },
     {
+      "id": "client_src_types_brand",
+      "label": "brand.ts",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "brand.ts",
+      "file_type": "code",
+      "norm_label": "brand.ts",
+      "source_file": "client/src/types/brand.ts",
+      "source_location": "L1"
+    },
+    {
       "id": "devstate",
       "label": "DEVSTATE.md",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "devstate.md",
@@ -2029,31 +2119,31 @@
       "label": "1. Expand Raw Pitch (`POST /api/interview/expand-pitch`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "1. expand raw pitch (`post /api/interview/expand-pitch`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L82"
+      "source_location": "L83"
     },
     {
       "id": "devstate_1_fetch_saved_sessions_get_api_brands",
       "label": "1. Fetch Saved Sessions (`GET /api/brands`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "1. fetch saved sessions (`get /api/brands`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L142"
+      "source_location": "L143"
     },
     {
       "id": "devstate_1_project_overview_sprint_status",
       "label": "1. Project Overview & Sprint Status",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "1. project overview & sprint status",
@@ -2065,167 +2155,287 @@
       "label": "1. Register (`POST /api/auth/register`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "1. register (`post /api/auth/register`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L120"
+      "source_location": "L121"
     },
     {
       "id": "devstate_2_active_pipeline_state_machine",
       "label": "2. Active Pipeline State Machine",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "2. active pipeline state machine",
       "source_file": "DEVSTATE.md",
-      "source_location": "L38"
+      "source_location": "L39"
     },
     {
       "id": "devstate_2_login_post_api_auth_login",
       "label": "2. Login (`POST /api/auth/login`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "2. login (`post /api/auth/login`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L125"
+      "source_location": "L126"
     },
     {
       "id": "devstate_2_save_active_brand_post_api_brands",
       "label": "2. Save Active Brand (`POST /api/brands`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "2. save active brand (`post /api/brands`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L145"
+      "source_location": "L146"
     },
     {
       "id": "devstate_2_start_interview_post_api_interview_start",
       "label": "2. Start Interview (`POST /api/interview/start`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "2. start interview (`post /api/interview/start`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L104"
+      "source_location": "L105"
     },
     {
       "id": "devstate_3_auto_migrate_guest_kits_post_api_brands_sync_guest",
       "label": "3. Auto-Migrate Guest Kits (`POST /api/brands/sync-guest`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "3. auto-migrate guest kits (`post /api/brands/sync-guest`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L149"
+      "source_location": "L150"
     },
     {
       "id": "devstate_3_google_oauth_post_api_auth_google",
       "label": "3. Google OAuth (`POST /api/auth/google`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "3. google oauth (`post /api/auth/google`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L129"
+      "source_location": "L130"
     },
     {
       "id": "devstate_3_implemented_api_contracts_schemas",
       "label": "3. Implemented API Contracts & Schemas",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "3. implemented api contracts & schemas",
       "source_file": "DEVSTATE.md",
-      "source_location": "L78"
+      "source_location": "L79"
+    },
+    {
+      "id": "devstate_3_synthesize_brand_kit_post_api_interview_compile",
+      "label": "3. Synthesize Brand Kit (`POST /api/interview/compile`)",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "brand.ts",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. synthesize brand kit (`post /api/interview/compile`)",
+      "source_file": "DEVSTATE.md",
+      "source_location": "L109"
+    },
+    {
+      "id": "devstate_4_completed_sprint_checklists",
+      "label": "4. Completed Sprint Checklists",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "brand.ts",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "4. completed sprint checklists",
+      "source_file": "DEVSTATE.md",
+      "source_location": "L159"
     },
     {
       "id": "devstate_4_current_user_get_api_auth_me",
       "label": "4. Current User (`GET /api/auth/me`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "4. current user (`get /api/auth/me`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L133"
+      "source_location": "L134"
     },
     {
       "id": "devstate_4_delete_brand_session_delete_api_brands_id",
       "label": "4. Delete Brand Session (`DELETE /api/brands/:id`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "4. delete brand session (`delete /api/brands/:id`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L153"
+      "source_location": "L154"
     },
     {
       "id": "devstate_a_socratic_interview_synthesis_api_api_interview",
       "label": "A. Socratic Interview & Synthesis API (`/api/interview`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "a. socratic interview & synthesis api (`/api/interview`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L80"
+      "source_location": "L81"
     },
     {
       "id": "devstate_b_authentication_api_api_auth",
       "label": "B. Authentication API (`/api/auth`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "b. authentication api (`/api/auth`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L118"
+      "source_location": "L119"
     },
     {
       "id": "devstate_c_brand_history_library_api_api_brands",
       "label": "C. Brand History & Library API (`/api/brands`)",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "c. brand history & library api (`/api/brands`)",
       "source_file": "DEVSTATE.md",
-      "source_location": "L139"
+      "source_location": "L140"
     },
     {
       "id": "devstate_devstate_md_ai_agent_runtime_architecture_state",
       "label": "DEVSTATE.md \u2014 AI Agent Runtime & Architecture State",
       "_origin": "ast",
       "community": 14,
-      "community_name": "B. Authentication API (`/api/auth`)",
+      "community_name": "brand.ts",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "devstate.md \u2014 ai agent runtime & architecture state",
       "source_file": "DEVSTATE.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "devstate_feature_sprint_keyboard_navigation_multi_select_feature_multi_select_and_keyboard_nav",
+      "label": "Feature Sprint: Keyboard Navigation & Multi-Select (`feature/multi-select-and-keyboard-nav`):",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "brand.ts",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "feature sprint: keyboard navigation & multi-select (`feature/multi-select-and-keyboard-nav`):",
+      "source_file": "DEVSTATE.md",
+      "source_location": "L186"
+    },
+    {
+      "id": "devstate_feature_sprint_practical_deliverables_dashboard_consolidation_feature_practical_deliverables",
+      "label": "Feature Sprint: Practical Deliverables & Dashboard Consolidation (`feature/practical-deliverables`):",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "brand.ts",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "feature sprint: practical deliverables & dashboard consolidation (`feature/practical-deliverables`):",
+      "source_file": "DEVSTATE.md",
+      "source_location": "L193"
+    },
+    {
+      "id": "graphify_architecture_graph",
+      "label": "architecture.graph.md",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "brand.ts",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "architecture.graph.md",
+      "source_file": "graphify/architecture.graph.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "graphify_architecture_graph_1_end_to_end_system_sequence_diagram",
+      "label": "1. End-to-End System Sequence Diagram",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "brand.ts",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1. end-to-end system sequence diagram",
+      "source_file": "graphify/architecture.graph.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "graphify_architecture_graph_2_component_to_api_dependency_matrix",
+      "label": "2. Component-to-API Dependency Matrix",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "brand.ts",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2. component-to-api dependency matrix",
+      "source_file": "graphify/architecture.graph.md",
+      "source_location": "L63"
+    },
+    {
+      "id": "graphify_architecture_graph_3_prompt_chain_architecture_socratic_logic",
+      "label": "3. Prompt Chain Architecture & Socratic Logic",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "brand.ts",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. prompt chain architecture & socratic logic",
+      "source_file": "graphify/architecture.graph.md",
+      "source_location": "L77"
+    },
+    {
+      "id": "graphify_architecture_graph_4_multi_agent_navigation_guide",
+      "label": "4. Multi-Agent Navigation Guide",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "brand.ts",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "4. multi-agent navigation guide",
+      "source_file": "graphify/architecture.graph.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "graphify_architecture_graph_brand_builder_architecture_agent_navigation_graph",
+      "label": "Brand Builder: Architecture & Agent Navigation Graph",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "brand.ts",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "brand builder: architecture & agent navigation graph",
+      "source_file": "graphify/architecture.graph.md",
       "source_location": "L1"
     },
     {
@@ -3021,114 +3231,38 @@
       "source_location": "L40"
     },
     {
-      "id": "package_scripts",
-      "label": "scripts",
+      "id": "server_data_domainconfig_domains",
+      "label": "DOMAINS",
       "_origin": "ast",
       "community": 18,
-      "community_name": "scripts",
+      "community_name": "mockEngine.js",
       "file_type": "code",
-      "norm_label": "scripts",
-      "source_file": "package.json",
+      "norm_label": "domains",
+      "source_file": "server/data/domainConfig.js",
       "source_location": "L9"
     },
     {
-      "id": "package_scripts_build_client",
-      "label": "build:client",
+      "id": "server_services_mockengine",
+      "label": "mockEngine.js",
       "_origin": "ast",
       "community": 18,
-      "community_name": "scripts",
+      "community_name": "mockEngine.js",
       "file_type": "code",
-      "norm_label": "build:client",
-      "source_file": "package.json",
-      "source_location": "L14"
+      "norm_label": "mockengine.js",
+      "source_file": "server/services/mockEngine.js",
+      "source_location": "L1"
     },
     {
-      "id": "package_scripts_dev",
-      "label": "dev",
+      "id": "devstate_phase_7_strategic_prompt_overhaul_anti_clich\u00e9_architecture",
+      "label": "Phase 7: Strategic Prompt Overhaul & Anti-Clich\u00e9 Architecture:",
       "_origin": "ast",
       "community": 18,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "dev",
-      "source_file": "package.json",
-      "source_location": "L10"
-    },
-    {
-      "id": "package_scripts_dev_client",
-      "label": "dev:client",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "dev:client",
-      "source_file": "package.json",
-      "source_location": "L12"
-    },
-    {
-      "id": "package_scripts_dev_server",
-      "label": "dev:server",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "dev:server",
-      "source_file": "package.json",
-      "source_location": "L11"
-    },
-    {
-      "id": "package_scripts_install_all",
-      "label": "install:all",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "install:all",
-      "source_file": "package.json",
-      "source_location": "L13"
-    },
-    {
-      "id": "package_scripts_test",
-      "label": "test",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "test",
-      "source_file": "package.json",
-      "source_location": "L18"
-    },
-    {
-      "id": "package_scripts_test_health",
-      "label": "test:health",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "test:health",
-      "source_file": "package.json",
-      "source_location": "L15"
-    },
-    {
-      "id": "package_scripts_test_jeans",
-      "label": "test:jeans",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "test:jeans",
-      "source_file": "package.json",
-      "source_location": "L17"
-    },
-    {
-      "id": "package_scripts_test_restaurant",
-      "label": "test:restaurant",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "test:restaurant",
-      "source_file": "package.json",
-      "source_location": "L16"
+      "community_name": "mockEngine.js",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 7: strategic prompt overhaul & anti-cliche architecture:",
+      "source_file": "DEVSTATE.md",
+      "source_location": "L175"
     },
     {
       "id": "client_vite_config",
@@ -3505,106 +3639,11 @@
       "source_location": "L20"
     },
     {
-      "id": "client_src_types_brand",
-      "label": "brand.ts",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "brand.ts",
-      "file_type": "code",
-      "norm_label": "brand.ts",
-      "source_file": "client/src/types/brand.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "devstate_3_synthesize_brand_kit_post_api_interview_compile",
-      "label": "3. Synthesize Brand Kit (`POST /api/interview/compile`)",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "brand.ts",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3. synthesize brand kit (`post /api/interview/compile`)",
-      "source_file": "DEVSTATE.md",
-      "source_location": "L108"
-    },
-    {
-      "id": "graphify_architecture_graph",
-      "label": "architecture.graph.md",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "brand.ts",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "architecture.graph.md",
-      "source_file": "graphify/architecture.graph.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "graphify_architecture_graph_1_end_to_end_system_sequence_diagram",
-      "label": "1. End-to-End System Sequence Diagram",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "brand.ts",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "1. end-to-end system sequence diagram",
-      "source_file": "graphify/architecture.graph.md",
-      "source_location": "L7"
-    },
-    {
-      "id": "graphify_architecture_graph_2_component_to_api_dependency_matrix",
-      "label": "2. Component-to-API Dependency Matrix",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "brand.ts",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "2. component-to-api dependency matrix",
-      "source_file": "graphify/architecture.graph.md",
-      "source_location": "L63"
-    },
-    {
-      "id": "graphify_architecture_graph_3_prompt_chain_architecture_socratic_logic",
-      "label": "3. Prompt Chain Architecture & Socratic Logic",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "brand.ts",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3. prompt chain architecture & socratic logic",
-      "source_file": "graphify/architecture.graph.md",
-      "source_location": "L77"
-    },
-    {
-      "id": "graphify_architecture_graph_4_multi_agent_navigation_guide",
-      "label": "4. Multi-Agent Navigation Guide",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "brand.ts",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "4. multi-agent navigation guide",
-      "source_file": "graphify/architecture.graph.md",
-      "source_location": "L98"
-    },
-    {
-      "id": "graphify_architecture_graph_brand_builder_architecture_agent_navigation_graph",
-      "label": "Brand Builder: Architecture & Agent Navigation Graph",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "brand.ts",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "brand builder: architecture & agent navigation graph",
-      "source_file": "graphify/architecture.graph.md",
-      "source_location": "L1"
-    },
-    {
       "id": "server_utils_geminiclient",
       "label": "geminiClient.js",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "llmClient.js",
+      "community": 20,
+      "community_name": "geminiClient.js",
       "file_type": "code",
       "norm_label": "geminiclient.js",
       "source_file": "server/utils/geminiClient.js",
@@ -3614,45 +3653,199 @@
       "id": "server_utils_geminiclient_candidate_models",
       "label": "CANDIDATE_MODELS",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "llmClient.js",
+      "community": 20,
+      "community_name": "geminiClient.js",
       "file_type": "code",
       "norm_label": "candidate_models",
       "source_file": "server/utils/geminiClient.js",
       "source_location": "L36"
     },
     {
-      "id": "server_utils_llmclient",
-      "label": "llmClient.js",
+      "id": "client_src_components_dashboard_livepreviewtab",
+      "label": "LivePreviewTab.jsx",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "llmClient.js",
+      "community": 21,
+      "community_name": "LivePreviewTab.jsx",
       "file_type": "code",
-      "norm_label": "llmclient.js",
-      "source_file": "server/utils/llmClient.js",
+      "norm_label": "livepreviewtab.jsx",
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
       "source_location": "L1"
     },
     {
-      "id": "server_utils_llmclient_getllmclient",
-      "label": "getLlmClient",
+      "id": "scripts_run_dev",
+      "label": "run-dev.js",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "llmClient.js",
+      "community": 3,
+      "community_name": "run-dev.js",
       "file_type": "code",
-      "norm_label": "getllmclient",
-      "source_file": "server/utils/llmClient.js",
-      "source_location": "L19"
+      "norm_label": "run-dev.js",
+      "source_file": "scripts/run-dev.js",
+      "source_location": "L1"
     },
     {
-      "id": "server_utils_llmclient_groq_candidate_models",
-      "label": "GROQ_CANDIDATE_MODELS",
+      "id": "scripts_run_dev_client",
+      "label": "client",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "run-dev.js",
+      "file_type": "code",
+      "norm_label": "client",
+      "source_file": "scripts/run-dev.js",
+      "source_location": "L17"
+    },
+    {
+      "id": "scripts_run_dev_dirname",
+      "label": "__dirname",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "run-dev.js",
+      "file_type": "code",
+      "norm_label": "__dirname",
+      "source_file": "scripts/run-dev.js",
+      "source_location": "L6"
+    },
+    {
+      "id": "scripts_run_dev_filename",
+      "label": "__filename",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "run-dev.js",
+      "file_type": "code",
+      "norm_label": "__filename",
+      "source_file": "scripts/run-dev.js",
+      "source_location": "L5"
+    },
+    {
+      "id": "scripts_run_dev_rootdir",
+      "label": "rootDir",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "run-dev.js",
+      "file_type": "code",
+      "norm_label": "rootdir",
+      "source_file": "scripts/run-dev.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "scripts_run_dev_server",
+      "label": "server",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "run-dev.js",
+      "file_type": "code",
+      "norm_label": "server",
+      "source_file": "scripts/run-dev.js",
+      "source_location": "L11"
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
       "_origin": "ast",
       "community": 4,
-      "community_name": "llmClient.js",
+      "community_name": "scripts",
       "file_type": "code",
-      "norm_label": "groq_candidate_models",
-      "source_file": "server/utils/llmClient.js",
-      "source_location": "L22"
+      "norm_label": "scripts",
+      "source_file": "package.json",
+      "source_location": "L9"
+    },
+    {
+      "id": "package_scripts_build_client",
+      "label": "build:client",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "build:client",
+      "source_file": "package.json",
+      "source_location": "L14"
+    },
+    {
+      "id": "package_scripts_dev",
+      "label": "dev",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "dev",
+      "source_file": "package.json",
+      "source_location": "L10"
+    },
+    {
+      "id": "package_scripts_dev_client",
+      "label": "dev:client",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "dev:client",
+      "source_file": "package.json",
+      "source_location": "L12"
+    },
+    {
+      "id": "package_scripts_dev_server",
+      "label": "dev:server",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "dev:server",
+      "source_file": "package.json",
+      "source_location": "L11"
+    },
+    {
+      "id": "package_scripts_install_all",
+      "label": "install:all",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "install:all",
+      "source_file": "package.json",
+      "source_location": "L13"
+    },
+    {
+      "id": "package_scripts_test",
+      "label": "test",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "test",
+      "source_file": "package.json",
+      "source_location": "L18"
+    },
+    {
+      "id": "package_scripts_test_health",
+      "label": "test:health",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "test:health",
+      "source_file": "package.json",
+      "source_location": "L15"
+    },
+    {
+      "id": "package_scripts_test_jeans",
+      "label": "test:jeans",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "test:jeans",
+      "source_file": "package.json",
+      "source_location": "L17"
+    },
+    {
+      "id": "package_scripts_test_restaurant",
+      "label": "test:restaurant",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "test:restaurant",
+      "source_file": "package.json",
+      "source_location": "L16"
     },
     {
       "id": "package_dependencies",
@@ -3927,72 +4120,6 @@
       "norm_label": "\ud83d\udee0\ufe0f tech stack",
       "source_file": "README.md",
       "source_location": "L32"
-    },
-    {
-      "id": "scripts_run_dev",
-      "label": "run-dev.js",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "resilientStore.js",
-      "file_type": "code",
-      "norm_label": "run-dev.js",
-      "source_file": "scripts/run-dev.js",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_run_dev_client",
-      "label": "client",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "resilientStore.js",
-      "file_type": "code",
-      "norm_label": "client",
-      "source_file": "scripts/run-dev.js",
-      "source_location": "L17"
-    },
-    {
-      "id": "scripts_run_dev_dirname",
-      "label": "__dirname",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "resilientStore.js",
-      "file_type": "code",
-      "norm_label": "__dirname",
-      "source_file": "scripts/run-dev.js",
-      "source_location": "L6"
-    },
-    {
-      "id": "scripts_run_dev_filename",
-      "label": "__filename",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "resilientStore.js",
-      "file_type": "code",
-      "norm_label": "__filename",
-      "source_file": "scripts/run-dev.js",
-      "source_location": "L5"
-    },
-    {
-      "id": "scripts_run_dev_rootdir",
-      "label": "rootDir",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "resilientStore.js",
-      "file_type": "code",
-      "norm_label": "rootdir",
-      "source_file": "scripts/run-dev.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "scripts_run_dev_server",
-      "label": "server",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "resilientStore.js",
-      "file_type": "code",
-      "norm_label": "server",
-      "source_file": "scripts/run-dev.js",
-      "source_location": "L11"
     },
     {
       "id": "server_config_db",
@@ -4378,55 +4505,11 @@
       "source_location": "L27"
     },
     {
-      "id": "client_src_components_brandkitdashboard",
-      "label": "BrandKitDashboard.jsx",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "brandkitdashboard.jsx",
-      "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_src_components_brandkitdashboard_tabs",
-      "label": "TABS",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "tabs",
-      "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L28"
-    },
-    {
-      "id": "client_src_components_dashboard_brandstrategytab",
-      "label": "BrandStrategyTab.jsx",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "brandstrategytab.jsx",
-      "source_file": "client/src/components/dashboard/BrandStrategyTab.jsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_src_components_dashboard_launchcopytab",
-      "label": "LaunchCopyTab.jsx",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "launchcopytab.jsx",
-      "source_file": "client/src/components/dashboard/LaunchCopyTab.jsx",
-      "source_location": "L1"
-    },
-    {
       "id": "client_src_components_dashboard_visualtokenstab",
       "label": "VisualTokensTab.jsx",
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "visualtokenstab.jsx",
       "source_file": "client/src/components/dashboard/VisualTokensTab.jsx",
@@ -4437,45 +4520,22 @@
       "label": "VIEWPORT_SIZES",
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "viewport_sizes",
       "source_file": "client/src/components/dashboard/VisualTokensTab.jsx",
       "source_location": "L42"
     },
     {
-      "id": "client_src_components_dashboard_voiceandtonetab",
-      "label": "VoiceAndToneTab.jsx",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
-      "file_type": "code",
-      "norm_label": "voiceandtonetab.jsx",
-      "source_file": "client/src/components/dashboard/VoiceAndToneTab.jsx",
-      "source_location": "L1"
-    },
-    {
       "id": "client_src_utils_exportutils",
       "label": "exportUtils.js",
       "_origin": "ast",
       "community": 9,
-      "community_name": "BrandKitDashboard.jsx",
+      "community_name": "exportUtils.js",
       "file_type": "code",
       "norm_label": "exportutils.js",
       "source_file": "client/src/utils/exportUtils.js",
       "source_location": "L1"
-    },
-    {
-      "id": "client_src_data_mockbranddata_extractclientdomain",
-      "label": "client_src_data_mockbranddata_extractclientdomain",
-      "_origin": "semantic",
-      "community": 0,
-      "community_name": "App.jsx",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "client_src_data_mockbranddata_extractclientdomain",
-      "source_file": "",
-      "type": "external"
     },
     {
       "id": "client_src_index",
@@ -4538,11 +4598,35 @@
       "type": "external"
     },
     {
+      "id": "ref_google_genai",
+      "label": "ref_google_genai",
+      "_origin": "semantic",
+      "community": 1,
+      "community_name": "interviewService.js",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_google_genai",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_groq_sdk",
+      "label": "ref_groq_sdk",
+      "_origin": "semantic",
+      "community": 1,
+      "community_name": "interviewService.js",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_groq_sdk",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "server_controllers_interviewercontroller_extractdomain",
       "label": "server_controllers_interviewercontroller_extractdomain",
       "_origin": "semantic",
       "community": 1,
-      "community_name": "mockEngine.js",
+      "community_name": "interviewService.js",
       "external": true,
       "file_type": "concept",
       "norm_label": "server_controllers_interviewercontroller_extractdomain",
@@ -4574,26 +4658,50 @@
       "type": "external"
     },
     {
-      "id": "ref_google_genai",
-      "label": "ref_google_genai",
+      "id": "client_src_data_mockbranddata_extractclientdomain",
+      "label": "client_src_data_mockbranddata_extractclientdomain",
       "_origin": "semantic",
-      "community": 4,
-      "community_name": "llmClient.js",
+      "community": 22,
+      "community_name": "client_src_data_mockbranddata_extractclientdomain",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_google_genai",
+      "norm_label": "client_src_data_mockbranddata_extractclientdomain",
       "source_file": "",
       "type": "external"
     },
     {
-      "id": "ref_groq_sdk",
-      "label": "ref_groq_sdk",
+      "id": "ref_child_process",
+      "label": "ref_child_process",
       "_origin": "semantic",
-      "community": 4,
-      "community_name": "llmClient.js",
+      "community": 3,
+      "community_name": "run-dev.js",
       "external": true,
       "file_type": "concept",
-      "norm_label": "ref_groq_sdk",
+      "norm_label": "ref_child_process",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_path",
+      "label": "ref_path",
+      "_origin": "semantic",
+      "community": 3,
+      "community_name": "run-dev.js",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_path",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_url",
+      "label": "ref_url",
+      "_origin": "semantic",
+      "community": 3,
+      "community_name": "run-dev.js",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_url",
       "source_file": "",
       "type": "external"
     },
@@ -4606,18 +4714,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_bcryptjs",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_child_process",
-      "label": "ref_child_process",
-      "_origin": "semantic",
-      "community": 7,
-      "community_name": "resilientStore.js",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_child_process",
       "source_file": "",
       "type": "external"
     },
@@ -4704,30 +4800,6 @@
       "norm_label": "ref_mongoose",
       "source_file": "",
       "type": "external"
-    },
-    {
-      "id": "ref_path",
-      "label": "ref_path",
-      "_origin": "semantic",
-      "community": 7,
-      "community_name": "resilientStore.js",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_path",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_url",
-      "label": "ref_url",
-      "_origin": "semantic",
-      "community": 7,
-      "community_name": "resilientStore.js",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_url",
-      "source_file": "",
-      "type": "external"
     }
   ],
   "links": [
@@ -4788,7 +4860,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L179",
+      "source_location": "L171",
       "weight": 1.0
     },
     {
@@ -4800,7 +4872,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L188",
+      "source_location": "L180",
       "weight": 1.0
     },
     {
@@ -4812,7 +4884,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L197",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -4824,19 +4896,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L40",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
       "source": "client_src_components_dashboard_livepreviewtab_livepreviewtab",
-      "target": "client_src_data_domainconfig_extractclientdomain",
+      "target": "client_src_components_dashboard_livepreviewtab_getcontrastcolor",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L31",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_components_dashboard_livepreviewtab_livepreviewtab",
+      "target": "client_src_components_dashboard_livepreviewtab_resolvearchetype",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -5188,6 +5272,42 @@
       "weight": 1.0
     },
     {
+      "source": "server_prompts_brandprompts_buildbatchquestionsysteminstruction",
+      "target": "server_prompts_brandprompts_buildfounderanchorblock",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L212",
+      "weight": 1.0
+    },
+    {
+      "source": "server_prompts_brandprompts_buildcompilesysteminstruction",
+      "target": "server_prompts_brandprompts_buildanswersanchorblock",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L217",
+      "weight": 1.0
+    },
+    {
+      "source": "server_prompts_brandprompts_buildquestionsysteminstruction",
+      "target": "server_prompts_brandprompts_buildfounderanchorblock",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
       "source": "server_services_compilerservice_compilebrandkit",
       "target": "server_data_domainconfig_classifydomain",
       "relation": "calls",
@@ -5220,7 +5340,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L139",
+      "source_location": "L155",
       "weight": 1.0
     },
     {
@@ -5232,7 +5352,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L141",
+      "source_location": "L157",
       "weight": 1.0
     },
     {
@@ -5244,7 +5364,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L144",
+      "source_location": "L160",
       "weight": 1.0
     },
     {
@@ -5256,7 +5376,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/compilerService.js",
-      "source_location": "L151",
+      "source_location": "L167",
       "weight": 1.0
     },
     {
@@ -5316,7 +5436,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L185",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -5328,7 +5448,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L186",
+      "source_location": "L187",
       "weight": 1.0
     },
     {
@@ -5340,7 +5460,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L188",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -5352,7 +5472,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L190",
+      "source_location": "L191",
       "weight": 1.0
     },
     {
@@ -5364,7 +5484,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L193",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -5376,7 +5496,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L210",
+      "source_location": "L211",
       "weight": 1.0
     },
     {
@@ -5388,7 +5508,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L261",
+      "source_location": "L266",
       "weight": 1.0
     },
     {
@@ -5400,7 +5520,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L262",
+      "source_location": "L267",
       "weight": 1.0
     },
     {
@@ -5412,7 +5532,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L264",
+      "source_location": "L270",
       "weight": 1.0
     },
     {
@@ -5424,7 +5544,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L266",
+      "source_location": "L272",
       "weight": 1.0
     },
     {
@@ -5436,7 +5556,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L269",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -5448,7 +5568,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L275",
+      "source_location": "L281",
       "weight": 1.0
     },
     {
@@ -5460,7 +5580,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/interviewService.js",
-      "source_location": "L283",
+      "source_location": "L289",
       "weight": 1.0
     },
     {
@@ -5484,7 +5604,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L617",
+      "source_location": "L618",
       "weight": 1.0
     },
     {
@@ -6216,7 +6336,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L19",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -6228,7 +6348,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L21",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -6240,31 +6360,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L22",
-      "weight": 1.0
-    },
-    {
-      "source": "client_src_components_brandkitdashboard",
-      "target": "client_src_components_dashboard_voiceandtonetab_voiceandtonetab",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L23",
-      "weight": 1.0
-    },
-    {
-      "source": "client_src_components_brandkitdashboard",
-      "target": "client_src_components_dashboard_visualtokenstab_visualtokenstab",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L24",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -6276,7 +6372,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L25",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -6288,7 +6384,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L26",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -6300,7 +6396,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L26",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -6312,31 +6408,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L26",
-      "weight": 1.0
-    },
-    {
-      "source": "client_src_components_dashboard_livepreviewtab",
-      "target": "client_src_data_domainconfig_extractclientdomain",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L11",
-      "weight": 1.0
-    },
-    {
-      "source": "client_src_components_dashboard_livepreviewtab",
-      "target": "client_src_data_mockbranddata_extractclientdomain",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L11",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -7476,7 +7548,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L17",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -7488,7 +7560,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L18",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -7500,7 +7572,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L19",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -7512,7 +7584,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L21",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -7524,31 +7596,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L22",
-      "weight": 1.0
-    },
-    {
-      "source": "client_src_components_brandkitdashboard",
-      "target": "client_src_components_dashboard_voiceandtonetab",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L23",
-      "weight": 1.0
-    },
-    {
-      "source": "client_src_components_brandkitdashboard",
-      "target": "client_src_components_dashboard_visualtokenstab",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L24",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -7560,7 +7608,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L25",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -7572,7 +7620,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L26",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -7637,30 +7685,6 @@
     },
     {
       "source": "client_src_components_dashboard_livepreviewtab",
-      "target": "ref_lucide_react",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L10",
-      "weight": 1.0
-    },
-    {
-      "source": "client_src_components_dashboard_livepreviewtab",
-      "target": "client_src_data_mockbranddata",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L11",
-      "weight": 1.0
-    },
-    {
-      "source": "client_src_components_dashboard_livepreviewtab",
       "target": "ref_react",
       "relation": "imports_from",
       "_origin": "ast",
@@ -7668,7 +7692,19 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L9",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_components_dashboard_livepreviewtab",
+      "target": "ref_lucide_react",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -8940,7 +8976,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L28",
+      "source_location": "L24",
       "weight": 1.0
     },
     {
@@ -8951,7 +8987,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/src/components/BrandKitDashboard.jsx",
-      "source_location": "L36",
+      "source_location": "L30",
       "weight": 1.0
     },
     {
@@ -8989,24 +9025,24 @@
     },
     {
       "source": "client_src_components_dashboard_livepreviewtab",
-      "target": "client_src_components_dashboard_livepreviewtab_apparelpreview",
+      "target": "client_src_components_dashboard_livepreviewtab_retailcpgpreview",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L118",
+      "source_location": "L206",
       "weight": 1.0
     },
     {
       "source": "client_src_components_dashboard_livepreviewtab",
-      "target": "client_src_components_dashboard_livepreviewtab_livepreviewtab",
+      "target": "client_src_components_dashboard_livepreviewtab_resolvearchetype",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L13",
+      "source_location": "L39",
       "weight": 1.0
     },
     {
@@ -9017,29 +9053,51 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L258",
+      "source_location": "L395",
       "weight": 1.0
     },
     {
       "source": "client_src_components_dashboard_livepreviewtab",
-      "target": "client_src_components_dashboard_livepreviewtab_developerpreview",
+      "target": "client_src_components_dashboard_livepreviewtab_digitalsaaspreview",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L382",
+      "source_location": "L554",
       "weight": 1.0
     },
     {
       "source": "client_src_components_dashboard_livepreviewtab",
-      "target": "client_src_components_dashboard_livepreviewtab_editorialpreview",
+      "target": "client_src_components_dashboard_livepreviewtab_palettetokenbar",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
-      "source_location": "L456",
+      "source_location": "L685",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_components_dashboard_livepreviewtab",
+      "target": "client_src_components_dashboard_livepreviewtab_getcontrastcolor",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "client_src_components_dashboard_livepreviewtab",
+      "target": "client_src_components_dashboard_livepreviewtab_livepreviewtab",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/src/components/dashboard/LivePreviewTab.jsx",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -9688,7 +9746,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L118",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -9699,7 +9757,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L139",
+      "source_location": "L140",
       "weight": 1.0
     },
     {
@@ -9710,7 +9768,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L80",
+      "source_location": "L81",
       "weight": 1.0
     },
     {
@@ -9721,7 +9779,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L160",
+      "source_location": "L161",
       "weight": 1.0
     },
     {
@@ -9732,7 +9790,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L174",
+      "source_location": "L175",
+      "weight": 1.0
+    },
+    {
+      "source": "devstate_4_completed_sprint_checklists",
+      "target": "devstate_feature_sprint_keyboard_navigation_multi_select_feature_multi_select_and_keyboard_nav",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "DEVSTATE.md",
+      "source_location": "L186",
+      "weight": 1.0
+    },
+    {
+      "source": "devstate_4_completed_sprint_checklists",
+      "target": "devstate_feature_sprint_practical_deliverables_dashboard_consolidation_feature_practical_deliverables",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "DEVSTATE.md",
+      "source_location": "L193",
       "weight": 1.0
     },
     {
@@ -9743,7 +9823,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L104",
+      "source_location": "L105",
       "weight": 1.0
     },
     {
@@ -9754,7 +9834,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L108",
+      "source_location": "L109",
       "weight": 1.0
     },
     {
@@ -9765,7 +9845,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L82",
+      "source_location": "L83",
       "weight": 1.0
     },
     {
@@ -9776,7 +9856,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L120",
+      "source_location": "L121",
       "weight": 1.0
     },
     {
@@ -9787,7 +9867,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L125",
+      "source_location": "L126",
       "weight": 1.0
     },
     {
@@ -9798,7 +9878,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L129",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -9809,7 +9889,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L133",
+      "source_location": "L134",
       "weight": 1.0
     },
     {
@@ -9820,7 +9900,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L142",
+      "source_location": "L143",
       "weight": 1.0
     },
     {
@@ -9831,7 +9911,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L145",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
@@ -9842,7 +9922,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L149",
+      "source_location": "L150",
       "weight": 1.0
     },
     {
@@ -9853,7 +9933,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L153",
+      "source_location": "L154",
       "weight": 1.0
     },
     {
@@ -9864,7 +9944,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L158",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -9875,7 +9955,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L38",
+      "source_location": "L39",
       "weight": 1.0
     },
     {
@@ -9897,7 +9977,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "DEVSTATE.md",
-      "source_location": "L78",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -11156,24 +11236,35 @@
     },
     {
       "source": "server_prompts_brandprompts",
-      "target": "server_prompts_brandprompts_pitchenhancerprompt",
+      "target": "server_prompts_brandprompts_compilersysteminstruction",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L16",
+      "source_location": "L128",
       "weight": 1.0
     },
     {
       "source": "server_prompts_brandprompts",
-      "target": "server_prompts_brandprompts_socraticbatchprompt",
+      "target": "server_prompts_brandprompts_buildfounderanchorblock",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L47",
+      "source_location": "L175",
+      "weight": 1.0
+    },
+    {
+      "source": "server_prompts_brandprompts",
+      "target": "server_prompts_brandprompts_buildanswersanchorblock",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L192",
       "weight": 1.0
     },
     {
@@ -11184,12 +11275,23 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L6",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
       "source": "server_prompts_brandprompts",
-      "target": "server_prompts_brandprompts_compilersysteminstruction",
+      "target": "server_prompts_brandprompts_pitchenhancerprompt",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/prompts/brandPrompts.js",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "server_prompts_brandprompts",
+      "target": "server_prompts_brandprompts_socraticbatchprompt",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -11305,7 +11407,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/interviewService.js",
-      "source_location": "L183",
+      "source_location": "L184",
       "weight": 1.0
     },
     {
@@ -11327,7 +11429,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/interviewService.js",
-      "source_location": "L216",
+      "source_location": "L217",
       "weight": 1.0
     },
     {
@@ -11338,7 +11440,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/interviewService.js",
-      "source_location": "L255",
+      "source_location": "L260",
       "weight": 1.0
     },
     {
@@ -11349,7 +11451,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/interviewService.js",
-      "source_location": "L286",
+      "source_location": "L292",
       "weight": 1.0
     },
     {
@@ -11569,7 +11671,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L604",
+      "source_location": "L605",
       "weight": 1.0
     },
     {
@@ -11580,7 +11682,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L616",
+      "source_location": "L617",
       "weight": 1.0
     },
     {
@@ -11591,7 +11693,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L629",
+      "source_location": "L630",
       "weight": 1.0
     },
     {
@@ -11602,7 +11704,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L675",
+      "source_location": "L676",
       "weight": 1.0
     },
     {
@@ -11613,7 +11715,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L721",
+      "source_location": "L722",
       "weight": 1.0
     },
     {
@@ -11624,7 +11726,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/services/mockEngine.js",
-      "source_location": "L766",
+      "source_location": "L767",
       "weight": 1.0
     },
     {
@@ -12004,7 +12106,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L137",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -12016,7 +12118,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L138",
+      "source_location": "L234",
       "weight": 1.0
     },
     {
@@ -12028,7 +12130,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L139",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -12040,7 +12142,7 @@
       "confidence_score": 0.85,
       "context": "collection",
       "source_file": "server/prompts/brandPrompts.js",
-      "source_location": "L140",
+      "source_location": "L236",
       "weight": 1.0
     },
     {
@@ -12076,7 +12178,7 @@
       "confidence_score": 0.95,
       "context": "AuthModal",
       "source_file": "DEVSTATE.md",
-      "source_location": "L67",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -12088,7 +12190,7 @@
       "confidence_score": 0.95,
       "context": "BrandKit",
       "source_file": "DEVSTATE.md",
-      "source_location": "L110",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
@@ -12124,7 +12226,7 @@
       "confidence_score": 0.95,
       "context": "_beverageKit()",
       "source_file": "DEVSTATE.md",
-      "source_location": "L181",
+      "source_location": "L182",
       "weight": 1.0
     },
     {
@@ -12136,7 +12238,7 @@
       "confidence_score": 0.95,
       "context": "expandRawPitch",
       "source_file": "DEVSTATE.md",
-      "source_location": "L164",
+      "source_location": "L165",
       "weight": 1.0
     },
     {
@@ -12148,7 +12250,7 @@
       "confidence_score": 0.95,
       "context": "handleExpandPitch",
       "source_file": "DEVSTATE.md",
-      "source_location": "L165",
+      "source_location": "L166",
       "weight": 1.0
     },
     {
@@ -12160,10 +12262,10 @@
       "confidence_score": 0.95,
       "context": "requireAuth",
       "source_file": "DEVSTATE.md",
-      "source_location": "L169",
+      "source_location": "L170",
       "weight": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e015dbd1367b746443d1d23335fc444c7994f9f3"
+  "built_at_commit": "18420daaa9766714f3b660865ecb18857c112112"
 }

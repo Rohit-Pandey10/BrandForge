@@ -11,15 +11,47 @@
   --color-ash-gray: #999999;
 }
 
+/* Liquid glass background canvas */
 body {
-  background-color: #f2f1ed;
-  color: #000000;
+  background-color: #f4f1ea;
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(214, 206, 190, 0.35) 0px, transparent 55%),
+    radial-gradient(at 85% 85%, rgba(224, 216, 201, 0.4) 0px, transparent 60%),
+    radial-gradient(at 50% 50%, rgba(240, 237, 230, 0.5) 0px, transparent 100%);
+  background-attachment: fixed;
+  color: #111111;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-weight: 400;
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+/* Glass card utility */
+.liquid-glass-card {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.65) !important;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.02),
+    0 10px 24px -3px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Glass interactive button */
+.liquid-glass-button {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.liquid-glass-button:hover {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-1px);
 }
 
 /* Luxury Editorial Serif Display Headings */
@@ -65,38 +97,100 @@ p, span, button, input, textarea, label, div {
   background: #999999;
 }
 
-/* Print Monograph Styles */
+/* ==========================================================================
+   EXECUTIVE BRAND BOOK PRINT STYLESHEET (Letter 3-Page Dossier)
+   ========================================================================== */
+
+/* Hide print dossier on interactive screens */
+@media screen {
+  #brand-book-print-container {
+    display: none;
+  }
+}
+
 @media print {
-  body {
-    background-color: #ffffff !important;
-    color: #000000 !important;
+  /* 1. Global Reset */
+  *, *:before, *:after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html, body, #root {
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
+  /* 2. Hide all interactive UI */
   header,
+  nav,
+  aside,
   footer,
   .no-print,
-  button,
-  .print-hide {
+  .floating-toolbar,
+  #brand-builder-tabs-nav,
+  .guest-meter,
+  .auth-modal {
     display: none !important;
   }
 
+  /* 3. Hide screen dashboard; show print dossier */
+  .screen-dashboard-container {
+    display: none !important;
+  }
+
+  #brand-book-print-container {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 4. Page geometry */
+  @page {
+    size: letter portrait;
+    margin: 1.6cm 1.8cm 1.8cm 1.8cm;
+  }
+
+  /* 5. Dossier page rhythm */
+  .print-dossier-page {
+    page-break-after: always !important;
+    break-after: page !important;
+    min-height: 94vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding-bottom: 2rem;
+  }
+
+  .print-dossier-page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  /* 6. Card break protection */
+  .print-card-avoid-break {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* 7. Force background colors on palette swatches */
+  .print-swatch-box {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 8. Existing editorial surface compat */
   .editorial-surface {
     background: #ffffff !important;
     border: 1px solid #dbd7cd !important;
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-
-  section {
-    page-break-inside: avoid;
-    break-inside: avoid;
-    margin-bottom: 2rem !important;
-  }
-
-  @page {
-    margin: 1.2cm;
-    size: A4 portrait;
   }
 }
+

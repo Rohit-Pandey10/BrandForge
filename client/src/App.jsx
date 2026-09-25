@@ -8,15 +8,18 @@ import Sidebar from './components/Sidebar';
 import AuthModal from './components/AuthModal';
 import { useAuth, MAX_GUEST_RUNS } from './context/AuthContext';
 import { mockBrandKit, getDomainMockBrandKit, getDomainMockBatch, getDomainMockQuestion } from './data/mockBrandData';
+import { API_BASE } from './utils/apiConfig';
 
 export default function App() {
   const [stage, setStage] = useState('intake'); // 'intake' | 'refinement' | 'interview' | 'dashboard'
   const [rawPitch, setRawPitch] = useState('');
   const [expandedConcepts, setExpandedConcepts] = useState([]);
   const [isExpanding, setIsExpanding] = useState(false);
+  const [intakeError, setIntakeError] = useState('');
   const [questions, setQuestions] = useState([]);
   const [initialPitch, setInitialPitch] = useState('');
-  const [brandKit, setBrandKit] = useState(mockBrandKit);
+  const [brandKit, setBrandKit] = useState(null);
+  const [interviewAnswers, setInterviewAnswers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isCompiling, setIsCompiling] = useState(false);
 
@@ -27,8 +30,6 @@ export default function App() {
     saveGuestKitLocally,
     openAuthModal
   } = useAuth();
-
-  const API_BASE = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '';
 
   /**
    * Helper to call backend API with fallback
@@ -64,28 +65,46 @@ export default function App() {
     const cleanPitch = String(pitch || '').trim();
     setRawPitch(cleanPitch);
     setIsExpanding(true);
+    setIntakeError('');
 
     const data = await callApi('/api/interview/expand-pitch', { rawPitch: cleanPitch });
 
+    if (data && data.isValidPremise === false) {
+      setIsExpanding(false);
+      setIntakeError(data.retryMessage || "That premise is a bit too fragmented to extract a defensible market angle. Try describing your product or business in a short phrase (e.g., 'An artisanal sourdough bakery' or 'A low-latency database for fintech').");
+      return;
+    }
+
     if (data && Array.isArray(data.concepts) && data.concepts.length >= 2) {
       setExpandedConcepts(data.concepts);
-    } else {
-      // Local domain-adaptive fallback concepts
-      setExpandedConcepts([
-        {
-          id: 'concept_a',
-          title: 'Specialty Minimalist Studio',
-          expandedPitch: cleanPitch.length > 5 ? cleanPitch : 'A focused modern solution built for discerning professionals.',
-          strategicAngle: 'Direct-to-consumer craftsmanship without legacy distributor markups.'
-        },
-        {
-          id: 'concept_b',
-          title: 'Community Craft Collective',
-          expandedPitch: 'A communal alternative designed around sustainable materials and transparent customer trust.',
-          strategicAngle: 'High-touch artisanal experience centered on human connection.'
-        }
-      ]);
+      setIsExpanding(false);
+      setStage('refinement');
+      return;
     }
+
+    // Programmatic safety gate: reject fragmented or spam inputs
+    const lower = cleanPitch.toLowerCase();
+    if (lower.length < 6 || /^(asdf|qwert|zxcvb)/i.test(lower) || lower === 'school make' || lower === 'make do thing') {
+      setIsExpanding(false);
+      setIntakeError("That premise is a bit too fragmented to extract a defensible market angle. Try describing your product or business in a short phrase (e.g., 'An artisanal sourdough bakery' or 'A low-latency database for fintech').");
+      return;
+    }
+
+    // Local domain-adaptive fallback concepts for valid inputs
+    setExpandedConcepts([
+      {
+        id: 'concept_a',
+        title: `${cleanPitch.slice(0, 20)} Studio`,
+        expandedPitch: cleanPitch,
+        strategicAngle: 'Direct-to-consumer craftsmanship without legacy distributor markups.'
+      },
+      {
+        id: 'concept_b',
+        title: `${cleanPitch.slice(0, 20)} Collective`,
+        expandedPitch: 'A communal alternative designed around sustainable materials and transparent customer trust.',
+        strategicAngle: 'High-touch artisanal experience centered on human connection.'
+      }
+    ]);
 
     setIsExpanding(false);
     setStage('refinement');
@@ -122,6 +141,8 @@ export default function App() {
 
     const payload = typeof qaData === 'object' ? qaData : {};
     const pitch = payload.initialPitch || initialPitch;
+    const answersList = Array.isArray(payload.qaPairs) ? payload.qaPairs : [];
+    setInterviewAnswers(answersList);
 
     const data = await callApi('/api/interview/compile', {
       initialPitch: pitch,
@@ -162,6 +183,9 @@ export default function App() {
     setInitialPitch('');
     setRawPitch('');
     setExpandedConcepts([]);
+    setIntakeError('');
+    setBrandKit(null);
+    setInterviewAnswers([]);
   };
 
   /**
@@ -304,7 +328,7 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
   };
 
   return (
-    <div className="min-h-screen bg-[#f2f1ed] text-[#000000] flex flex-col justify-between selection:bg-black selection:text-white font-sans">
+    <div className="min-h-screen bg-transparent text-zinc-900 flex flex-col justify-between selection:bg-orange-500 selection:text-white font-sans antialiased">
       {/* Expandable / Collapsible Left Sidebar */}
       <Sidebar
         onRehydrateBrand={handleRehydrateBrand}
@@ -334,6 +358,7 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
             onStartInterview={handleRawPitchSubmit}
             onPreviewMock={handlePreviewMock}
             isExpanding={isExpanding}
+            serverError={intakeError}
           />
         )}
 
@@ -361,16 +386,24 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
         {stage === 'dashboard' && (
           <BrandKitDashboard
             brandKit={brandKit}
+            answers={interviewAnswers}
             onStartNew={handleReset}
           />
         )}
       </main>
 
-      {/* Minimalist Editorial Footer */}
-      <footer className="no-print py-6 px-6 text-center text-xs text-[#737373] border-t border-[#dbd7cd]/50">
-        <p>
-          &copy; {new Date().getFullYear()} Brand Builder. Socratic Brand Studio &bull; Handhold Editorial Design System.
-        </p>
+      {/* Editorial Footer (Shaurya's Design System) */}
+      <footer className="no-print py-6 px-6 text-center text-xs text-zinc-500 border-t border-zinc-200/60 bg-white/40">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p>
+            &copy; 2026 BrandLoom. Strategic Positioning, Verbal Identity & Design Systems.
+          </p>
+          <div className="flex items-center gap-3 text-zinc-500 font-mono text-xs">
+            <span>Socratic Brand Synthesis</span>
+            <span>•</span>
+            <span>Design Tokens & Multi-Archetype Specimen</span>
+          </div>
+        </div>
       </footer>
     </div>
   );

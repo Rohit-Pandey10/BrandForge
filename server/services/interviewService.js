@@ -21,6 +21,8 @@ import { getMockQuestion, getMockBatch } from './mockEngine.js';
 export const pitchEnhancerSchema = {
   type: 'object',
   properties: {
+    isValidPremise: { type: 'boolean' },
+    retryMessage: { type: 'string' },
     concepts: {
       type: 'array',
       items: {
@@ -35,17 +37,45 @@ export const pitchEnhancerSchema = {
       }
     }
   },
-  required: ['concepts']
+  required: ['isValidPremise']
 };
 
 /**
+ * Checks for obvious keyboard spam, single-word gibberish, or incoherent phrases
+ */
+export function isGibberishInput(input = '') {
+  const clean = String(input || '').trim().toLowerCase();
+  if (!clean || clean.length < 3) return true;
+  // Repeated character spam (e.g. "asdfgh", "aaaa", "zzzz")
+  if (/^([a-z0-9])\1{2,}$/i.test(clean)) return true;
+  // Keyboard mashing
+  if (/^(asdf|qwert|zxcvb|hjkl|poiuy)/i.test(clean) && clean.length <= 10) return true;
+  // Known incoherent / fragmented nonsense phrases
+  const knownNonsense = [
+    'school make', 'make do thing', 'thing do', 'do thing', 'make thing',
+    'why u not', 'make make', 'do do', 'thing make', 'thing thing',
+    'idk do', 'not work', 'test test', 'make do', 'do make'
+  ];
+  if (knownNonsense.includes(clean)) return true;
+  return false;
+}
+
+/**
  * Evaluates raw or fragmented user input and expands it into 2 distinct strategic concepts.
+ * Validates coherence first to intercept gibberish/nonsense.
  * @param {string} rawInput
- * @returns {Promise<Array<Object>>} Exactly 2 concepts: [{ id, title, expandedPitch, strategicAngle }]
+ * @returns {Promise<Object>} { isValidPremise: boolean, retryMessage?: string, concepts?: Array<Object> }
  */
 export async function expandRawPitch(rawInput = '') {
   const cleanInput = String(rawInput || '').trim();
   const domain = classifyDomain(cleanInput);
+
+  if (isGibberishInput(cleanInput)) {
+    return {
+      isValidPremise: false,
+      retryMessage: "That premise is a bit too fragmented to extract a defensible market angle. Try describing your product or business in a short phrase (e.g., 'An artisanal sourdough bakery' or 'A low-latency database for fintech')."
+    };
+  }
 
   if (isLlmConfigured()) {
     try {
@@ -54,7 +84,10 @@ export async function expandRawPitch(rawInput = '') {
 
 Detected General Domain: ${domain.toUpperCase()}
 
-Transform this input into exactly 2 distinct, highly ambitious brand concepts matching the schema.`;
+VALIDATION CHECK (CRITICAL FIRST PASS):
+Evaluate if the input contains a discernible business, product, service, or creator premise.
+If it is nonsense, keyboard spam, fragmented gibberish, or completely incoherent, immediately return isValidPremise=false with an encouraging retryMessage.
+If valid, transform this input into exactly 2 distinct, highly ambitious brand concepts matching the schema.`;
 
       const result = await generateStructuredJson({
         systemInstruction: pitchEnhancerPrompt,
@@ -62,37 +95,42 @@ Transform this input into exactly 2 distinct, highly ambitious brand concepts ma
         schema: pitchEnhancerSchema
       });
 
-      if (result && Array.isArray(result.concepts) && result.concepts.length >= 2) {
-        return result.concepts.slice(0, 2);
+      if (result) {
+        if (result.isValidPremise === false || result.retryMessage) {
+          return {
+            isValidPremise: false,
+            retryMessage: result.retryMessage || "That premise is a bit too fragmented to extract a defensible market angle. Try describing your product or business in a short phrase (e.g., 'An artisanal sourdough bakery' or 'A low-latency database for fintech')."
+          };
+        }
+        if (Array.isArray(result.concepts) && result.concepts.length >= 2) {
+          return {
+            isValidPremise: true,
+            concepts: result.concepts.slice(0, 2)
+          };
+        }
       }
     } catch (err) {
       console.warn('[interviewService] LLM Pitch expansion failed, using smart fallback:', err.message);
     }
   }
 
-  return getFallbackConcepts(cleanInput, domain);
+  // Fallback mode: check if input is vague/broken
+  const lower = cleanInput.toLowerCase();
+  if (lower.length < 8 || lower.includes('work') || lower.includes('idk') || lower.includes('test')) {
+    return {
+      isValidPremise: false,
+      retryMessage: "That premise is a bit too fragmented to extract a defensible market angle. Try describing your product or business in a short phrase (e.g., 'An artisanal sourdough bakery' or 'A low-latency database for fintech')."
+    };
+  }
+
+  return {
+    isValidPremise: true,
+    concepts: getFallbackConcepts(cleanInput, domain)
+  };
 }
 
 function getFallbackConcepts(input, domain) {
   const lower = (input || '').toLowerCase();
-
-  // If broken / casual / meta query
-  if (!input || lower.includes('work') || lower.includes('idk') || lower.includes('test') || lower.length < 8) {
-    return [
-      {
-        id: 'concept_a',
-        title: 'IncidentZero AI Debugger',
-        expandedPitch: 'An autonomous runtime debugging agent that pinpoints flaky microservices and halting state errors before customers notice.',
-        strategicAngle: 'Zero-downtime reliability for distributed high-velocity engineering teams.'
-      },
-      {
-        id: 'concept_b',
-        title: 'BareMetal Observability',
-        expandedPitch: 'A deterministic telemetry and log tracing suite engineered for low-overhead kernel and Rust backend architectures.',
-        strategicAngle: 'Raw sub-millisecond performance without proprietary SaaS tracing tax.'
-      }
-    ];
-  }
 
   // If culinary / dining / pizza
   if (domain === 'hospitality' || lower.includes('pizza') || lower.includes('food') || lower.includes('eat') || lower.includes('restaurant')) {
@@ -112,12 +150,30 @@ function getFallbackConcepts(input, domain) {
     ];
   }
 
+  // If beverage / drinks
+  if (domain === 'beverage' || lower.includes('drink') || lower.includes('tea') || lower.includes('soda') || lower.includes('coffee') || lower.includes('water')) {
+    return [
+      {
+        id: 'concept_a',
+        title: 'Kura Botanical Elixirs',
+        expandedPitch: 'Clean sparkling adaptogenic energy elixirs formulated with organic botanicals and slow-burn caffeine.',
+        strategicAngle: 'Sustained cognitive focus without sugar spikes, synthetic taurine, or 3 PM jitters.'
+      },
+      {
+        id: 'concept_b',
+        title: 'Aura Cold-Brew Ritual',
+        expandedPitch: 'Single-origin nitrogen cold brew steeped for 24 hours with organic oat milk and functional Lion\'s Mane.',
+        strategicAngle: 'Elevated morning cafe ritual packaged for on-the-go creative professionals.'
+      }
+    ];
+  }
+
   // If fashion / apparel / denim
   if (domain === 'fashion' || lower.includes('denim') || lower.includes('jeans') || lower.includes('clothes') || lower.includes('wear')) {
     return [
       {
         id: 'concept_a',
-        title: 'Kuro Raw Selvedge Studio',
+        title: 'Atelier Selvaggio',
         expandedPitch: 'Unwashed 14oz Japanese shuttle-loom denim built with copper hardware for creators and architects seeking timeless silhouettes.',
         strategicAngle: 'Radical durability and anti-fast-fashion craft with authentic indigo fades.'
       },
@@ -162,7 +218,11 @@ function getFallbackConcepts(input, domain) {
       id: 'concept_b',
       title: `${brandNameClean} Standard`,
       expandedPitch: `An artisanal, high-touch craft alternative built around sustainable materials and transparent customer trust.`,
+<<<<<<< HEAD
       strategicAngle: 'Heirloom-grade design language over commoditized disposable alternatives.'
+=======
+      strategicAngle: 'High-touch personal care centered on durability and human connection.'
+>>>>>>> dc9bada763cc7d97945289cc141d87886243899d
     }
   ];
 }
@@ -185,7 +245,8 @@ export const batchQuestionSchema = {
             type: 'array',
             items: { type: 'string' }
           },
-          reasoning: { type: 'string' }
+          reasoning: { type: 'string' },
+          allowMultiple: { type: 'boolean' }
         },
         required: ['id', 'stageLabel', 'question', 'suggestedAnswers', 'reasoning']
       }
@@ -206,7 +267,7 @@ export async function generateInterviewBatch(initialPitch = '') {
 
   if (isLlmConfigured()) {
     try {
-      const systemInstruction = buildBatchQuestionSystemInstruction(domain, isFamily);
+      const systemInstruction = buildBatchQuestionSystemInstruction(domain, isFamily, { rawPitch: pitchText });
       const prompt = `Founder's Initial Concept Pitch:\n"${pitchText}"\n\nDetected Domain: ${domain.toUpperCase()}${isFamily ? ' (FAMILY DINING INTENT)' : ''}.\nGenerate the complete 7-question discovery batch now matching schema.`;
 
       const result = await generateStructuredJson({
@@ -222,6 +283,7 @@ export async function generateInterviewBatch(initialPitch = '') {
         return result.stageQuestions;
       }
     } catch (llmError) {
+      console.error("CRITICAL AI ENGINE ERROR:", llmError?.message || llmError);
       console.warn('[interviewService] LLM Batch generation failed, using mock batch fallback:', llmError.message);
     }
   }
@@ -259,6 +321,10 @@ export const questionSchema = {
     readyForSynthesis: {
       type: 'boolean',
       description: 'True if baseline context is sufficient for brand kit synthesis.'
+    },
+    allowMultiple: {
+      type: 'boolean',
+      description: 'Optional flag indicating if multiple choices can be selected.'
     }
   },
   required: ['currentRound', 'question', 'suggestedAnswers', 'reasoning', 'stageLabel', 'readyForSynthesis']
@@ -280,9 +346,10 @@ export async function generateNextQuestion(history = []) {
   const domain = classifyDomain(transcriptText);
   const isFamily = isFamilyIntent(transcriptText);
 
+  const firstPitch = userMessages[0]?.content || '';
   if (isLlmConfigured()) {
     try {
-      const systemInstruction = buildQuestionSystemInstruction(domain, isFamily, currentRound);
+      const systemInstruction = buildQuestionSystemInstruction(domain, isFamily, currentRound, { rawPitch: firstPitch });
       const prompt = `Conversation Transcript:\n${transcriptText}\n\nDetected Domain: ${domain.toUpperCase()}${isFamily ? ' (FAMILY DINING INTENT)' : ''}.\nFormulate the next question for Round ${currentRound}. Return structured JSON matching schema.`;
 
       const result = await generateStructuredJson({ systemInstruction, prompt, schema: questionSchema });
@@ -295,6 +362,7 @@ export async function generateNextQuestion(history = []) {
       }
       return result;
     } catch (llmError) {
+      console.error("CRITICAL AI ENGINE ERROR:", llmError?.message || llmError);
       console.warn('[interviewService] LLM API call failed, using mock fallback:', llmError.message);
     }
   }

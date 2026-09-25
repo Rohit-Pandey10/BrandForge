@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { API_BASE } from '../utils/apiConfig';
 
 const AuthContext = createContext(null);
 
@@ -26,8 +27,6 @@ export function AuthProvider({ children }) {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalReason, setAuthModalReason] = useState('manual'); // 'save_gate' | 'run_limit' | 'manual'
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const API_BASE = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
   // ----------------------------------------------------
   // GUEST STORAGE HELPERS

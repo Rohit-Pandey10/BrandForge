@@ -111,11 +111,11 @@ export const hospitalityBrandKit = {
   },
   visualTokens: {
     palette: [
-      { name: "Cast Iron Charcoal", hex: "#1C1917", role: "surface" },
+      { name: "Warm Cream", hex: "#FAF8F5", role: "surface" },
       { name: "Deep Terracotta", hex: "#C25E3E", role: "primary" },
       { name: "Toasted Fennel", hex: "#556B2F", role: "secondary" },
       { name: "Aged Brass", hex: "#C49A45", role: "accent" },
-      { name: "Warm Cream", hex: "#FAF8F5", role: "text" }
+      { name: "Cast Iron Charcoal", hex: "#1C1917", role: "text" }
     ],
     typography: {
       headingFont: "Fraunces",
@@ -276,9 +276,9 @@ export const careerBrandKit = {
 
 export const fashionBrandKit = {
   brandStrategy: {
-    brandName: "Kuro Selvedge Co.",
-    tagline: "Heavyweight Japanese Raw Denim",
-    mission: "To liberate denim from disposable fast-fashion and synthetic stretch through 14oz shuttle-loom raw selvedge built to fade over decades.",
+    brandName: "Atelier Selvaggio",
+    tagline: "Heirloom Shuttle-Loom Denim & Garments",
+    mission: "To liberate apparel from disposable fast-fashion through 14oz shuttle-loom raw selvedge built to fade over decades.",
     targetAudience: "Discerning creatives, denim purists, architects, and makers seeking a timeless, durable daily uniform that molds to their body.",
     coreValueProposition: "Unwashed 14oz narrow-loom Japanese raw selvedge, custom solid copper hardware, and free lifetime repairs.",
     antiHero: "Fast-fashion mall jeans with synthetic elastane stretch, fake laser-whisker distressing, and disposable 6-month lifespans.",
@@ -333,7 +333,7 @@ export const fashionBrandKit = {
     heroSubheadline: "14oz narrow-loom Japanese raw selvedge cut for daily creative work. Zero synthetic stretch, unwashed authenticity, and lifetime repairs.",
     callToAction: "Shop Collection",
     manifesto: "Denim was never meant to be disposable. Somewhere along the line, the industry replaced durable 14-ounce cotton with plastic stretch blends and washed away character with chemical distressing before you even touched it. We reject artificial aging. We weave on slow, vintage shuttle looms where every imperfection tells a story. Put them on stiff. Wear them hard. Earn your fades.",
-    elevatorPitch: "Kuro Selvedge Co. crafts heirloom 14oz Japanese raw selvedge denim for creatives and purists who value uncompromised textile craft and lifetime durability.",
+    elevatorPitch: "Atelier Selvaggio crafts heirloom 14oz shuttle-loom raw selvedge denim for creatives and purists who value uncompromised textile craft and lifetime durability.",
     socialHooks: [
       "No synthetic stretch. No fake laser fades. Just 14oz raw Japanese selvedge.",
       "Denim that molds to your life, not a mall mannequin. Earn your fades.",
@@ -399,9 +399,9 @@ export const beverageBrandKit = {
 };
 
 /**
- * Default mock brand kit export
+ * Default mock brand kit export (editorial CPG)
  */
-export const mockBrandKit = fashionBrandKit;
+export const mockBrandKit = beverageBrandKit;
 
 import { DOMAINS, classifyDomain, isFamilyIntent, extractClientDomain, isClientFamilyIntent } from './domainConfig';
 
@@ -422,7 +422,7 @@ export function getDomainMockBrandKit(contextText = '') {
   }
   if (domain === 'career') return careerBrandKit;
   if (domain === 'developer') return developerBrandKit;
-  return fashionBrandKit;
+  return beverageBrandKit;
 }
 
 /**
@@ -673,9 +673,9 @@ export function getDomainMockBatch(contextText = '') {
       { id: 1, stageLabel: "Audience Wedge", question: "Which consumer group feels most underserved by current energy drinks?", suggestedAnswers: ["Health-conscious professionals", "Endurance athletes & movers", "Mindful creators & builders"], reasoning: "Focusing on a specific ritual wedge builds defensibility." },
       { id: 2, stageLabel: "The Tension / Friction", question: "What frustrating side effect of commercial energy drinks will you eradicate?", suggestedAnswers: ["Jittery palpitations and anxiety", "The brutal 3 PM sugar crash", "Chemical aftertaste from sucralose"], reasoning: "Addressing real physical friction drives organic word of mouth." },
       { id: 3, stageLabel: "The Sacred Cow", question: "Which sacred assumption of the beverage industry do you openly challenge?", suggestedAnswers: ["More caffeine equals better energy", "Energy drinks must taste like candy", "Neon cans with aggressive graphics"], reasoning: "Challenging an industry dogma establishes clear brand positioning." },
-      { id: 4, stageLabel: "Atmosphere & Setting", question: "In what exact ritual should this drink become indispensable?", suggestedAnswers: ["Morning deep-work focus block", "Mid-day post-lunch reset", "Pre-workout movement ritual"], reasoning: "Grounding the drink in daily rituals creates habitual repeat purchases." },
+      { id: 4, stageLabel: "Atmosphere & Setting", question: "In what exact ritual should this drink become indispensable?", suggestedAnswers: ["Morning deep-work focus block", "Mid-day post-lunch reset", "Pre-workout movement ritual"], reasoning: "Grounding the drink in daily rituals creates habitual repeat purchases.", allowMultiple: true },
       { id: 5, stageLabel: "Pricing Stance", question: "How should your price point signal your formulation standard?", suggestedAnswers: ["Premium single-can craft tier", "Everyday accessible wellness tier", "Direct-to-consumer case subscriptions"], reasoning: "Price communicates ingredient integrity and target market tier." },
-      { id: 6, stageLabel: "Aesthetic Boundary", question: "What visual direction immediately sets your can apart on the shelf?", suggestedAnswers: ["Botanical elegance with linen textures", "Muted earth tones and warm minimalism", "Vibrant citrus blocks with crisp typography"], reasoning: "Shelf visual contrast stops scrolling and commands attention." },
+      { id: 6, stageLabel: "Aesthetic Boundary", question: "What visual direction immediately sets your can apart on the shelf?", suggestedAnswers: ["Botanical elegance with linen textures", "Muted earth tones and warm minimalism", "Vibrant citrus blocks with crisp typography"], reasoning: "Shelf visual contrast stops scrolling and commands attention.", allowMultiple: true },
       { id: 7, stageLabel: "Unfair Moat", question: "What core ingredient or formulation truth cannot be easily cloned?", suggestedAnswers: ["Clinically dosed wild adaptogens", "Direct-farm botanical extracts", "Zero artificial sweeteners or gums"], reasoning: "A defensible product truth builds enduring brand equity." }
     ];
   }

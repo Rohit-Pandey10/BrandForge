@@ -28,8 +28,10 @@ const corsOptions = {
   origin: (origin, callback) => {
     // Allow requests with no Origin header (curl, mobile apps, server-to-server)
     if (!origin) return callback(null, true);
-    // Allow explicitly whitelisted origins
-    if (allowedOrigins.includes(origin)) return callback(null, true);
+    // Allow explicitly whitelisted origins or any local development port
+    if (allowedOrigins.includes(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+      return callback(null, true);
+    }
     // Allow known deployment platform subdomains
     if (
       origin.endsWith('.vercel.app') ||
@@ -63,8 +65,8 @@ app.use((req, res, next) => {
 });
 
 // Health check endpoint
-app.get('/health', (req, res) => {
-  const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
+app.get(['/health', '/api/health'], (req, res) => {
+  const provider = (process.env.LLM_PROVIDER || 'groq').split('#')[0].replace(/['"]/g, '').trim().toLowerCase();
   res.json({
     status: 'ok',
     service: 'brand-builder-server',
@@ -95,13 +97,15 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  const provider = (process.env.LLM_PROVIDER || 'groq').replace(/['"]/g, '').trim().toLowerCase();
-  console.log('----------------------------------------------------');
-  console.log(`⚡ Brand Builder Backend running on http://localhost:${PORT}`);
-  console.log(`🤖 Primary LLM Provider: ${provider.toUpperCase()} (${provider === 'groq' ? 'llama-3.3-70b-versatile' : (process.env.GEMINI_MODEL || 'gemini-2.5-flash')})`);
-  console.log(`🔄 Fallback Engine: ${process.env.GEMINI_API_KEY ? 'Gemini API' : 'Domain-Adaptive Mock Engine'}`);
-  console.log('----------------------------------------------------');
-});
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    const provider = (process.env.LLM_PROVIDER || 'groq').split('#')[0].replace(/['"]/g, '').trim().toLowerCase();
+    console.log('----------------------------------------------------');
+    console.log(`⚡ BrandLoom Backend running on http://localhost:${PORT}`);
+    console.log(`🤖 Primary LLM Provider: ${provider.toUpperCase()} (${provider === 'groq' ? 'llama-3.3-70b-versatile' : (process.env.GEMINI_MODEL || 'gemini-2.5-flash')})`);
+    console.log(`🔄 Fallback Engine: ${process.env.GEMINI_API_KEY ? 'Gemini API' : 'Domain-Adaptive Mock Engine'}`);
+    console.log('----------------------------------------------------');
+  });
+}
 
 export default app;

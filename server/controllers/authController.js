@@ -7,7 +7,7 @@ import resilientStore from '../models/resilientStore.js';
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'brand-builder-jwt-secret-key-2026';
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '';
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || process.env.VITE_GOOGLE_CLIENT_ID || '281883142806-j9aqfp522gv4phq85kiq3k1mq2ntii62.apps.googleusercontent.com';
 const googleClient = GOOGLE_CLIENT_ID ? new OAuth2Client(GOOGLE_CLIENT_ID) : null;
 
 // Strict Gmail Regex rule

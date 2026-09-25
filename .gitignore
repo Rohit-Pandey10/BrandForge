@@ -34,3 +34,5 @@ Thumbs.db
 
 # Local data cache
 server/.data/
+.vercel
+.playwright-mcp/

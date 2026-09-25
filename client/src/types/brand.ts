@@ -1,5 +1,5 @@
 /**
- * Strict TypeScript Interfaces & JSON Data Contracts for Brand Builder
+ * Strict TypeScript Interfaces & JSON Data Contracts for BrandLoom
  */
 
 export type ColorRole = 'primary' | 'secondary' | 'accent' | 'surface' | 'text';

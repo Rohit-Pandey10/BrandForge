@@ -152,7 +152,7 @@ export default function ConceptSelector({
           className="w-full p-3.5 rounded-xl bg-[#f2f1ed]/50 border border-[#dbd7cd] text-black text-sm sm:text-base leading-relaxed resize-none focus:outline-none focus:border-black transition-colors"
         />
 
-        <p className="mt-2 text-[11px] text-stone-500">
+        <p className="mt-2 text-sm text-zinc-500">
           This refined sentence will be used as the anchor context to generate your 7 strategic discovery questions.
         </p>
       </div>
