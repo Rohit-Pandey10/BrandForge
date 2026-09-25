@@ -216,7 +216,7 @@ export default function App() {
 
     // If unauthenticated guest, record run usage and buffer in memory/local storage
     if (!isAuthenticated) {
-      incrementGuestRun();
+      incrementGuestRun(compiledKit);
       saveGuestKitLocally(compiledKit, {
         brandName: compiledKit?.brandStrategy?.brandName,
         tagline: compiledKit?.brandStrategy?.tagline,
@@ -246,26 +246,11 @@ export default function App() {
 
   /**
    * Jump straight to dashboard with hydrated sample monograph (Blister & Beam)
+   * Hardcoded static data: viewing is completely free and never increments or decrements guest quota
    */
   const handleLoadSample = (sampleKit = SAMPLE_BRAND_KIT) => {
-    if (!isAuthenticated && guestRunsCount >= MAX_GUEST_RUNS) {
-      openAuthModal('run_limit');
-      return;
-    }
-
     const targetKit = (sampleKit && sampleKit.brandStrategy) ? sampleKit : SAMPLE_BRAND_KIT;
     setBrandKit(targetKit);
-
-    if (!isAuthenticated) {
-      incrementGuestRun();
-      saveGuestKitLocally(targetKit, {
-        brandName: targetKit?.brandStrategy?.brandName,
-        tagline: targetKit?.brandStrategy?.tagline,
-        initialPitch: initialPitch || rawPitch || 'Sample Brand',
-        domain: targetKit?.domain || 'food_hospitality'
-      });
-    }
-
     setStage('dashboard');
   };
 

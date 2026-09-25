@@ -264,10 +264,11 @@
   - Structured 2x2 SWOT analysis with 2 curated high-conviction points per quadrant (transcript anchors, operational mitigations, growth vectors, defensive plays).
   - 3 rotating wedges catalog grid (*The Founders' Wedge*, *Brick & Basil*, *The Gathering Box*) with prices and `+ Add` pills.
   - Comparative ledger (*BLISTER & BEAM* vs *THE INDUSTRY DEFAULT*).
-- [x] **Sample Action Wiring:**
-  - In `IntakeView.jsx`: Wired `Skip to sample brand monograph →` to invoke `handleLoadSample(SAMPLE_BRAND_KIT)`.
-  - In `Header.jsx`: Wired `Preview Sample →` to invoke `handleLoadSample(SAMPLE_BRAND_KIT)`.
-  - In `App.jsx`: Defined `handleLoadSample(sampleKit = SAMPLE_BRAND_KIT)` and updated `handlePreviewMock` to default strictly to `SAMPLE_BRAND_KIT`.
+- [x] **Sample Action Wiring & Quota Decoupling:**
+  - In `IntakeView.jsx`: Wired `Skip to sample brand monograph →` to invoke `handleLoadSample(SAMPLE_BRAND_KIT)` with `e.preventDefault()`.
+  - In `Header.jsx`: Wired `Preview Sample →` to invoke `handleLoadSample(SAMPLE_BRAND_KIT)` with `e.preventDefault()`.
+  - In `App.jsx`: Completely decoupled `handleLoadSample` from guest quota counters (`incrementGuestRun` / `guestRunsCount >= MAX_GUEST_RUNS`); loading static sample monograph is always free and never gates guests.
+  - In `AuthContext.jsx`: Added `isSampleKit` guard in `incrementGuestRun` and `saveGuestKitLocally`; cleansed legacy local storage guest kit cache on init.
   - In `mockBrandData.js`: Updated default export `mockBrandKit = SAMPLE_BRAND_KIT` and `getDomainMockBrandKit` default fallback to `SAMPLE_BRAND_KIT`.
   - In `mockEngine.js`: Updated `_hospitalityKit()` to return Blister & Beam monograph.
 - [x] **Live Preview Tab Verification:**

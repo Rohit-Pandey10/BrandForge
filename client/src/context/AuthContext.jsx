@@ -8,6 +8,18 @@ const GUEST_RUNS_KEY = 'brand_builder_guest_runs';
 const GUEST_KITS_KEY = 'brand_builder_guest_kits';
 export const MAX_GUEST_RUNS = 2;
 
+// Helper to determine if a brand kit is the hardcoded static sample monograph
+export const isSampleKit = (kit) => {
+  if (!kit) return false;
+  return (
+    kit._id === 'sample_blister_and_beam_01' ||
+    kit.id === 'sample_blister_and_beam_01' ||
+    (typeof kit._id === 'string' && kit._id.startsWith('sample_')) ||
+    (typeof kit.id === 'string' && kit.id.startsWith('sample_')) ||
+    kit?.brandStrategy?.brandName === 'Blister & Beam'
+  );
+};
+
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem(TOKEN_KEY) || null);
   const [user, setUser] = useState(null);
@@ -15,7 +27,23 @@ export function AuthProvider({ children }) {
 
   // Guest test count (persisted across page reloads)
   const [guestRunsCount, setGuestRunsCount] = useState(() => {
-    const val = localStorage.getItem(GUEST_RUNS_KEY);
+    // One-time sanitization: cleanse any sample kits mistakenly saved to local guest storage
+    try {
+      const rawKits = localStorage.getItem(GUEST_KITS_KEY);
+      if (rawKits) {
+        const parsed = JSON.parse(rawKits);
+        if (Array.isArray(parsed)) {
+          const sanitized = parsed.filter(item => !isSampleKit(item?.brandKit) && item?.brandName !== 'Blister & Beam');
+          if (sanitized.length !== parsed.length) {
+            localStorage.setItem(GUEST_KITS_KEY, JSON.stringify(sanitized));
+          }
+        }
+      }
+    } catch {
+      // Safe no-op
+    }
+
+    const val = localStorage.getItem(GUEST_RUNS_KEY) ?? localStorage.getItem('guestRunCount');
     return val ? parseInt(val, 10) : 0;
   });
 
@@ -34,14 +62,18 @@ export function AuthProvider({ children }) {
   const getGuestKits = useCallback(() => {
     try {
       const raw = localStorage.getItem(GUEST_KITS_KEY);
-      return raw ? JSON.parse(raw) : [];
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return [];
+      return parsed.filter(item => !isSampleKit(item?.brandKit) && item?.brandName !== 'Blister & Beam');
     } catch {
       return [];
     }
   }, []);
 
   const saveGuestKitLocally = useCallback((brandKit, meta = {}) => {
-    if (!brandKit) return;
+    // Static sample preview should never be saved into guest creations history
+    if (!brandKit || isSampleKit(brandKit)) return;
     try {
       const current = getGuestKits();
       const newEntry = {
@@ -60,10 +92,16 @@ export function AuthProvider({ children }) {
     }
   }, [getGuestKits]);
 
-  const incrementGuestRun = useCallback(() => {
+  const incrementGuestRun = useCallback((kit = null) => {
+    // If viewing the hardcoded static sample, never count against quota
+    if (kit && isSampleKit(kit)) {
+      return;
+    }
+    // Only increment for genuine user generations
     setGuestRunsCount(prev => {
       const next = prev + 1;
       localStorage.setItem(GUEST_RUNS_KEY, String(next));
+      localStorage.setItem('guestRunCount', String(next));
       return next;
     });
   }, []);
@@ -308,6 +346,7 @@ export function AuthProvider({ children }) {
     guestRunsCount,
     maxGuestRuns: MAX_GUEST_RUNS,
     canRunGuestTest: Boolean(token || guestRunsCount < MAX_GUEST_RUNS),
+    isSampleKit,
     incrementGuestRun,
     saveGuestKitLocally,
     getGuestKits,

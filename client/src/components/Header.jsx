@@ -147,7 +147,9 @@ export default function Header({
           {/* Intake View Action */}
           {stage === 'intake' && (
             <button
-              onClick={() => {
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
                 if (typeof handleLoadSample === 'function') {
                   handleLoadSample(SAMPLE_BRAND_KIT);
                 } else if (typeof onPreviewMock === 'function') {

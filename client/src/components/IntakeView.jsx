@@ -141,7 +141,8 @@ export default function IntakeView({ onStartInterview, onPreviewMock, handleLoad
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
             <button
               type="button"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 if (typeof handleLoadSample === 'function') {
                   handleLoadSample(SAMPLE_BRAND_KIT);
                 } else if (typeof onPreviewMock === 'function') {
