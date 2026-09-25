@@ -16,9 +16,10 @@ import React, { useState, useEffect } from 'react';
 import { Download, Palette, Code, Eye, Target, FileText, Printer, RotateCcw, Bookmark, Check } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-import LivePreviewTab    from './dashboard/LivePreviewTab';
-import BrandStrategyTab from './dashboard/BrandStrategyTab';
-import LaunchCopyTab    from './dashboard/LaunchCopyTab';
+import LivePreviewTab      from './dashboard/LivePreviewTab';
+import BrandStrategyTab   from './dashboard/BrandStrategyTab';
+import LaunchCopyTab      from './dashboard/LaunchCopyTab';
+import PrintBrandDossier  from './dashboard/PrintBrandDossier';
 import { exportBrandKitJson, exportCssTokens, exportPaletteSvg } from '../utils/exportUtils';
 
 const TABS = [
@@ -57,7 +58,9 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
   const tabProps = { brandStrategy, voiceSystem, visualTokens, launchContent, brandKit, kit: brandKit };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-4 sm:py-8 animate-fade-in pb-32 font-sans text-black">
+    <>
+    {/* ── Interactive Screen Dashboard ── */}
+    <div className="screen-dashboard-container w-full max-w-6xl mx-auto px-4 py-4 sm:py-8 animate-fade-in pb-32 font-sans text-black">
 
       {/* ── Editorial Identity Header ── */}
       <div className="bg-white rounded-[28px] border border-[#dbd7cd] p-6 sm:p-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -207,5 +210,9 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
         </div>
       </div>
     </div>
+
+    {/* ── Hidden on screen; renders only via @media print ── */}
+    <PrintBrandDossier kit={brandKit} />
+    </>
   );
 }

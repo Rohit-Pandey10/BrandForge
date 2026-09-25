@@ -198,4 +198,12 @@
 - [x] Implemented Step 2 Adaptive Multi-Archetype Preview Engine in LivePreviewTab (Retail CPG, Hospitality & Dining, Digital Tools & SaaS).
 - [x] Bound synthesized design tokens dynamically (--brand-primary, --brand-secondary, --brand-surface, --brand-text, --brand-accent, Google Fonts, radius curvature).
 - [x] Added interactive PaletteTokenBar beneath the frame with one-click HEX copy toast feedback.
+- [x] Fixed domain detection fallback: CPG keyword corpus expanded (whey, protein, smoothie, latte, supplement, vitamin, serum, activewear, etc.); default fallback changed from digital_saas to retail_cpg.
+- [x] Implemented Semantic Component Tree Architecture (Step 2B): websiteBlueprint schema added to brandKitSchema & compilerSystemInstruction; all hardcoded product strings removed from LivePreviewTab.
+- [x] Added SectionDispatcher with 5 dynamic section types: catalog_grid, ritual_steps, flavor_profile, comparative_ledger, press_quotes.
+- [x] Implemented multi-page Executive PDF Brand Book Print Stylesheet (Step 3):
+    - index.css: Replaced minimal print block with full @media print executive stylesheet; .screen-dashboard-container hidden; #brand-book-print-container shown during print.
+    - PrintBrandDossier.jsx: 3-page editorial dossier (Cover+Palette+Strategy, Manifesto+Voice, Blueprint+Catalog).
+    - BrandKitDashboard.jsx: Mounted PrintBrandDossier alongside screen dashboard; Print PDF button calls window.print().
+- [x] Build verified: 0 errors, 1912 modules after all three sprint steps.
 

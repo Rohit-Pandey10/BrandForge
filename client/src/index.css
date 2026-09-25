@@ -65,38 +65,100 @@ p, span, button, input, textarea, label, div {
   background: #999999;
 }
 
-/* Print Monograph Styles */
+/* ==========================================================================
+   EXECUTIVE BRAND BOOK PRINT STYLESHEET (Letter 3-Page Dossier)
+   ========================================================================== */
+
+/* Hide print dossier on interactive screens */
+@media screen {
+  #brand-book-print-container {
+    display: none;
+  }
+}
+
 @media print {
-  body {
-    background-color: #ffffff !important;
-    color: #000000 !important;
+  /* 1. Global Reset */
+  *, *:before, *:after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html, body, #root {
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
+  /* 2. Hide all interactive UI */
   header,
+  nav,
+  aside,
   footer,
   .no-print,
-  button,
-  .print-hide {
+  .floating-toolbar,
+  #brand-builder-tabs-nav,
+  .guest-meter,
+  .auth-modal {
     display: none !important;
   }
 
+  /* 3. Hide screen dashboard; show print dossier */
+  .screen-dashboard-container {
+    display: none !important;
+  }
+
+  #brand-book-print-container {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 4. Page geometry */
+  @page {
+    size: letter portrait;
+    margin: 1.6cm 1.8cm 1.8cm 1.8cm;
+  }
+
+  /* 5. Dossier page rhythm */
+  .print-dossier-page {
+    page-break-after: always !important;
+    break-after: page !important;
+    min-height: 94vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding-bottom: 2rem;
+  }
+
+  .print-dossier-page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  /* 6. Card break protection */
+  .print-card-avoid-break {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* 7. Force background colors on palette swatches */
+  .print-swatch-box {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 8. Existing editorial surface compat */
   .editorial-surface {
     background: #ffffff !important;
     border: 1px solid #dbd7cd !important;
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-
-  section {
-    page-break-inside: avoid;
-    break-inside: avoid;
-    margin-bottom: 2rem !important;
-  }
-
-  @page {
-    margin: 1.2cm;
-    size: A4 portrait;
   }
 }
+
