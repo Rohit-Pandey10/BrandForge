@@ -304,7 +304,7 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
   };
 
   return (
-    <div className="min-h-screen bg-[#fbfaf9] text-zinc-900 flex flex-col justify-between selection:bg-orange-500 selection:text-white font-sans antialiased">
+    <div className="min-h-screen bg-transparent text-zinc-900 flex flex-col justify-between selection:bg-orange-500 selection:text-white font-sans antialiased">
       {/* Expandable / Collapsible Left Sidebar */}
       <Sidebar
         onRehydrateBrand={handleRehydrateBrand}

@@ -213,3 +213,26 @@
 - [x] Preserved 100% of prompt architecture and resilient backend services (`server/prompts/brandPrompts.js`, `compilerService.js`, `interviewService.js` strictly untouched).
 - [x] Build verified: 0 errors, 1912 modules bundled in 866ms, verified live in browser across desktop and mobile modes.
 
+### Visual Polish Sprint: Liquid Glass Design System, Mobile Viewport Header Fix & Typography Upgrades:
+- [x] **Liquid Glass Canvas & Cards (`client/src/index.css` & `client/src/App.jsx`):**
+  - Upgraded global `body` canvas with fixed ambient warm radial gradients (`#f4f1ea` base with warm stone and champagne gradient orbs).
+  - Defined reusable `.liquid-glass-card` utility (`backdrop-filter: blur(20px) saturate(180%)`, translucent white `rgba(255, 255, 255, 0.72)`, 1px specular white border, dual-layer drop shadows and inset highlight).
+  - Defined `.liquid-glass-button` utility with subtle elevation physics and micro-hover states.
+  - Set root wrapper `bg-transparent` in `App.jsx` so ambient liquid glass orbs display across all stages.
+- [x] **Mobile Preview Header Overhaul (`client/src/components/dashboard/LivePreviewTab.jsx`):**
+  - Extracted `[ Desktop ] [ Mobile ]` segmented device switcher **out** of the simulated browser bar into a dedicated `Viewport Simulator` toolbar above the specimen frame.
+  - Formatted the mobile frame as a realistic smartphone mockup (`max-w-[390px] mx-auto min-h-[720px] rounded-[48px] border-[6px] border-[#222222] shadow-2xl overflow-hidden my-4`) with top camera notch / dynamic island pill (`w-24 h-4 bg-[#222222] rounded-full mx-auto my-2.5`).
+  - Conditioned desktop browser chrome (dots, fake URL bar, tabs) to hide entirely in mobile mode (`!isMobile`).
+  - Re-architected top navigation across `RetailCpgPreview`, `HospitalityPreview`, and `DigitalSaasPreview` to cleanly hide desktop text links on simulated mobile view (`!isMobile`), retaining only the brand wordmark and action button (`Bag (0)` / `Reserve` / `Get Started`) on a single line with zero awkward wrapping, overlapping, or clipping.
+- [x] **Global Typography Scale & Contrast Bump:**
+  - Audited and eliminated unreadable micro-fonts (`text-[10px]`, `text-[11px]`) across cards, badges, and input helpers.
+  - In `IntakeView.jsx`: Upgraded prompt label to `text-xs sm:text-sm font-semibold tracking-wider text-stone-700 uppercase`, input textarea to `text-base sm:text-lg`, keyboard hint to `text-xs text-stone-600 font-medium`, experimentation cards to `text-xs font-semibold`, and 3-step footer cards to `liquid-glass-card rounded-2xl p-5`.
+  - In `InterviewChat.jsx`: Upgraded stage badge to `text-xs font-semibold uppercase tracking-wider text-stone-700`, multi-select pills to `text-xs`, radio option rows to `text-sm sm:text-base text-stone-900 font-normal leading-normal`, textarea to `text-sm sm:text-base`, and synthesis loading card to `liquid-glass-card rounded-[32px] p-10 sm:p-14`.
+  - In `LivePreviewTab.jsx`: Upgraded section headers, comparative ledger rows, flavor profiles, and press quotes to `text-xs font-semibold` and `text-sm`, and updated `PaletteTokenBar` swatches to `text-xs font-semibold` and `text-xs font-mono`.
+  - In `BrandKitDashboard.jsx`: Upgraded AI master prompts modal to `text-xs font-mono text-zinc-800` and helper captions to `text-xs text-zinc-500`.
+- [x] **Liquid Glass Applied to App Shell:**
+  - Applied `liquid-glass-card rounded-[32px]` to central input card (`IntakeView.jsx`) and question studio card (`InterviewChat.jsx`).
+  - Applied `liquid-glass-card rounded-[32px]` to brand monograph header card, `liquid-glass-card rounded-full p-1.5` to tab bar, `liquid-glass-card rounded-[36px]` to live preview container, and `liquid-glass-card` to floating export bar (`BrandKitDashboard.jsx`).
+- [x] **Zero Server & Prompt Regression:** `server/` and `server/prompts/brandPrompts.js` maintained at 0 diff.
+
+

@@ -177,48 +177,48 @@ export default function InterviewChat({
 
       {/* State 1: Synthesis In-Progress Monograph Overlay */}
       {isCompiling ? (
-        <div className="bg-white rounded-3xl border border-zinc-200/80 p-10 sm:p-14 text-center max-w-2xl mx-auto shadow-xs animate-fade-in space-y-4">
+        <div className="liquid-glass-card rounded-[32px] p-10 sm:p-14 text-center max-w-2xl mx-auto shadow-xs animate-fade-in space-y-4">
           <div className="w-14 h-14 mx-auto rounded-2xl bg-orange-50 border border-orange-200 flex items-center justify-center">
             <Sparkles className="w-6 h-6 text-orange-600 animate-spin" />
           </div>
-          <span className="text-[10px] uppercase font-mono tracking-widest text-orange-600 font-semibold block">
+          <span className="text-xs uppercase font-mono tracking-wider text-orange-600 font-semibold block">
             SYNTHESIS IN PROGRESS
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight leading-tight">
             Authoring your Brand Monograph...
           </h2>
-          <p className="text-xs sm:text-sm text-zinc-500 max-w-md mx-auto leading-relaxed">
+          <p className="text-sm text-zinc-600 max-w-md mx-auto leading-relaxed">
             Synthesizing 7 discovery dimensions into typographic scales, contrasting color tokens, voice dos & don'ts, and launch manifesto.
           </p>
         </div>
       ) : isLoading ? (
         /* State 2: In-Flight Loading Card for Upfront Batch */
-        <div className="bg-white rounded-3xl border border-zinc-200/80 p-6 sm:p-10 max-w-2xl mx-auto shadow-xs w-full transition-all animate-fade-in space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-zinc-100">
+        <div className="liquid-glass-card rounded-[32px] p-8 md:p-12 max-w-2xl mx-auto w-full transition-all animate-fade-in space-y-6">
+          <div className="flex items-center justify-between pb-3 border-b border-zinc-200/60">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-orange-500 animate-ping" />
-              <span className="text-[10px] tracking-widest uppercase font-mono text-zinc-500 font-semibold">
+              <span className="text-xs tracking-wider uppercase font-mono text-stone-700 font-semibold">
                 GENERATING 7 DISCOVERY DIMENSIONS
               </span>
             </div>
-            <span className="text-[11px] font-mono text-zinc-400">
+            <span className="text-xs font-mono text-stone-600">
               Batch Discovery Engine
             </span>
           </div>
 
           <div className="space-y-3 py-2">
             <div className="h-4 w-32 bg-zinc-200/80 rounded-full animate-pulse" />
-            <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 tracking-tight leading-snug">
+            <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight leading-snug">
               Mapping strategic discovery questions...
             </h2>
-            <p className="text-xs text-zinc-500 leading-relaxed">
+            <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
               Evaluating your concept to author 7 targeted inquiries across audience, villain, atmosphere, and competitive edge.
             </p>
           </div>
 
           <div className="space-y-2.5 pt-2">
             {[1, 2, 3].map(i => (
-              <div key={i} className="w-full h-14 rounded-xl border border-zinc-200/70 bg-zinc-50/60 animate-pulse flex items-center px-4 gap-3">
+              <div key={i} className="w-full h-14 rounded-xl border border-zinc-200/70 bg-white/50 animate-pulse flex items-center px-4 gap-3">
                 <div className="w-4 h-4 rounded-full border border-zinc-300 shrink-0" />
                 <div className="h-3 bg-zinc-200 rounded w-2/3" />
               </div>
@@ -227,22 +227,22 @@ export default function InterviewChat({
         </div>
       ) : (
         /* State 3: Active Studio Decision Card (Local 0ms Navigation) */
-        <div className="bg-white rounded-3xl border border-zinc-200/80 p-6 sm:p-10 max-w-2xl mx-auto shadow-xs w-full transition-all">
+        <div className="liquid-glass-card rounded-[32px] p-8 md:p-12 max-w-2xl mx-auto w-full transition-all">
           {/* Card Top Metadata Row */}
-          <div className="flex items-center justify-between pb-4 border-b border-zinc-100 mb-6 gap-2">
+          <div className="flex items-center justify-between pb-4 border-b border-zinc-200/60 mb-6 gap-2">
             <div className="flex items-center gap-3">
               {/* Stage Badge: Warm orange pill */}
-              <div className="bg-orange-50 text-orange-600 border border-orange-100 font-semibold text-xs tracking-wide px-3 py-1 rounded-full inline-flex items-center gap-1.5 shadow-2xs">
+              <div className="bg-orange-50 text-orange-700 border border-orange-200/80 font-semibold text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 shadow-2xs">
                 <Layers className="w-3.5 h-3.5 text-orange-500" />
                 <span>{stageLabel.toUpperCase()}</span>
               </div>
               {allowMultiple && (
-                <span className="text-[10px] font-mono uppercase text-orange-700 bg-orange-100/60 px-2 py-0.5 rounded-full font-medium">
+                <span className="text-xs font-mono uppercase text-orange-700 bg-orange-100/60 px-2.5 py-1 rounded-full font-semibold">
                   Multi-Select
                 </span>
               )}
               {initialPitch && (
-                <span className="text-xs text-zinc-400 italic truncate max-w-[140px] sm:max-w-xs hidden sm:inline">
+                <span className="text-xs sm:text-sm text-stone-500 italic truncate max-w-[140px] sm:max-w-xs hidden sm:inline">
                   "{initialPitch}"
                 </span>
               )}
@@ -253,16 +253,16 @@ export default function InterviewChat({
               <button
                 type="button"
                 onClick={handleSynthesizeEarly}
-                className="text-xs text-zinc-500 hover:text-zinc-900 bg-zinc-50 hover:bg-zinc-100 px-3 py-1.5 rounded-lg border border-zinc-200 transition-colors flex items-center gap-1 cursor-pointer font-medium"
+                className="text-xs text-stone-600 hover:text-black bg-white/80 hover:bg-white px-3.5 py-1.5 rounded-lg border border-zinc-200/80 transition-colors flex items-center gap-1.5 cursor-pointer font-medium shadow-2xs"
                 title="Synthesize early with completed answers"
               >
-                <FastForward className="w-3.5 h-3.5 text-zinc-400" />
+                <FastForward className="w-3.5 h-3.5 text-stone-500" />
                 <span className="hidden sm:inline">Synthesize Early</span>
               </button>
 
               <button
                 onClick={onReset}
-                className="p-1.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition-colors cursor-pointer"
+                className="p-1.5 text-stone-400 hover:text-stone-800 hover:bg-white/80 rounded-lg transition-colors cursor-pointer"
                 title="Reset interview"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
@@ -272,7 +272,7 @@ export default function InterviewChat({
 
           {/* Question Headline: Sans-serif high-contrast headline */}
           <div className="mb-6">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight leading-tight">
               {questionHeadline}
             </h2>
           </div>
@@ -283,22 +283,22 @@ export default function InterviewChat({
               <button
                 type="button"
                 onClick={() => setShowRationale(!showRationale)}
-                className="w-full text-left bg-zinc-50 border border-zinc-100 rounded-xl text-xs sm:text-sm text-zinc-600 hover:bg-zinc-100 p-3.5 flex items-center justify-between transition-colors cursor-pointer"
+                className="w-full text-left bg-white/70 border border-zinc-200/80 rounded-xl text-xs sm:text-sm text-stone-700 hover:bg-white p-3.5 flex items-center justify-between transition-colors cursor-pointer shadow-2xs"
               >
                 <div className="flex items-center gap-2 font-medium">
                   <Sparkles className="w-4 h-4 text-orange-500" />
                   <span>Why we are asking this (Strategic Diagnostic)</span>
                 </div>
                 {showRationale ? (
-                  <ChevronUp className="w-4 h-4 text-zinc-400" />
+                  <ChevronUp className="w-4 h-4 text-stone-400" />
                 ) : (
-                  <ChevronDown className="w-4 h-4 text-zinc-400" />
+                  <ChevronDown className="w-4 h-4 text-stone-400" />
                 )}
               </button>
 
               {showRationale && (
-                <div className="mt-2.5 p-4 rounded-xl bg-zinc-50/70 border border-zinc-100 text-xs sm:text-sm text-zinc-600 leading-relaxed animate-fade-in">
-                  <span className="font-semibold text-zinc-800 block mb-1">Strategist Diagnostic:</span>
+                <div className="mt-2.5 p-4 rounded-xl bg-white/80 border border-zinc-200/80 text-xs sm:text-sm text-stone-700 leading-relaxed animate-fade-in shadow-2xs">
+                  <span className="font-semibold text-stone-900 block mb-1">Strategist Diagnostic:</span>
                   {reasoning}
                 </div>
               )}
@@ -308,7 +308,7 @@ export default function InterviewChat({
           {/* Suggested Answer Pills */}
           {suggestedAnswers.length > 0 && (
             <div className="mb-6">
-              <label className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-3 block">
+              <label className="text-xs font-semibold uppercase tracking-wider text-stone-700 mb-3 block">
                 {allowMultiple
                   ? `SUGGESTED DIRECTIONS (SELECT MULTIPLE OR TYPE CUSTOM):`
                   : `SUGGESTED HIGH-SIGNAL OPTIONS:`}
@@ -327,13 +327,13 @@ export default function InterviewChat({
                       onClick={() => handleSelectOption(answer, index)}
                       className={`w-full text-left p-4 rounded-xl transition-all flex items-start gap-3.5 group cursor-pointer ${
                         isSelected
-                          ? 'ring-2 ring-orange-500 bg-orange-50/50 border border-orange-500 text-zinc-900 shadow-2xs'
-                          : 'bg-white border border-zinc-200 text-zinc-700 hover:border-orange-400 hover:shadow-2xs'
+                          ? 'ring-2 ring-orange-500 bg-orange-50/70 border border-orange-500 text-stone-900 shadow-2xs'
+                          : 'bg-white/80 border border-zinc-200/80 text-stone-800 hover:border-orange-400 hover:bg-white hover:shadow-2xs'
                       }`}
                     >
                       {allowMultiple ? (
                         <div
-                          className={`w-4 h-4 rounded-md border mt-0.5 flex items-center justify-center shrink-0 transition-colors ${
+                          className={`w-4 h-4 rounded-md border mt-1 flex items-center justify-center shrink-0 transition-colors ${
                             isSelected
                               ? 'bg-orange-500 border-orange-500 text-white'
                               : 'border-zinc-300 bg-white group-hover:border-orange-400'
@@ -343,7 +343,7 @@ export default function InterviewChat({
                         </div>
                       ) : (
                         <div
-                          className={`w-4 h-4 rounded-full border mt-0.5 flex items-center justify-center shrink-0 transition-colors ${
+                          className={`w-4 h-4 rounded-full border mt-1 flex items-center justify-center shrink-0 transition-colors ${
                             isSelected ? 'border-orange-500 bg-orange-500' : 'border-zinc-300 group-hover:border-orange-400'
                           }`}
                         >
@@ -351,7 +351,7 @@ export default function InterviewChat({
                         </div>
                       )}
 
-                      <div className="flex-1 text-sm font-medium leading-relaxed">
+                      <div className="flex-1 text-sm sm:text-base text-stone-900 font-normal leading-normal">
                         {answer}
                       </div>
 
@@ -370,7 +370,7 @@ export default function InterviewChat({
             <div>
               <label
                 htmlFor="nuancedAnswer"
-                className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-2 block"
+                className="text-xs font-semibold uppercase tracking-wider text-stone-700 mb-2 block"
               >
                 Refine or type custom answer:
               </label>
@@ -388,7 +388,7 @@ export default function InterviewChat({
                   }
                 }}
                 placeholder="Refine the selected response or type your exact conviction..."
-                className="bg-zinc-50 border border-zinc-200 rounded-xl text-zinc-900 placeholder:text-zinc-400 p-3.5 text-sm w-full min-h-[80px] resize-none focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none"
+                className="bg-white/80 border border-zinc-200/80 rounded-xl text-stone-900 placeholder:text-stone-400 p-4 text-sm sm:text-base w-full min-h-[85px] resize-none focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none leading-relaxed"
               />
             </div>
 

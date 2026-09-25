@@ -137,15 +137,65 @@ export default function LivePreviewTab(props) {
 
   return (
     <div className="space-y-6 animate-fade-in pb-28">
+      {/* ── Viewport Simulator Toolbar (Above Preview Frame) ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-semibold tracking-wider uppercase text-stone-700 font-mono">
+            Viewport Simulator
+          </span>
+          <span className="text-stone-300 hidden sm:inline">•</span>
+          <span className="text-xs font-mono text-stone-500 hidden sm:inline">
+            {isMobile ? 'iPhone 15 Pro (390px Viewport)' : 'MacBook Pro Desktop (Full Canvas)'}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-3">
+          {/* Segmented Device Switcher */}
+          <div className="flex items-center p-0.5 bg-stone-200/80 border border-stone-300/80 rounded-xl shadow-2xs">
+            <button
+              type="button"
+              onClick={() => setPreviewDevice('desktop')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded-lg transition-all cursor-pointer ${
+                !isMobile
+                  ? 'bg-black text-white shadow-xs'
+                  : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
+              }`}
+              title="Desktop View (Full Width)"
+            >
+              <Monitor className="w-3.5 h-3.5" />
+              <span>Desktop</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setPreviewDevice('mobile')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded-lg transition-all cursor-pointer ${
+                isMobile
+                  ? 'bg-black text-white shadow-xs'
+                  : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
+              }`}
+              title="Mobile View (390px Viewport)"
+            >
+              <Smartphone className="w-3.5 h-3.5" />
+              <span>Mobile</span>
+            </button>
+          </div>
+
+          <span className="text-xs uppercase font-mono tracking-wider text-stone-600 font-semibold hidden md:inline">
+            {domainBadge}
+          </span>
+        </div>
+      </div>
+
       {/* ── Viewport Specimen Frame (Desktop vs Mobile) ── */}
       <div
         className={`w-full bg-white transition-all duration-300 ${
           isMobile
-            ? 'max-w-[390px] mx-auto shadow-2xl border-4 border-stone-800 rounded-[44px] overflow-hidden my-4'
+            ? 'max-w-[390px] mx-auto min-h-[720px] rounded-[48px] border-[6px] border-[#222222] shadow-2xl overflow-hidden my-4'
             : 'border border-[#dbd7cd] overflow-hidden shadow-sm rounded-[28px]'
         }`}
         style={{
-          borderRadius: isMobile ? '44px' : '28px',
+          borderRadius: isMobile ? '48px' : '28px',
           '--brand-primary':    primaryColor,
           '--brand-secondary':  secondaryColor,
           '--brand-surface':    surfaceColor,
@@ -155,59 +205,28 @@ export default function LivePreviewTab(props) {
           fontFamily: fontStyle.body
         }}
       >
-        {/* Browser chrome with Viewport Switcher */}
-        <div className="bg-[#faf9f6] border-b border-[#dbd7cd] px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
-            <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
-            <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
-          </div>
-
-          <div className="px-5 py-1 rounded-full bg-white border border-[#dbd7cd] text-[11px] font-mono text-stone-500 max-w-xs truncate hidden sm:block">
-            {domainUrl}
-          </div>
-
-          <div className="flex items-center gap-3 shrink-0">
-            {/* Vraj's Desktop / Mobile Viewport Switcher */}
-            <div className="flex items-center p-0.5 bg-stone-200/80 border border-stone-300/80 rounded-lg shadow-2xs">
-              <button
-                type="button"
-                onClick={() => setPreviewDevice('desktop')}
-                className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-medium rounded-md transition-all ${
-                  !isMobile
-                    ? 'bg-black text-white shadow-xs'
-                    : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
-                }`}
-                title="Desktop View (Full Width)"
-              >
-                <Monitor className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Desktop</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPreviewDevice('mobile')}
-                className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-medium rounded-md transition-all ${
-                  isMobile
-                    ? 'bg-black text-white shadow-xs'
-                    : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
-                }`}
-                title="Mobile View (390px Viewport)"
-              >
-                <Smartphone className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Mobile</span>
-              </button>
+        {/* Desktop Browser Chrome: Only rendered in desktop view */}
+        {!isMobile && (
+          <div className="bg-[#faf9f6] border-b border-[#dbd7cd] px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
+              <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
+              <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
             </div>
 
-            <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 hidden md:inline">
+            <div className="px-5 py-1 rounded-full bg-white border border-[#dbd7cd] text-xs font-mono text-stone-600 max-w-xs truncate">
+              {domainUrl}
+            </div>
+
+            <span className="text-xs uppercase font-mono tracking-wider text-stone-500 hidden sm:inline font-medium">
               {domainBadge}
             </span>
           </div>
-        </div>
+        )}
 
         {/* Mobile Camera Notch / Dynamic Island */}
         {isMobile && (
-          <div className="w-24 h-4 bg-stone-800 rounded-full mx-auto my-2 shrink-0 animate-fade-in" />
+          <div className="w-24 h-4 bg-[#222222] rounded-full mx-auto my-2.5 shrink-0 animate-fade-in" />
         )}
 
         {archetype === 'retail_cpg'   && <RetailCpgPreview   {...sharedProps} />}
@@ -297,7 +316,7 @@ function CatalogGrid({
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-[11px] uppercase font-mono tracking-widest" style={{ color: subtleTextColor }}>
+        <span className="text-xs uppercase font-mono tracking-wider font-semibold" style={{ color: subtleTextColor }}>
           {section.title}
         </span>
         {section.subtitle && (
@@ -355,7 +374,7 @@ function CatalogGrid({
                 {/* Tag badge using accent tint */}
                 {item.tag && (
                   <span
-                    className="text-[10px] font-mono px-2 py-1 rounded font-semibold"
+                    className="text-xs font-mono px-2 py-1 rounded font-semibold"
                     style={{
                       backgroundColor: `${accentColor}15`,
                       color: accentColor,
@@ -406,7 +425,7 @@ function RitualSteps({
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-[11px] uppercase font-mono tracking-widest" style={{ color: subtleTextColor }}>
+        <span className="text-xs uppercase font-mono tracking-wider font-semibold" style={{ color: subtleTextColor }}>
           {section.title}
         </span>
         {section.subtitle && (
@@ -445,7 +464,7 @@ function RitualSteps({
               {item.description}
             </p>
             {item.metricOrPrice && (
-              <span className="text-[10px] font-mono mt-3 block" style={{ color: subtleTextColor }}>
+              <span className="text-xs font-mono mt-3 block" style={{ color: subtleTextColor }}>
                 {item.metricOrPrice}
               </span>
             )}
@@ -476,7 +495,7 @@ function FlavorProfile({
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-[11px] uppercase font-mono tracking-widest" style={{ color: subtleTextColor }}>
+        <span className="text-xs uppercase font-mono tracking-wider font-semibold" style={{ color: subtleTextColor }}>
           {section.title}
         </span>
         {section.subtitle && (
@@ -512,13 +531,13 @@ function FlavorProfile({
               {item.label}
             </h4>
             <p
-              className="text-[11px] leading-relaxed"
+              className="text-xs leading-relaxed"
               style={{ color: bodyTextColor, fontFamily: fontStyle.body }}
             >
               {item.description}
             </p>
             {item.tag && (
-              <span className="text-[10px] font-mono mt-2 block" style={{ color: subtleTextColor }}>
+              <span className="text-xs font-mono mt-2 block" style={{ color: subtleTextColor }}>
                 {item.tag}
               </span>
             )}
@@ -550,7 +569,7 @@ function ComparativeLedger({
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-[11px] uppercase font-mono tracking-widest" style={{ color: subtleTextColor }}>
+        <span className="text-xs font-semibold uppercase font-mono tracking-wider" style={{ color: subtleTextColor }}>
           {section.title}
         </span>
         {section.subtitle && (
@@ -572,7 +591,7 @@ function ComparativeLedger({
           }}
         >
           <span
-            className="text-[10px] uppercase font-mono tracking-widest font-bold block mb-3"
+            className="text-xs uppercase font-mono tracking-wider font-bold block mb-3"
             style={{ color: headingTextColor }}
           >
             {brandStrategy?.brandName || 'This Brand'}
@@ -582,11 +601,11 @@ function ComparativeLedger({
               <div key={i} className="flex items-start gap-2">
                 <Check className="w-3.5 h-3.5 mt-0.5 text-emerald-500 shrink-0" />
                 <div>
-                  <span className="text-xs font-semibold block" style={{ color: headingTextColor }}>
+                  <span className="text-sm font-semibold block" style={{ color: headingTextColor }}>
                     {item.label}
                   </span>
                   {item.description && (
-                    <span className="text-[11px]" style={{ color: subtleTextColor }}>
+                    <span className="text-xs" style={{ color: subtleTextColor }}>
                       {item.description}
                     </span>
                   )}
@@ -606,7 +625,7 @@ function ComparativeLedger({
           }}
         >
           <span
-            className="text-[10px] uppercase font-mono tracking-widest font-medium block mb-3"
+            className="text-xs uppercase font-mono tracking-wider font-semibold block mb-3"
             style={{ color: subtleTextColor }}
           >
             The Industry Default
@@ -620,7 +639,7 @@ function ComparativeLedger({
                 />
                 <div>
                   <span
-                    className="text-xs font-medium block line-through"
+                    className="text-sm font-medium block line-through"
                     style={{
                       color: subtleTextColor,
                       textDecorationColor: subtleTextColor
@@ -629,7 +648,7 @@ function ComparativeLedger({
                     {item.label}
                   </span>
                   {item.description && (
-                    <span className="text-[11px]" style={{ color: subtleTextColor }}>
+                    <span className="text-xs" style={{ color: subtleTextColor }}>
                       {item.description}
                     </span>
                   )}
@@ -658,7 +677,7 @@ function PressQuotes({
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-[11px] uppercase font-mono tracking-widest" style={{ color: subtleTextColor }}>
+        <span className="text-xs uppercase font-mono tracking-wider font-semibold" style={{ color: subtleTextColor }}>
           {section.title}
         </span>
       </div>
@@ -690,7 +709,7 @@ function PressQuotes({
                   {item.label}
                 </span>
                 {item.tag && (
-                  <span className="text-[10px] font-mono" style={{ color: subtleTextColor }}>
+                  <span className="text-xs font-mono" style={{ color: subtleTextColor }}>
                     {item.tag}
                   </span>
                 )}
@@ -751,49 +770,41 @@ function RetailCpgPreview({
     >
       {/* Nav */}
       <div
-        className={`border-b gap-4 mb-6 sm:mb-8 pb-5 sm:pb-6 flex ${
-          isMobile
-            ? 'flex-col items-start gap-3'
-            : 'flex-col sm:flex-row sm:items-center justify-between'
-        }`}
+        className="flex items-center justify-between pb-4 mb-6 border-b gap-2"
         style={{ borderColor: cardBorderColor }}
       >
-        <div className="flex items-center gap-3">
-          <span
-            className={`font-medium tracking-tight ${isMobile ? 'text-xl' : 'text-2xl sm:text-3xl'}`}
-            style={{ color: headingTextColor, fontFamily: fontStyle.display }}
-          >
-            {brandName}
-          </span>
-          {/* Accent badge pill */}
-          <span
-            className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full font-semibold"
-            style={{ backgroundColor: `${accentColor}20`, color: accentColor, border: `1px solid ${accentColor}50` }}
-          >
-            {badge}
-          </span>
-        </div>
-        <div className={`flex items-center gap-4 text-xs ${isMobile ? 'w-full justify-between' : 'gap-6'}`} style={{ color: bodyTextColor }}>
-          {!isMobile && <span className="cursor-pointer font-medium hover:opacity-80 transition-opacity">Products</span>}
-          {!isMobile && <span className="cursor-pointer hidden sm:inline hover:opacity-80 transition-opacity">Craft & Sourcing</span>}
-          {!isMobile && <span className="cursor-pointer hidden md:inline hover:opacity-80 transition-opacity">Stockists</span>}
-          {/* Secondary color on bag counter */}
+        <span
+          className="text-xl sm:text-2xl md:text-3xl font-medium tracking-tight truncate"
+          style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+        >
+          {brandName}
+        </span>
+        <div className="flex items-center gap-2">
+          {/* Hide text links on mobile, keep clean icon/cart */}
+          {!isMobile && (
+            <div className="hidden sm:flex items-center gap-4 text-xs font-medium" style={{ color: bodyTextColor }}>
+              <span className="cursor-pointer hover:opacity-80 transition-opacity">Products</span>
+              <span className="cursor-pointer hover:opacity-80 transition-opacity">Craft</span>
+              <span className="cursor-pointer hover:opacity-80 transition-opacity hidden md:inline">Stockists</span>
+            </div>
+          )}
           <button
-            className={`px-4 py-2 text-xs font-medium transition-all hover:opacity-90 flex items-center gap-2 ${isMobile ? 'ml-auto' : ''}`}
-            style={{ backgroundColor: secondaryColor, color: secondaryContrast, borderRadius: radiusCurvature }}
+            className="px-3.5 py-1.5 text-xs font-medium flex items-center gap-1.5 shrink-0 rounded-full transition-opacity hover:opacity-90"
+            style={{ backgroundColor: primaryColor, color: primaryContrast }}
           >
-            <ShoppingBag className="w-3.5 h-3.5" /><span>Bag (0)</span>
+            <ShoppingBag className="w-3.5 h-3.5" />
+            <span className="text-xs">Bag (0)</span>
           </button>
         </div>
       </div>
 
       {/* Announcement bar — accent tint */}
       <div
-        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-mono mb-6 self-start max-w-full"
+        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium mb-6 self-start max-w-full font-mono"
         style={{ backgroundColor: `${accentColor}15`, border: `1px solid ${accentColor}40`, color: accentColor }}
       >
         <Sparkles className="w-3 h-3 shrink-0" style={{ color: accentColor }} />
-        <span className="uppercase tracking-wide font-medium truncate">{annBar}</span>
+        <span className="uppercase tracking-wide truncate">{annBar}</span>
       </div>
 
       {/* Hero */}
@@ -867,7 +878,7 @@ function RetailCpgPreview({
               <div className="mt-8 pt-8 border-t space-y-6" style={{ borderColor: cardBorderColor }}>
                 {/* Comparative Positioning Ledger */}
                 <div>
-                  <span className="text-[11px] uppercase font-mono tracking-widest block mb-4" style={{ color: subtleTextColor }}>
+                  <span className="text-xs font-semibold uppercase font-mono tracking-wider block mb-4" style={{ color: subtleTextColor }}>
                     THE STANDARD WE REJECT
                   </span>
                   <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2'}`}>
@@ -883,7 +894,7 @@ function RetailCpgPreview({
                       }}
                     >
                       <span
-                        className="text-[10px] uppercase font-mono tracking-widest font-bold block mb-3"
+                        className="text-xs uppercase font-mono tracking-wider font-bold block mb-3"
                         style={{ color: headingTextColor }}
                       >
                         {brandName}
@@ -897,10 +908,10 @@ function RetailCpgPreview({
                           <div key={i} className="flex items-start gap-2">
                             <Check className="w-3.5 h-3.5 mt-0.5 text-emerald-500 shrink-0" />
                             <div>
-                              <span className="text-xs font-semibold block" style={{ color: headingTextColor }}>
+                              <span className="text-sm font-semibold block" style={{ color: headingTextColor }}>
                                 {row.label}
                               </span>
-                              <span className="text-[11px]" style={{ color: subtleTextColor }}>
+                              <span className="text-xs" style={{ color: subtleTextColor }}>
                                 {row.desc}
                               </span>
                             </div>
@@ -918,7 +929,7 @@ function RetailCpgPreview({
                       }}
                     >
                       <span
-                        className="text-[10px] uppercase font-mono tracking-widest font-medium block mb-3"
+                        className="text-xs uppercase font-mono tracking-wider font-semibold block mb-3"
                         style={{ color: subtleTextColor }}
                       >
                         The Industry Default
@@ -930,9 +941,9 @@ function RetailCpgPreview({
                           { label: 'Plastic excess and greenwashing' }
                         ].map((row, i) => (
                           <div key={i} className="flex items-start gap-2">
-                            <span className="w-3 h-px mt-2 shrink-0" style={{ backgroundColor: subtleTextColor }} />
+                            <span className="w-3.5 h-px mt-2 shrink-0" style={{ backgroundColor: subtleTextColor }} />
                             <span
-                              className="text-xs font-medium line-through"
+                              className="text-sm font-medium line-through"
                               style={{
                                 color: subtleTextColor,
                                 textDecorationColor: subtleTextColor
@@ -963,10 +974,10 @@ function RetailCpgPreview({
                         borderColor: cardBorderColor
                       }}
                     >
-                      <span className="text-[10px] uppercase font-mono block mb-1" style={{ color: subtleTextColor }}>
+                      <span className="text-xs uppercase font-mono font-semibold tracking-wider block mb-1" style={{ color: subtleTextColor }}>
                         {card.label}
                       </span>
-                      <p className="text-xs font-medium leading-snug" style={{ color: headingTextColor }}>
+                      <p className="text-sm font-medium leading-relaxed" style={{ color: headingTextColor }}>
                         {card.value}
                       </p>
                     </div>
@@ -992,10 +1003,10 @@ function RetailCpgPreview({
                       borderColor: cardBorderColor
                     }}
                   >
-                    <span className="text-[10px] uppercase font-mono block mb-1" style={{ color: subtleTextColor }}>
+                    <span className="text-xs uppercase font-mono font-semibold tracking-wider block mb-1" style={{ color: subtleTextColor }}>
                       {card.label}
                     </span>
-                    <p className="text-xs font-medium leading-snug" style={{ color: headingTextColor }}>
+                    <p className="text-sm font-medium leading-relaxed" style={{ color: headingTextColor }}>
                       {card.value}
                     </p>
                   </div>
@@ -1018,11 +1029,11 @@ function RetailCpgPreview({
           >
             {brandName}
           </span>
-          <span className="text-[10px] font-mono" style={{ color: subtleTextColor }}>
+          <span className="text-xs font-mono" style={{ color: subtleTextColor }}>
             {brandStrategy.tagline || launchContent.heroHeadline || ''}
           </span>
         </div>
-        <div className={`flex items-center text-[10px] font-mono ${isMobile ? 'flex-col items-start gap-1.5' : 'gap-4'}`} style={{ color: subtleTextColor }}>
+        <div className={`flex items-center text-xs font-mono ${isMobile ? 'flex-col items-start gap-1.5' : 'gap-4'}`} style={{ color: subtleTextColor }}>
           <span className="hover:opacity-80 cursor-pointer">Shipping & Returns</span>
           <span className="hover:opacity-80 cursor-pointer">Wholesale Inquiries</span>
           <span className="hover:opacity-80 cursor-pointer">Ingredient Transparency</span>
@@ -1078,44 +1089,39 @@ function HospitalityPreview({
       }`}
       style={{ backgroundColor: surfaceColor }}
     >
+      {/* Nav */}
       <div
-        className={`border-b gap-4 mb-6 pb-5 sm:pb-6 flex ${
-          isMobile
-            ? 'flex-col items-start gap-3'
-            : 'flex-col sm:flex-row sm:items-center justify-between'
-        }`}
+        className="flex items-center justify-between pb-4 mb-6 border-b gap-2"
         style={{ borderColor: cardBorderColor }}
       >
-        <div className="flex items-center gap-3">
-          <span
-            className={`font-light tracking-tight ${isMobile ? 'text-xl' : 'text-2xl sm:text-3xl'}`}
-            style={{ color: headingTextColor, fontFamily: fontStyle.display }}
-          >
-            {brandName}
-          </span>
-          <span
-            className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full font-semibold"
-            style={{ backgroundColor: `${accentColor}20`, color: accentColor, border: `1px solid ${accentColor}50` }}
-          >
-            {badge}
-          </span>
-        </div>
-        <div className={`flex items-center text-xs ${isMobile ? 'w-full justify-between' : 'gap-5'}`} style={{ color: bodyTextColor }}>
-          {!isMobile && <span className="cursor-pointer font-medium hover:opacity-80 transition-opacity">Daily Menu</span>}
-          {!isMobile && <span className="cursor-pointer hidden sm:inline hover:opacity-80 transition-opacity">Private Dining</span>}
-          {!isMobile && <span className="cursor-pointer hidden md:inline hover:opacity-80 transition-opacity">Location & Hours</span>}
+        <span
+          className="text-xl sm:text-2xl md:text-3xl font-light tracking-tight truncate"
+          style={{ color: headingTextColor, fontFamily: fontStyle.display }}
+        >
+          {brandName}
+        </span>
+        <div className="flex items-center gap-2">
+          {/* Hide text links on mobile, keep clean reserve button */}
+          {!isMobile && (
+            <div className="hidden sm:flex items-center gap-4 text-xs font-medium" style={{ color: bodyTextColor }}>
+              <span className="cursor-pointer hover:opacity-80 transition-opacity">Daily Menu</span>
+              <span className="cursor-pointer hover:opacity-80 transition-opacity">Private Dining</span>
+              <span className="cursor-pointer hover:opacity-80 transition-opacity hidden md:inline">Hours</span>
+            </div>
+          )}
           <button
-            className={`px-4 py-2 text-xs font-medium transition-all hover:opacity-90 ${isMobile ? 'ml-auto' : ''}`}
-            style={{ backgroundColor: secondaryColor, color: secondaryContrast, borderRadius: radiusCurvature }}
+            className="px-3.5 py-1.5 text-xs font-medium flex items-center gap-1.5 shrink-0 rounded-full transition-opacity hover:opacity-90"
+            style={{ backgroundColor: primaryColor, color: primaryContrast }}
           >
-            Reserve a Table
+            <Clock className="w-3.5 h-3.5" />
+            <span className="text-xs">Reserve</span>
           </button>
         </div>
       </div>
 
       {/* Announcement ribbon — accent tint */}
       <div
-        className="inline-flex items-center gap-2 text-[11px] font-mono mb-6 px-3.5 py-1.5 rounded-full w-fit max-w-full"
+        className="inline-flex items-center gap-2 text-xs font-medium font-mono mb-6 px-3.5 py-1.5 rounded-full w-fit max-w-full"
         style={{ backgroundColor: `${accentColor}15`, border: `1px solid ${accentColor}40`, color: accentColor }}
       >
         <Clock className="w-3.5 h-3.5 shrink-0" style={{ color: accentColor }} />
@@ -1189,7 +1195,7 @@ function HospitalityPreview({
               <div className="mt-8 pt-8 border-t space-y-6" style={{ borderColor: cardBorderColor }}>
                 {/* Tonight's culinary philosophy ledger */}
                 <div>
-                  <span className="text-[11px] uppercase font-mono tracking-widest block mb-4" style={{ color: subtleTextColor }}>
+                  <span className="text-xs font-semibold uppercase font-mono tracking-wider block mb-4" style={{ color: subtleTextColor }}>
                     OUR KITCHEN PHILOSOPHY
                   </span>
                   <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2'}`}>
@@ -1204,7 +1210,7 @@ function HospitalityPreview({
                       }}
                     >
                       <span
-                        className="text-[10px] uppercase font-mono tracking-widest font-bold block mb-3"
+                        className="text-xs uppercase font-mono tracking-wider font-bold block mb-3"
                         style={{ color: headingTextColor }}
                       >
                         {brandName}
@@ -1218,10 +1224,10 @@ function HospitalityPreview({
                           <div key={i} className="flex items-start gap-2">
                             <Check className="w-3.5 h-3.5 mt-0.5 text-emerald-500 shrink-0" />
                             <div>
-                              <span className="text-xs font-semibold block" style={{ color: headingTextColor }}>
+                              <span className="text-sm font-semibold block" style={{ color: headingTextColor }}>
                                 {row.label}
                               </span>
-                              <span className="text-[11px]" style={{ color: subtleTextColor }}>
+                              <span className="text-xs" style={{ color: subtleTextColor }}>
                                 {row.desc}
                               </span>
                             </div>
@@ -1238,7 +1244,7 @@ function HospitalityPreview({
                       }}
                     >
                       <span
-                        className="text-[10px] uppercase font-mono tracking-widest font-medium block mb-3"
+                        className="text-xs uppercase font-mono tracking-wider font-semibold block mb-3"
                         style={{ color: subtleTextColor }}
                       >
                         The Industry Default
@@ -1252,7 +1258,7 @@ function HospitalityPreview({
                           <div key={i} className="flex items-start gap-2">
                             <span className="w-3 h-px mt-2 shrink-0" style={{ backgroundColor: subtleTextColor }} />
                             <span
-                              className="text-xs font-medium line-through"
+                              className="text-sm font-medium line-through"
                               style={{
                                 color: subtleTextColor,
                                 textDecorationColor: subtleTextColor
@@ -1283,10 +1289,10 @@ function HospitalityPreview({
                         borderColor: cardBorderColor
                       }}
                     >
-                      <span className="text-[10px] uppercase font-mono block mb-1" style={{ color: subtleTextColor }}>
+                      <span className="text-xs uppercase font-mono font-semibold tracking-wider block mb-1" style={{ color: subtleTextColor }}>
                         {card.label}
                       </span>
-                      <p className="text-xs font-medium leading-snug" style={{ color: headingTextColor }}>
+                      <p className="text-sm font-medium leading-relaxed" style={{ color: headingTextColor }}>
                         {card.value}
                       </p>
                     </div>
@@ -1311,10 +1317,10 @@ function HospitalityPreview({
                       borderColor: cardBorderColor
                     }}
                   >
-                    <span className="text-[10px] uppercase font-mono block mb-1" style={{ color: subtleTextColor }}>
+                    <span className="text-xs uppercase font-mono font-semibold tracking-wider block mb-1" style={{ color: subtleTextColor }}>
                       {card.label}
                     </span>
-                    <p className="text-xs font-medium leading-snug" style={{ color: headingTextColor }}>
+                    <p className="text-sm font-medium leading-relaxed" style={{ color: headingTextColor }}>
                       {card.value}
                     </p>
                   </div>
@@ -1337,11 +1343,11 @@ function HospitalityPreview({
           >
             {brandName}
           </span>
-          <span className="text-[10px] font-mono" style={{ color: subtleTextColor }}>
+          <span className="text-xs font-mono" style={{ color: subtleTextColor }}>
             {brandStrategy.tagline || launchContent.heroHeadline || ''}
           </span>
         </div>
-        <div className={`flex items-center text-[10px] font-mono ${isMobile ? 'flex-col items-start gap-1.5' : 'gap-4'}`} style={{ color: subtleTextColor }}>
+        <div className={`flex items-center text-xs font-mono ${isMobile ? 'flex-col items-start gap-1.5' : 'gap-4'}`} style={{ color: subtleTextColor }}>
           <span className="hover:opacity-80 cursor-pointer">Booking & Reservations</span>
           <span className="hover:opacity-80 cursor-pointer">Private Events</span>
           <span className="hover:opacity-80 cursor-pointer">Sourcing Philosophy</span>
@@ -1379,20 +1385,20 @@ function DigitalSaasPreview({
         isMobile ? 'p-4 sm:p-6' : 'p-6 sm:p-14'
       }`}
     >
-      <div className={`border-b border-stone-800 pb-5 mb-6 flex ${isMobile ? 'flex-col items-start gap-3' : 'items-center justify-between'}`}>
-        <div className="flex items-center gap-3">
-          <span className="font-mono text-xl font-bold tracking-tight">{brandName}</span>
-          <div className="flex items-center gap-1.5">
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-stone-800 text-stone-400">v2.4.0</span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40">{badge}</span>
-          </div>
+      <div className="flex items-center justify-between pb-4 mb-6 border-b border-stone-800 gap-2">
+        <div className="flex items-center gap-2 truncate">
+          <span className="font-mono text-lg sm:text-xl font-bold tracking-tight text-white truncate">{brandName}</span>
+          <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40 shrink-0">{badge}</span>
         </div>
-        <div className={`flex items-center gap-4 text-xs text-stone-400 font-mono ${isMobile ? 'w-full justify-between' : ''}`}>
-          {!isMobile && <span className="hover:text-white cursor-pointer">Features</span>}
-          {!isMobile && <span className="hover:text-white cursor-pointer hidden sm:inline">Docs</span>}
-          {!isMobile && <span className="hover:text-white cursor-pointer hidden md:inline">Changelog</span>}
+        <div className="flex items-center gap-2">
+          {!isMobile && (
+            <div className="hidden sm:flex items-center gap-4 text-xs text-stone-400 font-mono">
+              <span className="hover:text-white cursor-pointer">Features</span>
+              <span className="hover:text-white cursor-pointer">Docs</span>
+            </div>
+          )}
           <button
-            className={`px-4 py-1.5 text-xs font-mono font-medium transition-all hover:opacity-90 ${isMobile ? 'ml-auto' : ''}`}
+            className="px-3.5 py-1.5 text-xs font-mono font-medium rounded-md transition-all hover:opacity-90 shrink-0"
             style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}
           >
             {primaryCta}
@@ -1409,27 +1415,27 @@ function DigitalSaasPreview({
         >
           {launchContent.heroHeadline || 'Low-Latency Infrastructure for Modern Teams.'}
         </h2>
-        <p className={`text-stone-400 leading-relaxed mb-6 ${isMobile ? 'text-xs sm:text-sm' : 'text-sm sm:text-base'}`}>
+        <p className={`text-stone-300 leading-relaxed mb-6 ${isMobile ? 'text-sm' : 'text-base'}`}>
           {launchContent.heroSubheadline || brandStrategy.coreValueProposition}
         </p>
 
         <div className="p-4 bg-black border border-stone-800 font-mono text-xs text-emerald-400 space-y-1 mb-6" style={{ borderRadius: radiusCurvature }}>
-          <div className="text-stone-500 text-[10px] flex items-center justify-between">
-            <span>// Quick install</span><span className="text-stone-600">zsh / bash</span>
+          <div className="text-stone-400 text-xs flex items-center justify-between">
+            <span>// Quick install</span><span className="text-stone-500">zsh / bash</span>
           </div>
           <div className="flex items-center justify-between pt-1 gap-2">
             <code className="truncate text-emerald-400">{installCmd}</code>
             <button onClick={handleCopy}
-              className="text-[11px] text-stone-400 hover:text-white shrink-0 flex items-center gap-1 px-2 py-0.5 rounded bg-stone-900 border border-stone-800">
+              className="text-xs text-stone-300 hover:text-white shrink-0 flex items-center gap-1 px-2.5 py-1 rounded bg-stone-900 border border-stone-800">
               {copied
-                ? <><Check className="w-3 h-3 text-emerald-400" /><span className="text-emerald-400">Copied</span></>
-                : <><Copy className="w-3 h-3" /><span>Copy</span></>
+                ? <><Check className="w-3.5 h-3.5 text-emerald-400" /><span className="text-emerald-400">Copied</span></>
+                : <><Copy className="w-3.5 h-3.5" /><span>Copy</span></>
               }
             </button>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <button className="px-6 py-2.5 text-sm font-mono font-medium transition-all hover:opacity-90"
             style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}>
             {primaryCta} →
@@ -1442,14 +1448,14 @@ function DigitalSaasPreview({
         <div className="space-y-8 mt-6 pt-6 border-t border-stone-800">
           {blueprint.sections.map((section, i) => (
             <div key={i}>
-              <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500 block mb-4">{section.title}</span>
+              <span className="text-xs font-semibold uppercase font-mono tracking-wider text-stone-400 block mb-4">{section.title}</span>
               <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-3'}`}>
                 {(section.items || []).map((item, j) => (
                   <div key={j} className="p-4 bg-stone-900/60 border border-stone-800" style={{ borderRadius: radiusCurvature }}>
-                    {item.metricOrPrice && <span className="text-[10px] font-mono text-stone-500 block mb-1">{item.metricOrPrice}</span>}
-                    <p className="text-xs font-semibold text-stone-200 mb-1">{item.label}</p>
-                    <p className="text-xs text-stone-500 font-mono leading-snug">{item.description}</p>
-                    {item.tag && <span className="text-[10px] font-mono text-emerald-500 mt-2 block">{item.tag}</span>}
+                    {item.metricOrPrice && <span className="text-xs font-mono text-stone-400 block mb-1">{item.metricOrPrice}</span>}
+                    <p className="text-sm font-semibold text-stone-200 mb-1">{item.label}</p>
+                    <p className="text-xs text-stone-400 font-mono leading-relaxed">{item.description}</p>
+                    {item.tag && <span className="text-xs font-mono text-emerald-400 mt-2 block">{item.tag}</span>}
                   </div>
                 ))}
               </div>
@@ -1464,8 +1470,8 @@ function DigitalSaasPreview({
             { label: '03 / Legacy Bloat Axed',     value: brandStrategy.antiHero       || 'Complex JVM runtimes' }
           ].map(card => (
             <div key={card.label} className="p-4 bg-stone-900/60 border border-stone-800" style={{ borderRadius: radiusCurvature }}>
-              <span className="text-[10px] uppercase font-mono text-stone-500 block mb-1">{card.label}</span>
-              <p className="text-xs text-stone-300 font-mono leading-snug">{card.value}</p>
+              <span className="text-xs uppercase font-mono font-semibold tracking-wider text-stone-400 block mb-1">{card.label}</span>
+              <p className="text-sm text-stone-200 font-mono leading-relaxed">{card.value}</p>
             </div>
           ))}
         </div>
@@ -1473,6 +1479,7 @@ function DigitalSaasPreview({
     </div>
   );
 }
+
 
 // =============================================================================
 // PALETTE & TOKEN BAR
@@ -1490,9 +1497,9 @@ function PaletteTokenBar({ palette, fontStyle }) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3 pb-3 border-b border-[#dbd7cd]/60">
         <div className="flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-black" />
-          <span className="text-[10px] uppercase font-mono tracking-widest text-stone-500 font-medium">SYNTHESIZED PALETTE & TOKENS</span>
+          <span className="text-xs uppercase font-mono tracking-wider text-stone-700 font-semibold">SYNTHESIZED PALETTE & TOKENS</span>
         </div>
-        <span className="text-[11px] font-mono text-stone-400">Click any swatch to copy HEX</span>
+        <span className="text-xs font-mono text-stone-500">Click any swatch to copy HEX</span>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
         {palette.slice(0, 5).map(color => {
@@ -1502,7 +1509,7 @@ function PaletteTokenBar({ palette, fontStyle }) {
               className="group p-3 rounded-2xl border border-[#dbd7cd]/80 hover:border-black bg-[#faf9f6] text-left transition-all flex flex-col justify-between"
               title={`Click to copy ${color.hex}`}>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] uppercase font-mono tracking-wider text-stone-500">{color.role}</span>
+                <span className="text-xs uppercase font-mono tracking-wider text-stone-600 font-medium">{color.role}</span>
                 {isCopied
                   ? <Check className="w-3 h-3 text-emerald-600" />
                   : <Copy className="w-3 h-3 text-stone-300 group-hover:text-black transition-colors" />
@@ -1512,7 +1519,7 @@ function PaletteTokenBar({ palette, fontStyle }) {
                 <div className="w-5 h-5 rounded-full border border-black/10 shrink-0" style={{ backgroundColor: color.hex }} />
                 <div className="min-w-0">
                   <span className="text-xs font-semibold text-stone-900 block truncate leading-none mb-1">{color.name || color.role}</span>
-                  <span className="text-[10px] font-mono text-stone-500 block leading-none">{isCopied ? 'COPIED!' : color.hex}</span>
+                  <span className="text-xs font-mono text-stone-500 block leading-none">{isCopied ? 'COPIED!' : color.hex}</span>
                 </div>
               </div>
             </button>

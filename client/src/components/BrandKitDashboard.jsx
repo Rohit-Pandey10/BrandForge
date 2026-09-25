@@ -80,9 +80,9 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
     <div className="screen-dashboard-container w-full max-w-6xl mx-auto px-4 py-4 sm:py-8 animate-fade-in pb-32 font-sans text-zinc-900">
 
       {/* ── Editorial Identity Header ── */}
-      <div className="bg-white rounded-3xl border border-zinc-200/80 shadow-xs p-6 sm:p-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="liquid-glass-card rounded-[32px] p-6 sm:p-10 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all">
         <div>
-          <span className="text-[10px] uppercase tracking-widest text-orange-600 font-semibold font-mono block mb-2">
+          <span className="text-xs uppercase tracking-wider text-orange-600 font-semibold font-mono block mb-2">
             SYNTHESIZED BRAND MONOGRAPH • SPECIFICATION 01
           </span>
           <h1
@@ -153,10 +153,10 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
         </div>
       </div>
 
-      {/* ── Segmented Tab Bar (Shaurya's Pill Design) ── */}
+      {/* ── Segmented Tab Bar (Liquid Glass Pill Design) ── */}
       <div className="no-print mb-8">
         <div className="flex items-center justify-start sm:justify-center overflow-x-auto pb-2 gap-1.5 scrollbar-none">
-          <div className="inline-flex p-1.5 bg-white/90 backdrop-blur-md rounded-2xl border border-zinc-200/80 shadow-xs max-w-full gap-1">
+          <div className="inline-flex p-1.5 liquid-glass-card rounded-full max-w-full gap-1">
             {TABS.map(({ id, label, Icon }) => {
               const isActive = activeTab === id;
               return (
@@ -164,10 +164,10 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
                   key={id}
                   id={`tab-${id}`}
                   onClick={() => setActiveTab(id)}
-                  className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-xl text-xs transition-all whitespace-nowrap cursor-pointer ${
+                  className={`flex items-center gap-2 px-4 sm:px-6 py-2 rounded-full text-xs transition-all whitespace-nowrap cursor-pointer ${
                     isActive
                       ? 'bg-[#1a1a1a] text-white shadow-xs font-semibold'
-                      : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/70 font-medium'
+                      : 'text-zinc-600 hover:text-zinc-900 hover:bg-white/60 font-medium'
                   }`}
                 >
                   <Icon className={`w-3.5 h-3.5 stroke-[1.8] ${isActive ? 'text-orange-400' : 'text-zinc-400'}`} />
@@ -180,14 +180,18 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
       </div>
 
       {/* ── Tab Content ── */}
-      {activeTab === 'preview'   && <LivePreviewTab   {...tabProps} />}
+      {activeTab === 'preview' && (
+        <div className="liquid-glass-card rounded-[36px] p-4 sm:p-8">
+          <LivePreviewTab {...tabProps} />
+        </div>
+      )}
       {activeTab === 'strategy'  && <BrandStrategyTab {...tabProps} />}
       {activeTab === 'manifesto' && <LaunchCopyTab    {...tabProps} />}
 
       {/* ── Floating Glassmorphism Export Toolbar ── */}
       <div className="no-print fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
-        <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/90 backdrop-blur-md border border-zinc-200/80 shadow-lg transition-all">
-          <span className="text-[10px] uppercase font-mono tracking-widest text-zinc-400 font-semibold pr-2 border-r border-zinc-200 mr-1">
+        <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl liquid-glass-card shadow-xl transition-all">
+          <span className="text-xs uppercase font-mono tracking-widest text-zinc-500 font-semibold pr-2 border-r border-zinc-300 mr-1">
             Export
           </span>
 
@@ -262,7 +266,7 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
                 <Sparkles className="w-4 h-4 text-indigo-500" />
                 <h2 className="text-sm font-bold text-zinc-900">AI Master Prompts</h2>
               </div>
-              <p className="text-[11px] text-zinc-400 mt-0.5">Copy and paste into ChatGPT, Claude, Midjourney, or v0 to extend this brand kit.</p>
+              <p className="text-xs text-zinc-500 mt-0.5">Copy and paste into ChatGPT, Claude, Midjourney, or v0 to extend this brand kit.</p>
             </div>
             <button onClick={() => setAiDrawerOpen(false)} className="p-1.5 rounded-lg hover:bg-zinc-100 transition-all cursor-pointer">
               <X className="w-4 h-4 text-zinc-500" />
@@ -288,7 +292,7 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
           {AI_TABS.map(t => aiTab === t.id && (
             <div key={t.id} className="px-6 py-4">
               <div className="relative">
-                <pre className="bg-zinc-50 border border-zinc-200 rounded-2xl p-4 text-[11px] font-mono text-zinc-700 leading-relaxed whitespace-pre-wrap max-h-64 overflow-y-auto">
+                <pre className="bg-zinc-50 border border-zinc-200 rounded-2xl p-4 text-xs font-mono text-zinc-800 leading-relaxed whitespace-pre-wrap max-h-64 overflow-y-auto">
                   {aiPrompts[t.promptKey]}
                 </pre>
                 <button
@@ -306,7 +310,7 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
                   }
                 </button>
               </div>
-              <p className="text-[10px] text-zinc-400 font-mono mt-2 leading-relaxed">
+              <p className="text-xs text-zinc-500 font-mono mt-2 leading-relaxed">
                 {t.id === 'copywriter' && 'Paste as a System Prompt in ChatGPT, Claude, or Gemini.'}
                 {t.id === 'midjourney' && 'Paste directly into Midjourney /imagine or DALL·E 3.'}
                 {t.id === 'ui' && 'Paste into v0.dev or Cursor Composer to scaffold a new page.'}
