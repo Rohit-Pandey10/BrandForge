@@ -304,7 +304,7 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
   };
 
   return (
-    <div className="min-h-screen bg-[#f2f1ed] text-[#000000] flex flex-col justify-between selection:bg-black selection:text-white font-sans">
+    <div className="min-h-screen bg-[#fbfaf9] text-zinc-900 flex flex-col justify-between selection:bg-orange-500 selection:text-white font-sans antialiased">
       {/* Expandable / Collapsible Left Sidebar */}
       <Sidebar
         onRehydrateBrand={handleRehydrateBrand}
@@ -366,11 +366,18 @@ ${palette.map(c => `  --color-${(c.role || 'color').toLowerCase().replace(/[^a-z
         )}
       </main>
 
-      {/* Minimalist Editorial Footer */}
-      <footer className="no-print py-6 px-6 text-center text-xs text-[#737373] border-t border-[#dbd7cd]/50">
-        <p>
-          &copy; {new Date().getFullYear()} Brand Builder. Socratic Brand Studio &bull; Handhold Editorial Design System.
-        </p>
+      {/* Editorial Footer (Shaurya's Design System) */}
+      <footer className="no-print py-6 px-6 text-center text-xs text-zinc-500 border-t border-zinc-200/60 bg-white/40">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p>
+            &copy; {new Date().getFullYear()} Brand Builder. Powered by Groq LLaMA 3.3 70B & Google Gemini 2.5 Flash.
+          </p>
+          <div className="flex items-center gap-3 text-zinc-500 font-mono text-[11px]">
+            <span>7-Stage Socratic Synthesis</span>
+            <span>•</span>
+            <span>Design Tokens & Multi-Archetype Specimen</span>
+          </div>
+        </div>
       </footer>
     </div>
   );

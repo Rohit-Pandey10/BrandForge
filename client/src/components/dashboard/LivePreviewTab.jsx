@@ -12,6 +12,8 @@
  * Archetype detection routes the outer chrome (nav labels, color tone);
  * CONTENT is 100% driven by websiteBlueprint from the LLM.
  * Falls back gracefully to launchContent/brandStrategy if blueprint absent.
+ *
+ * Includes Desktop vs Mobile (390px Viewport) switcher with dynamic island notch.
  */
 
 import React, { useState } from 'react';
@@ -28,7 +30,9 @@ import {
   Droplets,
   Leaf,
   Zap,
-  Quote
+  Quote,
+  Monitor,
+  Smartphone
 } from 'lucide-react';
 
 // ─── Domain Resolver ──────────────────────────────────────────────────────────
@@ -89,6 +93,9 @@ export default function LivePreviewTab(props) {
   const launchContent = props.launchContent || kit.launchContent || {};
   const blueprint     = props.websiteBlueprint || kit.websiteBlueprint || null;
 
+  const [previewDevice, setPreviewDevice] = useState('desktop'); // 'desktop' | 'mobile'
+  const isMobile = previewDevice === 'mobile';
+
   const palette    = visualTokens.palette || [];
   const typography = visualTokens.typography || {};
   const brandName  = brandStrategy.brandName || 'Brand';
@@ -125,15 +132,20 @@ export default function LivePreviewTab(props) {
   const sharedProps = {
     brandStrategy, voiceSystem, visualTokens, launchContent, blueprint,
     cleanName, primaryColor, secondaryColor, accentColor, surfaceColor, textColor,
-    primaryContrast, secondaryContrast, radiusCurvature, fontStyle
+    primaryContrast, secondaryContrast, radiusCurvature, fontStyle, isMobile
   };
 
   return (
     <div className="space-y-6 animate-fade-in pb-28">
+      {/* ── Viewport Specimen Frame (Desktop vs Mobile) ── */}
       <div
-        className="bg-white border border-[#dbd7cd] overflow-hidden shadow-sm transition-all"
+        className={`w-full bg-white transition-all duration-300 ${
+          isMobile
+            ? 'max-w-[390px] mx-auto shadow-2xl border-4 border-stone-800 rounded-[44px] overflow-hidden my-4'
+            : 'border border-[#dbd7cd] overflow-hidden shadow-sm rounded-[28px]'
+        }`}
         style={{
-          borderRadius: '28px',
+          borderRadius: isMobile ? '44px' : '28px',
           '--brand-primary':    primaryColor,
           '--brand-secondary':  secondaryColor,
           '--brand-surface':    surfaceColor,
@@ -143,18 +155,60 @@ export default function LivePreviewTab(props) {
           fontFamily: fontStyle.body
         }}
       >
-        {/* Browser chrome */}
-        <div className="bg-[#faf9f6] border-b border-[#dbd7cd] px-5 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        {/* Browser chrome with Viewport Switcher */}
+        <div className="bg-[#faf9f6] border-b border-[#dbd7cd] px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 shrink-0">
             <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
             <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
             <span className="w-2.5 h-2.5 rounded-full bg-stone-300" />
           </div>
-          <div className="px-6 py-1 rounded-full bg-white border border-[#dbd7cd] text-[11px] font-mono text-stone-500 max-w-xs truncate">
+
+          <div className="px-5 py-1 rounded-full bg-white border border-[#dbd7cd] text-[11px] font-mono text-stone-500 max-w-xs truncate hidden sm:block">
             {domainUrl}
           </div>
-          <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400">{domainBadge}</span>
+
+          <div className="flex items-center gap-3 shrink-0">
+            {/* Vraj's Desktop / Mobile Viewport Switcher */}
+            <div className="flex items-center p-0.5 bg-stone-200/80 border border-stone-300/80 rounded-lg shadow-2xs">
+              <button
+                type="button"
+                onClick={() => setPreviewDevice('desktop')}
+                className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-medium rounded-md transition-all ${
+                  !isMobile
+                    ? 'bg-black text-white shadow-xs'
+                    : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
+                }`}
+                title="Desktop View (Full Width)"
+              >
+                <Monitor className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Desktop</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setPreviewDevice('mobile')}
+                className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-medium rounded-md transition-all ${
+                  isMobile
+                    ? 'bg-black text-white shadow-xs'
+                    : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
+                }`}
+                title="Mobile View (390px Viewport)"
+              >
+                <Smartphone className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Mobile</span>
+              </button>
+            </div>
+
+            <span className="text-[10px] uppercase font-mono tracking-wider text-stone-400 hidden md:inline">
+              {domainBadge}
+            </span>
+          </div>
         </div>
+
+        {/* Mobile Camera Notch / Dynamic Island */}
+        {isMobile && (
+          <div className="w-24 h-4 bg-stone-800 rounded-full mx-auto my-2 shrink-0 animate-fade-in" />
+        )}
 
         {archetype === 'retail_cpg'   && <RetailCpgPreview   {...sharedProps} />}
         {archetype === 'hospitality'  && <HospitalityPreview  {...sharedProps} />}
@@ -179,6 +233,7 @@ function SectionDispatcher({
   fontStyle,
   brandStrategy,
   isDarkTheme = false,
+  isMobile = false,
   headingTextColor = '#111111',
   bodyTextColor = '#4b5563',
   subtleTextColor = '#6b7280',
@@ -199,6 +254,7 @@ function SectionDispatcher({
           radiusCurvature,
           fontStyle,
           isDarkTheme,
+          isMobile,
           headingTextColor,
           bodyTextColor,
           subtleTextColor,
@@ -225,6 +281,7 @@ function CatalogGrid({
   radiusCurvature,
   fontStyle,
   isDarkTheme = false,
+  isMobile = false,
   headingTextColor = '#111111',
   bodyTextColor = '#4b5563',
   subtleTextColor = '#6b7280',
@@ -233,7 +290,9 @@ function CatalogGrid({
 }) {
   const [addedItem, setAddedItem] = useState(null);
   const handleAdd = (label) => { setAddedItem(label); setTimeout(() => setAddedItem(null), 2000); };
-  const cols = section.items?.length === 2 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-3';
+  const cols = isMobile
+    ? 'grid-cols-1'
+    : (section.items?.length === 2 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-3');
 
   return (
     <div>
@@ -336,12 +395,14 @@ function RitualSteps({
   primaryColor,
   radiusCurvature,
   fontStyle,
+  isMobile = false,
   headingTextColor = '#111111',
   bodyTextColor = '#4b5563',
   subtleTextColor = '#6b7280',
   cardBgColor = '#ffffff',
   cardBorderColor = '#dbd7cd'
 }) {
+  const cols = isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-3';
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -354,7 +415,7 @@ function RitualSteps({
           </span>
         )}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className={`grid ${cols} gap-4`}>
         {(section.items || []).map((item, i) => (
           <div
             key={i}
@@ -402,6 +463,7 @@ function FlavorProfile({
   radiusCurvature,
   fontStyle,
   isDarkTheme = false,
+  isMobile = false,
   headingTextColor = '#111111',
   bodyTextColor = '#4b5563',
   subtleTextColor = '#6b7280',
@@ -409,6 +471,8 @@ function FlavorProfile({
   cardBorderColor = '#dbd7cd'
 }) {
   const icons = [<Droplets className="w-4 h-4" />, <Leaf className="w-4 h-4" />, <Sparkles className="w-4 h-4" />, <Zap className="w-4 h-4" />];
+  const cols = isMobile ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-4';
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -421,7 +485,7 @@ function FlavorProfile({
           </span>
         )}
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className={`grid ${cols} gap-3`}>
         {(section.items || []).map((item, i) => (
           <div
             key={i}
@@ -471,6 +535,7 @@ function ComparativeLedger({
   brandStrategy,
   radiusCurvature,
   isDarkTheme = false,
+  isMobile = false,
   headingTextColor = '#111111',
   subtleTextColor = '#6b7280',
   cardBgColor = '#ffffff',
@@ -480,6 +545,7 @@ function ComparativeLedger({
   const half    = Math.ceil(items.length / 2);
   const ours    = items.slice(0, half);
   const theirs  = items.slice(half);
+  const cols    = isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2';
 
   return (
     <div>
@@ -493,7 +559,7 @@ function ComparativeLedger({
           </span>
         )}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className={`grid ${cols} gap-4`}>
         {/* Brand column */}
         <div
           className="p-5 transition-all"
@@ -582,12 +648,13 @@ function PressQuotes({
   section,
   radiusCurvature,
   fontStyle,
-  isDarkTheme = false,
+  isMobile = false,
   headingTextColor = '#111111',
   subtleTextColor = '#6b7280',
   cardBgColor = '#ffffff',
   cardBorderColor = '#dbd7cd'
 }) {
+  const cols = isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2';
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -595,7 +662,7 @@ function PressQuotes({
           {section.title}
         </span>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className={`grid ${cols} gap-4`}>
         {(section.items || []).map((item, i) => (
           <div
             key={i}
@@ -652,7 +719,8 @@ function RetailCpgPreview({
   surfaceColor,
   textColor,
   radiusCurvature,
-  fontStyle
+  fontStyle,
+  isMobile = false
 }) {
   const isDarkTheme = isDarkColor(surfaceColor);
   const headingTextColor = isDarkTheme ? '#ffffff' : (textColor || '#111111');
@@ -675,15 +743,24 @@ function RetailCpgPreview({
     : secondaryColor;
 
   return (
-    <div className="p-6 sm:p-12 min-h-[580px] flex flex-col" style={{ backgroundColor: surfaceColor }}>
+    <div
+      className={`min-h-[580px] flex flex-col transition-all ${
+        isMobile ? 'p-4 sm:p-6' : 'p-6 sm:p-12'
+      }`}
+      style={{ backgroundColor: surfaceColor }}
+    >
       {/* Nav */}
       <div
-        className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b gap-4"
+        className={`border-b gap-4 mb-6 sm:mb-8 pb-5 sm:pb-6 flex ${
+          isMobile
+            ? 'flex-col items-start gap-3'
+            : 'flex-col sm:flex-row sm:items-center justify-between'
+        }`}
         style={{ borderColor: cardBorderColor }}
       >
         <div className="flex items-center gap-3">
           <span
-            className="text-2xl sm:text-3xl font-medium tracking-tight"
+            className={`font-medium tracking-tight ${isMobile ? 'text-xl' : 'text-2xl sm:text-3xl'}`}
             style={{ color: headingTextColor, fontFamily: fontStyle.display }}
           >
             {brandName}
@@ -696,13 +773,13 @@ function RetailCpgPreview({
             {badge}
           </span>
         </div>
-        <div className="flex items-center gap-6 text-xs" style={{ color: bodyTextColor }}>
-          <span className="cursor-pointer font-medium hover:opacity-80 transition-opacity">Products</span>
-          <span className="cursor-pointer hidden sm:inline hover:opacity-80 transition-opacity">Craft & Sourcing</span>
-          <span className="cursor-pointer hidden md:inline hover:opacity-80 transition-opacity">Stockists</span>
+        <div className={`flex items-center gap-4 text-xs ${isMobile ? 'w-full justify-between' : 'gap-6'}`} style={{ color: bodyTextColor }}>
+          {!isMobile && <span className="cursor-pointer font-medium hover:opacity-80 transition-opacity">Products</span>}
+          {!isMobile && <span className="cursor-pointer hidden sm:inline hover:opacity-80 transition-opacity">Craft & Sourcing</span>}
+          {!isMobile && <span className="cursor-pointer hidden md:inline hover:opacity-80 transition-opacity">Stockists</span>}
           {/* Secondary color on bag counter */}
           <button
-            className="px-5 py-2 text-xs font-medium transition-all hover:opacity-90 flex items-center gap-2"
+            className={`px-4 py-2 text-xs font-medium transition-all hover:opacity-90 flex items-center gap-2 ${isMobile ? 'ml-auto' : ''}`}
             style={{ backgroundColor: secondaryColor, color: secondaryContrast, borderRadius: radiusCurvature }}
           >
             <ShoppingBag className="w-3.5 h-3.5" /><span>Bag (0)</span>
@@ -712,23 +789,25 @@ function RetailCpgPreview({
 
       {/* Announcement bar — accent tint */}
       <div
-        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-mono mb-6 self-start"
+        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-mono mb-6 self-start max-w-full"
         style={{ backgroundColor: `${accentColor}15`, border: `1px solid ${accentColor}40`, color: accentColor }}
       >
-        <Sparkles className="w-3 h-3" style={{ color: accentColor }} />
-        <span className="uppercase tracking-wide font-medium">{annBar}</span>
+        <Sparkles className="w-3 h-3 shrink-0" style={{ color: accentColor }} />
+        <span className="uppercase tracking-wide font-medium truncate">{annBar}</span>
       </div>
 
       {/* Hero */}
       <div className="max-w-3xl mb-6">
         <h2
-          className="text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight leading-[1.08] mb-4"
+          className={`font-normal tracking-tight leading-[1.08] mb-4 ${
+            isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl md:text-6xl'
+          }`}
           style={{ color: headingTextColor, fontFamily: fontStyle.display }}
         >
           {launchContent.heroHeadline || 'Crafted for Pure Impact.'}
         </h2>
         <p
-          className="text-base sm:text-lg max-w-2xl leading-relaxed mb-6"
+          className={`max-w-2xl leading-relaxed mb-6 ${isMobile ? 'text-sm' : 'text-base sm:text-lg'}`}
           style={{ color: bodyTextColor, fontFamily: fontStyle.body }}
         >
           {launchContent.heroSubheadline || brandStrategy.coreValueProposition}
@@ -774,6 +853,7 @@ function RetailCpgPreview({
                 fontStyle={fontStyle}
                 brandStrategy={brandStrategy}
                 isDarkTheme={isDarkTheme}
+                isMobile={isMobile}
                 headingTextColor={headingTextColor}
                 bodyTextColor={bodyTextColor}
                 subtleTextColor={subtleTextColor}
@@ -790,7 +870,7 @@ function RetailCpgPreview({
                   <span className="text-[11px] uppercase font-mono tracking-widest block mb-4" style={{ color: subtleTextColor }}>
                     THE STANDARD WE REJECT
                   </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2'}`}>
                     {/* Brand side */}
                     <div
                       className="p-5 transition-all"
@@ -868,7 +948,7 @@ function RetailCpgPreview({
                 </div>
 
                 {/* Craft / Mission Pillars */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-3'}`}>
                   {[
                     { label: '01 / Sourcing & Craft',      value: brandStrategy.coreValueProposition || 'Uncompromising formulation' },
                     { label: '02 / Customer Commitment',   value: brandStrategy.targetAudience      || 'Discerning enthusiasts' },
@@ -897,7 +977,7 @@ function RetailCpgPreview({
 
             {/* Fallback base grid when no blueprint at all */}
             {sections.length === 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t mt-4" style={{ borderColor: cardBorderColor }}>
+              <div className={`grid gap-4 pt-8 border-t mt-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-3'}`} style={{ borderColor: cardBorderColor }}>
                 {[
                   { label: '01 / Product Moat',          value: brandStrategy.differentiator || 'Pure-grade formulation' },
                   { label: '02 / Target Consumer',        value: brandStrategy.targetAudience || 'Discerning enthusiasts' },
@@ -942,7 +1022,7 @@ function RetailCpgPreview({
             {brandStrategy.tagline || launchContent.heroHeadline || ''}
           </span>
         </div>
-        <div className="flex items-center gap-4 text-[10px] font-mono" style={{ color: subtleTextColor }}>
+        <div className={`flex items-center text-[10px] font-mono ${isMobile ? 'flex-col items-start gap-1.5' : 'gap-4'}`} style={{ color: subtleTextColor }}>
           <span className="hover:opacity-80 cursor-pointer">Shipping & Returns</span>
           <span className="hover:opacity-80 cursor-pointer">Wholesale Inquiries</span>
           <span className="hover:opacity-80 cursor-pointer">Ingredient Transparency</span>
@@ -968,7 +1048,8 @@ function HospitalityPreview({
   surfaceColor,
   textColor,
   radiusCurvature,
-  fontStyle
+  fontStyle,
+  isMobile = false
 }) {
   const isDarkTheme = isDarkColor(surfaceColor);
   const headingTextColor = isDarkTheme ? '#ffffff' : (textColor || '#111111');
@@ -991,14 +1072,23 @@ function HospitalityPreview({
     : secondaryColor;
 
   return (
-    <div className="p-6 sm:p-12 min-h-[560px] flex flex-col" style={{ backgroundColor: surfaceColor }}>
+    <div
+      className={`min-h-[560px] flex flex-col transition-all ${
+        isMobile ? 'p-4 sm:p-6' : 'p-6 sm:p-12'
+      }`}
+      style={{ backgroundColor: surfaceColor }}
+    >
       <div
-        className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b gap-4"
+        className={`border-b gap-4 mb-6 pb-5 sm:pb-6 flex ${
+          isMobile
+            ? 'flex-col items-start gap-3'
+            : 'flex-col sm:flex-row sm:items-center justify-between'
+        }`}
         style={{ borderColor: cardBorderColor }}
       >
         <div className="flex items-center gap-3">
           <span
-            className="text-2xl sm:text-3xl font-light tracking-tight"
+            className={`font-light tracking-tight ${isMobile ? 'text-xl' : 'text-2xl sm:text-3xl'}`}
             style={{ color: headingTextColor, fontFamily: fontStyle.display }}
           >
             {brandName}
@@ -1010,12 +1100,12 @@ function HospitalityPreview({
             {badge}
           </span>
         </div>
-        <div className="flex items-center gap-5 text-xs" style={{ color: bodyTextColor }}>
-          <span className="cursor-pointer font-medium hover:opacity-80 transition-opacity">Daily Menu</span>
-          <span className="cursor-pointer hidden sm:inline hover:opacity-80 transition-opacity">Private Dining</span>
-          <span className="cursor-pointer hidden md:inline hover:opacity-80 transition-opacity">Location & Hours</span>
+        <div className={`flex items-center text-xs ${isMobile ? 'w-full justify-between' : 'gap-5'}`} style={{ color: bodyTextColor }}>
+          {!isMobile && <span className="cursor-pointer font-medium hover:opacity-80 transition-opacity">Daily Menu</span>}
+          {!isMobile && <span className="cursor-pointer hidden sm:inline hover:opacity-80 transition-opacity">Private Dining</span>}
+          {!isMobile && <span className="cursor-pointer hidden md:inline hover:opacity-80 transition-opacity">Location & Hours</span>}
           <button
-            className="px-5 py-2 text-xs font-medium transition-all hover:opacity-90"
+            className={`px-4 py-2 text-xs font-medium transition-all hover:opacity-90 ${isMobile ? 'ml-auto' : ''}`}
             style={{ backgroundColor: secondaryColor, color: secondaryContrast, borderRadius: radiusCurvature }}
           >
             Reserve a Table
@@ -1025,22 +1115,24 @@ function HospitalityPreview({
 
       {/* Announcement ribbon — accent tint */}
       <div
-        className="inline-flex items-center gap-2 text-[11px] font-mono mb-6 px-3.5 py-1.5 rounded-full w-fit"
+        className="inline-flex items-center gap-2 text-[11px] font-mono mb-6 px-3.5 py-1.5 rounded-full w-fit max-w-full"
         style={{ backgroundColor: `${accentColor}15`, border: `1px solid ${accentColor}40`, color: accentColor }}
       >
-        <Clock className="w-3.5 h-3.5" style={{ color: accentColor }} />
-        <span>{annBar}</span>
+        <Clock className="w-3.5 h-3.5 shrink-0" style={{ color: accentColor }} />
+        <span className="truncate">{annBar}</span>
       </div>
 
       <div className="max-w-3xl mb-6">
         <h2
-          className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight leading-[1.08] mb-4"
+          className={`font-light tracking-tight leading-[1.08] mb-4 ${
+            isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl md:text-6xl'
+          }`}
           style={{ color: headingTextColor, fontFamily: fontStyle.display }}
         >
           {launchContent.heroHeadline || 'Honest Plates. Natural Pours. Welcome In.'}
         </h2>
         <p
-          className="text-base sm:text-lg max-w-2xl leading-relaxed mb-6"
+          className={`max-w-2xl leading-relaxed mb-6 ${isMobile ? 'text-sm' : 'text-base sm:text-lg'}`}
           style={{ color: bodyTextColor, fontFamily: fontStyle.body }}
         >
           {launchContent.heroSubheadline || brandStrategy.coreValueProposition}
@@ -1084,6 +1176,7 @@ function HospitalityPreview({
                 fontStyle={fontStyle}
                 brandStrategy={brandStrategy}
                 isDarkTheme={isDarkTheme}
+                isMobile={isMobile}
                 headingTextColor={headingTextColor}
                 bodyTextColor={bodyTextColor}
                 subtleTextColor={subtleTextColor}
@@ -1099,7 +1192,7 @@ function HospitalityPreview({
                   <span className="text-[11px] uppercase font-mono tracking-widest block mb-4" style={{ color: subtleTextColor }}>
                     OUR KITCHEN PHILOSOPHY
                   </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2'}`}>
                     <div
                       className="p-5 transition-all"
                       style={{
@@ -1175,7 +1268,7 @@ function HospitalityPreview({
                 </div>
 
                 {/* Dining Pillars */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-3'}`}>
                   {[
                     { label: '01 / Culinary Moat',      value: brandStrategy.differentiator || 'Heritage grain sourcing' },
                     { label: '02 / Core Guest Profile', value: brandStrategy.targetAudience || 'Neighbourhood regulars' },
@@ -1203,7 +1296,7 @@ function HospitalityPreview({
             )}
 
             {sections.length === 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t mt-4" style={{ borderColor: cardBorderColor }}>
+              <div className={`grid gap-4 pt-8 border-t mt-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-3'}`} style={{ borderColor: cardBorderColor }}>
                 {[
                   { label: '01 / Culinary Moat',      value: brandStrategy.differentiator || 'Heritage grain sourcing' },
                   { label: '02 / Core Guest Profile', value: brandStrategy.targetAudience || 'Neighbourhood regulars' },
@@ -1248,7 +1341,7 @@ function HospitalityPreview({
             {brandStrategy.tagline || launchContent.heroHeadline || ''}
           </span>
         </div>
-        <div className="flex items-center gap-4 text-[10px] font-mono" style={{ color: subtleTextColor }}>
+        <div className={`flex items-center text-[10px] font-mono ${isMobile ? 'flex-col items-start gap-1.5' : 'gap-4'}`} style={{ color: subtleTextColor }}>
           <span className="hover:opacity-80 cursor-pointer">Booking & Reservations</span>
           <span className="hover:opacity-80 cursor-pointer">Private Events</span>
           <span className="hover:opacity-80 cursor-pointer">Sourcing Philosophy</span>
@@ -1261,7 +1354,17 @@ function HospitalityPreview({
 // =============================================================================
 // ARCHETYPE C: DIGITAL TOOLS & SAAS
 // =============================================================================
-function DigitalSaasPreview({ brandStrategy, launchContent, blueprint, cleanName, primaryColor, primaryContrast, radiusCurvature, fontStyle }) {
+function DigitalSaasPreview({
+  brandStrategy,
+  launchContent,
+  blueprint,
+  cleanName,
+  primaryColor,
+  primaryContrast,
+  radiusCurvature,
+  fontStyle,
+  isMobile = false
+}) {
   const brandName    = brandStrategy.brandName || 'Brand';
   const badge        = blueprint?.badge || 'Zero Config';
   const primaryCta   = blueprint?.primaryCta  || launchContent?.callToAction || 'Get Started';
@@ -1271,8 +1374,12 @@ function DigitalSaasPreview({ brandStrategy, launchContent, blueprint, cleanName
   const handleCopy = () => { navigator.clipboard?.writeText(installCmd); setCopied(true); setTimeout(() => setCopied(false), 2200); };
 
   return (
-    <div className="p-6 sm:p-14 min-h-[560px] flex flex-col bg-[#0e1015] text-white">
-      <div className="flex items-center justify-between pb-6 mb-6 border-b border-stone-800">
+    <div
+      className={`min-h-[560px] flex flex-col bg-[#0e1015] text-white transition-all ${
+        isMobile ? 'p-4 sm:p-6' : 'p-6 sm:p-14'
+      }`}
+    >
+      <div className={`border-b border-stone-800 pb-5 mb-6 flex ${isMobile ? 'flex-col items-start gap-3' : 'items-center justify-between'}`}>
         <div className="flex items-center gap-3">
           <span className="font-mono text-xl font-bold tracking-tight">{brandName}</span>
           <div className="flex items-center gap-1.5">
@@ -1280,22 +1387,29 @@ function DigitalSaasPreview({ brandStrategy, launchContent, blueprint, cleanName
             <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40">{badge}</span>
           </div>
         </div>
-        <div className="flex items-center gap-5 text-xs text-stone-400 font-mono">
-          <span className="hover:text-white cursor-pointer">Features</span>
-          <span className="hover:text-white cursor-pointer hidden sm:inline">Docs</span>
-          <span className="hover:text-white cursor-pointer hidden md:inline">Changelog</span>
-          <button className="px-4 py-1.5 text-xs font-mono font-medium transition-all hover:opacity-90"
-            style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}>
+        <div className={`flex items-center gap-4 text-xs text-stone-400 font-mono ${isMobile ? 'w-full justify-between' : ''}`}>
+          {!isMobile && <span className="hover:text-white cursor-pointer">Features</span>}
+          {!isMobile && <span className="hover:text-white cursor-pointer hidden sm:inline">Docs</span>}
+          {!isMobile && <span className="hover:text-white cursor-pointer hidden md:inline">Changelog</span>}
+          <button
+            className={`px-4 py-1.5 text-xs font-mono font-medium transition-all hover:opacity-90 ${isMobile ? 'ml-auto' : ''}`}
+            style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}
+          >
             {primaryCta}
           </button>
         </div>
       </div>
 
       <div className="max-w-3xl my-6">
-        <h2 className="text-3xl sm:text-5xl font-mono font-bold tracking-tight leading-tight text-white mb-4" style={{ fontFamily: fontStyle.display }}>
+        <h2
+          className={`font-mono font-bold tracking-tight leading-tight text-white mb-4 ${
+            isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl'
+          }`}
+          style={{ fontFamily: fontStyle.display }}
+        >
           {launchContent.heroHeadline || 'Low-Latency Infrastructure for Modern Teams.'}
         </h2>
-        <p className="text-sm sm:text-base text-stone-400 leading-relaxed mb-6">
+        <p className={`text-stone-400 leading-relaxed mb-6 ${isMobile ? 'text-xs sm:text-sm' : 'text-sm sm:text-base'}`}>
           {launchContent.heroSubheadline || brandStrategy.coreValueProposition}
         </p>
 
@@ -1329,7 +1443,7 @@ function DigitalSaasPreview({ brandStrategy, launchContent, blueprint, cleanName
           {blueprint.sections.map((section, i) => (
             <div key={i}>
               <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500 block mb-4">{section.title}</span>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-3'}`}>
                 {(section.items || []).map((item, j) => (
                   <div key={j} className="p-4 bg-stone-900/60 border border-stone-800" style={{ borderRadius: radiusCurvature }}>
                     {item.metricOrPrice && <span className="text-[10px] font-mono text-stone-500 block mb-1">{item.metricOrPrice}</span>}
@@ -1343,7 +1457,7 @@ function DigitalSaasPreview({ brandStrategy, launchContent, blueprint, cleanName
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-stone-800">
+        <div className={`grid gap-4 pt-6 border-t border-stone-800 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-3'}`}>
           {[
             { label: '01 / Engine Differentiator', value: brandStrategy.differentiator || 'Sub-millisecond query execution' },
             { label: '02 / Target Systems User',   value: brandStrategy.targetAudience || 'Infrastructure engineers' },
