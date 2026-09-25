@@ -164,12 +164,12 @@ export default function LivePreviewTab(props) {
 // =============================================================================
 // SECTION DISPATCHER
 // =============================================================================
-function SectionDispatcher({ sections, primaryColor, primaryContrast, radiusCurvature, fontStyle, brandStrategy }) {
+function SectionDispatcher({ sections, primaryColor, primaryContrast, accentColor, radiusCurvature, fontStyle, brandStrategy }) {
   if (!sections || sections.length === 0) return null;
   return (
     <div className="space-y-8 mt-8 pt-8 border-t border-[#dbd7cd]">
       {sections.map((section, i) => {
-        const common = { key: i, section, primaryColor, primaryContrast, radiusCurvature, fontStyle };
+        const common = { key: i, section, primaryColor, primaryContrast, accentColor, radiusCurvature, fontStyle };
         switch (section.type) {
           case 'catalog_grid':       return <CatalogGrid {...common} />;
           case 'ritual_steps':       return <RitualSteps {...common} />;
@@ -184,7 +184,7 @@ function SectionDispatcher({ sections, primaryColor, primaryContrast, radiusCurv
 }
 
 // ─── Catalog Grid ────────────────────────────────────────────────────────────
-function CatalogGrid({ section, primaryColor, primaryContrast, radiusCurvature, fontStyle }) {
+function CatalogGrid({ section, primaryColor, primaryContrast, accentColor, radiusCurvature, fontStyle }) {
   const [addedItem, setAddedItem] = useState(null);
   const handleAdd = (label) => { setAddedItem(label); setTimeout(() => setAddedItem(null), 2000); };
   const cols = section.items?.length === 2 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-3';
@@ -198,23 +198,37 @@ function CatalogGrid({ section, primaryColor, primaryContrast, radiusCurvature, 
         {(section.items || []).map((item, i) => {
           const isAdded = addedItem === item.label;
           return (
-            <div key={i} className="p-5 bg-white border border-[#dbd7cd] flex flex-col justify-between transition-all hover:border-stone-400" style={{ borderRadius: radiusCurvature }}>
+            <div key={i} className="p-5 bg-white flex flex-col justify-between transition-all"
+              style={{ borderRadius: radiusCurvature, border: `1px solid ${accentColor}25` }}>
               <div>
                 <div className="flex items-start justify-between mb-1.5 gap-2">
                   <h4 className="text-sm font-medium text-black leading-snug" style={{ fontFamily: fontStyle.display }}>{item.label}</h4>
-                  {item.metricOrPrice && <span className="font-mono text-xs font-semibold text-stone-900 shrink-0">{item.metricOrPrice}</span>}
+                  {/* Price highlighted in accent color */}
+                  {item.metricOrPrice && (
+                    <span className="font-mono text-xs font-bold shrink-0 px-1.5 py-0.5 rounded"
+                      style={{ backgroundColor: `${accentColor}18`, color: accentColor }}>
+                      {item.metricOrPrice}
+                    </span>
+                  )}
                 </div>
                 <p className="text-xs text-stone-600 leading-relaxed">{item.description}</p>
               </div>
               <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between">
-                {item.tag && <span className="text-[10px] font-mono text-stone-500 bg-[#f4f1ea] px-2 py-1 rounded">{item.tag}</span>}
+                {/* Tag badge using accent tint */}
+                {item.tag && (
+                  <span className="text-[10px] font-mono px-2 py-1 rounded font-semibold"
+                    style={{ backgroundColor: `${accentColor}15`, color: accentColor }}>
+                    {item.tag}
+                  </span>
+                )}
                 <button
                   onClick={() => handleAdd(item.label)}
-                  className="text-xs font-medium px-3 py-1.5 border border-stone-300 hover:border-black flex items-center gap-1 transition-all ml-auto"
-                  style={{ borderRadius: radiusCurvature }}
+                  className="text-xs font-medium px-3 py-1.5 flex items-center gap-1 transition-all ml-auto border"
+                  style={{ borderRadius: radiusCurvature, borderColor: isAdded ? 'transparent' : `${accentColor}60`,
+                    backgroundColor: isAdded ? `${accentColor}15` : 'transparent', color: isAdded ? accentColor : 'inherit' }}
                 >
                   {isAdded
-                    ? <><Check className="w-3 h-3 text-emerald-600" /><span className="text-emerald-700">Added</span></>
+                    ? <><Check className="w-3 h-3" style={{ color: accentColor }} /><span>Added</span></>
                     : <><Plus className="w-3 h-3 text-stone-500" /><span>Add</span></>
                   }
                 </button>
@@ -359,36 +373,45 @@ function PressQuotes({ section, primaryColor, fontStyle }) {
 // =============================================================================
 // ARCHETYPE A: PHYSICAL CPG & RETAIL
 // =============================================================================
-function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint, primaryColor, primaryContrast, radiusCurvature, fontStyle }) {
+function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint, primaryColor, primaryContrast, secondaryColor, secondaryContrast, accentColor, surfaceColor, radiusCurvature, fontStyle }) {
   const brandName      = brandStrategy.brandName || 'Brand';
   const badge          = blueprint?.badge || voiceSystem?.archetype || 'Retail & CPG';
   const annBar         = blueprint?.announcementBar || 'Free standard shipping on orders over $50 · 100% satisfaction guarantee';
   const primaryCta     = blueprint?.primaryCta || launchContent?.callToAction || 'Shop Now';
   const secondaryCta   = blueprint?.secondaryCta || 'Craft & Sourcing Story';
+  const accentContrast = getContrastColor(accentColor);
 
   return (
-    <div className="p-6 sm:p-12 min-h-[580px] flex flex-col bg-[#faf8f5]">
+    <div className="p-6 sm:p-12 min-h-[580px] flex flex-col" style={{ backgroundColor: surfaceColor }}>
       {/* Nav */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-[#dbd7cd] gap-4">
         <div className="flex items-center gap-3">
           <span className="text-2xl sm:text-3xl font-medium tracking-tight text-black" style={{ fontFamily: fontStyle.display }}>{brandName}</span>
-          <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-[#f0ede6] text-stone-700 border border-[#dbd7cd]">{badge}</span>
+          {/* Accent badge pill */}
+          <span
+            className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full font-semibold"
+            style={{ backgroundColor: `${accentColor}20`, color: accentColor, border: `1px solid ${accentColor}50` }}
+          >{badge}</span>
         </div>
         <div className="flex items-center gap-6 text-xs text-stone-700">
           <span className="hover:text-black cursor-pointer font-medium">Products</span>
           <span className="hover:text-black cursor-pointer hidden sm:inline">Craft & Sourcing</span>
           <span className="hover:text-black cursor-pointer hidden md:inline">Stockists</span>
+          {/* Secondary color on bag counter */}
           <button className="px-5 py-2 text-xs font-medium transition-all hover:opacity-90 flex items-center gap-2"
-            style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}>
+            style={{ backgroundColor: secondaryColor, color: secondaryContrast, borderRadius: radiusCurvature }}>
             <ShoppingBag className="w-3.5 h-3.5" /><span>Bag (0)</span>
           </button>
         </div>
       </div>
 
-      {/* Announcement bar */}
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono mb-6 border border-[#dbd7cd] bg-white text-stone-600 self-start">
-        <Sparkles className="w-3 h-3 text-stone-500" />
-        <span className="uppercase tracking-wide">{annBar}</span>
+      {/* Announcement bar — accent tint */}
+      <div
+        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-mono mb-6 self-start"
+        style={{ backgroundColor: `${accentColor}15`, border: `1px solid ${accentColor}40`, color: accentColor }}
+      >
+        <Sparkles className="w-3 h-3" style={{ color: accentColor }} />
+        <span className="uppercase tracking-wide font-medium">{annBar}</span>
       </div>
 
       {/* Hero */}
@@ -404,9 +427,10 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
             style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}>
             <ShoppingBag className="w-3.5 h-3.5" /><span>{primaryCta}</span>
           </button>
-          <button className="px-6 py-3 text-xs font-medium text-stone-900 bg-white border border-[#dbd7cd] hover:border-black transition-all flex items-center gap-2"
-            style={{ borderRadius: radiusCurvature }}>
-            <span>{secondaryCta}</span><ArrowRight className="w-3 h-3 text-stone-400" />
+          {/* Secondary color on ghost CTA */}
+          <button className="px-6 py-3 text-xs font-medium transition-all flex items-center gap-2"
+            style={{ borderRadius: radiusCurvature, border: `1.5px solid ${secondaryColor}`, color: secondaryColor, background: 'transparent' }}>
+            <span>{secondaryCta}</span><ArrowRight className="w-3 h-3" style={{ color: secondaryColor }} />
           </button>
         </div>
       </div>
@@ -423,6 +447,7 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
                 sections={sections}
                 primaryColor={primaryColor}
                 primaryContrast={primaryContrast}
+                accentColor={accentColor}
                 radiusCurvature={radiusCurvature}
                 fontStyle={fontStyle}
                 brandStrategy={brandStrategy}
@@ -530,33 +555,41 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
 // =============================================================================
 // ARCHETYPE B: HOSPITALITY & DINING
 // =============================================================================
-function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, blueprint, primaryColor, primaryContrast, radiusCurvature, fontStyle }) {
+function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, blueprint, primaryColor, primaryContrast, secondaryColor, secondaryContrast, accentColor, surfaceColor, radiusCurvature, fontStyle }) {
   const brandName    = brandStrategy.brandName || 'Brand';
   const badge        = blueprint?.badge || voiceSystem?.archetype || 'Hospitality & Dining';
   const annBar       = blueprint?.announcementBar || 'Open Daily from 5:00 PM · Walk-ins & Communal Tables Welcome';
   const primaryCta   = blueprint?.primaryCta  || launchContent?.callToAction || 'Reserve Table';
   const secondaryCta = blueprint?.secondaryCta || "View Tonight's Menu";
+  const accentContrast = getContrastColor(accentColor);
 
   return (
-    <div className="p-6 sm:p-12 min-h-[560px] flex flex-col bg-[#fcfbf9]">
+    <div className="p-6 sm:p-12 min-h-[560px] flex flex-col" style={{ backgroundColor: surfaceColor }}>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-[#dbd7cd] gap-4">
         <div className="flex items-center gap-3">
           <span className="text-2xl sm:text-3xl font-light tracking-tight text-black" style={{ fontFamily: fontStyle.display }}>{brandName}</span>
-          <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-[#f2f1ed] text-stone-600 border border-[#dbd7cd]">{badge}</span>
+          <span
+            className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full font-semibold"
+            style={{ backgroundColor: `${accentColor}20`, color: accentColor, border: `1px solid ${accentColor}50` }}
+          >{badge}</span>
         </div>
         <div className="flex items-center gap-5 text-xs text-stone-700">
           <span className="hover:text-black cursor-pointer font-medium">Daily Menu</span>
           <span className="hover:text-black cursor-pointer hidden sm:inline">Private Dining</span>
           <span className="hover:text-black cursor-pointer hidden md:inline">Location & Hours</span>
           <button className="px-5 py-2 text-xs font-medium transition-all hover:opacity-90"
-            style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}>
+            style={{ backgroundColor: secondaryColor, color: secondaryContrast, borderRadius: radiusCurvature }}>
             Reserve a Table
           </button>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 text-[11px] font-mono text-stone-500 mb-6 bg-white px-3.5 py-1.5 rounded-full border border-[#dbd7cd] w-fit">
-        <Clock className="w-3.5 h-3.5 text-stone-400" /><span>{annBar}</span>
+      {/* Announcement ribbon — accent tint */}
+      <div
+        className="inline-flex items-center gap-2 text-[11px] font-mono mb-6 px-3.5 py-1.5 rounded-full w-fit"
+        style={{ backgroundColor: `${accentColor}15`, border: `1px solid ${accentColor}40`, color: accentColor }}
+      >
+        <Clock className="w-3.5 h-3.5" style={{ color: accentColor }} /><span>{annBar}</span>
       </div>
 
       <div className="max-w-3xl mb-6">
@@ -571,9 +604,9 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, bluepri
             style={{ backgroundColor: primaryColor, color: primaryContrast, borderRadius: radiusCurvature }}>
             <Utensils className="w-3.5 h-3.5" /><span>{primaryCta}</span>
           </button>
-          <button className="px-6 py-3 text-xs font-medium text-stone-900 bg-white border border-[#dbd7cd] hover:border-black transition-all flex items-center gap-2"
-            style={{ borderRadius: radiusCurvature }}>
-            <Calendar className="w-3.5 h-3.5 text-stone-500" /><span>{secondaryCta}</span>
+          <button className="px-6 py-3 text-xs font-medium transition-all flex items-center gap-2"
+            style={{ borderRadius: radiusCurvature, border: `1.5px solid ${secondaryColor}`, color: secondaryColor, background: 'transparent' }}>
+            <Calendar className="w-3.5 h-3.5" style={{ color: secondaryColor }} /><span>{secondaryCta}</span>
           </button>
         </div>
       </div>
@@ -589,6 +622,7 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, bluepri
                 sections={sections}
                 primaryColor={primaryColor}
                 primaryContrast={primaryContrast}
+                accentColor={accentColor}
                 radiusCurvature={radiusCurvature}
                 fontStyle={fontStyle}
                 brandStrategy={brandStrategy}

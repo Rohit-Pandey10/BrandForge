@@ -13,14 +13,14 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Download, Palette, Code, Eye, Target, FileText, Printer, RotateCcw, Bookmark, Check } from 'lucide-react';
+import { Download, Palette, Code, Eye, Target, FileText, Printer, RotateCcw, Bookmark, Check, Sparkles, X, Copy } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 import LivePreviewTab      from './dashboard/LivePreviewTab';
 import BrandStrategyTab   from './dashboard/BrandStrategyTab';
 import LaunchCopyTab      from './dashboard/LaunchCopyTab';
 import PrintBrandDossier  from './dashboard/PrintBrandDossier';
-import { exportBrandKitJson, exportCssTokens, exportPaletteSvg } from '../utils/exportUtils';
+import { exportBrandKitJson, exportCssTokens, exportPaletteSvg, getAiPrompts } from '../utils/exportUtils';
 
 const TABS = [
   { id: 'preview',   label: 'Live Website Preview',         Icon: Eye },
@@ -32,6 +32,9 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
   const [activeTab, setActiveTab] = useState('preview');
   const [isSaving, setIsSaving] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [aiDrawerOpen, setAiDrawerOpen] = useState(false);
+  const [aiTab, setAiTab] = useState('copywriter');
+  const [copiedPrompt, setCopiedPrompt] = useState(null);
   const { isAuthenticated, saveBrandToLibrary, openAuthModal } = useAuth();
 
   const { brandStrategy = {}, voiceSystem = {}, visualTokens = {}, launchContent = {} } = brandKit || {};
@@ -54,6 +57,20 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
   }, [typography.googleFontsUrl]);
 
   const handlePrint = () => window.print();
+
+  const aiPrompts = getAiPrompts(brandKit);
+  const handleCopyPrompt = (key) => {
+    const text = aiPrompts[key] || '';
+    navigator.clipboard?.writeText(text);
+    setCopiedPrompt(key);
+    setTimeout(() => setCopiedPrompt(null), 2500);
+  };
+
+  const AI_TABS = [
+    { id: 'copywriter',  label: 'Copywriter (ChatGPT / Claude)', promptKey: 'chatGptCopywriterSystemPrompt' },
+    { id: 'midjourney',  label: 'Midjourney Photography',         promptKey: 'midjourneyProductShootPrompt' },
+    { id: 'ui',          label: 'UI Builder (v0 / Cursor)',        promptKey: 'cursorV0UiGenerationPrompt' },
+  ];
 
   const tabProps = { brandStrategy, voiceSystem, visualTokens, launchContent, brandKit, kit: brandKit };
 
@@ -207,9 +224,94 @@ export default function BrandKitDashboard({ brandKit, onStartNew }) {
             <Printer className="w-3.5 h-3.5 text-stone-500" />
             <span>Print PDF</span>
           </button>
+
+          <div className="w-px h-4 bg-stone-200 mx-1" />
+
+          {/* AI Prompts button */}
+          <button
+            onClick={() => setAiDrawerOpen(true)}
+            className="inline-flex items-center gap-1.5 text-xs font-medium px-3.5 py-1.5 rounded-full transition-all"
+            style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', color: '#fff' }}
+            title="AI Master Prompts"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>AI Prompts</span>
+          </button>
         </div>
       </div>
     </div>
+
+    {/* ── AI Prompts Drawer Modal ── */}
+    {aiDrawerOpen && (
+      <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center" onClick={() => setAiDrawerOpen(false)}>
+        {/* Backdrop */}
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+        {/* Panel */}
+        <div
+          className="relative w-full sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-t-[28px] sm:rounded-[28px] border border-[#dbd7cd] shadow-2xl animate-fade-in"
+          onClick={e => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-[#dbd7cd]">
+            <div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4" style={{ color: '#8b5cf6' }} />
+                <h2 className="text-sm font-semibold text-black">AI Master Prompts</h2>
+              </div>
+              <p className="text-[11px] text-stone-400 mt-0.5">Copy and paste into ChatGPT, Claude, Midjourney, or v0 to extend this brand kit.</p>
+            </div>
+            <button onClick={() => setAiDrawerOpen(false)} className="p-1.5 rounded-full hover:bg-[#f2f1ed] transition-all">
+              <X className="w-4 h-4 text-stone-500" />
+            </button>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex gap-1.5 px-6 pt-4">
+            {AI_TABS.map(t => (
+              <button
+                key={t.id}
+                onClick={() => setAiTab(t.id)}
+                className={`text-xs px-3 py-1.5 rounded-full transition-all ${
+                  aiTab === t.id ? 'bg-black text-white' : 'text-stone-600 hover:bg-[#f2f1ed]'
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Prompt area */}
+          {AI_TABS.map(t => aiTab === t.id && (
+            <div key={t.id} className="px-6 py-4">
+              <div className="relative">
+                <pre className="bg-[#faf9f6] border border-[#dbd7cd] rounded-2xl p-4 text-[11px] font-mono text-stone-700 leading-relaxed whitespace-pre-wrap max-h-64 overflow-y-auto">
+                  {aiPrompts[t.promptKey]}
+                </pre>
+                <button
+                  onClick={() => handleCopyPrompt(t.promptKey)}
+                  className="absolute top-3 right-3 inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full transition-all"
+                  style={{
+                    background: copiedPrompt === t.promptKey ? '#ecfdf5' : '#fff',
+                    border: `1px solid ${copiedPrompt === t.promptKey ? '#6ee7b7' : '#dbd7cd'}`,
+                    color: copiedPrompt === t.promptKey ? '#059669' : '#111'
+                  }}
+                >
+                  {copiedPrompt === t.promptKey
+                    ? <><Check className="w-3 h-3" /><span>Copied!</span></>
+                    : <><Copy className="w-3 h-3" /><span>Copy Prompt</span></>
+                  }
+                </button>
+              </div>
+              <p className="text-[10px] text-stone-400 font-mono mt-2 leading-relaxed">
+                {t.id === 'copywriter' && 'Paste as a System Prompt in ChatGPT, Claude, or Gemini.'}
+                {t.id === 'midjourney' && 'Paste directly into Midjourney /imagine or DALL·E 3.'}
+                {t.id === 'ui' && 'Paste into v0.dev or Cursor Composer to scaffold a new page.'}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
 
     {/* ── Hidden on screen; renders only via @media print ── */}
     <PrintBrandDossier kit={brandKit} />
