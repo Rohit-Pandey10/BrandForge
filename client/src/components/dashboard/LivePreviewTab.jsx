@@ -124,7 +124,7 @@ export default function LivePreviewTab(props) {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in pb-20">
       <div
         className="bg-white border border-[#dbd7cd] overflow-hidden shadow-sm transition-all"
         style={{
@@ -411,23 +411,118 @@ function RetailCpgPreview({ brandStrategy, launchContent, voiceSystem, blueprint
         </div>
       </div>
 
-      {blueprint?.sections?.length > 0
-        ? <SectionDispatcher sections={blueprint.sections} primaryColor={primaryColor} primaryContrast={primaryContrast} radiusCurvature={radiusCurvature} fontStyle={fontStyle} brandStrategy={brandStrategy} />
-        : (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t border-[#dbd7cd] mt-8">
-            {[
-              { label: '01 / Product Moat',          value: brandStrategy.differentiator || 'Pure-grade formulation' },
-              { label: '02 / Target Consumer',        value: brandStrategy.targetAudience || 'Discerning enthusiasts' },
-              { label: '03 / Industry Flaw Rejected', value: brandStrategy.antiHero      || 'Disposable shortcuts' }
-            ].map(card => (
-              <div key={card.label} className="p-4 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
-                <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">{card.label}</span>
-                <p className="text-xs text-stone-800 font-medium leading-snug">{card.value}</p>
+      {/* ── Body Sections ── */}
+      {(() => {
+        const sections = blueprint?.sections || [];
+        const hasManySectons = sections.length > 1;
+        return (
+          <>
+            {/* Always dispatch whatever the LLM returned */}
+            {sections.length > 0 && (
+              <SectionDispatcher
+                sections={sections}
+                primaryColor={primaryColor}
+                primaryContrast={primaryContrast}
+                radiusCurvature={radiusCurvature}
+                fontStyle={fontStyle}
+                brandStrategy={brandStrategy}
+              />
+            )}
+
+            {/* If only 0–1 sections came back, pad with an inline comparative ledger */}
+            {!hasManySectons && (
+              <div className="mt-8 pt-8 border-t border-[#dbd7cd] space-y-6">
+                {/* Comparative Positioning Ledger */}
+                <div>
+                  <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500 block mb-4">
+                    THE STANDARD WE REJECT
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Brand side */}
+                    <div className="p-5 border-2 border-black bg-white" style={{ borderRadius: radiusCurvature }}>
+                      <span className="text-[10px] uppercase font-mono tracking-widest text-black font-bold block mb-3">{brandName}</span>
+                      <div className="space-y-2">
+                        {[
+                          { label: brandStrategy.differentiator || 'Pure-grade formulation', desc: 'Our core promise' },
+                          { label: 'Fully transparent ingredient sourcing', desc: 'Independently verified' },
+                          { label: 'Compostable & zero-waste packaging', desc: 'Built-in from day one' }
+                        ].map((row, i) => (
+                          <div key={i} className="flex items-start gap-2">
+                            <Check className="w-3.5 h-3.5 mt-0.5 text-emerald-600 shrink-0" />
+                            <div>
+                              <span className="text-xs font-semibold text-black block">{row.label}</span>
+                              <span className="text-[11px] text-stone-500">{row.desc}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    {/* Anti-hero side */}
+                    <div className="p-5 border border-[#dbd7cd] bg-[#faf8f5]" style={{ borderRadius: radiusCurvature }}>
+                      <span className="text-[10px] uppercase font-mono tracking-widest text-stone-400 font-medium block mb-3">The Industry Default</span>
+                      <div className="space-y-2">
+                        {[
+                          { label: brandStrategy.antiHero || 'Generic compromise' },
+                          { label: 'Opaque supply chains and recycled buzzwords' },
+                          { label: 'Plastic excess and greenwashing' }
+                        ].map((row, i) => (
+                          <div key={i} className="flex items-start gap-2">
+                            <span className="w-3 h-px mt-2 bg-stone-300 shrink-0" />
+                            <span className="text-xs font-medium text-stone-400 line-through decoration-stone-300">{row.label}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Craft / Mission Pillars */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    { label: '01 / Sourcing & Craft',      value: brandStrategy.coreValueProposition || 'Uncompromising formulation' },
+                    { label: '02 / Customer Commitment',   value: brandStrategy.targetAudience      || 'Discerning enthusiasts' },
+                    { label: '03 / The Standard We Reject', value: brandStrategy.antiHero            || 'Disposable shortcuts' }
+                  ].map(card => (
+                    <div key={card.label} className="p-4 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
+                      <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">{card.label}</span>
+                      <p className="text-xs text-stone-800 font-medium leading-snug">{card.value}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
-        )
-      }
+            )}
+
+            {/* Fallback base grid when no blueprint at all */}
+            {sections.length === 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t border-[#dbd7cd] mt-4">
+                {[
+                  { label: '01 / Product Moat',          value: brandStrategy.differentiator || 'Pure-grade formulation' },
+                  { label: '02 / Target Consumer',        value: brandStrategy.targetAudience || 'Discerning enthusiasts' },
+                  { label: '03 / Industry Flaw Rejected', value: brandStrategy.antiHero      || 'Disposable shortcuts' }
+                ].map(card => (
+                  <div key={card.label} className="p-4 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
+                    <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">{card.label}</span>
+                    <p className="text-xs text-stone-800 font-medium leading-snug">{card.value}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        );
+      })()}
+
+      {/* ── Editorial In-Frame Footer ── */}
+      <div className="mt-10 pt-5 border-t border-[#dbd7cd] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div>
+          <span className="text-sm font-medium text-black block" style={{ fontFamily: fontStyle.display }}>{brandName}</span>
+          <span className="text-[10px] text-stone-400 font-mono">{brandStrategy.tagline || launchContent.heroHeadline || ''}</span>
+        </div>
+        <div className="flex items-center gap-4 text-[10px] text-stone-400 font-mono">
+          <span className="hover:text-black cursor-pointer">Shipping & Returns</span>
+          <span className="hover:text-black cursor-pointer">Wholesale Inquiries</span>
+          <span className="hover:text-black cursor-pointer">Ingredient Transparency</span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -483,23 +578,113 @@ function HospitalityPreview({ brandStrategy, launchContent, voiceSystem, bluepri
         </div>
       </div>
 
-      {blueprint?.sections?.length > 0
-        ? <SectionDispatcher sections={blueprint.sections} primaryColor={primaryColor} primaryContrast={primaryContrast} radiusCurvature={radiusCurvature} fontStyle={fontStyle} brandStrategy={brandStrategy} />
-        : (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t border-[#dbd7cd] mt-8">
-            {[
-              { label: '01 / Culinary Moat',      value: brandStrategy.differentiator || 'Heritage grain sourcing' },
-              { label: '02 / Core Guest Profile', value: brandStrategy.targetAudience || 'Neighbourhood regulars' },
-              { label: '03 / We Reject',          value: brandStrategy.antiHero       || 'Rushed industrial dining' }
-            ].map(card => (
-              <div key={card.label} className="p-4 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
-                <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">{card.label}</span>
-                <p className="text-xs text-stone-800 font-medium leading-snug">{card.value}</p>
+      {/* ── Body Sections ── */}
+      {(() => {
+        const sections = blueprint?.sections || [];
+        const hasManySectons = sections.length > 1;
+        return (
+          <>
+            {sections.length > 0 && (
+              <SectionDispatcher
+                sections={sections}
+                primaryColor={primaryColor}
+                primaryContrast={primaryContrast}
+                radiusCurvature={radiusCurvature}
+                fontStyle={fontStyle}
+                brandStrategy={brandStrategy}
+              />
+            )}
+
+            {!hasManySectons && (
+              <div className="mt-8 pt-8 border-t border-[#dbd7cd] space-y-6">
+                {/* Tonight's culinary philosophy ledger */}
+                <div>
+                  <span className="text-[11px] uppercase font-mono tracking-widest text-stone-500 block mb-4">
+                    OUR KITCHEN PHILOSOPHY
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="p-5 border-2 border-black bg-white" style={{ borderRadius: radiusCurvature }}>
+                      <span className="text-[10px] uppercase font-mono tracking-widest text-black font-bold block mb-3">{brandName}</span>
+                      <div className="space-y-2">
+                        {[
+                          { label: brandStrategy.differentiator || 'Heritage grain sourcing', desc: 'Our culinary moat' },
+                          { label: 'Seasonal supplier partnerships, updated weekly', desc: 'From named local farms' },
+                          { label: 'Zero industrial additives or stabilisers', desc: 'In every plate, every service' }
+                        ].map((row, i) => (
+                          <div key={i} className="flex items-start gap-2">
+                            <Check className="w-3.5 h-3.5 mt-0.5 text-emerald-600 shrink-0" />
+                            <div>
+                              <span className="text-xs font-semibold text-black block">{row.label}</span>
+                              <span className="text-[11px] text-stone-500">{row.desc}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="p-5 border border-[#dbd7cd] bg-[#faf8f5]" style={{ borderRadius: radiusCurvature }}>
+                      <span className="text-[10px] uppercase font-mono tracking-widest text-stone-400 font-medium block mb-3">The Industry Default</span>
+                      <div className="space-y-2">
+                        {[
+                          { label: brandStrategy.antiHero || 'Rushed, industrialised dining' },
+                          { label: 'Frozen or par-cooked mass-produced proteins' },
+                          { label: 'Formulaic menus that never change by season' }
+                        ].map((row, i) => (
+                          <div key={i} className="flex items-start gap-2">
+                            <span className="w-3 h-px mt-2 bg-stone-300 shrink-0" />
+                            <span className="text-xs font-medium text-stone-400 line-through decoration-stone-300">{row.label}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Dining Pillars */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    { label: '01 / Culinary Moat',      value: brandStrategy.differentiator || 'Heritage grain sourcing' },
+                    { label: '02 / Core Guest Profile', value: brandStrategy.targetAudience || 'Neighbourhood regulars' },
+                    { label: '03 / Convention We Reject', value: brandStrategy.antiHero    || 'Rushed industrial dining' }
+                  ].map(card => (
+                    <div key={card.label} className="p-4 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
+                      <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">{card.label}</span>
+                      <p className="text-xs text-stone-800 font-medium leading-snug">{card.value}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
-        )
-      }
+            )}
+
+            {sections.length === 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-8 border-t border-[#dbd7cd] mt-4">
+                {[
+                  { label: '01 / Culinary Moat',      value: brandStrategy.differentiator || 'Heritage grain sourcing' },
+                  { label: '02 / Core Guest Profile', value: brandStrategy.targetAudience || 'Neighbourhood regulars' },
+                  { label: '03 / We Reject',          value: brandStrategy.antiHero       || 'Rushed industrial dining' }
+                ].map(card => (
+                  <div key={card.label} className="p-4 bg-white border border-[#dbd7cd]" style={{ borderRadius: radiusCurvature }}>
+                    <span className="text-[10px] uppercase font-mono text-stone-400 block mb-1">{card.label}</span>
+                    <p className="text-xs text-stone-800 font-medium leading-snug">{card.value}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        );
+      })()}
+
+      {/* ── Editorial In-Frame Footer ── */}
+      <div className="mt-10 pt-5 border-t border-[#dbd7cd] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div>
+          <span className="text-sm font-medium text-black block" style={{ fontFamily: fontStyle.display }}>{brandName}</span>
+          <span className="text-[10px] text-stone-400 font-mono">{brandStrategy.tagline || launchContent.heroHeadline || ''}</span>
+        </div>
+        <div className="flex items-center gap-4 text-[10px] text-stone-400 font-mono">
+          <span className="hover:text-black cursor-pointer">Booking & Reservations</span>
+          <span className="hover:text-black cursor-pointer">Private Events</span>
+          <span className="hover:text-black cursor-pointer">Sourcing Philosophy</span>
+        </div>
+      </div>
     </div>
   );
 }
