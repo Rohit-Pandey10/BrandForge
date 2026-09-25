@@ -1,0 +1,122 @@
+:root {
+  /* Theme Identity */
+  --theme-mode: light;
+
+  /* Colors — Light Mode (Warm Parchment Editorial) */
+  --color-ink-black: #000000;
+  --color-paper-cream: #f2f1ed;
+  --color-warm-border: #dbd7cd;
+  --color-stone-gray: #555555; /* crisp readable contrast */
+  --color-ash-gray: #888888;
+  --color-pure-white: #ffffff;
+
+  /* Semantic UI Surfaces */
+  --surface-canvas: #f2f1ed;
+  --surface-card: #ffffff;
+  --surface-ink-surface: #000000;
+  --surface-card-hover: #faf9f6;
+  --surface-tag-bg: #ffffff;
+  --surface-input-bg: #ffffff;
+  --surface-code-bg: #eae7df;
+  --surface-choice-hover: #faf9f6;
+  --surface-subtle-overlay: rgba(0, 0, 0, 0.04);
+  --surface-active-overlay: rgba(0, 0, 0, 0.08);
+
+  /* Typography — Font Families */
+  --font-bureauserif: 'Newsreader', 'Cormorant Garamond', 'EB Garamond', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-inter: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Typography — Scale */
+  --text-caption: 12px;
+  --leading-caption: 16px;
+  --tracking-caption: -0.01px;
+
+  --text-body-sm: 14px;
+  --leading-body-sm: 20px;
+  --tracking-body-sm: -0.11px;
+
+  --text-body: 16px;
+  --leading-body: 24px;
+  --tracking-body: -0.18px;
+
+  --text-subheading: 20px;
+  --leading-subheading: 22px;
+  --tracking-subheading: -0.4px;
+
+  --text-heading-sm: 28px;
+  --leading-heading-sm: 30px;
+  --tracking-heading-sm: -0.6px;
+
+  --text-heading: 42px;
+  --leading-heading: 44px;
+  --tracking-heading: -0.9px;
+
+  --text-display: 68px;
+  --leading-display: 70px;
+  --tracking-display: -1.5px;
+
+  /* Typography — Weights */
+  --font-weight-display: 450;
+  --font-weight-heading: 450;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  /* Spacing */
+  --spacing-unit: 4px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-72: 72px;
+  --spacing-80: 80px;
+  --spacing-128: 128px;
+
+  /* Layout */
+  --page-max-width: 1200px;
+  --section-gap: 48px;
+  --card-padding: 32px;
+  --element-gap: 16px;
+
+  /* Border Radius */
+  --radius-lg: 8px;
+  --radius-3xl: 24px;
+  --radius-3xl-2: 32px;
+
+  /* Named Radii */
+  --radius-tags: 9999px;
+  --radius-cards: 28px;
+  --radius-inputs: 8px;
+  --radius-buttons: 9999px;
+}
+
+/* Dark Mode Tokens — Deep Velvet Obsidian & Luminous Platinum */
+[data-theme="dark"] {
+  --theme-mode: dark;
+
+  /* Colors — Dark Mode */
+  --color-ink-black: #f5f5f4;
+  --color-paper-cream: #0c0d10;
+  --color-warm-border: #23262d;
+  --color-stone-gray: #9ca3af;
+  --color-ash-gray: #6b7280;
+  --color-pure-white: #15171d;
+
+  /* Semantic UI Surfaces */
+  --surface-canvas: #0c0d10;
+  --surface-card: #15171d;
+  --surface-ink-surface: #f5f5f4;
+  --surface-card-hover: #1c1f26;
+  --surface-tag-bg: #181a22;
+  --surface-input-bg: #121319;
+  --surface-code-bg: #07080a;
+  --surface-choice-hover: #1b1e26;
+  --surface-subtle-overlay: rgba(255, 255, 255, 0.06);
+  --surface-active-overlay: rgba(255, 255, 255, 0.12);
+}
