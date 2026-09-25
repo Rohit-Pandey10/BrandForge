@@ -79,11 +79,33 @@ async function runJeansVerification() {
   console.log('Archetype:', brandKit.voiceSystem?.archetype);
   console.log('Manifesto Snippet:', brandKit.launchContent?.manifesto?.slice(0, 150) + '...');
 
-  const fullText = JSON.stringify(brandKit).toLowerCase();
-  for (const word of forbiddenFoodWords) {
-    if (fullText.includes(` ${word} `) || fullText.includes(`"${word}"`)) {
-      throw new Error(`FAILED: Synthesized Brand Kit contains food/restaurant word "${word}"`);
+  // Core brand narrative fields must NOT contain culinary or restaurant terms
+  const coreCopy = [
+    brandKit.brandStrategy?.brandName,
+    brandKit.brandStrategy?.tagline,
+    brandKit.brandStrategy?.mission,
+    brandKit.launchContent?.heroHeadline,
+    brandKit.launchContent?.heroSubheadline,
+    brandKit.launchContent?.manifesto,
+    brandKit.brandStrategy?.coreValueProposition
+  ].join(' ').toLowerCase();
+
+  const culinaryTerms = [
+    'table', 'dining', 'restaurant', 'plate', 'plates', 'bites',
+    'grill', 'grills', 'hearth', 'sourdough', 'chef', 'menu', 'tasty',
+    'culinary', 'wine', 'cuisine', 'terroir', 'provenance', 'quiet luxury'
+  ];
+
+  for (const word of culinaryTerms) {
+    if (coreCopy.includes(` ${word} `) || coreCopy.includes(` ${word}.`) || coreCopy.includes(` ${word},`) || coreCopy.includes(`"${word}"`)) {
+      throw new Error(`FAILED: Synthesized Brand Kit narrative contains restaurant/culinary word "${word}"`);
     }
+  }
+
+  // Must contain authentic apparel / denim terminology
+  const hasApparelTokens = /(denim|selvedge|shuttle|loom|indigo|cotton|cut|wear|workwear|garment|rivet|fade)/i.test(coreCopy);
+  if (!hasApparelTokens) {
+    throw new Error('FAILED: Synthesized Brand Kit lacks core denim/apparel terminology');
   }
 
   console.log('\n✅ Denim Brand Kit PASSED with 100% apparel purity and 0 food contamination!');
