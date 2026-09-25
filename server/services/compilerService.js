@@ -142,9 +142,64 @@ export const brandKitSchema = {
         }
       },
       required: ['badge', 'heroLayout', 'primaryCta', 'sections']
+    },
+    swotAnalysis: {
+      type: 'object',
+      properties: {
+        summary: { type: 'string', description: "High-conviction, 1-2 sentence executive verdict on the brand's commercial defensibility." },
+        strengths: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              title: { type: 'string' },
+              description: { type: 'string' },
+              transcriptAnchor: { type: 'string', description: "Direct quote or specific decision made by the founder in the interview." }
+            },
+            required: ['title', 'description', 'transcriptAnchor']
+          }
+        },
+        weaknesses: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              title: { type: 'string' },
+              description: { type: 'string' },
+              mitigation: { type: 'string', description: "Actionable strategic hedge against this vulnerability." }
+            },
+            required: ['title', 'description', 'mitigation']
+          }
+        },
+        opportunities: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              title: { type: 'string' },
+              description: { type: 'string' },
+              growthVector: { type: 'string', description: "Specific retail, product expansion, or cultural wedge." }
+            },
+            required: ['title', 'description', 'growthVector']
+          }
+        },
+        threats: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              title: { type: 'string' },
+              description: { type: 'string' },
+              defensivePlay: { type: 'string', description: "Tactical defense against incumbent counter-measures." }
+            },
+            required: ['title', 'description', 'defensivePlay']
+          }
+        }
+      },
+      required: ['summary', 'strengths', 'weaknesses', 'opportunities', 'threats']
     }
   },
-  required: ['brandStrategy', 'voiceSystem', 'visualTokens', 'launchContent', 'websiteBlueprint']
+  required: ['brandStrategy', 'voiceSystem', 'visualTokens', 'launchContent', 'websiteBlueprint', 'swotAnalysis']
 };
 
 /**

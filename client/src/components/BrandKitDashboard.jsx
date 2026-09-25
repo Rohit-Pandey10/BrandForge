@@ -20,6 +20,7 @@ import LivePreviewTab      from './dashboard/LivePreviewTab';
 import BrandStrategyTab   from './dashboard/BrandStrategyTab';
 import LaunchCopyTab      from './dashboard/LaunchCopyTab';
 import PrintBrandDossier  from './dashboard/PrintBrandDossier';
+import SwotAnalysisView   from './SwotAnalysisView';
 import { 
   exportBrandKitJson, 
   exportCssTokens, 
@@ -32,7 +33,8 @@ import {
 const TABS = [
   { id: 'preview',   label: 'Live Website Preview',         Icon: Eye },
   { id: 'strategy',  label: 'Brand Strategy & Positioning', Icon: Target },
-  { id: 'manifesto', label: 'Launch Manifesto & Copy',      Icon: FileText }
+  { id: 'manifesto', label: 'Launch Manifesto & Copy',      Icon: FileText },
+  { id: 'swot',      label: 'Strategic SWOT Analysis',      Icon: Sparkles, isSwot: true }
 ];
 
 export default function BrandKitDashboard({
@@ -242,8 +244,26 @@ export default function BrandKitDashboard({
       <div className="no-print mb-8">
         <div className="flex items-center justify-start sm:justify-center overflow-x-auto pb-2 gap-1.5 scrollbar-none">
           <div className="inline-flex p-1.5 liquid-glass-card rounded-full max-w-full gap-1">
-            {TABS.map(({ id, label, Icon }) => {
+            {TABS.map(({ id, label, Icon, isSwot }) => {
               const isActive = activeTab === id;
+              if (isSwot) {
+                return (
+                  <button
+                    key={id}
+                    id={`tab-${id}`}
+                    type="button"
+                    onClick={() => setActiveTab(id)}
+                    className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2 text-xs font-mono uppercase tracking-wider rounded-full transition-all whitespace-nowrap cursor-pointer ${
+                      isActive
+                        ? 'bg-stone-900 text-stone-100 shadow-sm font-semibold'
+                        : 'bg-stone-100/80 text-stone-600 hover:bg-stone-200/80 border border-stone-200/60 font-medium'
+                    }`}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                    {label}
+                  </button>
+                );
+              }
               return (
                 <button
                   key={id}
@@ -272,6 +292,11 @@ export default function BrandKitDashboard({
       )}
       {activeTab === 'strategy'  && <BrandStrategyTab {...tabProps} />}
       {activeTab === 'manifesto' && <LaunchCopyTab    {...tabProps} />}
+      {activeTab === 'swot'      && (
+        <div className="liquid-glass-card rounded-[36px] p-4 sm:p-8">
+          <SwotAnalysisView swotAnalysis={brandKit?.swotAnalysis} brandKit={brandKit} />
+        </div>
+      )}
 
       {/* ── Floating Glassmorphism Export Toolbar ── */}
       <div className="no-print fixed bottom-6 left-1/2 -translate-x-1/2 z-30">

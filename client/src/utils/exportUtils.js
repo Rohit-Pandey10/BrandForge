@@ -518,6 +518,7 @@ export function exportBrandKitJson(brandKit) {
     visualTokens:     brandKit?.visualTokens     || {},
     launchContent:    brandKit?.launchContent    || {},
     websiteBlueprint: brandKit?.websiteBlueprint || {},
+    swotAnalysis:     brandKit?.swotAnalysis     || {},
     aiImprovisationPrompts: buildAiPrompts(brandKit)
   };
   downloadFile(JSON.stringify(payload, null, 2), `${name}-tokens.json`, 'application/json');

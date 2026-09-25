@@ -1,5 +1,5 @@
 /**
- * Print Brand Dossier — Executive 3-Page Brand Book
+ * Print Brand Dossier — Executive 4-Page Brand Book
  *
  * Rendered only during window.print() via @media print CSS rules.
  * Hidden on screen via `#brand-book-print-container { display: none }` in index.css.
@@ -7,6 +7,7 @@
  * Page 1: Cover, Palette Swatches, 4 Strategy Pillars
  * Page 2: Founding Manifesto, Voice Dos/Don'ts, Brand Lexicon
  * Page 3: Experience Blueprint, Product Catalog, Social Hooks
+ * Page 4: Strategic SWOT Ledger & Commercial Defensibility Matrix
  */
 
 import React from 'react';
@@ -19,6 +20,7 @@ export default function PrintBrandDossier({ kit }) {
   const visualTokens  = kit.visualTokens  || {};
   const launchContent = kit.launchContent || {};
   const blueprint     = kit.websiteBlueprint || {};
+  const swotAnalysis  = kit.swotAnalysis  || {};
 
   const palette    = visualTokens.palette  || [];
   const typography = visualTokens.typography || {};
@@ -36,6 +38,12 @@ export default function PrintBrandDossier({ kit }) {
         { label: 'Edition 02: Reserve Bundle', description: 'Limited batch with origin certificate.',                       metricOrPrice: '—' },
         { label: 'Edition 03: Routine Tier',  description: 'Monthly subscription in compostable packaging.',              metricOrPrice: '—' }
       ];
+
+  const swotSummary = swotAnalysis.summary || brandStrategy.coreValueProposition || 'High-conviction commercial positioning isolating key defensibility wedges and market hedges.';
+  const swotStrengths = Array.isArray(swotAnalysis.strengths) ? swotAnalysis.strengths : [];
+  const swotWeaknesses = Array.isArray(swotAnalysis.weaknesses) ? swotAnalysis.weaknesses : [];
+  const swotOpportunities = Array.isArray(swotAnalysis.opportunities) ? swotAnalysis.opportunities : [];
+  const swotThreats = Array.isArray(swotAnalysis.threats) ? swotAnalysis.threats : [];
 
   /* ── Style Helpers ──────────────────────────────────────────────────── */
   const mono = { fontFamily: 'monospace' };
@@ -151,7 +159,7 @@ export default function PrintBrandDossier({ kit }) {
 
         <div style={footerStyle}>
           <span>{brandName} • Core Strategy Specification</span>
-          <span>Page 01 of 03</span>
+          <span>Page 01 of 04</span>
         </div>
       </section>
 
@@ -230,7 +238,7 @@ export default function PrintBrandDossier({ kit }) {
 
         <div style={footerStyle}>
           <span>{brandName} • Verbal Identity & Manifesto</span>
-          <span>Page 02 of 03</span>
+          <span>Page 02 of 04</span>
         </div>
       </section>
 
@@ -319,7 +327,142 @@ export default function PrintBrandDossier({ kit }) {
 
         <div style={footerStyle}>
           <span>{brandName} • Experience Blueprint</span>
-          <span>Page 03 of 03</span>
+          <span>Page 03 of 04</span>
+        </div>
+      </section>
+
+      {/* ================================================================
+          PAGE 4: STRATEGIC SWOT LEDGER & COMMERCIAL ANALYSIS
+          ================================================================ */}
+      <section className="print-dossier-page">
+        <div>
+          <div style={{ borderBottom: '2px solid #111', paddingBottom: '0.75rem', marginBottom: '1.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+              <span style={sectionLabel}>SECTION 04 • STRATEGIC SWOT LEDGER & COMMERCIAL ANALYSIS</span>
+              <span style={{ ...mono, fontSize: '9pt', color: '#666' }}>SOCRATIC SYNTHESIS</span>
+            </div>
+          </div>
+
+          {/* Executive Verdict Banner */}
+          <div
+            className="print-card-avoid-break"
+            style={{
+              border: '1px solid #111',
+              borderRadius: '10px',
+              padding: '1.25rem 1.5rem',
+              marginBottom: '1.5rem',
+              background: '#fcfbf9'
+            }}
+          >
+            <span style={{ ...cardLabel, color: '#b45309', fontWeight: 600 }}>
+              EXECUTIVE COMMERCIAL DEFICIT & ADVANTAGE VERDICT
+            </span>
+            <div style={{ ...serif, fontSize: '13pt', lineHeight: 1.45, color: '#111', fontStyle: 'italic' }}>
+              "{swotSummary}"
+            </div>
+          </div>
+
+          {/* 2x2 SWOT Matrix */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+
+            {/* Strengths */}
+            <div className="print-card-avoid-break" style={{ ...card, borderLeft: '3px solid #059669' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.5rem' }}>
+                <span style={{ ...cardLabel, color: '#065f46', fontWeight: 700, marginBottom: 0 }}>
+                  [S] CORE STRENGTHS & WEDGES
+                </span>
+                <span style={{ ...mono, fontSize: '7.5pt', color: '#059669' }}>{swotStrengths.length} WEDGES</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {(swotStrengths.slice(0, 5)).map((s, idx) => (
+                  <div key={idx} style={{ padding: '6px 8px', background: '#f6fbf8', borderRadius: '6px', border: '1px solid #e2ece6' }}>
+                    <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{s.title}</div>
+                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{s.description}</div>
+                    {s.transcriptAnchor && (
+                      <div style={{ ...mono, fontSize: '7.5pt', color: '#065f46', marginTop: '4px', fontStyle: 'italic' }}>
+                        Anchor: "{s.transcriptAnchor}"
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Weaknesses */}
+            <div className="print-card-avoid-break" style={{ ...card, borderLeft: '3px solid #d97706' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.5rem' }}>
+                <span style={{ ...cardLabel, color: '#92400e', fontWeight: 700, marginBottom: 0 }}>
+                  [W] COMMERCIAL VULNERABILITIES
+                </span>
+                <span style={{ ...mono, fontSize: '7.5pt', color: '#d97706' }}>{swotWeaknesses.length} RISKS</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {(swotWeaknesses.slice(0, 5)).map((w, idx) => (
+                  <div key={idx} style={{ padding: '6px 8px', background: '#fdfaf5', borderRadius: '6px', border: '1px solid #f2e9dc' }}>
+                    <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{w.title}</div>
+                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{w.description}</div>
+                    {w.mitigation && (
+                      <div style={{ ...mono, fontSize: '7.5pt', color: '#78350f', marginTop: '4px' }}>
+                        Hedge: {w.mitigation}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Opportunities */}
+            <div className="print-card-avoid-break" style={{ ...card, borderLeft: '3px solid #4f46e5' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.5rem' }}>
+                <span style={{ ...cardLabel, color: '#3730a3', fontWeight: 700, marginBottom: 0 }}>
+                  [O] EXPANSION VECTORS
+                </span>
+                <span style={{ ...mono, fontSize: '7.5pt', color: '#4f46e5' }}>{swotOpportunities.length} CHANNELS</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {(swotOpportunities.slice(0, 5)).map((o, idx) => (
+                  <div key={idx} style={{ padding: '6px 8px', background: '#f7f7fd', borderRadius: '6px', border: '1px solid #e5e5f7' }}>
+                    <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{o.title}</div>
+                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{o.description}</div>
+                    {o.growthVector && (
+                      <div style={{ ...mono, fontSize: '7.5pt', color: '#3730a3', marginTop: '4px' }}>
+                        Vector: {o.growthVector}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Threats */}
+            <div className="print-card-avoid-break" style={{ ...card, borderLeft: '3px solid #e11d48' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.5rem' }}>
+                <span style={{ ...cardLabel, color: '#9f1239', fontWeight: 700, marginBottom: 0 }}>
+                  [T] INCUMBENT THREATS & COUNTER-MOVES
+                </span>
+                <span style={{ ...mono, fontSize: '7.5pt', color: '#e11d48' }}>{swotThreats.length} THREATS</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {(swotThreats.slice(0, 5)).map((t, idx) => (
+                  <div key={idx} style={{ padding: '6px 8px', background: '#fdf6f7', borderRadius: '6px', border: '1px solid #fae4e7' }}>
+                    <div style={{ fontSize: '9pt', fontWeight: 600, color: '#111' }}>{t.title}</div>
+                    <div style={{ fontSize: '8pt', color: '#444', lineHeight: 1.35, marginTop: '2px' }}>{t.description}</div>
+                    {t.defensivePlay && (
+                      <div style={{ ...mono, fontSize: '7.5pt', color: '#881337', marginTop: '4px' }}>
+                        Defense: {t.defensivePlay}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div style={footerStyle}>
+          <span>{brandName} • Strategic SWOT Analysis</span>
+          <span>Page 04 of 04</span>
         </div>
       </section>
 

@@ -204,7 +204,74 @@ Rules:
     "press_quotes"      → use for validated, credibility-first brands
 - For every item in sections[].items, invent a REAL commercial name and description specific to this brand.
   (e.g., for a whey protein: "Meadow Blend — Unflavored", "Morning Latte Mix", "Trial Duo Pack" — not "Signature Edition").
+
+PERSONALIZED SWOT ANALYSIS DIRECTIVE (CRITICAL - NO GENERIC FILLER):
+Synthesize a razor-sharp, authentic SWOT analysis grounded strictly in the founder's 
+actual interview choices (their chosen trade-offs, aesthetic boundaries, price point, and rejected sacred cows).
+
+- STRENGTHS (5 items): Focus on the deliberate trade-offs the founder chose (e.g. lifetime repairs, hyper-dense denim, refusing seasonal trends). Anchor each item to a specific word or choice from their answers.
+- WEAKNESSES (5 items): Real, honest commercial vulnerabilities caused by those choices (e.g. higher production unit costs, slower customer replenishment cycles, niche adoption barrier). Include an actionable mitigation for each.
+- OPPORTUNITIES (5 items): High-conviction cultural, retail, or product expansion vectors that fit their exact archetype (e.g. archive repair workshops, limited deadstock runs, premium specialty boutique stockists).
+- THREATS (5 items): Actual market threats (e.g. fast-fashion dupes, fluctuating raw selvedge cotton pricing, incumbent greenwashing). Include a tactical defensive play.
+
+FORBIDDEN: Never write generic business school filler ("Competition is high", "Marketing is expensive", "Use social media for growth").
 `;
+
+export const swotAnalysisSchema = {
+  type: "object",
+  properties: {
+    summary: { type: "string", description: "High-conviction, 1-2 sentence executive verdict on the brand's commercial defensibility." },
+    strengths: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          title: { type: "string" },
+          description: { type: "string" },
+          transcriptAnchor: { type: "string", description: "Direct quote or specific decision made by the founder in the interview." }
+        },
+        required: ["title", "description", "transcriptAnchor"]
+      }
+    },
+    weaknesses: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          title: { type: "string" },
+          description: { type: "string" },
+          mitigation: { type: "string", description: "Actionable strategic hedge against this vulnerability." }
+        },
+        required: ["title", "description", "mitigation"]
+      }
+    },
+    opportunities: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          title: { type: "string" },
+          description: { type: "string" },
+          growthVector: { type: "string", description: "Specific retail, product expansion, or cultural wedge." }
+        },
+        required: ["title", "description", "growthVector"]
+      }
+    },
+    threats: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          title: { type: "string" },
+          description: { type: "string" },
+          defensivePlay: { type: "string", description: "Tactical defense against incumbent counter-measures." }
+        },
+        required: ["title", "description", "defensivePlay"]
+      }
+    }
+  },
+  required: ["summary", "strengths", "weaknesses", "opportunities", "threats"]
+};
 
 /**
  * Internal helper — formats the founder's raw pitch / chosen concept into an

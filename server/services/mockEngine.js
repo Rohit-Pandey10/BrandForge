@@ -541,34 +541,154 @@ function _generalQuestion(round) {
 // MOCK BRAND KITS
 // ---------------------------------------------------------------------------
 
+export function getDomainSwot(kit = {}) {
+  const name = kit?.brandStrategy?.brandName || 'Brand';
+  const diff = kit?.brandStrategy?.differentiator || 'Craft-first production and direct sourcing';
+  const antiHero = kit?.brandStrategy?.antiHero || 'Generic mass-market commodities';
+  const audience = kit?.brandStrategy?.targetAudience || 'Discerning customers';
+  const valProp = kit?.brandStrategy?.coreValueProposition || 'High-integrity experience';
+
+  return {
+    summary: `High-conviction positioning built around "${diff.slice(0, 80)}", establishing distinct pricing power against "${antiHero.slice(0, 60)}" while requiring defensive hedges around unit cost friction and customer education.`,
+    strengths: [
+      {
+        title: "Distinct Operational Differentiator",
+        description: `Deliberate commitment to ${diff.toLowerCase().slice(0, 110)}, creating authentic commercial defensibility that generic competitors cannot easily replicate.`,
+        transcriptAnchor: diff.slice(0, 45)
+      },
+      {
+        title: "Polarizing Anti-Hero Stance",
+        description: `Explicit rejection of ${antiHero.toLowerCase().slice(0, 95)}, forging immediate trust and emotional tribal alignment with core users.`,
+        transcriptAnchor: antiHero.slice(0, 45)
+      },
+      {
+        title: "High-Margin Core Proposition",
+        description: `Value proposition grounded in ${valProp.toLowerCase().slice(0, 100)}, commanding premium price inelasticity over mass-produced alternatives.`,
+        transcriptAnchor: valProp.slice(0, 45)
+      },
+      {
+        title: "Curated Brand Voice Boundaries",
+        description: "Strict tone and aesthetic boundaries eliminate cringe marketing tropes and foster long-term customer affinity.",
+        transcriptAnchor: kit?.voiceSystem?.archetype || "Brand Architecture"
+      },
+      {
+        title: "Targeted Audience Resonance",
+        description: `Direct focus on ${audience.toLowerCase().slice(0, 100)}, driving word-of-mouth adoption without wasted broad-reach ad spend.`,
+        transcriptAnchor: audience.slice(0, 40)
+      }
+    ],
+    weaknesses: [
+      {
+        title: "Higher Unit Production & Operating Costs",
+        description: "Uncompromising ingredient/material selection and non-standard processes compress initial gross margins at lower volumes.",
+        mitigation: "Establish numbered limited batch runs and pre-order deposit mechanics to lock in forward cash flow."
+      },
+      {
+        title: "Customer Education Barrier",
+        description: "Refusal to adopt conventional shortcuts requires educating buyers on why the product feels, tastes, or operates differently.",
+        mitigation: "Publish transparent sourcing breakdowns, process dossiers, and tactile unboxing guides."
+      },
+      {
+        title: "Niche Subculture Friction",
+        description: "High-conviction aesthetic posture risks appearing intimidating or exclusionary to broader adjacent segments.",
+        mitigation: "Maintain welcoming, grounded service touchpoints and clear introductory product tiers."
+      },
+      {
+        title: "Longer Replenishment & Purchase Cycles",
+        description: "Durable design or deep fulfillment rituals reduce short-term transactional churn and repeat re-order velocity.",
+        mitigation: "Develop recurring companion consumables, refills, or seasonal archive collaborations."
+      },
+      {
+        title: "Supply Chain & Sourcing Bottlenecks",
+        description: "Dependence on authentic single-origin suppliers or artisanal machinery limits rapid burst scalability.",
+        mitigation: "Partner with dual regional secondary suppliers vetted against the same rigorous quality criteria."
+      }
+    ],
+    opportunities: [
+      {
+        title: "Bespoke Physical Studio & Tasting Spaces",
+        description: "Transform physical spaces into sensorial brand epicenters featuring live workshops, tastings, and community salons.",
+        growthVector: "Pop-up architectural flagships in culturally aligned cultural capitals."
+      },
+      {
+        title: "Limited-Run Archive Capsule Editions",
+        description: "Release rare micro-batches and experimental formulas celebrating seasonal or technical craft breakthroughs.",
+        growthVector: "Numbered collectors' capsules with digital provenance certificates."
+      },
+      {
+        title: "Curated Strategic Wholesale & Stockist Network",
+        description: "Partner with independent specialty boutiques, boutique hotels, and design galleries over indiscriminate retail distribution.",
+        growthVector: "Selective global placement in top-tier design destination stockists."
+      },
+      {
+        title: "Customer Ritual & Longevity Documentation",
+        description: "Celebrate customer patina, wear milestones, or daily workflow rituals through an editorial community gazette.",
+        growthVector: "User-generated storytelling flywheel validating authentic durability."
+      },
+      {
+        title: "Direct-to-Consumer Customization Programs",
+        description: "Offer tailored calibrations, custom packaging monograms, or bespoke formulation choices at checkout.",
+        growthVector: "High-AOV concierge customization tier for devoted brand patrons."
+      }
+    ],
+    threats: [
+      {
+        title: "Mass-Market Incumbent Greenwashing",
+        description: "Legacy conglomerate competitors launching superficial clone lines that mimic the aesthetic without the genuine craft.",
+        defensivePlay: "Publish radical ingredient transparency, open-source lab tests, and mill/farm audit certificates."
+      },
+      {
+        title: "Raw Material & Commodity Price Volatility",
+        description: "Fluctuating agricultural harvest yields or specialized material costs threatening unit economics.",
+        defensivePlay: "Secure multi-year fixed forward agreements and build strategic safety inventory reserves."
+      },
+      {
+        title: "Fast-Follower Low-Cost Copycats",
+        description: "Aggressive copycats deploying cheap synthetic replicas and subsidized digital ad spend.",
+        defensivePlay: "Deepen trademark protections and anchor brand value in tangible physical rituals that cannot be dropshipped."
+      },
+      {
+        title: "Category Fatigue & Changing Consumer Rhythms",
+        description: "Broader cultural shifts altering consumer daily habits and discretionary spend thresholds.",
+        defensivePlay: "Position the brand as an essential, timeless daily staple rather than a transient lifestyle trend."
+      },
+      {
+        title: "Counterfeit & Grey Market Resale Leakage",
+        description: "Unauthorized third-party sellers diluting the unboxing experience and customer service guarantees.",
+        defensivePlay: "Enforce direct-only fulfillment and register verified serial numbers with lifetime warranties."
+      }
+    ]
+  };
+}
+
 export function getMockBrandKit(founderPitch = '', fullHistory = []) {
   const combined = [founderPitch, ...fullHistory.map(m => m.content)].join(' ');
   const lower = combined.toLowerCase();
   const domain = classifyDomain(combined);
   const isFamily = isFamilyIntent(combined);
 
+  let kit;
   // 1. Direct burger / smash / diner check
   if (/(burger|smash|patty|patties|bun|fries|shake)/i.test(lower)) {
-    return _burgerKit(founderPitch);
+    kit = _burgerKit(founderPitch);
+  } else if (domain === DOMAINS.FASHION) {
+    kit = _fashionKit();
+  } else if (domain === DOMAINS.BEVERAGE) {
+    kit = _beverageKit();
+  } else if (domain === DOMAINS.HOSPITALITY) {
+    kit = isFamily ? _familyHospitalityKit() : _hospitalityKit();
+  } else if (domain === DOMAINS.CAREER) {
+    kit = _careerKit();
+  } else if (domain === DOMAINS.DEVELOPER) {
+    kit = _developerKit();
+  } else {
+    kit = _hospitalityKit();
   }
-  // 2. Apparel & Fashion
-  if (domain === DOMAINS.FASHION) return _fashionKit();
-  // 3. Beverage & Functional drinks
-  if (domain === DOMAINS.BEVERAGE) return _beverageKit();
-  // 4. Hospitality & Dining
-  if (domain === DOMAINS.HOSPITALITY) {
-    return isFamily ? _familyHospitalityKit() : _hospitalityKit();
-  }
-  // 5. Career & Professional
-  if (domain === DOMAINS.CAREER) return _careerKit();
-  // 6. Developer SaaS (STRICT: only if developer keywords matched)
-  if (domain === DOMAINS.DEVELOPER) return _developerKit();
 
-  // 7. General fallback: if food or dining or CPG, return hospitality kit, never developer kit!
-  if (/(food|eat|dining|restaurant|kitchen|chef|snack|bakery|cpg)/i.test(lower)) {
-    return _hospitalityKit();
+  if (kit && !kit.swotAnalysis) {
+    kit.swotAnalysis = getDomainSwot(kit);
   }
-  return _hospitalityKit();
+  return kit;
 }
 
 function _fashionKit() {
