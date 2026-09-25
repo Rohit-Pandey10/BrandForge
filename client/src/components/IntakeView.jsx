@@ -185,7 +185,7 @@ export default function IntakeView({ onStartInterview, onPreviewMock, isExpandin
                     <span className="text-xs font-mono uppercase tracking-wider text-stone-500 block mb-0.5">
                       {preset.category}
                     </span>
-                    <h4 className="text-xs font-semibold text-stone-900 leading-snug group-hover:text-orange-600 transition-colors">
+                    <h4 className="text-lg font-semibold text-stone-900 leading-snug group-hover:text-orange-600 transition-colors">
                       {preset.title}
                     </h4>
                   </div>
@@ -214,22 +214,22 @@ export default function IntakeView({ onStartInterview, onPreviewMock, isExpandin
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-center sm:text-left">
         <div className="p-5 rounded-2xl liquid-glass-card">
           <span className="text-xs uppercase font-mono tracking-widest text-orange-600 font-semibold block mb-1">Step 01</span>
-          <h4 className="text-sm font-bold text-stone-900 leading-snug">Target User</h4>
-          <p className="text-xs text-stone-600 mt-1 leading-relaxed">
+          <h4 className="text-2xl font-extrabold text-stone-900 leading-tight mb-3">Target User</h4>
+          <p className="text-base text-stone-600 leading-relaxed">
             Isolating the core audience and defining their primary expectation.
           </p>
         </div>
         <div className="p-5 rounded-2xl liquid-glass-card">
           <span className="text-xs uppercase font-mono tracking-widest text-orange-600 font-semibold block mb-1">Step 02</span>
-          <h4 className="text-sm font-bold text-stone-900 leading-snug">Differentiation</h4>
-          <p className="text-xs text-stone-600 mt-1 leading-relaxed">
+          <h4 className="text-2xl font-extrabold text-stone-900 leading-tight mb-3">Differentiation</h4>
+          <p className="text-base text-stone-600 leading-relaxed">
             Rejecting conventional incumbent compromises to reveal your distinct angle.
           </p>
         </div>
         <div className="p-5 rounded-2xl liquid-glass-card">
           <span className="text-xs uppercase font-mono tracking-widest text-orange-600 font-semibold block mb-1">Step 03</span>
-          <h4 className="text-sm font-bold text-stone-900 leading-snug">Brand Edge</h4>
-          <p className="text-xs text-stone-600 mt-1 leading-relaxed">
+          <h4 className="text-2xl font-extrabold text-stone-900 leading-tight mb-3">Brand Edge</h4>
+          <p className="text-base text-stone-600 leading-relaxed">
             Setting attitude boundaries and generating production visual & voice tokens.
           </p>
         </div>
