@@ -1,146 +1,112 @@
-# Graph Report - brand-builder  (2026-09-25)
+# Graph Report - FounderEditor  (2026-09-24)
 
 ## Corpus Check
-- 55 files · ~37,967 words
-- Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 4 file(s) not represented in the graph (top: .example 2, (none) 1, .css 1)
+- Corpus is ~22,834 words - fits in a single context window. You may not need a graph.
 
 ## Summary
-- 412 nodes · 643 edges · 20 communities (15 shown, 5 thin omitted)
-- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 32 edges (avg confidence: 0.88)
+- 172 nodes · 254 edges · 11 communities
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 7 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
-## Graph Freshness
-- Built from commit: `e015dbd1`
-- Run `git rev-parse HEAD` and compare to check if the graph is stale.
-- Run `graphify update .` after code changes (no API cost).
-
 ## Community Hubs (Navigation)
-- App.jsx
-- mockEngine.js
-- client/package.json
-- brand.ts
-- llmClient.js
-- dependencies
-- Brand Builder ⚡
-- resilientStore.js
-- DESIGN.md — Handhold Editorial Design System
-- BrandKitDashboard.jsx
-- shared/domainConfig.js
-- B. Authentication API (`/api/auth`)
-- server/package.json
-- package.json
-- scripts
-- vite.config.js
+- React UI Components
+- TypeScript Config & Toolchain
+- Brand Builder App & Socratic Interview
+- Gemini AI Service (TS)
+- Dev Dependencies
+- Runtime Dependencies
+- Brand Design Systems
+- Express Server & API Routes
+- Build Scripts & Package
 
 ## God Nodes (most connected - your core abstractions)
-1. `classifyDomain()` - 13 edges
-2. `isFamilyIntent()` - 12 edges
-3. `getMockQuestion()` - 12 edges
-4. `getMockBatch()` - 12 edges
-5. `useAuth()` - 11 edges
-6. `getMockBrandKit()` - 11 edges
-7. `scripts` - 10 edges
-8. `generateNextQuestion()` - 10 edges
-9. `compileBrandKit()` - 9 edges
-10. `generateInterviewBatch()` - 9 edges
+1. `compilerOptions` - 16 edges
+2. `playPillClickSound()` - 9 edges
+3. `Handhold Style Reference` - 8 edges
+4. `BrandKit` - 7 edges
+5. `Handshake Style Reference` - 7 edges
+6. `scripts` - 6 edges
+7. `QuestionResponse` - 6 edges
+8. `DEVSTATE — AI Agent Runtime & Architecture State` - 6 edges
+9. `Brand Kit Schema (brandKitSchema) — POST /api/interview/compile` - 6 edges
+10. `getNextQuestion()` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `2. Active Pipeline State Machine` --references--> `AuthModal()`  [INFERRED]
-  DEVSTATE.md → client/src/components/AuthModal.jsx
-- `Backend Engineering:` --references--> `requireAuth()`  [INFERRED]
-  DEVSTATE.md → server/middleware/authMiddleware.js
-- `3. Synthesize Brand Kit (`POST /api/interview/compile`)` --references--> `BrandKit`  [INFERRED]
-  DEVSTATE.md → client/src/types/brand.ts
-- `2. Component-to-API Dependency Matrix` --references--> `BrandKit`  [INFERRED]
-  graphify/architecture.graph.md → client/src/types/brand.ts
-- `2. Component-to-API Dependency Matrix` --references--> `QuestionResponse`  [INFERRED]
-  graphify/architecture.graph.md → client/src/types/brand.ts
+- `Visual Tokens Entity (palette, typography, stylePhilosophy, borderCurvature)` --semantically_similar_to--> `Handshake Style Reference`  [INFERRED] [semantically similar]
+  message.txt → DESIGN(handshake).md
+- `Visual Tokens Entity (palette, typography, stylePhilosophy, borderCurvature)` --semantically_similar_to--> `Handhold Style Reference`  [INFERRED] [semantically similar]
+  message.txt → DESIGN.md
+- `Google Fonts Loading (Cormorant Garamond, EB Garamond, Inter, Newsreader, JetBrains Mono)` --semantically_similar_to--> `Inter Typography System`  [INFERRED] [semantically similar]
+  index.html → DESIGN.md
+- `bureauSerif Typography System` --semantically_similar_to--> `SansPlomb Display Typography`  [INFERRED] [semantically similar]
+  DESIGN.md → DESIGN(handshake).md
+- `Monochrome + Single Accent Design Pattern` --semantically_similar_to--> `Zero Chromatic Color Principle`  [INFERRED] [semantically similar]
+  DESIGN(handshake).md → DESIGN.md
 
 ## Import Cycles
 - None detected.
 
-## Communities (20 total, 5 thin omitted)
+## Hyperedges (group relationships)
+- **Brand Builder Socratic Interview Flow** — message_stage1_intake_icp, message_stage2_differentiation, message_stage3_attitude_edge, message_stage4_brand_kit_synthesis [EXTRACTED 1.00]
+- **Handhold Editorial Design System** — design_md_bureauserif_typography, design_md_inter_typography, design_md_zero_chromatic_color_principle, design_md_shadow_free_elevation_principle, design_md_paper_cream_canvas [EXTRACTED 1.00]
+- **Handshake Chromatic Identity System** — design_handshake__voltage_lime_design_token, design_handshake__hero_gradient_banner, design_handshake__monochrome_plus_one_accent_pattern, design_handshake__sansplomb_typography [EXTRACTED 1.00]
 
-### Community 0 - "App.jsx"
-Cohesion: 0.08
-Nodes (36): App(), AuthModal(), ConceptSelector(), LivePreviewTab(), Header(), IntakeView(), InterviewChat(), ProgressStepper() (+28 more)
+## Communities (11 total, 0 thin omitted)
 
-### Community 1 - "mockEngine.js"
-Cohesion: 0.07
-Nodes (56): 4. Completed Sprint Checklists, Backend Engineering:, Phase 7: Strategic Prompt Overhaul & Anti-Cliché Architecture:, brandNamesWithAmpersand, testQueries, server_controllers_interviewercontroller_extractdomain, handleCompileBrandKit(), handleExpandPitch() (+48 more)
-
-### Community 2 - "client/package.json"
-Cohesion: 0.06
-Nodes (32): dependencies, lucide-react, react, react-dom, @react-oauth/google, devDependencies, autoprefixer, postcss (+24 more)
-
-### Community 3 - "brand.ts"
+### Community 0 - "React UI Components"
 Cohesion: 0.11
-Nodes (17): BrandKit, BrandStrategy, ChatMessage, ColorRole, ColorToken, LaunchContent, QuestionResponse, TypographyTokens (+9 more)
+Nodes (26): App(), AnnouncementBar(), AnnouncementBarProps, ApiKeyModal(), ApiKeyModalProps, BrandKitDashboard(), BrandKitDashboardProps, InterviewChat() (+18 more)
 
-### Community 4 - "llmClient.js"
-Cohesion: 0.23
-Nodes (10): ref_google_genai, ref_groq_sdk, CANDIDATE_MODELS, cleanJsonString(), generateStructuredJson(), getGeminiClient(), isTransientError(), sleep() (+2 more)
+### Community 1 - "TypeScript Config & Toolchain"
+Cohesion: 0.09
+Nodes (22): DOM, DOM.Iterable, ES2020, src, vite.config.ts, compilerOptions, allowImportingTsExtensions, isolatedModules (+14 more)
 
-### Community 5 - "dependencies"
-Cohesion: 0.14
-Nodes (14): dependencies, bcryptjs, cors, dotenv, express, google-auth-library, @google/genai, groq-sdk (+6 more)
+### Community 2 - "Brand Builder App & Socratic Interview"
+Cohesion: 0.13
+Nodes (19): Brand Builder App (index.html), Google Fonts Loading (Cormorant Garamond, EB Garamond, Inter, Newsreader, JetBrains Mono), Main TSX Entrypoint (/src/main.tsx), Socratic Brand Interviewer & Token Synthesizer, Brand Builder Project (Socratic Brand Interviewer & Token Synthesizer), Brand Kit Schema (brandKitSchema) — POST /api/interview/compile, Brand Strategy Entity (brandName, tagline, mission, targetAudience, coreValueProposition, antiHero, differentiator), DEVSTATE — AI Agent Runtime & Architecture State (+11 more)
 
-### Community 6 - "Brand Builder ⚡"
+### Community 3 - "Gemini AI Service (TS)"
 Cohesion: 0.20
-Nodes (9): 1. Clone & Install Dependencies, 2. Configure Environment (Optional for Live Gemini API), 3. Run Development Servers, Brand Builder ⚡, 🎨 Interactive Features, 👥 Multi-Agent & Teammate Tooling, 🚀 Overview, ⚡ Quickstart (+1 more)
+Nodes (14): CompileBrandKitParams, NextQuestionParams, compileBrandKit(), getNextQuestion(), retryWithBackoff(), PresetPitch, PresetRound, generateGenericMockBrandKit() (+6 more)
 
-### Community 7 - "resilientStore.js"
-Cohesion: 0.06
-Nodes (44): ref_bcryptjs, ref_child_process, ref_cors, ref_dotenv, ref_express, ref_fs, ref_google_auth_library, ref_jsonwebtoken (+36 more)
+### Community 4 - "Dev Dependencies"
+Cohesion: 0.12
+Nodes (17): devDependencies, @types/cors, @types/express, @types/node, @types/react, @types/react-dom, typescript, vite (+9 more)
 
-### Community 8 - "DESIGN.md — Handhold Editorial Design System"
-Cohesion: 0.22
-Nodes (8): 1. Color Palette (Zero Chromatic Noise — Strict Monochrome), 2. Typography Contract (Two Fonts, Two Weights Only), 3. Geometry, Shapes & Elevation, 4. Component Manifest, Body & Interface, Critical Rules:, DESIGN.md — Handhold Editorial Design System, Display Headlines
+### Community 5 - "Runtime Dependencies"
+Cohesion: 0.13
+Nodes (15): cors, dotenv, express, @google/genai, lucide-react, dependencies, cors, dotenv (+7 more)
 
-### Community 9 - "BrandKitDashboard.jsx"
+### Community 6 - "Brand Design Systems"
+Cohesion: 0.19
+Nodes (15): Handshake Style Reference, Hero Gradient Banner Component, Monochrome + Single Accent Design Pattern, NoiGrotesk Typography System, Pillow-Soft Border Radius System, SansPlomb Display Typography, Voltage Lime (#d3fb52) Design Token, bureauSerif Typography System (+7 more)
+
+### Community 7 - "Express Server & API Routes"
+Cohesion: 0.29
+Nodes (10): compileBrandKit(), getNextQuestion(), retryWithBackoff(), app, __dirname, distPath, __filename, generateGenericMockBrandKit() (+2 more)
+
+### Community 8 - "Build Scripts & Package"
 Cohesion: 0.18
-Nodes (16): BrandKitDashboard(), TABS, BrandStrategyTab(), LaunchCopyTab(), getContrastVsWhite(), VIEWPORT_SIZES, VisualTokensTab(), wcagLevel() (+8 more)
-
-### Community 10 - "shared/domainConfig.js"
-Cohesion: 0.33
-Nodes (3): DOMAINS, extractClientDomain, isClientFamilyIntent
-
-### Community 14 - "B. Authentication API (`/api/auth`)"
-Cohesion: 0.11
-Nodes (17): 1. Expand Raw Pitch (`POST /api/interview/expand-pitch`), 1. Fetch Saved Sessions (`GET /api/brands`), 1. Project Overview & Sprint Status, 1. Register (`POST /api/auth/register`), 2. Active Pipeline State Machine, 2. Login (`POST /api/auth/login`), 2. Save Active Brand (`POST /api/brands`), 2. Start Interview (`POST /api/interview/start`) (+9 more)
-
-### Community 16 - "server/package.json"
-Cohesion: 0.06
-Nodes (30): dependencies, bcryptjs, cors, dotenv, express, google-auth-library, @google/genai, groq-sdk (+22 more)
-
-### Community 17 - "package.json"
-Cohesion: 0.05
-Nodes (39): author, description, devDependencies, autoprefixer, concurrently, nodemon, postcss, tailwindcss (+31 more)
-
-### Community 18 - "scripts"
-Cohesion: 0.20
-Nodes (10): scripts, build:client, dev, dev:client, dev:server, install:all, test, test:health (+2 more)
+Nodes (10): name, private, scripts, build, dev, preview, server, start (+2 more)
 
 ## Knowledge Gaps
-- **188 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+183 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 223 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **67 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+62 more)
+  These have ≤1 connection - possible missing edges or undocumented components.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `DEVSTATE.md — AI Agent Runtime & Architecture State` connect `B. Authentication API (`/api/auth`)` to `mockEngine.js`?**
-  _High betweenness centrality (0.214) - this node is a cross-community bridge._
-- **Why does `4. Completed Sprint Checklists` connect `mockEngine.js` to `B. Authentication API (`/api/auth`)`?**
-  _High betweenness centrality (0.182) - this node is a cross-community bridge._
-- **Why does `2. Active Pipeline State Machine` connect `B. Authentication API (`/api/auth`)` to `App.jsx`?**
-  _High betweenness centrality (0.155) - this node is a cross-community bridge._
+- **Why does `devDependencies` connect `Dev Dependencies` to `Build Scripts & Package`?**
+  _High betweenness centrality (0.036) - this node is a cross-community bridge._
+- **Why does `dependencies` connect `Runtime Dependencies` to `Build Scripts & Package`?**
+  _High betweenness centrality (0.033) - this node is a cross-community bridge._
 - **What connects `name`, `private`, `version` to the rest of the system?**
-  _188 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `App.jsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.0803633822501747 - nodes in this community are weakly interconnected._
-- **Should `mockEngine.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.07459207459207459 - nodes in this community are weakly interconnected._
-- **Should `client/package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.06060606060606061 - nodes in this community are weakly interconnected._
+  _67 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `React UI Components` be split into smaller, more focused modules?**
+  _Cohesion score 0.10952380952380952 - nodes in this community are weakly interconnected._
+- **Should `TypeScript Config & Toolchain` be split into smaller, more focused modules?**
+  _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
+- **Should `Brand Builder App & Socratic Interview` be split into smaller, more focused modules?**
+  _Cohesion score 0.13450292397660818 - nodes in this community are weakly interconnected._
+- **Should `Dev Dependencies` be split into smaller, more focused modules?**
+  _Cohesion score 0.11764705882352941 - nodes in this community are weakly interconnected._

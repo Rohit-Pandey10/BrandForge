@@ -1,56 +1,33 @@
 {
-  "name": "brand-builder-workspace",
+  "name": "Founder's Mirror",
+  "private": true,
   "version": "1.0.0",
-  "description": "Adaptive Socratic Brand Interviewer & Token Synthesizer powered by Groq & Gemini",
-  "workspaces": [
-    "server",
-    "client"
-  ],
+  "type": "module",
   "scripts": {
-    "dev": "node scripts/run-dev.js",
-    "dev:server": "cd server && npm run dev",
-    "dev:client": "cd client && npm run dev",
-    "install:all": "npm install && (cd server && npm install) && (cd client && npm install)",
-    "build:client": "cd client && npm run build",
-    "test:health": "curl -s http://localhost:5001/health | jq .",
-    "test:restaurant": "node scripts/test-restaurant-flow.js",
-    "test:jeans": "node scripts/test-jeans-flow.js",
-    "test": "node scripts/test-restaurant-flow.js && node scripts/test-jeans-flow.js"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "server": "node server/index.js",
+    "start": "node server/index.js"
   },
   "dependencies": {
-    "@google/genai": "^2.24.0",
-    "@react-oauth/google": "^0.12.1",
-    "bcryptjs": "^2.4.3",
+    "@google/genai": "0.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "google-auth-library": "^9.15.0",
     "groq-sdk": "^1.6.0",
-    "jsonwebtoken": "^9.0.2",
-    "lucide-react": "^1.48.0",
-    "mongoose": "^8.9.5",
+    "lucide-react": "^0.468.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
-    "autoprefixer": "^10.4.20",
-    "concurrently": "^9.1.2",
-    "nodemon": "^3.1.9",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.17",
-    "vite": "^6.0.7"
-  },
-  "keywords": [
-    "brand-builder",
-    "groq",
-    "gemini",
-    "socratic-interviewer",
-    "design-tokens",
-    "ai-hackathon"
-  ],
-  "author": "Brand Builder Team",
-  "license": "MIT"
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3"
+  }
 }
